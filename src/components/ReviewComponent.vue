@@ -20,7 +20,7 @@ const props = defineProps<{
 <template lang="">
   <div>
     <div class="flex h-screen p-4">
-    <div class="w-1/4 h-1/2 bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="w-1/2 h-1/2 bg-white rounded-xl shadow-md overflow-hidden">
       <div class="p-8 flex flex-col justify-between h-full">
         <div>
           <div class="flex flex-row items-center">
