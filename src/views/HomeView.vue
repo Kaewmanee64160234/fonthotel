@@ -16,7 +16,9 @@ const rating: Rating = {
 </script>
 
 <template>
+ 
   <div class="body overflow-y-auto dc-scroll">
+
     <!-- The container for the overlay and cards -->
     <div class="flex justify-center items-center bigcard">
       <!-- Added classes for centering -->
@@ -86,8 +88,7 @@ const rating: Rating = {
   /* Make sure the div covers the full height of the viewport */
   position: fixed;
   /* Optional: Fixes the background to the viewport */
-  top: 0;
-  left: 0;
+ 
 }
 
 .card-style {
