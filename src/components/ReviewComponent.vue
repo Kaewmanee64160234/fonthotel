@@ -19,6 +19,7 @@ const props = defineProps<{
 </script>
 <template>
   <div>
+
     <div class="flex mb-10 mr-7">
     <div class="h-1/2 review-card rounded-xl shadow-md overflow-hidden">
       <div class="p-8 flex flex-col justify-between h-full">
