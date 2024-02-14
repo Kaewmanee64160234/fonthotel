@@ -8,7 +8,17 @@ export default {
   
   ],
   theme: {
-    extend: {},
+    colors:{
+      'blue_button': {
+        light: '#AFD3E2',
+        DEFAULT: '#AFD3E2',
+        dark: '#AFD3E2',
+      },
+
+    },
+    extend: {
+
+    },
   },
   plugins: [
     require('flowbite/plugin')
