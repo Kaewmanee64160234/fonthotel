@@ -14,6 +14,7 @@ const submitForm = () => {
 const register = () => {
   // Redirect to registration page or open registration modal
   console.log("Go to registration");
+  window.location.href = "/";
 };
 </script>
 
@@ -35,11 +36,7 @@ const register = () => {
     <!-- Right Side: Login Form -->
     <div class="flex-1 flex items-center justify-center">
       <div class="w-full max-w-md">
-        <form
-          @submit.prevent="submitForm"
-        
-          style="background-color: #f6f1f1"
-        >
+        <form @submit.prevent="submitForm" style="background-color: #f6f1f1">
           <div class="mb-10">
             <h2
               class="block text-center text-gray-700 text-4xl mb-5 font-bold mb-2 judson"
@@ -49,7 +46,7 @@ const register = () => {
             <!-- <input v-model="username" type="text" placeholder="Username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"> -->
             <!-- <input v-model="password" type="password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"> -->
 
-            <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5 ">
+            <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5">
               <i class="fa fa-user text-black mx-3"></i>
               <input
                 v-model="username"
@@ -58,7 +55,7 @@ const register = () => {
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
             </div>
-            <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5 ">
+            <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5">
               <i class="fa fa-user text-black mx-3"></i>
               <input
                 v-model="email"
@@ -86,19 +83,17 @@ const register = () => {
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
             </div>
-
-         
           </div>
-          <div class="flex items-center justify-between mt-5 ">
-            <button
-              type="submit"
-              class=" bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full "
-              style="border-radius: 40px; height: 50px;"
-            >
-              Register
-            </button>
+          <div class="flex items-center justify-between mt-5">
+           
+              <button @click="register"
+                type="submit"
+                class="bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                style="border-radius: 40px; height: 50px"
+              >
+                Register
+              </button>
           </div>
-        
         </form>
       </div>
     </div>
@@ -118,7 +113,8 @@ const register = () => {
 .judson {
   font-family: "Judson", serif;
 }
-input, button {
+input,
+button {
   padding: 0.5rem 1rem; /* Example padding, adjust as needed */
   line-height: 1.25; /* Example line-height, adjust as needed */
 }
