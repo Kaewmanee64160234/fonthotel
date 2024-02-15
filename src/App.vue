@@ -3,7 +3,6 @@ import NavigationBar from '@/components/navigations/NavigationBar.vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-
 const route = useRoute();
 const hideNavigation = computed(() => route.meta.hideNavigation);
 </script>
