@@ -11,10 +11,10 @@
 
       <!-- Right Side: Menu Items -->
       <div class="flex gap-4">
-        <a href="/booking-history" class=" hover:text-gray-700"
+        <a href="/booking-history" class=" hover:text-gray-700 text-sm font-judson "
           >BOOKING HISTORY</a
         >
-        <a href="/sign-in" class=" hover:text-gray-700">LOGIN</a>
+        <a href="/sign-in" class=" hover:text-gray-700 text-sm font-judson">LOGIN</a>
       </div>
     </nav>
   </div>
@@ -22,6 +22,7 @@
 <style scoped>
 .bg-beige {
   background-color: #DFCDB6; /* Replace with the actual color code for your beige background */
+  
 }
 
 /* Add more styles here if needed */

@@ -1,5 +1,36 @@
 <script setup lang="ts">
+import { defineProps } from 'vue';
+const props = defineProps<{
+    imgretyperoom : string,
+    // iconbath: string,
+    // iconbed: string,
+    // iconpay: string,
+    // iconsmart: string,
+    // icontele : string,
+    // iconwater: string,
+    // iconwifi: string,
+    // iconwork: string,
+    readnametype: string,
+    readheadroom: string,
+    readdesroom : string,
+    // txticonbed: string,
+    // txticonpay: string,
+    // txticonbath: string,
+    // txticonsmart: string,
+    // txticontele: string,
+    // txticonwater: string,
+    // txticonwifi: string,
+    // txticonwork: string,
+    // readbtnbooknow: string,
+
+
+
+}>();
+
+
+
 </script>
+
 
 <template>
     <div class="body ">
@@ -15,30 +46,23 @@
                 <div class="flex grid grid-rows-1 grid-cols-2  flex-col items-right  ml-10 "> <!-- Center alignment -->
                     <div class="flex flex-wrap justify-between items-center  pt-5  font-judson">
                         <div>
-                            <p class="text-xl mb-4 text-left">DELUXE ROOM</p>
+                            <p class="text-xl mb-4 text-left">{{ readnametype }}</p>
 
                         </div>
                     </div>
 
                     <div class="flex grid-cols-2 justify-between items-center mt-10 pt-5  font-judson">
-                        <p class="text-sm  text-gray-900 dark:text-white mb-4 text-left">STAY CLOSE TO TERMINAL 21 AND OTHER
-                            HOPPING MALLS IN BANGKOK CITY</p>
+                        <p class="text-sm  text-gray-900 dark:text-white mb-4 text-left">{{ readheadroom }}</p>
 
                     </div>
                     <div class="justify-start items-center   font-judson">
-                        <img class="rounded-lg h-auto max-w-md max-w-lg" src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" alt="">
+                        <img class="rounded-lg h-auto max-w-md max-w-lg" :src="props.imgretyperoom" alt="รูปtype room">
+
 
                     </div>
                     <div class="flex grid-cols-2 justify-between items-center  font-judson">
                         
-                        <p class="text-sm  text-gray-900 dark:text-white mb-4 ">Spacious Deluxe rooms feature a
-                            comfortable king-size bed with a Sealy Posturepedic mattress for a restful night’s sleep, a
-                            bathroom with a bathtub, separate walk-in rain shower and a bidet toilet. There’s also a seating
-                            area and a work desk, high-speed Wi-Fi, a 49” smart TV, an entertainment centre, and USB port.
-                            Amenities include coffee and tea making facilities, refrigerator, a safety deposit box,
-                            complimentary daily newspaper and bottled water. Floor-to-ceiling windows give a fabulous city
-                            view while electric blinds and blackout curtains ensure peaceful sleep whatever your schedule.
-                            Interconnecting rooms are available.</p>
+                        <p class="text-sm  text-gray-900 dark:text-white mb-4 ">{{ readdesroom }}</p>
                     </div>
 
 
@@ -60,13 +84,24 @@
 
                 <div class="flex  grid-rows-3  grid-cols-3  items-center  ml-10 ">
                     <div class="text-center font-judson">
+                        <!-- <div class="flex grid gap-10 grid-rows-3  grid-cols-2  items-center  ml-10 ">
+                            <img class="rounded-lg size-9   max-w-lg ms-auto " :src="iconbed" alt="">
+                            <p class="text-sm text-left font-judson ">{{ txticonbed }}</p>
+                            <img class="rounded-lg size-9 max-w-lg ms-auto" :src="iconbath" alt="">
+                            <p class="text-sm text-left font-judson">{{ txticonbath }}</p>
+                            <img class="rounded-lg size-9 max-w-lg ms-auto" :src="iconwork" alt="">
+                            <p class="text-sm text-left font-judson">{{ txticonwork }}</p>
+
+                        </div> -->
+
+                    </div>
+
+                    <div class="text-center font-judson">
                         <div class="flex grid gap-10 grid-rows-3  grid-cols-2  items-center  ml-10 ">
-                            <img class="rounded-lg size-9   max-w-lg ms-auto " src="../images/bed.png" alt="">
-                            <p class="text-sm text-left font-judson ">1.8 m king size bed</p>
-                            <img class="rounded-lg size-9 max-w-lg ms-auto" src="../images/bathtube.png" alt="">
-                            <p class="text-sm text-left font-judson">Separate Bath & Shower</p>
-                            <img class="rounded-lg size-9 max-w-lg ms-auto" src="../images/work-space.png" alt="">
-                            <p class="text-sm text-left font-judson">Working desk</p>
+                            <!-- <img class="rounded-lg size-9   max-w-lg ms-auto" :src="icontele" alt=""> -->
+                            <!-- <p class="text-sm text-left font-judson ">{{ txticontele }}</p> -->
+                            <!-- <img class="rounded-lg size-9 max-w-lg ms-auto" :src="iconwifi" alt=""> -->
+                            <!-- <p class="text-sm text-left font-judson">{{ txticonwifi }}</p> -->
 
                         </div>
 
@@ -74,21 +109,10 @@
 
                     <div class="text-center font-judson">
                         <div class="flex grid gap-10 grid-rows-3  grid-cols-2  items-center  ml-10 ">
-                            <img class="rounded-lg size-9   max-w-lg ms-auto" src="../images/television.png" alt="">
-                            <p class="text-sm text-left font-judson ">Chrome cast & Apple mirror apps</p>
-                            <img class="rounded-lg size-9 max-w-lg ms-auto" src="../images/wifi-sign.png" alt="">
-                            <p class="text-sm text-left font-judson">Complimentary High Speed WiFi</p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="text-center font-judson">
-                        <div class="flex grid gap-10 grid-rows-3  grid-cols-2  items-center  ml-10 ">
-                            <img class="rounded-lg size-9   max-w-lg ms-auto" src="../images/smart-curtain.png" alt="">
-                            <p class="text-sm text-left font-judson ">Electric curtain and sheer</p>
-                            <img class="rounded-lg size-9 max-w-lg ms-auto" src="../images/water.png" alt="">
-                            <p class="text-sm text-left font-judson">Complimentary Water</p>
+                            <!-- <img class="rounded-lg size-9   max-w-lg ms-auto" :src="iconsmart" alt=""> -->
+                            <!-- <p class="text-sm text-left font-judson ">{{ txticonsmart }}</p>
+                            <img class="rounded-lg size-9 max-w-lg ms-auto" :src="iconwater" alt="">
+                            <p class="text-sm text-left font-judson">{{ txticonwater }}</p> -->
 
                         </div>
 

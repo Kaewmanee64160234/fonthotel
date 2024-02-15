@@ -15,8 +15,9 @@ const props = defineProps({
         <img class="room-image" :src="imgroom" alt="Room Image">
         <div class="card-content p-4 text-center">
             <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ roomtype }}</h5>
-            <a :href="readmore" class="hover:text-white mt-5 block">Read more</a>
-            <a :href="btnbooking" class="btn-booking mt-7 inline-block">Book now</a>
+            <a href="/readmore" class="hover:text-white mt-5 block">Read more</a>
+            <a href="/btnbooking" class="btn-booking mt-7 inline-block">Book now</a>
+
         </div>
     </div>
 </template>
