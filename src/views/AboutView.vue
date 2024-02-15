@@ -1,10 +1,9 @@
 <script setup lang="ts">
 // Import the TyperoomCard component
-import TyperoomCard from "@/components/TyperoomCard.vue";
 import ReviewComponent from "@/components/ReviewComponent.vue";
-import Flowbite from 'flowbite';
-import { onMounted } from "vue";
-
+import Flowbite from "flowbite";
+import TyperoomCard from "@/components/TyperoomCard.vue";
+import RoomCard from "@/components/RoomCard.vue";
 type Rating = {
   cleanliness: number;
   service: number;
@@ -16,12 +15,17 @@ const rating: Rating = {
   convenience: 5,
 };
 // initialize components based on data attribute selectors
-
-
-
 </script>
 
 <template>
+  <RoomCard  
+  image="https://i.pinimg.com/564x/56/6f/53/566f5322c0d704c5ef343c98f49eed10.jpg" 
+  type="Deluxe"  
+  sleep="1" 
+  area="37" 
+  detail="Sea View, Smart TV, Work Desk"
+  price="THB 5,700.00" ></RoomCard>
+  
   <!-- This example requires Tailwind CSS and Flowbite. -->
   <!-- Make sure to include Flowbite library -->
   <div id="default-carousel" class="relative" data-carousel="static">
@@ -31,9 +35,7 @@ const rating: Rating = {
     >
       <!-- Item 1 -->
       <div class="duration-700 ease-in-out" data-carousel-item>
-        <div
-          class="flex justify-center items-center h-full  "
-        >
+        <div class="flex justify-center items-center h-full">
           <!-- Replace with your content -->
           <ReviewComponent
             :name="'wmanee0'"

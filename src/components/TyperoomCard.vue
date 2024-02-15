@@ -18,6 +18,7 @@ const props = defineProps({
             <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ roomtype }}</h5>
             <a :href="readmore" class="hover:text-white mt-5 block">Read more</a>
             <router-link to="/selectguestdate" class="btn-booking mt-7 inline-block">Book now</router-link>
+
         </div>
     </div>
 </template>

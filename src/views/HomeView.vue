@@ -3,6 +3,7 @@
 import ReviewComponent from '@/components/ReviewComponent.vue';
 import TyperoomCard from '@/components/TyperoomCard.vue';
 
+
 type Rating = {
   cleanliness: number;
   service: number;
@@ -16,7 +17,9 @@ const rating: Rating = {
 </script>
 
 <template>
+ 
   <div class="body overflow-y-auto dc-scroll">
+
     <!-- The container for the overlay and cards -->
     <div class="flex justify-center items-center bigcard">
       <!-- Added classes for centering -->
@@ -37,6 +40,7 @@ const rating: Rating = {
               roomtype="DELUXE ROOM" btnbooking="#" />
             <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="#"
               roomtype="LUXURY ROOM" btnbooking="#" />
+              
           </div>
         </div>
       </div>
@@ -86,8 +90,7 @@ const rating: Rating = {
   /* Make sure the div covers the full height of the viewport */
   position: fixed;
   /* Optional: Fixes the background to the viewport */
-  top: 0;
-  left: 0;
+ 
 }
 
 .card-style {

@@ -9,9 +9,10 @@ const submitForm = () => {
   console.log("Login", username.value, password.value);
 };
 
-const register = () => {
+const login = () => {
   // Redirect to registration page or open registration modal
   console.log("Go to registration");
+  window.location.href='/'
 };
 </script>
 
@@ -75,6 +76,7 @@ const register = () => {
           </div>
           <div class="flex items-center justify-between mt-5 ">
             <button
+            @click="login"
               type="submit"
               class=" bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full "
               style="border-radius: 40px; height: 50px;"

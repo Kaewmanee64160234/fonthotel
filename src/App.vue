@@ -12,9 +12,10 @@ import Datepicker from 'flowbite-datepicker/Datepicker';
   <router-view/>
 
 
+
 </template>
+
 <style>
+/* Your global styles */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
 </style>
-
-
