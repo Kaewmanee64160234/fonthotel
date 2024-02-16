@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'home',
     component: HomeView,
-    meta: { hideNavigation: true }
+    meta: { hideNavigation: false }
   },
   {
     path: '/about',
@@ -59,7 +59,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../components/RoomDetailCard.vue'),
     meta: { hideNavigation: true } 
   },
-  
+  {
+    path: '/selectroom',
+    name: 'selectroom',
+    component: () => import(/* webpackChunkName: "selectroom" */ '../views/SelectRoom.vue'),
+    meta: { hideNavigation: false }
+  },
 ]
 
 const router = createRouter({
