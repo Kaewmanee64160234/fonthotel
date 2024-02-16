@@ -176,19 +176,21 @@ const endDate = ref<Date>(new Date());
 </template>
 <style scoped>
 .body {
-    background-image: url("../images/image.png");
-    background-size: cover;
-    /* Cover the entire screen */
-    background-position: center;
-    /* Center the background image */
-    background-repeat: no-repeat;
-    /* Do not repeat the image */
-    width: 100vw;
-    height: 100vh;
-    /* Make sure the div covers the full height of the viewport */
-    position: fixed;
-    /* Optional: Fixes the background to the viewport */
-    /* top: 0;
+
+  background-image: url("../images/image.png");
+  background-size: cover;
+  /* Cover the entire screen */
+  background-position: center;
+  /* Center the background image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  width: 100vw;
+  height: 100vh;
+  /* Make sure the div covers the full height of the viewport */
+  position: fixed;
+  /* Optional: Fixes the background to the viewport */
+  /* top: 0;
+
   left: 0; */
 }
 
