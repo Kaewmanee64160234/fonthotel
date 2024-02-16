@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import RoomCard from '@/components/RoomCard.vue';
 import { ref } from 'vue';
 import DatePicker from 'vue3-datepicker';
 
@@ -18,9 +19,14 @@ const endDate = ref<Date>(new Date());
 </script>
 <template>
     <div class="body">
-        <div class="min-h-screen flex card-container">
+        <div class="pt-5 pl-5">
+        <button>
+                <i style='font-size:30px' class='far'>&#xf359;</i>
+            </button>
+        </div>
+        <div class="min-h-screen flex card-container">    
             <!-- Left Side: Logo and Welcome Text -->
-            <div class="flex-1 flex flex-col p-12">
+            <div class="flex-1 flex flex-col pt-5 p-10">
                 <div class="text-center">
 
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -32,15 +38,15 @@ const endDate = ref<Date>(new Date());
                                     <p class="text-right pr-7">2</p>
                                 </button>
 
-                                <div v-if="isDropdownOpen" @click="closeDropdown" class="card-selectguest mt-2" role="guest"
+                                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
                                     aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
                                     <div class="py-1" role="none">
 
                                         <div>
                                             <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
                                             <hr class="color-line">
-
-                                            <div class="flex-1 flex flex-row p-2">
+                                            <!-- Select Adult -->
+                                            <div class="flex-1 flex flex-row p-1">
                                                 <div class="flex-1 flex flex-col " style="width:50% ;">
                                                     <a class="text-black block px-4 py-2 text-sm" role="menuitem"
                                                         tabindex="-1" id="menu-item-1">Adult</a>
@@ -58,8 +64,8 @@ const endDate = ref<Date>(new Date());
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="flex-2 flex flex-row p-2">
+                                            <!-- Select Children -->
+                                            <div class="flex-2 flex flex-row p-1">
                                                 <div class="flex-1 flex flex-col " style="width:50% ;">
                                                     <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                                         tabindex="-1" id="menu-item-2">Children</a>
@@ -75,6 +81,14 @@ const endDate = ref<Date>(new Date());
                                                         </button>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <!-- Btn Apply -->
+                                            <div class="flex-3 flex flex-row p-1 justify-end">
+                                                <div class="flex">
+                                                <button type="button" class="btn-apply">
+                                                    <a class="text-white text-m text-center">Apply</a>
+                                                </button>
+                                            </div>
                                             </div>
                                         </div>
 
@@ -106,9 +120,15 @@ const endDate = ref<Date>(new Date());
                     </div>
 
                 </div>
+                <div class="mt-5">
+                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe"
+                        sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                        price="THB 5,700.00" />
+                </div>
             </div>
+
             <!-- Right Side: Login Form -->
-            <div class="flex-1 flex justify-center mt-10">
+            <div class="flex-1 flex justify-center mt-5">
                 <div class="w-full max-w-md">
 
                     <div class="card-stay">
@@ -209,7 +229,7 @@ const endDate = ref<Date>(new Date());
 .card-selectguest {
     background-color: #FFFCF7;
     width: 229px;
-    height: 173px;
+    height: 1px;
     border-radius: 10px;
 }
 
@@ -232,5 +252,14 @@ const endDate = ref<Date>(new Date());
     width: 24.22px;
     height: 24.22px;
 
+}
+
+.btn-apply {
+    background-color: #EBBD99;
+    color: #FFFFFF;
+    width: 59px;
+    height: 27px;
+    border-radius: 9999px;
+    justify-content: end;
 }
 </style>
