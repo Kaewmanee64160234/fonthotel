@@ -50,6 +50,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../components/ReadMore.vue'),
     meta: { hideNavigation: true } 
   },
+  {
+    path: '/roomdetail',
+    name: 'roomdetail',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/RoomDetailCard.vue'),
+    meta: { hideNavigation: true } 
+  },
   
 ]
 
