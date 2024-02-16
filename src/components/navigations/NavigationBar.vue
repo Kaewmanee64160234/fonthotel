@@ -25,5 +25,4 @@
   
 }
 
-/* Add more styles here if needed */
 </style>

@@ -208,8 +208,8 @@ const endDate = ref<Date>(new Date());
   /* Make sure the div covers the full height of the viewport */
   position: fixed;
   /* Optional: Fixes the background to the viewport */
-  top: 0;
-  left: 0;
+  /* top: 0;
+  left: 0; */
 }
 
 .card-container {

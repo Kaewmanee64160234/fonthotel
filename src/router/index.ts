@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'home',
     component: HomeView,
-    meta: { hideNavigation: true }
+    meta: { hideNavigation: false }
   },
   {
     path: '/about',
