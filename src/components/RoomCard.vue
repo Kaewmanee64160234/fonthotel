@@ -12,15 +12,15 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex rounded-lg shadow-lg overflow-hidden w-1/2 " >
+  <div class=" flex rounded-lg shadow-lg overflow-hidden  " style="height: 25vh;" >
     <!-- Room Image -->
-    <div class="py-8 pr-10 pl-3 w-1/2 flex " style="justify-content: center;">
+    <div class=" w-1/2 py-3 pl-5 pr-10   flex " style="justify-content: start; background-color: white;">
     <img :src="props.image" alt="Room Image" class="  object-cover   rounded-lg"  />
 
     </div>
 
     <!-- Room Details -->
-    <div class="w-1/2 pt-8 bg-white flex flex-col justify-between">
+    <div class="w-1/2  pt-3 bg-white flex flex-col justify-between">
       <div>
         <h2 class="text-xl font-semibold">{{ props.type }}</h2>
         <p class="text-gray-600">Sleep {{ props.sleep }} | {{ props.area }} square metre</p>
