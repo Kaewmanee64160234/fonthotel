@@ -1,0 +1,236 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import DatePicker from 'vue3-datepicker';
+
+const selectedDate = ref<Date>();
+const isDropdownOpen = ref(false);
+
+const toggleDropdown = () => {
+    isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const closeDropdown = () => {
+    isDropdownOpen.value = false;
+};
+const startDate = ref<Date>(new Date());
+const endDate = ref<Date>(new Date());
+
+</script>
+<template>
+    <div class="body">
+        <div class="min-h-screen flex card-container">
+            <!-- Left Side: Logo and Welcome Text -->
+            <div class="flex-1 flex flex-col p-12">
+                <div class="text-center">
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="relative inline-block text-left" @click="toggleDropdown">
+                            <div>
+                                <button type="button" class="btn-guest text-left" id="guest-button" aria-expanded="true"
+                                    aria-haspopup="true">
+                                    Guest
+                                    <p class="text-right pr-7">2</p>
+                                </button>
+
+                                <div v-if="isDropdownOpen" @click="closeDropdown" class="card-selectguest mt-2" role="guest"
+                                    aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
+                                    <div class="py-1" role="none">
+
+                                        <div>
+                                            <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
+                                            <hr class="color-line">
+
+                                            <div class="flex-1 flex flex-row p-2">
+                                                <div class="flex-1 flex flex-col " style="width:50% ;">
+                                                    <a class="text-black block px-4 py-2 text-sm" role="menuitem"
+                                                        tabindex="-1" id="menu-item-1">Adult</a>
+                                                </div>
+
+                                                <div class="flex-2 flex flex-col " style="width:50% ;">
+                                                    <div class="flex items-center py-2">
+                                                        <button type="button" class="btn-minus">
+                                                            <a class="text-white text-m text-center">-</a>
+                                                        </button>
+                                                        <a class="mx-4">2</a>
+                                                        <button type="button" class="btn-plus">
+                                                            <a class="text-white text-m text-center">+</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-2 flex flex-row p-2">
+                                                <div class="flex-1 flex flex-col " style="width:50% ;">
+                                                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                                        tabindex="-1" id="menu-item-2">Children</a>
+                                                </div>
+                                                <div class="flex-2 flex flex-col " style="width:50% ;">
+                                                    <div class="flex items-center py-2">
+                                                        <button type="button" class="btn-minus">
+                                                            <a class="text-white text-m text-center">-</a>
+                                                        </button>
+                                                        <a class="mx-4">0</a>
+                                                        <button type="button" class="btn-plus">
+                                                            <a class="text-white text-m text-center">+</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Check-in date picker -->
+                        <div class="btn-date text-left">
+                            <label class="">
+                                Check-in
+                            </label>
+                            <DatePicker id="check-in" v-model="startDate"
+                                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
+                                placeholder="Select date" />
+                        </div>
+
+                        <!-- Check-out date picker -->
+                        <div class="btn-date text-left">
+                            <label class="">
+                                Check-out
+                            </label>
+                            <DatePicker id="check-out" v-model="endDate"
+                                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
+                                placeholder="Select date" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Right Side: Login Form -->
+            <div class="flex-1 flex justify-center mt-10">
+                <div class="w-full max-w-md">
+
+                    <div class="card-stay">
+                        <p class="text-2xl p-2 pl-5 ">Your Stay</p>
+                        <div class="min-h-screen card-container">
+
+                            <div class="flex-1 flex flex-row p-2 pl-5">
+                                <div class="flex-1 flex flex-col " style="width:50% ;">
+                                    <p class="font-medium">Check-in</p>
+                                    <p>After 1:00 PM</p>
+                                </div>
+
+                                <div class="flex-2 flex flex-col" style="width:50% ;">
+                                    <p class="font-medium">Check-out</p>
+                                    <p>Before 7:00 AM</p>
+                                </div>
+
+                            </div>
+                            <div class="flex-2 flex flex-row p-2 pl-5">
+                                <span class="font-medium">Date :</span>
+                                <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+                            </div>
+
+                            <div class="flex-3 flex flex-row p-2 pl-5">
+                                <div class="flex-1 flex flex-col ">
+                                    <p class="font-medium">Guest</p>
+                                    <p>
+                                        <a class="mr-10">Adult : 2</a>
+                                        <a class="ml-10">Children : -</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+<style scoped>
+.body {
+    background-image: url('../images/image.png');
+    background-size: cover;
+    /* Cover the entire screen */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    width: 100vw;
+    height: 100vh;
+    /* Make sure the div covers the full height of the viewport */
+    position: fixed;
+    /* Optional: Fixes the background to the viewport */
+    top: 0;
+    left: 0;
+}
+
+.card-container {
+    max-width: auto;
+    height: 234px;
+}
+
+.btn-guest,
+.btn-date {
+    border-color: #000000;
+    background-color: #FFFFFF;
+    padding-top: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    font-weight: medium;
+    display: inline-block;
+    width: 229px;
+    height: 75px;
+}
+
+.card-stay {
+    width: 35vw;
+    height: 35vh;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+}
+
+.card-stay {
+    width: 35vw;
+    height: 35vh;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+}
+
+.card-selectguest {
+    background-color: #FFFCF7;
+    width: 229px;
+    height: 173px;
+    border-radius: 10px;
+}
+
+.color-line {
+    background-color: #BEBEBE;
+    height: 2px;
+}
+
+.btn-minus {
+    background-color: #FF0000;
+    border-radius: 9999px;
+    width: 24.22px;
+    height: 24.22px;
+    text-align: center;
+}
+
+.btn-plus {
+    background-color: #59CE8F;
+    border-radius: 9999px;
+    width: 24.22px;
+    height: 24.22px;
+
+}
+</style>

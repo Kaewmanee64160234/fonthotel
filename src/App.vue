@@ -1,15 +1,18 @@
-<script setup lang="ts">
-import NavigationBar from '@/components/navigations/NavigationBar.vue';
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const hideNavigation = computed(() => route.meta.hideNavigation);
+<script setup>
+import { onMounted } from "vue";
+import Datepicker from 'flowbite-datepicker/Datepicker';
+
 </script>
-
 <template>
-  <NavigationBar v-if="!hideNavigation"  />
-  <router-view />
+  <!-- <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav> -->
+  <router-view/>
+
+
+
 </template>
 
 <style>
