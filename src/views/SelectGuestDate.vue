@@ -9,8 +9,12 @@ const router=useRouter();
 const selectedDate = ref<Date>();
 const isDropdownOpen = ref(false);
 
-const clickto = () => {
-    window.open('/selectRoom')
+const clickcontinue = () => {
+    window.location.href = '/selectRoom'
+}
+
+const clickback = () => {
+    window.location.href = '/'
 }
 const toggleDropdown = () => {
     isDropdownOpen.value = !isDropdownOpen.value;
@@ -25,8 +29,8 @@ const endDate = ref<Date>(new Date());
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
-            <button>
-                <i style="font-size: 30px;">&#xf359;</i>
+            <button @click="clickback">
+                <i style="font-size: 30px" class="far">&#xf359;</i>
             </button>
         </div>
         <div class="min-h-screen flex card-container">
@@ -161,7 +165,7 @@ const endDate = ref<Date>(new Date());
                 
 
                 <div class="flex-2 flex flex-row justify-center pt-10">
-                    <button class="btn-continue" @click="clickto()">
+                    <button class="btn-continue" @click="clickcontinue()">
                         <a>Continue</a>
                     </button>
                 </div>
