@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import ReadMore from '@/components/ReadMore.vue';
-
+const text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 </script>
 
 <template>
     <div>
-        <ReadMore readnametype="read"
-            imgretyperoom="'https://i.pinimg.com/564x/14/2a/d0/142ad0288488d0e23c87af477ce8aa89.jpg'" readheadroom="read"
-            readdesroom="fdbgdfbdbdgfbdbfdfgfdggfd"/>
+        <ReadMore :type="'DELUXE ROOM'" :description="text" :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'" :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" :bed="'1.8 king size'" :tv="true" :electric="true" :wifi="true" :water="false" :bath="true" :path="'/login'" :desk="true"></ReadMore>
 
         
 
