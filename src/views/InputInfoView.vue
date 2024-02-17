@@ -5,7 +5,7 @@ const clickback = () => {
 }
 
 const clickcontinue = () => {
-    window.location.href = '/selectRoom'
+    window.location.href = '/activaty'
 }
 
 </script>
@@ -21,7 +21,7 @@ const clickcontinue = () => {
             <!-- Left Side: Logo and Welcome Text -->
             <div class="flex-1 flex flex-col pt-3 p-10">
                 <div class="card-left flex justify-center items-center">
-                    <form class="w-full max-w-md">
+                    <form class="w-full  justify-center items-center pl-20">
                         <p class="text-black font-semibold text-xl mb-2 ml-3">Contact info</p>
                         <div class="grid gap-3 md:grid-cols-2">
                             <!-- Contact Info -->
@@ -56,7 +56,7 @@ const clickcontinue = () => {
                         <!-- Description Section -->
                         <div class="mb-2">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Description</label>
-                            <textarea class="dc-input" style="height: 7vh;"></textarea>
+                            <textarea class="dc-input" style="height: 7vh; width: 85%;"></textarea>
                         </div>
 
                         <!-- Promotion Section -->
@@ -92,12 +92,12 @@ const clickcontinue = () => {
             </div>
 
             <!-- Right Side: Login Form -->
-            <div class="w-full flex-1 flex justify-center mt-5">
+            <div class="w-full flex-1 flex justify-center mt-3">
                 <div class="w-full justify-center">
                     <div class="flex-1 flex flex-row justify-center">
-                        <div class="card-stay">
+                        <div class="card-stay overflow-y-auto dc-scroll">
                             <p class="text-2xl p-2 pl-5 font-semibold" style="font-size: 23px;">Your Stay</p>
-                            <div class="min-h-screen card-container">
+                            <div class="card-container">
                                 <div class="flex-1 flex flex-row p-2 pl-5">
                                     <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium">Check-in</p>
@@ -127,15 +127,83 @@ const clickcontinue = () => {
                                     </div>
                                 </div>
 
-                                <div class="flex-4 flex flex-row pt-2 px-5" style="font-size: 16px;">
+                                <div class="flex-4 flex flex-row pt-2 px-5">
                                     <div class="flex-1 flex flex-col">
-                                        <p class="font-medium">1 Night</p>
-                                        <p> Dec 26, 2023</p>
+                                        <p class="font-medium" style="font-size: 16px;">1 Night</p>
+                                        <p style="font-size: 13px;"> Dec 26, 2023</p>
+                                    </div>
+                                    <div class="flex-2 flex flex-col mt-6">
+                                        <p style="font-size: 13px;">THB 5,700.00</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-5 flex flex-row pt-2 px-5" style="font-size: 13px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p>Deluxe</p>
                                     </div>
                                     <div class="flex-2 flex flex-col">
-                                        <p>THB 5,700.00</p>
+                                        <p class="font-medium">THB 5,700.00</p>
                                     </div>
+                                </div>
 
+                                <div class="flex-6 flex flex-row pt-2 px-5" style="font-size: 13px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium">Buffet Breakfast</p>
+                                        <p>Dec 26 / 1 Adult</p>
+                                    </div>
+                                    <div class="flex-2 flex flex-col mt-6">
+                                        <p>THB 300.00</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-7 flex flex-row pt-2 px-5" style="font-size: 13px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium">Promotion</p>
+                                        <p>-</p>
+                                    </div>
+                                    <div class="flex-2 flex flex-col">
+                                        <p>-</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium"> Edit | Remove</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium"> Add room</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-9 flex flex-row pt-2 px-5 " style="font-size: 20px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium">Total:</p>
+                                    </div>
+                                    <div class="flex-2 flex flex-col">
+                                        <p class="font-medium">THB 7,009.00</p>
+                                    </div>
+                                </div>
+
+                                <div class="pt-2">
+                                    <hr class="color-line"/>
+                                </div>
+
+                                <div class="flex-9 flex flex-row pt-2 px-5 " style="font-size: 20px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="font-medium">Cash pledge</p>
+                                    </div>
+                                    <div class="flex-2 flex flex-col">
+                                        <p class="font-medium">THB 1,500.00</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 12px;">
+                                    <div class="flex-1 flex flex-col">
+                                        <p class="text-red-500">(This cash pledge is confirmation of your stay at our hotel. You will receive a refund when you check out. As for the room rate, you will have to pay it when you check out.)</p>
+                                    </div>
                                 </div>
 
                             </div>
@@ -143,7 +211,7 @@ const clickcontinue = () => {
                     </div>
 
 
-                    <div class="flex-2 flex flex-row justify-center pt-10">
+                    <div class="flex-2 flex flex-row justify-center pt-3">
                         <button class="btn-complete" @click="clickcontinue()">
                             <a>Complete Booking</a>
                         </button>
@@ -178,7 +246,7 @@ const clickcontinue = () => {
 
 .card-left {
     background-color: #f4f4f4;
-    max-width: 50vw;
+    max-width: 40vw;
     /* Set a maximum width for the card */
     height: 78vh;
     border-radius: 10px;
@@ -224,7 +292,7 @@ const clickcontinue = () => {
 
 .card-stay {
     width: 80%;
-    height: 63vh;
+    height: 70vh;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
@@ -238,6 +306,21 @@ const clickcontinue = () => {
     display: flex;
     margin: auto;
     /* Center the line horizontally */
+}
+
+.dc-scroll {
+    max-height: 100vh;
+    overflow: scroll;
+}
+
+.dc-scroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.dc-scroll::-webkit-scrollbar-thumb {
+    background-color: #EBBD99;
+    border-radius: 10px;
 }
 </style>
 

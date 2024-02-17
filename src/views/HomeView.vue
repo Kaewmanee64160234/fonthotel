@@ -167,23 +167,18 @@ const rating: Rating = {
 .bigcard {
   display: flex;
   height: 65vh;
-
 }
-
 .font-judson {
   font-family: 'Judson';
 }
-
 .dc-scroll {
   max-height: 100vh;
   overflow: scroll;
 }
-
 .dc-scroll::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
-
 .dc-scroll::-webkit-scrollbar-thumb {
   background-color: #EBBD99;
   border-radius: 10px;
