@@ -12,7 +12,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class=" flex rounded-lg shadow-lg overflow-hidden mb-5" style="height: 25vh;" >
+  <div class="mb-5">
+  <div class=" flex rounded-lg shadow-lg overflow-hidden " style="height: 25vh;" >
     <!-- Room Image -->
     <div class=" w-1/2 py-3 pl-5 pr-10   flex " style="justify-content: start; background-color: white;">
     <img :src="props.image" alt="Room Image" class="rounded-lg pic-showroom"  />
@@ -30,6 +31,7 @@ const props = defineProps<{
       <div class="px-5 py-2 font-bold text-lg price-room">{{ props.price }}</div>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>

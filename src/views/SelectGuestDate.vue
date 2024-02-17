@@ -120,16 +120,16 @@ const endDate = ref<Date>(new Date());
                         </div>
                     </div>
                 </div>
-                <div class="mt-5 overflow-y-auto dc-scroll">
-                    <p class="mb-2 text-white font-semibold text-xl">Select Room</p>
+                <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
+                <div class="mt-2 overflow-y-auto dc-scroll mb-20">
                     <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
                         sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
-                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe Twin"
-                        sleep="Sleep  2" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
+                        type="Deluxe Twin" sleep="Sleep  2" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
-                    <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" type="Deluxe King"
-                        sleep="Sleep  3" area="45  square metre" detail="Sea View , Smart TV , Work Desk"
+                    <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
+                        type="Deluxe King" sleep="Sleep  3" area="45  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
                 </div>
             </div>
@@ -286,17 +286,18 @@ const endDate = ref<Date>(new Date());
 }
 
 .dc-scroll {
-  max-height: 70vh;
-  overflow: scroll;
+    padding-right: 5px;
+    max-height: 70vh;
+    overflow: scroll;
 }
 
-.dc-scroll::-webkit-scrollbar{
-  width: 5px;
-  height: 5px;
+.dc-scroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
-  border-radius: 10px;
+    background-color: #EBBD99;
+    border-radius: 10px;
 }
 </style>
