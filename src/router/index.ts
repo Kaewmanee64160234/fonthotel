@@ -76,6 +76,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "selectroom" */ '../views/SelectRoomView.vue'),
     meta: { hideNavigation: false }
   },
+  
 ]
 
 const router = createRouter({
