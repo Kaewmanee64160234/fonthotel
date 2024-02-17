@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import RoomCard from "@/components/RoomCard.vue";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import DatePicker from "vue3-datepicker";
-import SelectRoom from "./SelectRoom.vue";
-
-const router = useRouter();
-const selectedDate = ref<Date>();
 const isDropdownOpen = ref(false);
 
 const clickcontinue = () => {

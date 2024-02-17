@@ -1,24 +1,10 @@
 <script setup lang="ts">
 import SelectRoomCard from "@/components/SelectRoomCard.vue";
-import { ref } from "vue";
-import DatePicker from "vue3-datepicker";
-
-const selectedDate = ref<Date>();
-const isDropdownOpen = ref(false);
-
-const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
-
-const closeDropdown = () => {
-  isDropdownOpen.value = false;
-};
 
 const clickback = () => {
   window.location.href = '/selectguestdate'
 }
-const startDate = ref<Date>(new Date());
-const endDate = ref<Date>(new Date());
+
 </script>
 <template>
   <div class="body">
@@ -28,94 +14,10 @@ const endDate = ref<Date>(new Date());
       </button>
     </div>
     <div class="min-h-screen flex card-container">
-      <!-- Left Side: Logo and Welcome Text -->
-      <div class="flex-1 flex flex-col pt-5 p-10">
-        <div class="text-center">
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="relative inline-block text-left" @click="toggleDropdown">
-              <div>
-                <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
-                  aria-haspopup="true">
-                  <p> Guest</p>
-                  <p class="text-right pr-7 p-2">2</p>
-                </button>
-
-                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
-                  aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
-                  <div class="py-1" role="none">
-                    <div>
-                      <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
-                      <hr class="color-line" />
-                      <!-- Select Adult -->
-                      <div class="flex-1 flex flex-row p-1">
-                        <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                            id="menu-item-1">Adult</a>
-                        </div>
-
-                        <div class="flex-2 flex flex-col" style="width: 50%">
-                          <div class="flex items-center py-2">
-                            <button type="button" class="btn-minus">
-                              <a class="text-white text-m text-center">-</a>
-                            </button>
-                            <a class="mx-4">2</a>
-                            <button type="button" class="btn-plus">
-                              <a class="text-white text-m text-center">+</a>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Select Children -->
-                      <div class="flex-2 flex flex-row p-1">
-                        <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                            id="menu-item-2">Children</a>
-                        </div>
-                        <div class="flex-2 flex flex-col" style="width: 50%">
-                          <div class="flex items-center py-2">
-                            <button type="button" class="btn-minus">
-                              <a class="text-white text-m text-center">-</a>
-                            </button>
-                            <a class="mx-4">0</a>
-                            <button type="button" class="btn-plus">
-                              <a class="text-white text-m text-center">+</a>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Btn Apply -->
-                      <div class="flex-3 flex flex-row p-1 justify-end">
-                        <div class="flex">
-                          <button type="button" class="btn-apply">
-                            <a class="text-white text-m text-center">Apply</a>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Check-in date picker -->
-            <div class="btn-date text-left">
-              <label class=""> Check-in </label>
-              <DatePicker id="check-in" v-model="startDate"
-                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                style="width: 90%;" placeholder="Select date" />
-            </div>
-
-            <!-- Check-out date picker -->
-            <div class="btn-date text-left">
-              <label class=""> Check-out </label>
-              <DatePicker id="check-out" v-model="endDate"
-                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                placeholder="Select date" style="width: 90%;" />
-            </div>
-          </div>
-        </div>
-        <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-20">
+      <!-- Left Side: -->
+      <div class="flex-1 flex flex-col pt-2 p-10">
+        <p class="text-white font-semibold text-xl">Select Room</p>
+        <div class="mt-2 overflow-y-auto dc-scroll">
           <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
             sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00" btnbooknow="#" />
           <SelectRoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
@@ -127,7 +29,7 @@ const endDate = ref<Date>(new Date());
         </div>
       </div>
 
-      <!-- Right Side: Login Form -->
+      <!-- Right Side: -->
       <div class="w-full flex-1 flex justify-center mt-5">
         <div class="w-full justify-center">
           <div class="flex-1 flex flex-row justify-center">
@@ -212,16 +114,6 @@ const endDate = ref<Date>(new Date());
   padding-left: 10px;
 }
 
-
-
-.card-stay {
-  width: 35vw;
-  height: 35vh;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255);
-  box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
-}
-
 .card-stay {
   width: 80%;
   height: 35vh;
@@ -280,4 +172,5 @@ const endDate = ref<Date>(new Date());
 .dc-scroll::-webkit-scrollbar-thumb {
   background-color: #EBBD99;
   border-radius: 10px;
-}</style>
+}
+</style>
