@@ -9,6 +9,7 @@ const props = defineProps<{
   detail: string,
   price: string
 }>();
+
 </script>
 
 <template>

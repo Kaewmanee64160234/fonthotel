@@ -1,16 +1,19 @@
 
 <script setup lang="ts">
 import NavigationBar from './components/navigations/NavigationBar.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import NavigationBarEmployee from './components/navigations/NavigationBarEmployee.vue';
+import { useUserStore } from './store/user.store';
 
 const route = useRoute();
 const hideNavigation = computed(() => route.meta.hideNavigation);
+const userStore = useUserStore();
 </script>
 <template>
-  <NavigationBarEmployee v-if="!hideNavigation" />
-  <!-- <NavigationBar v-if="!hideNavigation" /> -->
+    <NavigationBarEmployee v-if="!hideNavigation && userStore.user === 'employee'" />
+
+<NavigationBar v-else />
   <router-view class="relative"/>
 
   <!-- <nav>
