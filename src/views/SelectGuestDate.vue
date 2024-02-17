@@ -1,9 +1,15 @@
 <script setup lang="ts">
+<<<<<<< HEAD
 import RoomCard from '@/components/RoomCard.vue';
 import { ref } from 'vue';
 import DatePicker from 'vue3-datepicker';
 
 const selectedDate = ref<Date>();
+=======
+import RoomCard from "@/components/RoomCard.vue";
+import { ref } from "vue";
+import DatePicker from "vue3-datepicker";
+>>>>>>> origin/main
 const isDropdownOpen = ref(false);
 
 const toggleDropdown = () => {

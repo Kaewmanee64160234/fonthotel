@@ -31,7 +31,11 @@ const props = defineProps<{
         <div class="px-5 py-2 font-bold text-base price-room">{{ props.price }}</div>
       </div>
       <div class="text-right px-5">
+
         <router-link to="/ActivatyComponent" class="btn-booknow mt-2 mb-3">Book now</router-link>
+
+        <router-link to="/inputinfo" class="btn-booknow mt-2 mb-3">Book now</router-link>
+
       </div>
     </div>
   </div>
