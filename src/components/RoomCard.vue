@@ -15,7 +15,7 @@ const props = defineProps<{
   <div class=" flex rounded-lg shadow-lg overflow-hidden mb-5" style="height: 25vh;" >
     <!-- Room Image -->
     <div class=" w-1/2 py-3 pl-5 pr-10   flex " style="justify-content: start; background-color: white;">
-    <img :src="props.image" alt="Room Image" class="  object-cover   rounded-lg"  />
+    <img :src="props.image" alt="Room Image" class="rounded-lg pic-showroom"  />
 
     </div>
 
@@ -35,6 +35,12 @@ const props = defineProps<{
 <style scoped>
 .price-room{
   text-align: end;
+}
+.pic-showroom {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+
 }
 /* Add any additional styling you want here */
 </style>

@@ -34,7 +34,7 @@ const endDate = ref<Date>(new Date());
             </button>
         </div>
         <div class="min-h-screen flex card-container">
-            <!-- Left Side: Logo and Welcome Text -->
+            <!-- Left Side:  -->
             <div class="flex-1 flex flex-col pt-5 p-10">
                 <div class="text-center">
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -122,24 +122,24 @@ const endDate = ref<Date>(new Date());
                 </div>
                 <div class="mt-5 overflow-y-auto dc-scroll">
                     <p class="mb-2 text-white font-semibold text-xl">Select Room</p>
-                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe"
+                    <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
                         sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
                     <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe Twin"
-                        sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                        sleep="Sleep  2" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
-                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe King"
-                        sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                    <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" type="Deluxe King"
+                        sleep="Sleep  3" area="45  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
                 </div>
             </div>
 
-            <!-- Right Side: Login Form -->
-            <div class="flex-1 flex justify-center mt-5">
-                <div class="w-full max-w-md">
-                    <div class="flex-1 flex flex-row">
+            <!-- Right Side:  -->
+            <div class="w-full flex-1 flex justify-center mt-5">
+                <div class="w-full justify-center">
+                    <div class="flex-1 flex flex-row justify-center">
                         <div class="card-stay">
-                            <p class="text-2xl p-2 pl-5">Your Stay</p>
+                            <p class="text-2xl p-2 pl-5 font-medium">Your Stay</p>
                             <div class="min-h-screen card-container">
                                 <div class="flex-1 flex flex-row p-2 pl-5">
                                     <div class="flex-1 flex flex-col" style="width: 50%">
@@ -229,18 +229,8 @@ const endDate = ref<Date>(new Date());
     padding-left: 10px;
 }
 
-
-
 .card-stay {
-    width: 35vw;
-    height: 35vh;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255);
-    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
-}
-
-.card-stay {
-    width: 35vw;
+    width: 80%;
     height: 35vh;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
@@ -292,7 +282,7 @@ const endDate = ref<Date>(new Date());
     font-weight: medium;
     text-decoration: none;
     display: inline-block;
-    width: 80%;
+    width: 60%;
 }
 
 .dc-scroll {
