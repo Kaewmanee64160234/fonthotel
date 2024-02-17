@@ -29,16 +29,20 @@ const endDate = ref<Date>(new Date());
         </div>
 
         <div class="min-h-screen flex card-container">
+           
+
             <!-- Left Side: Logo and Welcome Text -->
 
 
             <div class="mt-2 overflow-y-auto dc-scroll mb-20">
-                <ActivatyComponent image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg"
+                
+                
+                <ActivatyComponent image="https://i.pinimg.com/564x/dd/86/aa/dd86aa1ea848e7865c057e1e42e21641.jpg"
                     name="Buffet Breakfast" detail="Special Deal for International buffet breakfast"
                     price="Price   300  Baht" btnadddetails="#" />
-                <ActivatyComponent image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg"
+                <ActivatyComponent image="https://i.pinimg.com/564x/e8/cd/bf/e8cdbf6d45a21c6d5f0bedccc7343ba9.jpg"
                     name="Spa " detail="Special Deal for International spa" price="Price   500  Baht" btnadddetails="#" />
-                <ActivatyComponent image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg"
+                <ActivatyComponent image="https://i.pinimg.com/564x/ae/81/66/ae8166050b0eaae9a79d0ba0cd503577.jpg"
                     name="Event" detail="Special Deal for Event" price="Price   2000  Baht" btnadddetails="#" />
             </div>
 
@@ -160,7 +164,7 @@ const endDate = ref<Date>(new Date());
 
 
                                 </div>
-                                <div class="flex-2 flex flex-row justify-center pt-10">
+                                <div class="flex-2 flex flex-row justify-center pt-5">
                                     <button class="btn-continue">
                                         <a>Continue To Book</a>
                                     </button>
@@ -235,7 +239,7 @@ const endDate = ref<Date>(new Date());
 
 .card-stay {
     width: 80%;
-    height: 75vh;
+    height: 72vh;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
