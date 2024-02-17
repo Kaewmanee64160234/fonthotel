@@ -32,9 +32,10 @@ const props = defineProps<{
       </div>
       <div class="text-right px-5">
 
-        <router-link to="/ActivatyComponent" class="btn-booknow mt-2 mb-3">Book now</router-link>
+        
+        <router-link to="/activaty" class="btn-booknow mt-2 mb-3">Book now</router-link>
 
-        <router-link to="/inputinfo" class="btn-booknow mt-2 mb-3">Book now</router-link>
+        
 
       </div>
     </div>
@@ -66,3 +67,4 @@ const props = defineProps<{
 }
 /* Add any additional styling you want here */
 </style>
+

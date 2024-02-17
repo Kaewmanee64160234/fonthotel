@@ -82,6 +82,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'inputinfo',
     component: () => import('../views/InputInfoView.vue'),
     meta: { hideNavigation: false }
+  },
+  {
+    path: '/activaty',
+    name: 'activaty',
+    component: () => import('../views/ActivatyView.vue'),
+    meta: { hideNavigation: true }
   }
 
 ]
