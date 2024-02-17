@@ -15,7 +15,7 @@ const closeDropdown = () => {
 };
 
 const clickback = () => {
-  window.location.href = '/'
+  window.location.href = '/selectguestdate'
 }
 const startDate = ref<Date>(new Date());
 const endDate = ref<Date>(new Date());
@@ -128,37 +128,40 @@ const endDate = ref<Date>(new Date());
       </div>
 
       <!-- Right Side: Login Form -->
-      <div class="flex-1 flex justify-center mt-5">
-        <div class="w-full max-w-md">
-          <div class="card-stay">
-            <p class="text-2xl p-2 pl-5">Your Stay</p>
-            <div class="min-h-screen card-container">
-              <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-1 flex flex-col" style="width: 50%">
-                  <p class="font-medium">Check-in</p>
-                  <p>After 1:00 PM</p>
+      <div class="w-full flex-1 flex justify-center mt-5">
+        <div class="w-full justify-center">
+          <div class="flex-1 flex flex-row justify-center">
+            <div class="card-stay">
+              <p class="text-2xl p-2 pl-5">Your Stay</p>
+              <div class="min-h-screen card-container">
+                <div class="flex-1 flex flex-row p-2 pl-5">
+                  <div class="flex-1 flex flex-col" style="width: 50%">
+                    <p class="font-medium">Check-in</p>
+                    <p>After 1:00 PM</p>
+                  </div>
+
+                  <div class="flex-2 flex flex-col" style="width: 50%">
+                    <p class="font-medium">Check-out</p>
+                    <p>Before 7:00 AM</p>
+                  </div>
+                </div>
+                <div class="flex-2 flex flex-row p-2 pl-5">
+                  <span class="font-medium">Date :</span>
+                  <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%">
-                  <p class="font-medium">Check-out</p>
-                  <p>Before 7:00 AM</p>
-                </div>
-              </div>
-              <div class="flex-2 flex flex-row p-2 pl-5">
-                <span class="font-medium">Date :</span>
-                <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
-              </div>
-
-              <div class="flex-3 flex flex-row p-2 pl-5">
-                <div class="flex-1 flex flex-col">
-                  <p class="font-medium">Guest</p>
-                  <p>
-                    <a class="mr-10">Adult : 2</a>
-                    <a class="ml-10">Children : -</a>
-                  </p>
+                <div class="flex-3 flex flex-row p-2 pl-5">
+                  <div class="flex-1 flex flex-col">
+                    <p class="font-medium">Guest</p>
+                    <p>
+                      <a class="mr-10">Adult : 2</a>
+                      <a class="ml-10">Children : -</a>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -179,8 +182,6 @@ const endDate = ref<Date>(new Date());
   /* Make sure the div covers the full height of the viewport */
   position: fixed;
   /* Optional: Fixes the background to the viewport */
-  top: 0;
-  left: 0;
 }
 
 .card-container {
@@ -222,7 +223,7 @@ const endDate = ref<Date>(new Date());
 }
 
 .card-stay {
-  width: 35vw;
+  width: 80%;
   height: 35vh;
   border-radius: 10px;
   background-color: rgba(255, 255, 255);
@@ -264,17 +265,19 @@ const endDate = ref<Date>(new Date());
   border-radius: 9999px;
   justify-content: end;
 }
+
 .dc-scroll {
-    padding-right: 5px;
-    max-height: 70vh;
-    overflow: scroll;
+  padding-right: 5px;
+  max-height: 70vh;
+  overflow: scroll;
 }
+
 .dc-scroll::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+  width: 5px;
+  height: 5px;
 }
+
 .dc-scroll::-webkit-scrollbar-thumb {
-    background-color: #EBBD99;
-    border-radius: 10px;
-}
-</style>
+  background-color: #EBBD99;
+  border-radius: 10px;
+}</style>

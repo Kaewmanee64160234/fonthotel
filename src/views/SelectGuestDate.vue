@@ -197,7 +197,6 @@ const endDate = ref<Date>(new Date());
     position: fixed;
     /* Optional: Fixes the background to the viewport */
     /* top: 0;
-
   left: 0; */
 }
 
