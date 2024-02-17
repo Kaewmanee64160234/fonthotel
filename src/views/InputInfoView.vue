@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 const clickback = () => {
-    window.location.href = '/selectguestdate'
+    window.location.href = '/activaty'
 }
 
 const clickcontinue = () => {
-    window.location.href = '/activaty'
+    window.location.href = '#'
 }
 
 </script>

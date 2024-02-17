@@ -165,9 +165,7 @@ const endDate = ref<Date>(new Date());
 
                                 </div>
                                 <div class="flex-2 flex flex-row justify-center pt-5">
-                                    <button class="btn-continue">
-                                        <a>Continue To Book</a>
-                                    </button>
+                                    <router-link to="/inputinfo" class="btn-continue">Continue To Book</router-link>
                                 </div>
 
 
