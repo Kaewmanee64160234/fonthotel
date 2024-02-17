@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 <template lang="">
   <div>
-    <div class="grid gap-4">
+    <div class="grid gap-4 mb-5">
       <!-- Repeat this block for each reservation -->
       <div class="card bg-white shadow-lg rounded-lg p-5">
         <div class="card-body">
