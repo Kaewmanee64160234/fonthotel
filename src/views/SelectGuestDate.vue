@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import DatePicker from "vue3-datepicker";
 import SelectRoom from "./SelectRoom.vue";
 
-const router=useRouter();
+const router = useRouter();
 const selectedDate = ref<Date>();
 const isDropdownOpen = ref(false);
 
@@ -120,8 +120,15 @@ const endDate = ref<Date>(new Date());
                         </div>
                     </div>
                 </div>
-                <div class="mt-5">
+                <div class="mt-5 overflow-y-auto dc-scroll">
+                    <p class="mb-2 text-white font-semibold text-xl">Select Room</p>
                     <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe"
+                        sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                        price="THB 5,700.00" />
+                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe Twin"
+                        sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
+                        price="THB 5,700.00" />
+                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe King"
                         sleep="Sleep  1" area="37  square metre" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
                 </div>
@@ -162,14 +169,14 @@ const endDate = ref<Date>(new Date());
                             </div>
                         </div>
                     </div>
-                
 
-                <div class="flex-2 flex flex-row justify-center pt-10">
-                    <button class="btn-continue" @click="clickcontinue()">
-                        <a>Continue</a>
-                    </button>
+
+                    <div class="flex-2 flex flex-row justify-center pt-10">
+                        <button class="btn-continue" @click="clickcontinue()">
+                            <a>Continue</a>
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -177,19 +184,19 @@ const endDate = ref<Date>(new Date());
 <style scoped>
 .body {
 
-  background-image: url("../images/image.png");
-  background-size: cover;
-  /* Cover the entire screen */
-  background-position: center;
-  /* Center the background image */
-  background-repeat: no-repeat;
-  /* Do not repeat the image */
-  width: 100vw;
-  height: 100vh;
-  /* Make sure the div covers the full height of the viewport */
-  position: fixed;
-  /* Optional: Fixes the background to the viewport */
-  /* top: 0;
+    background-image: url("../images/image.png");
+    background-size: cover;
+    /* Cover the entire screen */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    width: 100vw;
+    height: 100vh;
+    /* Make sure the div covers the full height of the viewport */
+    position: fixed;
+    /* Optional: Fixes the background to the viewport */
+    /* top: 0;
 
   left: 0; */
 }
@@ -286,5 +293,20 @@ const endDate = ref<Date>(new Date());
     text-decoration: none;
     display: inline-block;
     width: 80%;
+}
+
+.dc-scroll {
+  max-height: 70vh;
+  overflow: scroll;
+}
+
+.dc-scroll::-webkit-scrollbar{
+  width: 5px;
+  height: 5px;
+}
+
+.dc-scroll::-webkit-scrollbar-thumb {
+  background-color: #EBBD99;
+  border-radius: 10px;
 }
 </style>
