@@ -17,11 +17,12 @@ const rating: Rating = {
 </script>
 
 <template>
- 
+
   <div v-if="userStore.user=='customer'" class="body overflow-y-auto dc-scroll">
 
+
     <!-- The container for the overlay and cards -->
-    <div class="flex justify-center items-center bigcard">
+    <div class="flex justify-center items-center bigcard mt-10">
       <!-- Added classes for centering -->
 
       <div class="relative  card-style">
@@ -40,40 +41,44 @@ const rating: Rating = {
               roomtype="DELUXE ROOM" btnbooking="#" />
             <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="#"
               roomtype="LUXURY ROOM" btnbooking="#" />
-              
+
           </div>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col justify-start ml-10"> <!-- Center alignment -->
-          <div class="flex flex-wrap justify-start pt-5 font-judson">
-            <p class="font-semibold text-white text-2xl mb-4 text-center">Review</p>
-          </div>
+    <div>
+      <div class="flex flex-col justify-start ml-10 mt-5"> <!-- Center alignment -->
+        <div class="flex flex-wrap justify-start pt-5 font-judson">
+          <p class="font-semibold text-white text-2xl mb-4 text-center">Review</p>
         </div>
-    <div class="flex flex-row ml-10">
-      <ReviewComponent :name="'Kaewmanee'"
-        :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
-        :roomType="'luxury room'" :date="'12/12/2021'"
-        :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
-        :rating="rating" />
+      </div>
+      <div class="flex flex-row ml-10 mb-7">
         <ReviewComponent :name="'Kaewmanee'"
-        :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
-        :roomType="'luxury room'" :date="'12/12/2021'"
-        :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
-        :rating="rating" />
+          :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
+          :roomType="'luxury room'" :date="'12/12/2021'"
+          :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
+          :rating="rating" />
         <ReviewComponent :name="'Kaewmanee'"
-        :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
-        :roomType="'luxury room'" :date="'12/12/2021'"
-        :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
-        :rating="rating" />
+          :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
+          :roomType="'luxury room'" :date="'12/12/2021'"
+          :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
+          :rating="rating" />
         <ReviewComponent :name="'Kaewmanee'"
-        :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
-        :roomType="'luxury room'" :date="'12/12/2021'"
-        :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
-        :rating="rating" />
+          :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
+          :roomType="'luxury room'" :date="'12/12/2021'"
+          :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
+          :rating="rating" />
+        <ReviewComponent :name="'Kaewmanee'"
+          :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
+          :roomType="'luxury room'" :date="'12/12/2021'"
+          :description="'The room was very clean and the service was excellent. I would definitely stay here again.'"
+          :rating="rating" />
+      </div>
+      </div>
     </div>
-  </div>
+
+
 
 
 <!-- employee -->
@@ -114,6 +119,7 @@ const rating: Rating = {
  
 </div>
     
+
 </template>
 
 <style scoped>
@@ -136,7 +142,7 @@ const rating: Rating = {
   /* Make sure the div covers the full height of the viewport */
   position: fixed;
   /* Optional: Fixes the background to the viewport */
- 
+
 }
 
 .card-style2{
@@ -150,7 +156,7 @@ const rating: Rating = {
 }
 .card-style {
   width: 90vw;
-  height: 75vh;
+  height: 500px;
   border-radius: 30px;
   background-color: rgba(229, 229, 229, 0.758);
   /* add filter blue */
@@ -160,18 +166,20 @@ const rating: Rating = {
 
 .bigcard {
   display: flex;
-  height: 80vh;
+  height: 65vh;
+
 }
 
 .font-judson {
   font-family: 'Judson';
 }
+
 .dc-scroll {
   max-height: 100vh;
   overflow: scroll;
 }
 
-.dc-scroll::-webkit-scrollbar{
+.dc-scroll::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
@@ -180,5 +188,4 @@ const rating: Rating = {
   background-color: #EBBD99;
   border-radius: 10px;
 }
-
 </style>

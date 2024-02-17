@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import RoomCard from "@/components/RoomCard.vue";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import DatePicker from "vue3-datepicker";
-import SelectRoom from "./SelectRoom.vue";
 
-const router=useRouter();
+import RoomCard from '@/components/RoomCard.vue';
+import { ref } from 'vue';
+import DatePicker from 'vue3-datepicker';
+
 const selectedDate = ref<Date>();
+
 const isDropdownOpen = ref(false);
 
-const clickto = () => {
-    window.open('/selectRoom')
-}
 const toggleDropdown = () => {
     isDropdownOpen.value = !isDropdownOpen.value;
 };
@@ -21,41 +17,44 @@ const closeDropdown = () => {
 };
 const startDate = ref<Date>(new Date());
 const endDate = ref<Date>(new Date());
+
 </script>
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
-            <button>
-                <i style="font-size: 30px;">&#xf359;</i>
+        <button>
+                <i style='font-size:30px' class='far'>&#xf359;</i>
             </button>
         </div>
-        <div class="min-h-screen flex card-container">
+        <div class="min-h-screen flex card-container">    
             <!-- Left Side: Logo and Welcome Text -->
             <div class="flex-1 flex flex-col pt-5 p-10">
                 <div class="text-center">
+
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <div class="relative inline-block text-left" @click="toggleDropdown">
                             <div>
-                                <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button"
-                                    aria-expanded="true" aria-haspopup="true">
-                                    <p> Guest</p>
-                                    <p class="text-right pr-7 p-2">2</p>
+                                <button type="button" class="btn-guest text-left" id="guest-button" aria-expanded="true"
+                                    aria-haspopup="true">
+                                    Guest
+                                    <p class="text-right pr-7">2</p>
                                 </button>
 
-                                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2"
-                                    role="guest" aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
+                                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
+                                    aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
                                     <div class="py-1" role="none">
+
                                         <div>
                                             <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
-                                            <hr class="color-line" />
+                                            <hr class="color-line">
                                             <!-- Select Adult -->
                                             <div class="flex-1 flex flex-row p-1">
-                                                <div class="flex-1 flex flex-col" style="width: 50%">
+                                                <div class="flex-1 flex flex-col " style="width:50% ;">
                                                     <a class="text-black block px-4 py-2 text-sm" role="menuitem"
                                                         tabindex="-1" id="menu-item-1">Adult</a>
                                                 </div>
 
-                                                <div class="flex-2 flex flex-col" style="width: 50%">
+                                                <div class="flex-2 flex flex-col " style="width:50% ;">
                                                     <div class="flex items-center py-2">
                                                         <button type="button" class="btn-minus">
                                                             <a class="text-white text-m text-center">-</a>
@@ -69,11 +68,11 @@ const endDate = ref<Date>(new Date());
                                             </div>
                                             <!-- Select Children -->
                                             <div class="flex-2 flex flex-row p-1">
-                                                <div class="flex-1 flex flex-col" style="width: 50%">
+                                                <div class="flex-1 flex flex-col " style="width:50% ;">
                                                     <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                                         tabindex="-1" id="menu-item-2">Children</a>
                                                 </div>
-                                                <div class="flex-2 flex flex-col" style="width: 50%">
+                                                <div class="flex-2 flex flex-col " style="width:50% ;">
                                                     <div class="flex items-center py-2">
                                                         <button type="button" class="btn-minus">
                                                             <a class="text-white text-m text-center">-</a>
@@ -88,12 +87,14 @@ const endDate = ref<Date>(new Date());
                                             <!-- Btn Apply -->
                                             <div class="flex-3 flex flex-row p-1 justify-end">
                                                 <div class="flex">
-                                                    <button type="button" class="btn-apply">
-                                                        <a class="text-white text-m text-center">Apply</a>
-                                                    </button>
-                                                </div>
+                                                <button type="button" class="btn-apply">
+                                                    <a class="text-white text-m text-center">Apply</a>
+                                                </button>
+                                            </div>
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -101,20 +102,25 @@ const endDate = ref<Date>(new Date());
 
                         <!-- Check-in date picker -->
                         <div class="btn-date text-left">
-                            <label class=""> Check-in </label>
+                            <label class="">
+                                Check-in
+                            </label>
                             <DatePicker id="check-in" v-model="startDate"
                                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                                style="width: 90%;" placeholder="Select date" />
+                                placeholder="Select date" />
                         </div>
 
                         <!-- Check-out date picker -->
                         <div class="btn-date text-left">
-                            <label class=""> Check-out </label>
+                            <label class="">
+                                Check-out
+                            </label>
                             <DatePicker id="check-out" v-model="endDate"
                                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                                placeholder="Select date" style="width: 90%;" />
+                                placeholder="Select date" />
                         </div>
                     </div>
+
                 </div>
                 <div class="mt-5">
                     <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg" type="Deluxe"
@@ -126,68 +132,65 @@ const endDate = ref<Date>(new Date());
             <!-- Right Side: Login Form -->
             <div class="flex-1 flex justify-center mt-5">
                 <div class="w-full max-w-md">
-                    <div class="flex-1 flex flex-row">
-                        <div class="card-stay">
-                            <p class="text-2xl p-2 pl-5">Your Stay</p>
-                            <div class="min-h-screen card-container">
-                                <div class="flex-1 flex flex-row p-2 pl-5">
-                                    <div class="flex-1 flex flex-col" style="width: 50%">
-                                        <p class="font-medium">Check-in</p>
-                                        <p>After 1:00 PM</p>
-                                    </div>
 
-                                    <div class="flex-2 flex flex-col" style="width: 50%">
-                                        <p class="font-medium">Check-out</p>
-                                        <p>Before 7:00 AM</p>
-                                    </div>
-                                </div>
-                                <div class="flex-2 flex flex-row p-2 pl-5">
-                                    <span class="font-medium">Date :</span>
-                                    <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+                    <div class="card-stay">
+                        <p class="text-2xl p-2 pl-5 ">Your Stay</p>
+                        <div class="min-h-screen card-container">
+
+                            <div class="flex-1 flex flex-row p-2 pl-5">
+                                <div class="flex-1 flex flex-col " style="width:50% ;">
+                                    <p class="font-medium">Check-in</p>
+                                    <p>After 1:00 PM</p>
                                 </div>
 
-                                <div class="flex-3 flex flex-row p-2 pl-5">
-                                    <div class="flex-1 flex flex-col">
-                                        <p class="font-medium">Guest</p>
-                                        <p>
-                                            <a class="mr-10">Adult : 2</a>
-                                            <a class="ml-10">Children : -</a>
-                                        </p>
-                                    </div>
+                                <div class="flex-2 flex flex-col" style="width:50% ;">
+                                    <p class="font-medium">Check-out</p>
+                                    <p>Before 7:00 AM</p>
+                                </div>
+
+                            </div>
+                            <div class="flex-2 flex flex-row p-2 pl-5">
+                                <span class="font-medium">Date :</span>
+                                <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+                            </div>
+
+                            <div class="flex-3 flex flex-row p-2 pl-5">
+                                <div class="flex-1 flex flex-col ">
+                                    <p class="font-medium">Guest</p>
+                                    <p>
+                                        <a class="mr-10">Adult : 2</a>
+                                        <a class="ml-10">Children : -</a>
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                
 
-                <div class="flex-2 flex flex-row justify-center pt-10">
-                    <button class="btn-continue" @click="clickto()">
-                        <a>Continue</a>
-                    </button>
+                        </div>
+
+
+                    </div>
+
                 </div>
             </div>
-            </div>
+
         </div>
     </div>
 </template>
 <style scoped>
 .body {
-
-  background-image: url("../images/image.png");
-  background-size: cover;
-  /* Cover the entire screen */
-  background-position: center;
-  /* Center the background image */
-  background-repeat: no-repeat;
-  /* Do not repeat the image */
-  width: 100vw;
-  height: 100vh;
-  /* Make sure the div covers the full height of the viewport */
-  position: fixed;
-  /* Optional: Fixes the background to the viewport */
-  /* top: 0;
-
-  left: 0; */
+    background-image: url('../images/image.png');
+    background-size: cover;
+    /* Cover the entire screen */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    width: 100vw;
+    height: 100vh;
+    /* Make sure the div covers the full height of the viewport */
+    position: fixed;
+    /* Optional: Fixes the background to the viewport */
+    top: 0;
+    left: 0;
 }
 
 .card-container {
@@ -198,27 +201,16 @@ const endDate = ref<Date>(new Date());
 .btn-guest,
 .btn-date {
     border-color: #000000;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     padding-top: 5px;
     padding-left: 10px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
     font-weight: medium;
     display: inline-block;
-    width: 15vw;
+    width: 229px;
     height: 75px;
 }
-
-.btn-guest {
-    justify-items: flex-start;
-    top: 0;
-    left: 0;
-    padding: 0;
-    margin: 0;
-    padding-left: 10px;
-}
-
-
 
 .card-stay {
     width: 35vw;
@@ -237,19 +229,19 @@ const endDate = ref<Date>(new Date());
 }
 
 .card-selectguest {
-    background-color: #fffcf7;
+    background-color: #FFFCF7;
     width: 229px;
-    /* height: 1px; */
+    height: 1px;
     border-radius: 10px;
 }
 
 .color-line {
-    background-color: #bebebe;
+    background-color: #BEBEBE;
     height: 2px;
 }
 
 .btn-minus {
-    background-color: #ff0000;
+    background-color: #FF0000;
     border-radius: 9999px;
     width: 24.22px;
     height: 24.22px;
@@ -257,30 +249,19 @@ const endDate = ref<Date>(new Date());
 }
 
 .btn-plus {
-    background-color: #59ce8f;
+    background-color: #59CE8F;
     border-radius: 9999px;
     width: 24.22px;
     height: 24.22px;
+
 }
 
 .btn-apply {
-    background-color: #ebbd99;
-    color: #ffffff;
+    background-color: #EBBD99;
+    color: #FFFFFF;
     width: 59px;
     height: 27px;
     border-radius: 9999px;
     justify-content: end;
-}
-
-.btn-continue {
-    background-color: #906843;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px #805d3f;
-    font-weight: medium;
-    text-decoration: none;
-    display: inline-block;
-    width: 80%;
 }
 </style>
