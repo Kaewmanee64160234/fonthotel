@@ -14,6 +14,12 @@ export default {
         DEFAULT: '#AFD3E2',
         dark: '#AFD3E2',
       },
+      "brown_button":{
+        light: '#906843',
+        DEFAULT: '#906843',
+        dark: '#906843',
+      
+      }
 
     },
     extend: {
