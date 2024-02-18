@@ -29,14 +29,14 @@ const endDate = ref<Date>(new Date());
         </div>
 
         <div class="min-h-screen flex card-container">
-           
+
 
             <!-- Left Side: Logo and Welcome Text -->
 
 
             <div class="mt-2 overflow-y-auto dc-scroll mb-20">
-                
-                
+
+
                 <ActivatyComponent image="https://i.pinimg.com/564x/dd/86/aa/dd86aa1ea848e7865c057e1e42e21641.jpg"
                     name="Buffet Breakfast" detail="Special Deal for International buffet breakfast"
                     price="Price   300  Baht" btnadddetails="#" />
@@ -164,8 +164,9 @@ const endDate = ref<Date>(new Date());
 
 
                                 </div>
-                                <div class="flex-2 flex flex-row justify-center pt-5">
-                                    <router-link to="/inputinfo" class="btn-continue">Continue To Book</router-link>
+            
+                                <div class="flex-2 flex flex-row justify-center pt-3">
+                                    <router-link to="/inputinfo" class="btn-continue text-center">Continue To Book</router-link>
                                 </div>
 
 
