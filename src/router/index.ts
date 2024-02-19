@@ -88,7 +88,13 @@ const routes: Array<RouteRecordRaw> = [
     name: 'activaty',
     component: () => import('../views/ActivatyView.vue'),
     meta: { hideNavigation: true }
-  }
+  },
+  {
+    path: '/bookingdetail',
+    name: 'bookingdetail',
+    component: () => import('../components/BookingDetailComponent.vue'),
+    meta: { hideNavigation: true }
+  },
 
 ]
 
