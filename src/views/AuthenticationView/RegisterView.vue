@@ -1,20 +1,87 @@
 <script setup lang="ts">
+import { useAuthStore } from "@/store/auth.store";
 import { ref } from "vue";
 
+const showAlert = ref(false);
 const username = ref("");
 const password = ref("");
-const confirem_password = ref("");
+const password2 = ref("");
 const email = ref("");
 
+const usernameError = ref("");
+const passwordError = ref("");
+const password2Error = ref("");
+const emailError = ref("");
+const showPassword = ref(false);
+const showPassword2 = ref(false);
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+
+const authStore = useAuthStore();
+const validateForm = () => {
+  let isValid = true;
+
+  // Username validation
+  if (!username.value) {
+    usernameError.value = "Username is required";
+    isValid = false;
+  } else {
+    usernameError.value = "";
+  }
+
+  // Email validation
+  if (!email.value) {
+    emailError.value = "Email is required";
+    isValid = false;
+  }
+     else if (!/\S+@\S+\.\S+/.test(email.value)) {
+    emailError.value = "Email is invalid";
+    isValid = false;
+  } else {
+    emailError.value = "";
+  }
+
+
+
+  if (!password.value) {
+    passwordError.value = "Password is required";
+    isValid = false;
+  } else if (password.value.length < 6) {
+    passwordError.value = "Password must be at least 6 characters";
+    isValid = false;
+  }else if(!passwordRegex.test(password.value)){
+    passwordError.value = "Password must have uppercase lowercase number and special characters";
+    isValid = false;
+  }
+   else {
+    passwordError.value = "";
+  }
+
+  // Confirm Password validation
+  if (password.value !== password2.value) {
+    password2Error.value = "Passwords do not match";
+    isValid = false;
+  } else {
+    password2Error.value = "";
+  }
+
+  register(isValid);
+};
 const submitForm = () => {
-  // Handle the login logic here
-  console.log("Login", username.value, password.value);
+  // console.log("Login", username.value, password.value);
+  validateForm();
 };
 
-const register = () => {
-  // Redirect to registration page or open registration modal
-  console.log("Go to registration");
-  window.location.href = "/";
+const register = (valid: boolean) => {
+  if (valid) {
+    showAlert.value = false;
+
+    //log
+    console.log("Register", username.value, password.value);
+
+    // authStore.register(username.value, password.value,username.value);
+  } else {
+    showAlert.value = true;
+  }
 };
 </script>
 
@@ -43,8 +110,6 @@ const register = () => {
             >
               REGISTER
             </h2>
-            <!-- <input v-model="username" type="text" placeholder="Username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"> -->
-            <!-- <input v-model="password" type="password" placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"> -->
 
             <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5">
               <i class="fa fa-user text-black mx-3"></i>
@@ -65,37 +130,75 @@ const register = () => {
               />
             </div>
 
-            <div class="flex items-center rounded-full bg-gray-200 p-2 mb-5">
+            <div
+              class="flex items-center rounded-full bg-gray-200 p-2 mb-5 relative"
+            >
               <i class="fa fa-lock text-black mx-3"></i>
               <input
                 v-model="password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 placeholder="Password"
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
+              <i
+                :class="{
+                  'fa-eye-slash': showPassword,
+                  'fa-eye': !showPassword,
+                }"
+                @click="showPassword = !showPassword"
+                class="fa absolute right-4 cursor-pointer"
+              ></i>
             </div>
-            <div class="flex items-center rounded-full bg-gray-200 p-2">
+            <div
+              class="flex items-center rounded-full bg-gray-200 p-2 relative"
+            >
               <i class="fa fa-lock text-black mx-3"></i>
               <input
-                v-model="confirem_password"
-                type="password"
+                v-model="password2"
+                :type="showPassword2 ? 'text' : 'password'"
                 placeholder="Confirm Password"
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
+              <i
+                :class="{
+                  'fa-eye-slash': showPassword2,
+                  'fa-eye': !showPassword2,
+                }"
+                @click="showPassword2 = !showPassword2"
+                class="fa absolute right-4 cursor-pointer"
+              ></i>
             </div>
           </div>
           <div class="flex items-center justify-between mt-5">
-           
-              <button @click="register"
-                type="submit"
-                class="bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                style="border-radius: 40px; height: 50px"
-              >
-                Register
-              </button>
+            <button
+              @click="validateForm"
+              type="submit"
+              class="bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              style="border-radius: 40px; height: 50px"
+            >
+              Register
+            </button>
           </div>
         </form>
+        <div v-if="showAlert" class="fixed bottom-0 mx-10 w-1/4 justify-center mb-1">
+        <div
+          class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong class="font-bold">Oops!</strong>
+          <span class="block sm:inline"
+            >There are some errors in your form.</span
+          >
+          <ul class="mt-2 list-disc list-inside">
+            <li v-if="usernameError">{{ usernameError }}</li>
+            <li v-if="emailError">{{ emailError }}</li>
+            <li v-if="passwordError">{{ passwordError }}</li>
+            <li v-if="password2Error">{{ password2Error }}</li>
+          </ul>
+        </div>
       </div>
+      </div>
+      
     </div>
   </div>
 </template>

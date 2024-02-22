@@ -8,8 +8,8 @@ export interface User {
   login: string;
   password: string;
   role: string;
-  employee:Employee;
-  customer:Customer;
+  employee?:Employee;
+  customer?:Customer;
 
 
 }
