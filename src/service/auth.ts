@@ -7,11 +7,15 @@ const userStore = useUserStore();
 const user = ref<User>();
 
 const  authenticate = async (email: string, password: string, username: string) =>{
-
-    return await http.post("/auth/login", {
+console.log({
+  email,
+  user_name: username,
+  user_password: password
+});
+    return await http.post("/auths/register", {
       email,
-      password,
-      username,
+      user_name: username,
+      user_password: password
     });
 
   

@@ -76,9 +76,9 @@ const register = (valid: boolean) => {
     showAlert.value = false;
 
     //log
-    console.log("Register", username.value, password.value);
+    // console.log("Register", username.value, password.value);
 
-    // authStore.register(username.value, password.value,username.value);
+    authStore.register(username.value, password.value,username.value);
   } else {
     showAlert.value = true;
   }
