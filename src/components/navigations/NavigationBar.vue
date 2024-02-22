@@ -16,7 +16,7 @@
           class="hover:text-gray-700 text-sm font-judson"
           >BOOKING HISTORY</a
         >
-        <a href="/sign-in" class="hover:text-gray-700 text-sm font-judson"
+        <a href="/login" class="hover:text-gray-700 text-sm font-judson"
           >LOGIN</a
         >
       </div>

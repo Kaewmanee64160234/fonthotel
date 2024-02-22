@@ -11,9 +11,9 @@ const hideNavigation = computed(() => route.meta.hideNavigation);
 const userStore = useUserStore();
 </script>
 <template>
-    <NavigationBarEmployee v-if="!hideNavigation && userStore.user === 'employee'" />
+    <NavigationBarEmployee v-if="!hideNavigation && userStore.currentUser?.role === 'employee'" />
 
-<NavigationBar v-else />
+<NavigationBar v-if="!hideNavigation && userStore.currentUser?.role === 'customer' " />
   <router-view class="relative"/>
 
   <!-- <nav>
