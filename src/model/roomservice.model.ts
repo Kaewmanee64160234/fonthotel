@@ -1,4 +1,3 @@
-//create interface roomservice
 export interface RoomService {
   id: number;
   type: string;
