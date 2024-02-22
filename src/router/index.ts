@@ -92,8 +92,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/bookingdetail',
     name: 'bookingdetail',
-    component: () => import('../components/BookingDetailComponent.vue'),
+    component: () => import('../views/BookingDetailsView.vue'),
     meta: { hideNavigation: true }
+  },
+  {
+    path: '/readmoreview',
+    name: 'readmoreview',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/ReadMoreView.vue'),
+    meta: { hideNavigation: true } 
   },
 
 ]

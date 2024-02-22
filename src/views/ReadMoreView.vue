@@ -6,7 +6,7 @@ const text = "Lorem Ipsum is simply dummy text of the printing and typesetting i
 
 <template>
     <div>
-        <ReadMore :type="'DELUXE ROOM'" :description="text" :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'" :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" :bed="'1.8 king size'" :tv="true" :electric="true" :wifi="true" :water="false" :bath="true" :path="'/login'" :desk="true"></ReadMore>
+        <ReadMore :type="'DELUXE ROOM'" :description="text" :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'" :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" :bed="'1.8 king size'" :tv="true" :electric="true" :wifi="true" :water="false" :bath="true" :path="'/selectguestdate'" :desk="true"></ReadMore>
 
         
 

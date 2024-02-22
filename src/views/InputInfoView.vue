@@ -5,7 +5,7 @@ const clickback = () => {
 }
 
 const clickcontinue = () => {
-    window.location.href = '#'
+    window.location.href = '/bookingdetail'
 }
 
 </script>
