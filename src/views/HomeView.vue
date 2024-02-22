@@ -36,10 +36,10 @@ const rating: Rating = {
           <!-- The overlay card with a semi-transparent black background and blur effect -->
           <div class="flex flex-wrap justify-center items-center gap-5">
             <TyperoomCard imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
-              readmore="#" roomtype="STANDARD ROOM" btnbooking="#" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="#"
+              readmore="/readmore" roomtype="STANDARD ROOM" btnbooking="#" />
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmore"
               roomtype="DELUXE ROOM" btnbooking="#" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="#"
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="/readmore"
               roomtype="LUXURY ROOM" btnbooking="#" />
 
           </div>
@@ -167,23 +167,18 @@ const rating: Rating = {
 .bigcard {
   display: flex;
   height: 65vh;
-
 }
-
 .font-judson {
   font-family: 'Judson';
 }
-
 .dc-scroll {
   max-height: 100vh;
   overflow: scroll;
 }
-
 .dc-scroll::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
-
 .dc-scroll::-webkit-scrollbar-thumb {
   background-color: #EBBD99;
   border-radius: 10px;
