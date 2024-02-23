@@ -8,12 +8,10 @@ const gotoAcceptBookingView = () => {
     <nav class="flex items-center justify-between p-4 bg-beige">
       <!-- Left Side: Logo and Navigation -->
       <div class="flex items-center gap-4">
-        <img
-          src="../../images/logo.png"
-          alt="Hotel California Logo"
-          class="h-12"
-        />
-
+        <div class="flex gap-4">
+          <img src="../../images/logo.png" alt="Hotel California Logo" class="h-12" />
+          <a href="/login" class="hover:text-gray-700 text-sm font-judson flex items-center">LOGOUT</a>
+        </div>
         <!-- Dropdown Menu for ABOUT CUSTOMER -->
 
         <!-- Other navigation items... -->
@@ -21,60 +19,34 @@ const gotoAcceptBookingView = () => {
 
       <!-- Right Side: User Info and Notifications -->
       <div class="flex items-center gap-4 justify-center">
-        <a href="#" class="hover:text-gray-700 text-sm font-judson"
-          >BROWSE ROOM</a
-        >
-        <a href="#" class="hover:text-gray-700 text-sm font-judson"
-          >DASHBOARD</a
-        >
+        <a href="#" class="hover:text-gray-700 text-sm font-judson">BROWSE ROOM</a>
+        <a href="#" class="hover:text-gray-700 text-sm font-judson">DASHBOARD</a>
         <div class="group inline-block relative">
-          <a
-            href="#"
-            class="hover:text-gray-700 text-sm font-judson inline-flex items-center"
-          >
+          <a href="#" class="hover:text-gray-700 text-sm font-judson inline-flex items-center">
             ABOUT CUSTOMER
-            <svg
-              class="fill-current h-2 w-4 ml-2"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
+            <svg class="fill-current h-2 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path d="M5.9 7.5L10 11.6l4.1-4.1 1.4 1.4-5.5 5.5-5.5-5.5z" />
             </svg>
           </a>
-          <ul
-            class="absolute hidden text-gray-700 pt-1 group-hover:block dropdown text-center"
-          >
+          <ul class="absolute hidden text-gray-700 pt-1 group-hover:block dropdown text-center">
             <li class="">
-              <a
-                class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >CHECK-IN MANAGEMENT</a
-              >
+              <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">CHECK-IN
+                MANAGEMENT</a>
             </li>
             <li class="">
-              <a
-                class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >CHECK-OUT MANAGEMENT</a
-              >
+              <a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">CHECK-OUT
+                MANAGEMENT</a>
             </li>
             <li class="">
-              <a
-                class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                href="#"
-                >CUSTOMER MANAGEMENT</a
-              >
+              <a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">CUSTOMER
+                MANAGEMENT</a>
             </li>
           </ul>
         </div>
         <button type="button">
-          <span class="hover:text-gray-700 text-sm font-judson"
-            >PROMOTION MANAGEMENT</span
-          >
+          <span class="hover:text-gray-700 text-sm font-judson">PROMOTION MANAGEMENT</span>
         </button>
-        <div
-          class="flex hover:text-gray-700 text-sm font-judson justify-center"
-        >
+        <div class="flex hover:text-gray-700 text-sm font-judson justify-center">
           <button @click="gotoAcceptBookingView">
             <i class="far fa-bell" style="font-size: 24px"></i>
           </button>
@@ -96,8 +68,10 @@ const gotoAcceptBookingView = () => {
 
 <style scoped>
 .bg-beige {
-  background-color: #dfcdb6; /* Replace with the actual color code for your beige background */
+  background-color: #dfcdb6;
+  /* Replace with the actual color code for your beige background */
 }
+
 .dropdown {
   z-index: 999999999999999999999999;
 }

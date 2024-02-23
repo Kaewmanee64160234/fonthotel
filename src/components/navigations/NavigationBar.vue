@@ -16,11 +16,16 @@ onMounted(() => {
   <div>
     <nav class="flex items-center justify-between p-4 bg-beige">
       <!-- Left Side: Logo -->
+      <div class="flex gap-4">
       <img
         src="../../images/logo.png"
         alt="Hotel California Logo"
         class="h-12"
       />
+      <a v-if="userStore.currentUser.username==''" href="/login" class="hover:text-gray-700 text-sm font-judson flex items-center"
+          >LOGOUT</a
+        >
+      </div>
 
       <!-- Right Side: Menu Items -->
       <div class="flex gap-4">
