@@ -1,20 +1,25 @@
-
 <script setup lang="ts">
-import NavigationBar from './components/navigations/NavigationBar.vue';
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import NavigationBarEmployee from './components/navigations/NavigationBarEmployee.vue';
-import { useUserStore } from './store/user.store';
+import NavigationBar from "./components/navigations/NavigationBar.vue";
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import NavigationBarEmployee from "./components/navigations/NavigationBarEmployee.vue";
+import { useUserStore } from "./store/user.store";
+
 
 const route = useRoute();
 const hideNavigation = computed(() => route.meta.hideNavigation);
 const userStore = useUserStore();
+
 </script>
 <template>
-    <NavigationBarEmployee v-if="!hideNavigation && userStore.currentUser?.role === 'employee'" />
+  <NavigationBarEmployee
+    v-if="!hideNavigation && userStore.currentUser?.role === 'employee'"
+  />
 
-<NavigationBar v-if="!hideNavigation && userStore.currentUser?.role === 'customer' " />
-  <router-view class="relative"/>
+  <NavigationBar
+    v-if="!hideNavigation && userStore.currentUser?.role === 'customer'"
+  />
+  <router-view class="relative" />
 
   <!-- <nav>
     <router-link to="/">Home</router-link> |

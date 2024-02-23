@@ -18,7 +18,7 @@ const rating: Rating = {
 
 <template>
 
-  <div v-if="userStore.user=='customer'" class="body overflow-y-auto dc-scroll">
+  <div v-if="userStore.currentUser.role=='customer'" class="body overflow-y-auto dc-scroll">
 
 
     <!-- The container for the overlay and cards -->

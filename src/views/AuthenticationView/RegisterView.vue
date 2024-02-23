@@ -14,12 +14,12 @@ const password2Error = ref("");
 const emailError = ref("");
 const showPassword = ref(false);
 const showPassword2 = ref(false);
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+let isValid = true;
 
 const authStore = useAuthStore();
 const validateForm = () => {
-  let isValid = true;
-
   // Username validation
   if (!username.value) {
     usernameError.value = "Username is required";
@@ -32,15 +32,12 @@ const validateForm = () => {
   if (!email.value) {
     emailError.value = "Email is required";
     isValid = false;
-  }
-     else if (!/\S+@\S+\.\S+/.test(email.value)) {
+  } else if (!/\S+@\S+\.\S+/.test(email.value)) {
     emailError.value = "Email is invalid";
     isValid = false;
   } else {
     emailError.value = "";
   }
-
-
 
   if (!password.value) {
     passwordError.value = "Password is required";
@@ -48,11 +45,11 @@ const validateForm = () => {
   } else if (password.value.length < 6) {
     passwordError.value = "Password must be at least 6 characters";
     isValid = false;
-  }else if(!passwordRegex.test(password.value)){
-    passwordError.value = "Password must have uppercase lowercase number and special characters";
+  } else if (!passwordRegex.test(password.value)) {
+    passwordError.value =
+      "Password must have uppercase lowercase number and special characters";
     isValid = false;
-  }
-   else {
+  } else {
     passwordError.value = "";
   }
 
@@ -63,22 +60,16 @@ const validateForm = () => {
   } else {
     password2Error.value = "";
   }
-
-  register(isValid);
 };
-const submitForm = () => {
-  // console.log("Login", username.value, password.value);
+
+const register = (event:Event) => {
+
   validateForm();
-};
+  event.preventDefault();
 
-const register = (valid: boolean) => {
-  if (valid) {
+  if (isValid) {
     showAlert.value = false;
-
-    //log
-    // console.log("Register", username.value, password.value);
-
-    authStore.register(username.value, password.value,username.value);
+    authStore.register(email.value, password.value, username.value);
   } else {
     showAlert.value = true;
   }
@@ -103,7 +94,7 @@ const register = (valid: boolean) => {
     <!-- Right Side: Login Form -->
     <div class="flex-1 flex items-center justify-center">
       <div class="w-full max-w-md">
-        <form @submit.prevent="submitForm" style="background-color: #f6f1f1">
+        <form style="background-color: #f6f1f1">
           <div class="mb-10">
             <h2
               class="block text-center text-gray-700 text-4xl mb-5 font-bold mb-2 judson"
@@ -171,8 +162,7 @@ const register = (valid: boolean) => {
           </div>
           <div class="flex items-center justify-between mt-5">
             <button
-              @click="validateForm"
-              type="submit"
+              @click="register"
               class="bg-blue_button hover:bg- text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               style="border-radius: 40px; height: 50px"
             >
@@ -180,25 +170,25 @@ const register = (valid: boolean) => {
             </button>
           </div>
         </form>
-        <div v-if="showAlert" class="fixed bottom-0 mx-10 w-1/4 justify-center mb-1">
         <div
-          class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-          role="alert"
+          v-if="showAlert"
+          class="fixed bottom-0 mx-10 w-1/4 justify-center mb-1"
         >
-          <strong class="font-bold">Oops!</strong>
-          <span class="block sm:inline"
-            >There are some errors in your form.</span
+          <div
+            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
           >
-          <ul class="mt-2 list-disc list-inside">
-            <li v-if="usernameError">{{ usernameError }}</li>
-            <li v-if="emailError">{{ emailError }}</li>
-            <li v-if="passwordError">{{ passwordError }}</li>
-            <li v-if="password2Error">{{ password2Error }}</li>
-          </ul>
+            <strong class="font-bold">Oops!</strong>
+           
+            <ul class="mt-2 list-disc list-inside">
+              <li v-if="usernameError">{{ usernameError }}</li>
+              <li v-if="emailError">{{ emailError }}</li>
+              <li v-if="passwordError">{{ passwordError }}</li>
+              <li v-if="password2Error">{{ password2Error }}</li>
+            </ul>
+          </div>
         </div>
       </div>
-      </div>
-      
     </div>
   </div>
 </template>

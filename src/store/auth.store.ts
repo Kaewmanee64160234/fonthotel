@@ -8,33 +8,38 @@ import { User } from "@/model/user.model";
 export const useAuthStore = defineStore("auth", () => {
   const authName = ref({});
   const userStore = useUserStore();
+  const isLogin = ref(false);
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await auth.login({ email, password });
+      const response = await auth.login({ email:email, user_password:password });
       console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      if (response.data.user.customer != null) {
-        localStorage.setItem("customer", JSON.stringify(response.data.user.customer));
-        //map type to user type
-        const user = JSON.parse(response.data.user) as User;
-        user.role = "customer";
-        userStore.setUser(user);
-      } else {
-        localStorage.setItem(
-          "employee",
-          JSON.stringify(response.data.user.employee)
-        );
-        const user = JSON.parse(response.data.user) as User;
-        user.role = "customer";
-        userStore.setUser(user);
+      if (response != null) {
+        const user__: User = {
+          id: response.data.user_id,
+          username: response.data.user_name,
+          login: response.data.user_login,
+          password: response.data.user_password, // Storing password in frontend is usually not advisable.
+          role: response.data.user_role,
+          ...(response.data.customer && { customer: response.data.customer }),
+          ...(response.data.employee && { customer: response.data.employee }),
+        };
+       userStore.setUser(user__);
+       console.log(user__);
+       router.push('/');
+       
+      } 
+      else {
+        console.error("User does not have customer or employee role");
       }
-      console.log(response.data.user.employee);
+
       authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
     } catch (e) {
       console.log(e);
     }
-    router.push("/");
+    isLogin.value = true;
+    // router.push("/");
   };
   const logout = () => {
     localStorage.removeItem("token");
@@ -42,39 +47,65 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.removeItem("employee");
     localStorage.removeItem("customer");
     authName.value = "";
+    const currentUser = ref<User>({id:-1,role:'customer',login:'',password:'',username:''});
+    userStore.setUser(currentUser.value);
     router.replace("/login");
   };
   // create register user store
-  const register = async (email: string, password: string,username: string)=>{
+  const register = async (
+    email: string,
+    password: string,
+    username: string
+  ) => {
     try {
       const response = await auth.authenticate(email, password, username);
-      if(response.data.user){
-        //change json to user
-        if (response.data.user.customer != null) {
-          localStorage.setItem("customer", JSON.stringify(response.data.user.customer));
-          //map type to user type
-          const user = JSON.parse(response.data.user) as User;
-          user.role = "customer";
-          userStore.setUser(user);
-        } else {
-          localStorage.setItem(
-            "employee",
-            JSON.stringify(response.data.user.employee)
-          );
-          const user = JSON.parse(response.data.user) as User;
-          user.role = "customer";
-          userStore.setUser(user);
-        }
-        console.log(response.data.user.employee);
-        authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-
+      if (response != null) {
+        const user__: User = {
+          id: response.data.user_id,
+          username: response.data.user_name,
+          login: response.data.user_login,
+          password: response.data.user_password, // Storing password in frontend is usually not advisable.
+          role: response.data.user_role,
+          ...(response.data.customer && { customer: response.data.customer }),
+          ...(response.data.employee && { customer: response.data.employee }),
+        };
+       userStore.setUser(user__);
+       console.log(user__);
+       router.push('/');
+       
+      } 
+      else {
+        console.error("User does not have customer or employee role");
       }
-      
+
+      authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+      isLogin.value = true;
+      router.push("/");
     } catch (error) {
       console.log(error);
-      
     }
-    router.push('/');
-  }
-  return { login, logout, authName,register };
+  };
+
+  //get User from localStorage
+  const getUserFromLocalStorage = () => {
+    const userString = localStorage.getItem("user");
+    if (userString) { // Check if userString is truthy, avoiding null or "undefined"
+      try {
+        const userObject: User = JSON.parse(userString);
+        userStore.setUser(userObject); // Update userStore with the user object
+        authName.value = userObject; // Update authName with the user object
+        isLogin.value = true; // Set isLogin to true since a user is found
+      } catch (e) {
+        console.error("Failed to parse user from localStorage:", e);
+        // Handle parsing error, e.g., corrupted data
+        isLogin.value = false; // Optionally set isLogin to false
+      }
+    } else {
+      // Log or handle the case where no user data is found in localStorage
+      console.log("No user found in localStorage.");
+      isLogin.value = false; // Set isLogin to false since no user is logged in
+    }
+  };
+  
+  return { login, logout, authName, register,isLogin,getUserFromLocalStorage };
 });
