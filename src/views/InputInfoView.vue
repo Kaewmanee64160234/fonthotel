@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 const clickback = () => {
-    window.location.href = '/activaty'
+    window.location.href = '/activity'
 }
 
 const clickcontinue = () => {
@@ -18,7 +18,7 @@ const clickcontinue = () => {
         </div>
 
         <div class="min-h-screen flex card-container">
-            <!-- Left Side: Logo and Welcome Text -->
+            <!-- Left Side: -->
             <div class="flex-1 flex flex-col pt-3 p-10">
                 <div class="card-left flex justify-center items-center">
                     <form class="w-full  justify-center items-center pl-20">
@@ -91,7 +91,7 @@ const clickcontinue = () => {
                 </div>
             </div>
 
-            <!-- Right Side: Login Form -->
+            <!-- Right Side: -->
             <div class="w-full flex-1 flex justify-center mt-3">
                 <div class="w-full justify-center">
                     <div class="flex-1 flex flex-row justify-center">
@@ -139,7 +139,7 @@ const clickcontinue = () => {
 
                                 <div class="flex-5 flex flex-row pt-2 px-5" style="font-size: 13px;">
                                     <div class="flex-1 flex flex-col">
-                                        <p>Deluxe</p>
+                                        <p>Taxes and Fees</p>
                                     </div>
                                     <div class="flex-2 flex flex-col">
                                         <p class="font-medium">THB 5,700.00</p>
@@ -178,7 +178,7 @@ const clickcontinue = () => {
                                     </div>
                                 </div>
 
-                                <div class="flex-9 flex flex-row pt-2 px-5 " style="font-size: 20px;">
+                                <div class="flex-9 flex flex-row pt-3 px-5 " style="font-size: 20px;">
                                     <div class="flex-1 flex flex-col">
                                         <p class="font-medium">Total:</p>
                                     </div>
@@ -187,7 +187,7 @@ const clickcontinue = () => {
                                     </div>
                                 </div>
 
-                                <div class="pt-2">
+                                <div class="pt-3">
                                     <hr class="color-line"/>
                                 </div>
 

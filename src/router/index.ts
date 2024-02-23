@@ -84,10 +84,10 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideNavigation: false }
   },
   {
-    path: '/activaty',
-    name: 'activaty',
-    component: () => import('../views/ActivatyView.vue'),
-    meta: { hideNavigation: true }
+    path: '/activity',
+    name: 'activity',
+    component: () => import('../views/ActivityView.vue'),
+    meta: { hideNavigation: false }
   },
   {
     path: '/bookingdetail',

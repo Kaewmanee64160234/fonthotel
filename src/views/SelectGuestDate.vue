@@ -197,7 +197,7 @@ const endDate = ref<Date>(new Date());
 
 .card-container {
     max-width: auto;
-    height: 234px;
+    height: 300px;
 }
 
 .btn-guest,
@@ -281,7 +281,7 @@ const endDate = ref<Date>(new Date());
 
 .dc-scroll {
     padding-right: 5px;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow: scroll;
 }
 

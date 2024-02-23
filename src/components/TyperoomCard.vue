@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SelectRoomView from '@/views/SelectRoomView.vue';
 import { defineProps } from 'vue';
 
 // Define the props for the TyperoomCard component
