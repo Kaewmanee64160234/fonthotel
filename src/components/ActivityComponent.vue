@@ -35,11 +35,11 @@ const props = defineProps<{
                         <div class="flex-2 flex flex-col" style="width: 50%">
                             <div class="flex items-center py-2 ml-8">
                                 <button type="button" class="btn-minus">
-                                    <a class="text-white text-m text-center">-</a>
+                                    <a class="text-white text-m text-center ">-</a>
                                 </button>
-                                <a class="mx-4">0</a>
+                                <a class="mx-4 ">0</a>
                                 <button type="button" class="btn-plus">
-                                    <a class="text-white text-m text-center">+</a>
+                                    <a class="text-white text-m text-center ">+</a>
                                 </button>
                             </div>
                         </div>
@@ -54,11 +54,11 @@ const props = defineProps<{
                         <div class="flex-2 flex flex-col" style="width: 50%">
                             <div class="flex items-center py-2 ml-8">
                                 <button type="button" class="btn-minus">
-                                    <a class="text-white text-m text-center">-</a>
+                                    <a class="text-white text-m text-center ">-</a>
                                 </button>
                                 <a class="mx-4">0</a>
                                 <button type="button" class="btn-plus">
-                                    <a class="text-white text-m text-center">+</a>
+                                    <a class="text-white text-m text-center ">+</a>
                                 </button>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ const props = defineProps<{
                     </div>
 
                     <div class="flex-2 flex flex-row justify-end mr-5">
-                        <div class="text-right">
+                        <div class="text-right pt-5">
                             <router-link to="/activity" class="btn-addnew mb-3">Add Details</router-link>
                         </div>
                     </div>
@@ -94,16 +94,18 @@ const props = defineProps<{
 .btn-minus {
     background-color: #ff0000;
     border-radius: 9999px;
-    width: 20px;
+    width: 40px;
     height: 20px;
     text-align: center;
+
 }
 
 .btn-plus {
     background-color: #59ce8f;
     border-radius: 9999px;
-    width: 20px;
+    width: 40px;
     height: 20px;
+    text-align: center;
 }
 
 .btn-addnew {
