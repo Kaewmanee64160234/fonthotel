@@ -1,10 +1,6 @@
-import { ref } from "vue";
-import http from "./axios";
-import { useUserStore } from "../store/user.store";
-import { User } from "@/model/user.model";
 
-const userStore = useUserStore();
-const user = ref<User>();
+import http from "./axios";
+
 
 const  authenticate = async (email: string, password: string, username: string) =>{
 console.log({
@@ -12,7 +8,7 @@ console.log({
   user_name: username,
   user_password: password
 });
-    return await http.post("/auths/register", {
+    return await http.post("/auth/register", {
       email,
       user_name: username,
       user_password: password
@@ -21,10 +17,9 @@ console.log({
   
 }
 
-const login = async (credentials: { email: string; password: string }) =>{
+const login = async (credentials: { email: string; user_password: string }) =>{
   try {
     return await http.post("/auth/login", credentials);
-  
 
   } catch (error) {
     console.error("Login failed", error);

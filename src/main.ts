@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 
 import { initFlowbite } from 'flowbite'
 
+const pinia = createPinia()
 onMounted(() => {
     initFlowbite();
 })
