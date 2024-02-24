@@ -58,7 +58,7 @@ const props = defineProps({
                                         <p class="text-sm text-base text-black">Type Room : {{ typeroom }}</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-blod text-base text-black">Payment  Information </h1>
+                                        <h1 class="text-lg font-semibold  text-base text-black">Payment  Information </h1>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <p class="text-sm text-base text-black">Guest: {{ guest  }}  Per Adult -  Per Child</p>
@@ -76,21 +76,15 @@ const props = defineProps({
                                         
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Status: {{status }} </p>
+                                        <p class="text-sm text-base text-black text-green-600">Status: {{status }} </p>
                                     </div>
-
-
-
-
-                                   
+   
                                 </div>
-                                <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                                <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
                                     <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-blod text-base text-black">Total : {{ total }} Baht</h1>
+                                        <h1 class="text-lg font-semibold  text-base text-black ">Total : {{ total }} Baht</h1>
                                     </div>
                                   
-
-
                                 </div>
                                 
                             </div>
