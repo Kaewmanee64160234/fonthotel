@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth.store";
 import { onMounted, ref } from "vue";
+const showPassword = ref(false); // Initially, the password is hidden
 
 const username = ref("");
 const password = ref("");
@@ -47,7 +48,7 @@ const login = (event: Event) => {
               <input
                 v-model="username"
                 type="text"
-                placeholder="Username"
+                placeholder="Email"
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
             </div>
@@ -56,10 +57,17 @@ const login = (event: Event) => {
               <i class="fa fa-lock text-black mx-3"></i>
               <input
                 v-model="password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 placeholder="Password"
                 class="bg-gray-200 outline-none border-gray-200 focus:ring-gray-200 focus:border-gray-200 text-gray-700 w-full"
               />
+              <button
+                @click.prevent="showPassword = !showPassword"
+                class="text-sm text-gray-700"
+              >
+                <!-- Add this button -->
+                <i :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+              </button>
             </div>
 
             <a
