@@ -18,6 +18,7 @@ const rating: Rating = {
 
 <template>
 
+
   <div v-if="userStore.currentUser.role=='customer'" class="body overflow-y-auto dc-scroll">
 
 
@@ -36,11 +37,11 @@ const rating: Rating = {
           <!-- The overlay card with a semi-transparent black background and blur effect -->
           <div class="flex flex-wrap justify-center items-center gap-5">
             <TyperoomCard imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
-              readmore="/readmore" roomtype="STANDARD ROOM" btnbooking="#" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmore"
-              roomtype="DELUXE ROOM" btnbooking="#" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="/readmore"
-              roomtype="LUXURY ROOM" btnbooking="#" />
+              readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" />
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmoreview"
+              roomtype="DELUXE ROOM" btnbooking="/selectguestdate" />
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="/readmoreview"
+              roomtype="LUXURY ROOM" btnbooking="/selectguestdate" />
 
           </div>
         </div>
