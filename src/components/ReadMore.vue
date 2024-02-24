@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
+const clickback = () => {
+  window.location.href = '/'
+}
 
 const props = defineProps({
   type: String,
@@ -19,12 +22,17 @@ const props = defineProps({
 
 <template>
   <div class="body">
+    <div class="pt-5 pl-5">
+      <button @click="clickback">
+        <i style="font-size: 30px" class="far">&#xf359;</i>
+      </button>
+    </div>
     <div class="absolute top-0 right-0 p-8">
       <a :href="path" class="btn-booking text-center">Book now</a>
     </div>
     <!-- Container for the room details -->
     <div class="flex justify-center items-center min-h-screen">
-      <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[80%] mx-auto mt-10">
+      <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[80%] mx-auto ">
         <!-- Title above the image -->
         <h1 class="text-xl font-judson px-5 pt-2 ml-10 mt-5">{{ type }}</h1>
 

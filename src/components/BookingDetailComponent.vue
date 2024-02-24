@@ -1,153 +1,188 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup>
+import { defineProps } from "vue";
+
+
+const props = defineProps({
+    type: String,
+    img: String,
+    date: String,
+    name: String,
+    typeroom: String,
+    guest: String,
+    total: String,
+    checkin: String,
+    checkout: String,
+    payment: String,
+    status: String,
+
+
+});
+</script>
 
 <template>
-  <div class="body">
-    <!-- The container for the overlay and cards -->
+    <div class="body">
 
-    <div class="flex justify-center items-center pt-10 bigcard">
-      <!-- Added classes for centering -->
-      <div class="grid relative card-style mt-10">
-        <div class="flex grid grid-rows-1 flex-col items-right ml-10">
-          <div
-            class="flex flex-wrap justify-center items-center pt-5 font-judson"
-          >
-            <div>
-              <p class="text-2xl mb-4 text-center">Booking details</p>
-            </div>
-          </div>
-        </div>
-        <div class="flex grid grid-cols-2">
-          <div class="justify-start items-center font-judson">
-            <img
-              class="rounded-lg h-auto max-w-lg mx-auto"
-              src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-              alt=""
-            />
-          </div>
-          <div class="w-full flex-1 flex justify-center">
-            <div class="w-full justify-center">
-              <div class="flex-1 flex flex-row justify-center">
-                <div class="card-stay">
-                  <div class="min-h-screen grid-cols-2 card-container">
-                    <div class="flex-2 flex flex-row p-2 pl-5 mt-5">
-                      <span class="font-medium">Date : </span>
-                      <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+        <!-- Container for the room details -->
+        <div class="flex justify-center items-center min-h-screen">
+            <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto  ">
+                <!-- Title above the image -->
+                <h1 class="text-2xl font-judson px-5 pt-2 ml-10 mt-5 text-center">Booking details</h1>
+                
+                
+
+                <!-- Image and Description Container -->
+                <div class="md:flex pl-8">
+                    <!-- Room Image -->
+                    <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
+                        <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
                     </div>
-                    <div class="flex-2 flex flex-row p-2 pl-5 mt-5">
-                      <span class="font-medium">Name : </span>
-                      <span>Linlada Pasukjai </span>
+
+                    <!-- Room Description -->
+                    <div class="md:w-1/2 py-4 pl-8 mt-5">
+                        <div class="card-stay ">
+                            <div class="mt-4 pl-8">
+                                <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                                    <!-- Facility 1 -->
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Date: {{ date }} </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Check-in : After {{ checkin }} PM </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Name: {{ name }} </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Check-out : Before {{ checkout }} AM </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Type Room : {{ typeroom }}</p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <h1 class="text-lg font-semibold  text-base text-black">Payment  Information </h1>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Guest: {{ guest  }}  Per Adult -  Per Child</p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Payment: {{ payment }} </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black">Name: {{name }} </p>
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        
+                                    </div>
+                                    <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black text-green-600">Status: {{status }} </p>
+                                    </div>
+   
+                                </div>
+                                <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
+                                    <div class="facility-item text-base font-judson">
+                                        <h1 class="text-lg font-semibold  text-base text-black ">Total : {{ total }} Baht</h1>
+                                    </div>
+                                  
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+
                     </div>
-                    <div class="flex-2 flex flex-row p-2 pl-5 mt-5">
-                      <span class="font-medium">Type Room : </span>
-                      <span>Deluxe </span>
-                    </div>
-                    <div class="flex-3 flex flex-row p-2 pl-5 pt-5">
-                      <div class="flex-1 flex flex-col">
-                        <p class="font-medium">Guest</p>
-                        <p>
-                          <a class="mr-10">2 Per Adult </a>
-                          <a class="ml-10">- Per Child</a>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex-2 flex flex-row p-2 pl-5 mt-5 pt-10">
-                      <div class="flex-1 flex flex-col">
-                        <p>
-                          <a class="font-medium mr-10">Total </a>
-                          <a class="font-medium mr-10">7009.00</a>
-                          <a class="font-medium mr-10">Baht</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <hr class="hr-style" />
-                  </div>
                 </div>
-              </div>
+
+                <!-- Facilities Container -->
+
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
+.btn-booking {
+    background-color: #906843;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px #805d3f;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    width: 150px;
+}
+
+.facility-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: start;
+}
+
+.facility-item span {
+
+    display: flex;
+    align-items: center;
+}
+
+.facility-item image {
+    justify-items: center;
+    display: flex;
+    align-items: center;
+}
+
+.facility-icon {
+    width: 50px;
+    /* Set a fixed width for icons */
+    height: auto;
+    margin-bottom: 0.5rem;
+    /* //make image ccenetr */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px
+}
+
+
 .body {
-  background-image: url("../images/image.png");
-  background-size: cover;
-  /* Cover the entire screen */
-  background-position: center;
-  /* Center the background image */
-  background-repeat: no-repeat;
-  /* Do not repeat the image */
-  width: 100vw;
-  height: 100vh;
-  /* Make sure the div covers the full height of the viewport */
-  position: fixed;
-  /* Optional: Fixes the background to the viewport */
-  top: 0;
-  left: 0;
-}
-
-.card-style {
-  width: 95vw;
-  height: 85vh;
-  border-radius: 30px;
-  background-color: rgba(229, 229, 229, 0.758);
-  /* add filter blue */
-  fill-opacity: unset;
-  display: block;
-}
-
-.bigcard {
-  display: flex;
-  height: 90vh;
+    background-image: url("../images/image.png");
+    background-size: cover;
+    /* Cover the entire screen */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    width: 100vw;
+    height: 100vh;
+    /* Make sure the div covers the full height of the viewport */
+    position: fixed;
+    /* Optional: Fixes the background to the viewport */
+    top: 0;
+    left: 0;
 }
 
 .font-judson {
-  font-family: "Judson";
-}
-
-.btn-booking {
-  background-color: #906843;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px #805d3f;
-  font-weight: medium;
-  text-decoration: none;
-  display: inline-block;
-  width: 150px;
+    font-family: 'Judson';
 }
 
 .card-container {
-  max-width: auto;
-  height: 234px;
-}
-
-.card-right {
-  width: 34vw;
-  height: 50vh;
-  border-radius: 10px;
-  background-color: rgba(241, 241, 241, 0.758);
-
-  display: block;
+    max-width: auto;
+    height: 234px;
 }
 
 .card-stay {
-  width: 90%;
-  height: 60vh;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255);
-  box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
-}
-
-.hr-style {
-  margin-left: 3%;
-  /* Adjust margin as needed */
-  width: 90%;
-  border: 1px solid #eeeeee;
+    width: 50vw;
+    height: 46vh;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
 }
 </style>
+
+
+
