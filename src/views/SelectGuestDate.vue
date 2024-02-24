@@ -2,6 +2,9 @@
 import RoomCard from "@/components/RoomCard.vue";
 import { ref } from "vue";
 import DatePicker from "vue3-datepicker";
+import { onMounted } from 'vue';
+import { useRoomStore } from '@/store/room.store';
+const roomStore = useRoomStore();
 const isDropdownOpen = ref(false);
 
 const clickcontinue = () => {
@@ -20,6 +23,33 @@ const closeDropdown = () => {
 };
 const startDate = ref<Date>(new Date());
 const endDate = ref<Date>(new Date());
+
+const adultCount = ref(0);
+const childrenCount = ref(0);
+const totalGuests = ref(0);
+
+const decrementGuest = (type: 'adult' | 'children') => {
+    if (type === 'adult' && adultCount.value > 0) {
+        adultCount.value--;
+    } else if (type === 'children' && childrenCount.value > 0) {
+        childrenCount.value--;
+    }
+};
+
+const incrementGuest = (type: 'adult' | 'children') => {
+    if (type === 'adult') {
+        adultCount.value++;
+    } else if (type === 'children') {
+        childrenCount.value++;
+    }
+};
+
+const applyGuestCount = () => {
+    totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
+};
+onMounted(async () => {
+    await roomStore.getRoomsByType(' ', 'Readyrana');
+})
 </script>
 <template>
     <div class="body">
@@ -38,7 +68,7 @@ const endDate = ref<Date>(new Date());
                                 <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button"
                                     aria-expanded="true" aria-haspopup="true">
                                     <p> Guest</p>
-                                    <p class="text-right pr-7 p-2">2</p>
+                                    <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
                                 </button>
 
                                 <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2"
@@ -53,14 +83,15 @@ const endDate = ref<Date>(new Date());
                                                     <a class="text-black block px-4 py-2 text-sm" role="menuitem"
                                                         tabindex="-1" id="menu-item-1">Adult</a>
                                                 </div>
-
                                                 <div class="flex-2 flex flex-col" style="width: 50%">
                                                     <div class="flex items-center py-2">
-                                                        <button type="button" class="btn-minus">
+                                                        <button type="button" class="btn-minus"
+                                                            @click="decrementGuest('adult')">
                                                             <a class="text-white text-m text-center">-</a>
                                                         </button>
-                                                        <a class="mx-4">2</a>
-                                                        <button type="button" class="btn-plus">
+                                                        <a class="mx-4">{{ adultCount }}</a>
+                                                        <button type="button" class="btn-plus"
+                                                            @click="incrementGuest('adult')">
                                                             <a class="text-white text-m text-center">+</a>
                                                         </button>
                                                     </div>
@@ -74,11 +105,13 @@ const endDate = ref<Date>(new Date());
                                                 </div>
                                                 <div class="flex-2 flex flex-col" style="width: 50%">
                                                     <div class="flex items-center py-2">
-                                                        <button type="button" class="btn-minus">
+                                                        <button type="button" class="btn-minus"
+                                                            @click="decrementGuest('children')">
                                                             <a class="text-white text-m text-center">-</a>
                                                         </button>
-                                                        <a class="mx-4">0</a>
-                                                        <button type="button" class="btn-plus">
+                                                        <a class="mx-4">{{ childrenCount }}</a>
+                                                        <button type="button" class="btn-plus"
+                                                            @click="incrementGuest('children')">
                                                             <a class="text-white text-m text-center">+</a>
                                                         </button>
                                                     </div>
@@ -87,7 +120,7 @@ const endDate = ref<Date>(new Date());
                                             <!-- Btn Apply -->
                                             <div class="flex-3 flex flex-row p-1 justify-end">
                                                 <div class="flex">
-                                                    <button type="button" class="btn-apply">
+                                                    <button type="button" class="btn-apply" @click="applyGuestCount">
                                                         <a class="text-white text-m text-center">Apply</a>
                                                     </button>
                                                 </div>
@@ -116,8 +149,10 @@ const endDate = ref<Date>(new Date());
                     </div>
                 </div>
                 <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
-                <div class="mt-2 overflow-y-auto dc-scroll mb-20">
-                    <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
+                <div class="mt-2 overflow-y-auto dc-scroll mb-20" v-for="item of roomStore.rooms " :key="item.id">
+                    <RoomCard :image="item.image" :typename="item.roomtype.typename"
+                     detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" />
+                    <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
                         sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
                     <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
@@ -125,7 +160,7 @@ const endDate = ref<Date>(new Date());
                         price="THB 5,700.00" />
                     <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
                         type="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk"
-                        price="THB 6,000.00" />
+                        price="THB 6,000.00" /> -->
                 </div>
             </div>
 

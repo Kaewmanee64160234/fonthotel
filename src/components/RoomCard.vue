@@ -3,11 +3,9 @@ import { defineProps } from 'vue'
 
 const props = defineProps<{
   image: string,
-  type:  string,
-  sleep: string,
-  area: string,
+  typename: string,
   detail: string,
-  price: string
+  price: number
 }>();
 
 </script>
@@ -17,15 +15,17 @@ const props = defineProps<{
   <div class=" flex rounded-lg shadow-lg overflow-hidden " style="height: 30vh;" >
     <!-- Room Image -->
     <div class=" w-1/2 py-3 pl-5 pr-10   flex " style="justify-content: start; background-color: white;">
-    <img :src="props.image" alt="Room Image" class="rounded-lg pic-showroom"  />
+    <img :src="`${props.image}`" alt="Room Image" class="rounded-lg pic-showroom"  />
 
     </div>
 
     <!-- Room Details -->
     <div class="w-1/2  pt-3 bg-white flex flex-col justify-between">
       <div>
-        <h2 class="text-lg font-bold">{{ props.type }}</h2>
-        <p class="text-base text-gray-600">Sleep {{ props.sleep }} | {{ props.area }} square metre</p>
+        <h2 class="text-lg font-bold">{{ props.typename }}</h2>
+        <p class="text-base text-gray-600">Sleep 1 {{ props.typename }} </p>
+        <!-- <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'Twin'">Sleep 2 {{ props.typename }} </p>
+        <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'King'">Sleep 1 {{ props.typename }} </p> -->
         <p class="text-base text-gray-600">{{ props.detail }}</p>
         <a href="#" class="text-sm font-semibold">Room Detail</a>
       </div>

@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import roomService from "@/service/room";
+import { Room } from "@/model/room.model";
 
 export const useRoomStore = defineStore("roomStore", () => {
-    const rooms = ref([]); // Define rooms as a ref
+    const rooms = ref<Room[]>([]); // Define rooms as a ref
 
     const getRooms = async (status: string) => {
        try {
@@ -23,6 +24,8 @@ export const useRoomStore = defineStore("roomStore", () => {
     const getRoomsByType = async (type: string, status: string) => {
         try {
             const response = await roomService.getRoomsByType(type,status);
+            console.log(response.data)
+
         if (response.data) {
             rooms.value = response.data
         } else {
@@ -33,5 +36,5 @@ export const useRoomStore = defineStore("roomStore", () => {
         }
     };
 
-    return { getRooms, getRoomsByType };
+    return { rooms,getRooms, getRoomsByType };
 });

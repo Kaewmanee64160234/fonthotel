@@ -3,6 +3,8 @@
 import ReviewComponent from '@/components/ReviewComponent.vue';
 import TyperoomCard from '@/components/TyperoomCard.vue';
 import { useUserStore } from '@/store/user.store';
+import { useRoomStore } from '@/store/room.store';
+const roomStore = useRoomStore();
 const userStore = useUserStore();
 type Rating = {
   cleanliness: number;
@@ -36,6 +38,9 @@ const rating: Rating = {
 
           <!-- The overlay card with a semi-transparent black background and blur effect -->
           <div class="flex flex-wrap justify-center items-center gap-5">
+          <!-- <div class="flex flex-wrap justify-center items-center gap-5" v-for="item of  roomStore.rooms " :key="item.id"> -->
+            <!-- <TyperoomCard :imgroom="item.image"
+              readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" /> -->
             <TyperoomCard imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
               readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" />
             <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmoreview"
