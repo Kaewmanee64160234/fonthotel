@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps } from "vue";
 
 const props = defineProps({
@@ -15,153 +15,124 @@ const props = defineProps({
   path: String,
   desk: Boolean,
 });
-
-// Destructuring props for easier access
-// const { type, description, img, topic, bed, tv, electric, wifi, water, bath, path, desk } = props;
 </script>
 
 <template>
   <div class="body">
-    <!-- The container for the overlay and cards -->
-    <div class="flex grid grid-rows-1 flex-col items-right justify-end ml-10">
-      <a
-        class="btn-booking mt-7 mr-10 inline-block text-center text-center"
-        :href="props.path"
-        >Book now</a
-      >
+    <div class="absolute top-0 right-0 p-8">
+      <a :href="path" class="btn-booking">Book now</a>
     </div>
+    <!-- Container for the room details -->
+    <div class="flex justify-center items-center min-h-screen">
+      <div
+        class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[80%] mx-auto"
+      >
+        <!-- Title above the image -->
+        <h2 class="text-3xl font-bold px-5 pt-2 ml-5">{{ type }}</h2>
 
-    <div class="flex justify-center items-center bigcard">
-      <!-- Added classes for centering -->
-      <div class="grid relative card-style mt-10">
-        <div
-          class="flex grid grid-rows-1 grid-cols-2 flex-col items-right ml-10"
-        >
-          <!-- Center alignment -->
-          <div
-            class="flex flex-wrap justify-between items-center pt-5 font-judson"
-          >
-            <div>
-              <p class="text-xl mb-4 text-left">{{ props.type }}</p>
-            </div>
-          </div>
-
-          <div
-            class="flex grid-cols-2 justify-between items-center mt-10 pt-5 font-judson"
-          >
-            <p class="text-sm text-gray-900 dark:text-white mb-4 text-left">
-              {{ props.topic }}
-            </p>
-          </div>
-          <div class="justify-start items-center font-judson">
+        <!-- Image and Description Container -->
+        <div class="md:flex pl-8">
+          <!-- Room Image -->
+          <div class="md:w-1/3 flex justify-start items-center px-10 py-3">
             <img
-              class="rounded-lg h-auto max-w-md max-w-lg"
-              :src="props.img"
-              alt=""
+              :src="img"
+              alt="Room Image"
+              class="object-cover h-auto max-w-full rounded-lg"
             />
           </div>
+
+          <!-- Room Description -->
+          <div class="md:w-1/2 py-4 pl-8">
+            <!-- <h3 class="text-xl">{{ topic }}</h3> -->
+            <p>{{ description }}</p>
+          </div>
+        </div>
+
+        <!-- Facilities Container -->
+        <div class="mt-4 pl-8">
+          <h2 class="font-bold text-lg md:w-1/2 flex p-4">FACILITIES</h2>
           <div
-            class="flex grid-cols-2 justify-between items-center font-judson"
+            class="ml-6 p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
-            <p class="text-sm text-gray-900 dark:text-white mb-4">
-              {{ props.description }}
-            </p>
-          </div>
-        </div>
-        <div class="flex grid gap-8 grid-rows-1 items-center ml-10">
-          <div class="flex grid grid-rows-1 flex-col items-right ml-10">
-            <!-- Center alignment -->
-            <div class="text-center font-judson">
-              <div
-                class="flex flex-wrap justify-between items-center pt-5 font-judson"
-              >
-                <p class="text-sm mb-4 text-right">FACILITIES</p>
-              </div>
+            <!-- Facility 1 -->
+            <div v-if="bed" class="facility-item">
+              <img src="../images/bed.png" alt="Bed" class="facility-icon" />
+              <span>{{ bed }}</span>
             </div>
-          </div>
-        </div>
-
-        <div class="flex grid-rows-3 grid-cols-3 items-center ml-10">
-          <div class="text-center font-judson">
-            <div
-              class="flex grid gap-10 grid-rows-3 grid-cols-2 items-center ml-10"
-            >
+            <div v-if="tv" class="facility-item">
               <img
-                class="rounded-lg size-9 max-w-lg ms-auto"
-                src="../images/bed.png"
-                alt=""
+                src="../images/television.png"
+                alt="TV"
+                class="facility-icon"
               />
-              <p class="text-sm text-left font-judson">{{ props.bed }}</p>
-              <div v-if="props.bath">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/bathtube.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">
-                  Separate Bath & Shower
-                </p>
-              </div>
-              <div v-if="props.desk">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/work-space.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">Working desk</p>
-              </div>
+              <span>TV</span>
             </div>
-          </div>
-
-          <div class="text-center font-judson">
-            <div
-              class="flex grid gap-10 grid-rows-3 grid-cols-2 items-center ml-10"
-            >
-              <div v-if="props.tv">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/television.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">
-                  Chrome cast & Apple mirror apps
-                </p>
-              </div>
-              <div v-if="props.wifi">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/wifi-sign.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">
-                  Complimentary High Speed WiFi
-                </p>
-              </div>
+            <div v-if="electric" class="facility-item">
+              <img
+                src="../images/bathtube.png"
+                alt="Electric"
+                class="facility-icon"
+              />
+              <span>Electric</span>
             </div>
-          </div>
-
-          <div class="text-center font-judson">
-            <div
-              class="flex grid gap-10 grid-rows-3 grid-cols-2 items-center ml-10"
-            >
-              <div v-if="props.electric">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/smart-curtain.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">
-                  Electric curtain and sheer
-                </p>
-              </div>
-              <div v-if="props.water">
-                <img
-                  class="rounded-lg size-9 max-w-lg ms-auto"
-                  src="../images/water.png"
-                  alt=""
-                />
-                <p class="text-sm text-left font-judson">Complimentary Water</p>
-              </div>
+            <div v-if="wifi" class="facility-item">
+              <img
+                src="../images/wifi-sign.png"
+                alt="Wifi"
+                class="facility-icon"
+              />
+              <span>Wifi</span>
+            </div>
+            <div v-if="water" class="facility-item">
+              <img
+                src="../images/water.png"
+                alt="Water"
+                class="facility-icon"
+              />
+              <span>Water</span>
+            </div>
+            <div v-if="bath" class="facility-item">
+              <img
+                src="../images/smart-curtain.png"
+                alt="Bath"
+                class="facility-icon"
+              />
+              <span>Bath</span>
+            </div>
+            <div v-if="desk" class="facility-item">
+              <img
+                src="../images/work-space.png"
+                alt="Desk"
+                class="facility-icon"
+              />
+              <span>Desk</span>
+            </div>
+            <div v-if="desk" class="facility-item">
+              <img
+                src="../images/work-space.png"
+                alt="Desk"
+                class="facility-icon"
+              />
+              <span>Desk</span>
+            </div>
+            <div v-if="desk" class="facility-item">
+              <img
+                src="../images/work-space.png"
+                alt="Desk"
+                class="facility-icon"
+              />
+              <span>Desk</span>
+            </div>
+            <div v-if="desk" class="facility-item">
+              <img
+                src="../images/work-space.png"
+                alt="Desk"
+                class="facility-icon"
+              />
+              <span>Desk</span>
+            </div>
+            <div v-else>
+              <p>No facilities available</p>
             </div>
           </div>
         </div>
@@ -171,6 +142,46 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.btn-booking {
+  background-color: #906843;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px #805d3f;
+  font-weight: 500;
+  text-decoration: none;
+}
+.facility-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: start;
+}
+.facility-item span{
+
+  display: flex;
+  align-items: center;
+}
+.facility-item image{
+justify-items: center;
+display: flex;
+align-items: center;
+}
+
+.facility-icon {
+  width: 50px; /* Set a fixed width for icons */
+  height: auto;
+  margin-bottom: 0.5rem;
+  /* //make image ccenetr */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px
+
+}
+
+
 .body {
   background-image: url("../images/image.png");
   background-size: cover;
@@ -186,36 +197,5 @@ const props = defineProps({
   /* Optional: Fixes the background to the viewport */
   top: 0;
   left: 0;
-}
-
-.card-style {
-  width: 92vw;
-  height: 80vh;
-  border-radius: 30px;
-  background-color: rgba(229, 229, 229, 0.758);
-  /* add filter blue */
-  fill-opacity: unset;
-  display: block;
-}
-
-.bigcard {
-  display: flex;
-  height: 80vh;
-}
-
-.font-judson {
-  font-family: "Judson";
-}
-
-.btn-booking {
-  background-color: #906843;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px #805d3f;
-  font-weight: medium;
-  text-decoration: none;
-  display: inline-block;
-  width: 150px;
 }
 </style>
