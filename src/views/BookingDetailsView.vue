@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import BookingDetailComponent from "@/components/BookingDetailComponent.vue";
+
 const text =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 </script>
 
 <template>
-    <div>
+    <div class="body">
+
         <div class="absolute top-0 right-0 p-10"></div>
+
         <BookingDetailComponent type="DELUXE ROOM"
             :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'"
-            :date="'Tue,Dec 26 ,2023 - Wed,Dec 27,2023'" :name="' Linlada Pasukjai '" :typeroom="'  Deluxe  '" :guest="'   2 '" :total="' 7009.00 '" :checkin="' 1:00'"
-            :checkout="'  7:00'" :payment="'Cardit Card'" :status="'Success'">
+            :date="'Tue,Dec 26 ,2023 - Wed,Dec 27,2023'" :name="' Linlada Pasukjai '" :typeroom="'  Deluxe  '"
+            :guest="'   2 '" :total="' 7009.00 '" :checkin="' 1:00'" :checkout="'  7:00'" :payment="'Cardit Card'"
+            :status="'Success'">
 
 
 
