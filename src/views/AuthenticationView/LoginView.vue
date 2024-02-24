@@ -70,11 +70,11 @@ const login = (event: Event) => {
               </button>
             </div>
 
-            <a
+            <!-- <a
               href="#"
               class="text-sm text-blue-500 hover:text-blue-800 float-right mt-1"
               >Forgot password?</a
-            >
+            > -->
           </div>
           <div class="flex items-center justify-between mt-5">
             <button
