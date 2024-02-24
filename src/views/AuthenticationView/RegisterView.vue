@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth.store";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const showAlert = ref(false);
 const username = ref("");
@@ -19,24 +19,32 @@ const passwordRegex =
 let isValid = true;
 
 const authStore = useAuthStore();
+
 const validateForm = () => {
-  // Username validation
+  isValid = true; // Reset isValid to true at the start of validation
+  // Email validation for specific domains
+if (!email.value) {
+  emailError.value = "Email is required";
+  isValid = false;
+} else if (!/^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$/.test(email.value)) {
+  emailError.value = "Only Gmail or Hotmail accounts are accepted";
+  isValid = false;
+} else {
+  emailError.value = "";
+}
+
+  // Updated Username validation
   if (!username.value) {
     usernameError.value = "Username is required";
     isValid = false;
+  } else if (username.value.length < 8 || username.value.length > 20) {
+    usernameError.value = "Username must be between 8-20 characters";
+    isValid = false;
+  } else if (/[\u0E00-\u0E7F]+/.test(username.value)) {
+    usernameError.value = "Thai characters are not supported";
+    isValid = false;
   } else {
     usernameError.value = "";
-  }
-
-  // Email validation
-  if (!email.value) {
-    emailError.value = "Email is required";
-    isValid = false;
-  } else if (!/\S+@\S+\.\S+/.test(email.value)) {
-    emailError.value = "Email is invalid";
-    isValid = false;
-  } else {
-    emailError.value = "";
   }
 
   if (!password.value) {
@@ -61,14 +69,19 @@ const validateForm = () => {
     password2Error.value = "";
   }
 };
+watch(username, (newValue) => {
+  if (newValue.length > 20) {
+    username.value = newValue.slice(0, 20);
+  }
+});
 
-const register = (event:Event) => {
-
-  validateForm();
+const register = (event: Event) => {
   event.preventDefault();
+  validateForm();
 
   if (isValid) {
     showAlert.value = false;
+    // Proceed with registration
     authStore.register(email.value, password.value, username.value);
   } else {
     showAlert.value = true;
@@ -179,7 +192,7 @@ const register = (event:Event) => {
             role="alert"
           >
             <strong class="font-bold">Oops!</strong>
-           
+
             <ul class="mt-2 list-disc list-inside">
               <li v-if="usernameError">{{ usernameError }}</li>
               <li v-if="emailError">{{ emailError }}</li>

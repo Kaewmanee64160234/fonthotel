@@ -72,7 +72,7 @@ const props = defineProps<{
 
                     <div class="flex-2 flex flex-row justify-end mr-5">
                         <div class="text-right pt-5">
-                            <router-link to="/activity" class="btn-addnew mb-3">Add Details</router-link>
+                            <router-link to="/activity" class="btn-add-details mb-3">Add Details</router-link>
                         </div>
                     </div>
 
@@ -108,7 +108,7 @@ const props = defineProps<{
     text-align: center;
 }
 
-.btn-addnew {
+.btn-add-details {
     background-color: #906843;
     color: white;
     padding: 10px 20px;
@@ -121,5 +121,3 @@ const props = defineProps<{
     text-align: center;
 }
 </style>
-  
-  
