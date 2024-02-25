@@ -4,8 +4,8 @@ const saveBooking = () => {
     return http.post('/bookings')
 }
 
-const getBookingById = (id: number) => {
+const getBookingBybookingid = (id: number) => {
     return http.get('/booking/id' + id)
 }
 
-export default {saveBooking, getBookingById}
+export default {saveBooking, getBookingBybookingid}

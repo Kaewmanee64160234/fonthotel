@@ -19,9 +19,9 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
     };
 
-    const getBookingById = async (id: number) => {
+    const getBookingBybookingid = async (id: number) => {
         try {
-            const response = await bookingService.getBookingById(id);
+            const response = await bookingService.getBookingBybookingid(id);
             if (response.data) {
                 bookings.value = response.data;
             } else {
@@ -39,5 +39,5 @@ export const useBookingsStore = defineStore("bookings", () => {
     function getBooking() {
         return currentBooking.value;
     }
-    return { saveBooking, getBookingById, setBooking, getBooking,currentBooking };
+    return { bookings, saveBooking, getBookingBybookingid, setBooking, getBooking,currentBooking };
 });

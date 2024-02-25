@@ -7,8 +7,9 @@ import { onMounted } from 'vue';
 import { useRoomStore } from '@/store/room.store';
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking } from "@/model/booking.model";
+import router from "@/router";
 const roomStore = useRoomStore();
-const useBookings = useBookingsStore();
+const bookingStore = useBookingsStore();
 const isDropdownOpen = ref(false);
 const clickcontinue = () => {
 
@@ -33,9 +34,9 @@ const clickcontinue = () => {
         createdate: new Date()
     })
 
-    useBookings.setBooking(booking.value)
-    console.log(useBookings.currentBooking);
-
+    bookingStore.setBooking(booking.value)
+    console.log(bookingStore.currentBooking);
+    router.push('/selectroom')
 }
 
 const clickback = () => {
@@ -93,7 +94,7 @@ const stayDates = ref<string>(''); // Holds the formatted stay dates initially
 // Function to format date as "Tue, Dec 26, 2023"
 const formatDate = (date: Date): string => {
     const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    return new Intl.DateTimeFormat('en-US').format(date);
+    return new Intl.DateTimeFormat('en-US', options).format(date);
 };
 
 </script>
@@ -181,7 +182,7 @@ const formatDate = (date: Date): string => {
                         <!-- Check-in date picker -->
                         <div class="btn-date text-left">
                             <label class=""> Check-in </label>
-                            <DatePicker id="check-in" v-model="startDate"
+                            <DatePicker id="check-in" v-model="startDate" 
                                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
                                 style="width: 90%;" placeholder="Select date" />
                         </div>

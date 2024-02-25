@@ -1,18 +1,47 @@
 <script setup lang="ts">
 import SelectRoomCard from "@/components/SelectRoomCard.vue";
-import { onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoomStore } from '@/store/room.store';
-
+import { useBookingsStore } from "@/store/booking.store";
+import { Booking } from "@/model/booking.model";
+import router from "@/router";
+const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
+const booking = ref<Booking>();
 const clickback = () => {
-  window.location.href = '/selectguestdate'
+  router.push('/selectguestdate')
+
 }
 
 onMounted(async () => {
     await roomStore.getRoomsByType(' ', 'Readyrana');
+    booking.value = bookingsStore.currentBooking;
+    console.log(booking.value);  
 })
 
+// Compute the formatted check-in date
+const formattedCheckin = computed(() => {
+  if (booking.value) {
+    return formatDate(booking.value.checkin);
+  }
+  return "";
+});
+
+// Compute the formatted check-out date
+const formattedCheckout = computed(() => {
+  if (booking.value) {
+    return formatDate(booking.value.checkout);
+  }
+  return "";
+});
+
+// Function to format date as "Tue, Dec 26, 2023"
+const formatDate = (date: string): string => {
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  return new Date(date).toLocaleDateString('en-US', options);
+};
 </script>
+
 <template>
   <div class="body">
     <div class="pt-5 pl-5">
@@ -58,15 +87,15 @@ onMounted(async () => {
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+                  <span>{{ formattedCheckin }} - {{ formattedCheckout }}</span>
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">Guest</p>
                     <p>
-                      <a class="mr-10">Adult : 2</a>
-                      <a class="ml-10">Children : -</a>
+                      <a class="mr-10">Adult : {{ booking?.adult }}</a>
+                      <a class="ml-10">Children : {{ booking?.child }}</a>
                     </p>
                   </div>
                 </div>
