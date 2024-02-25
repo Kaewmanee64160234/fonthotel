@@ -23,8 +23,8 @@ const props = defineProps<{
             <!-- Room Details -->
             <div class="w-1/3  pt-3 bg-white flex flex-col justify-between">
                 <div>
-                    <p class="text-m text-base text-black mt-10">{{ props.detail }}</p>
-                    <p class="text-m text-base text-black mt-10">{{ props.price }}</p>
+                    <p class="text-m text-base text-black mt-10">{{ detail }}</p>
+                    <p class="text-m text-base text-black mt-10">Price {{ price }} Baht</p>
                 </div>
             </div>
 
