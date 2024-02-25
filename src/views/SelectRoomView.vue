@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import SelectRoomCard from "@/components/SelectRoomCard.vue";
+import { onMounted } from "vue";
+import { useRoomStore } from '@/store/room.store';
 
+const roomStore = useRoomStore();
 const clickback = () => {
   window.location.href = '/selectguestdate'
 }
+
+onMounted(async () => {
+    await roomStore.getRoomsByType(' ', 'Readyrana');
+})
 
 </script>
 <template>
@@ -17,15 +24,17 @@ const clickback = () => {
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-10">
-          <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
+        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.rooms " :key="item.id">
+          <SelectRoomCard :image="item.image" :typename="item.roomtype.typename"
+            sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" btnbooknow="#" />
+          <!-- <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
             sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00" btnbooknow="#" />
           <SelectRoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
             type="Deluxe Twin" sleep="Sleep  2" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00"
             btnbooknow="#" />
           <SelectRoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
             type="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk" price="THB 6,000.00"
-            btnbooknow="#" />
+            btnbooknow="#" /> -->
         </div>
       </div>
 

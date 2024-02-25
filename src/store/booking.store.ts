@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import bookingService from "@/service/booking";
 import { Booking } from "@/model/booking.model";
-export const useBookings = defineStore("bookings", () => {
+export const useBookingsStore = defineStore("bookings", () => {
     const currentBooking = ref<Booking>();
     const bookings = ref<Booking[]>([]);
 
@@ -39,5 +39,5 @@ export const useBookings = defineStore("bookings", () => {
     function getBooking() {
         return currentBooking.value;
     }
-    return { saveBooking, getBookingById, setBooking, getBooking };
+    return { saveBooking, getBookingById, setBooking, getBooking,currentBooking };
 });

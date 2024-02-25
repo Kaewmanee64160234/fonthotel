@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
 
     path: '/selectguestdate',
     name: 'selectguestdate',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SelectGuestDate.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/SelectGuestDateView.vue'),
     meta: { hideNavigation: false }
   },
   {

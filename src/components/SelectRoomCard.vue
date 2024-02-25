@@ -3,11 +3,11 @@ import { defineProps } from 'vue'
 
 const props = defineProps<{
   image: string,
-  type: string,
+  typename: string,
   sleep: string,
   area: string,
   detail: string,
-  price: string
+  price: number,
   btnbooknow: string,
 }>();
 </script>
@@ -23,7 +23,7 @@ const props = defineProps<{
       <!-- Room Details -->
       <div class="w-1/2  pt-3 bg-white flex flex-col justify-between">
         <div>
-          <h2 class="text-base font-bold">{{ props.type }}</h2>
+          <h2 class="text-base font-bold">{{ props.typename }}</h2>
           <p class="text-sm text-gray-600">Sleep {{ props.sleep }} | {{ props.area }} square metre</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
           <a href="#" class="text-xs font-semibold">Room Detail</a>

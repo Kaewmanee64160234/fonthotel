@@ -1,14 +1,41 @@
+<!-- eslint-disable no-undef -->
 <script setup lang="ts">
 import RoomCard from "@/components/RoomCard.vue";
 import { ref, watch } from "vue";
 import DatePicker from "vue3-datepicker";
 import { onMounted } from 'vue';
 import { useRoomStore } from '@/store/room.store';
+import { useBookingsStore } from "@/store/booking.store";
+import { Booking } from "@/model/booking.model";
 const roomStore = useRoomStore();
+const useBookings = useBookingsStore();
 const isDropdownOpen = ref(false);
-
 const clickcontinue = () => {
-    window.location.href = '/selectRoom'
+
+    const booking = ref<Booking>({
+        id: -1,
+        adult: adultCount.value,
+        child: childrenCount.value,
+        cusname: '',
+        cuslastname: '',
+        custel: '',
+        cusemail: '',
+        cuscontry: '',
+        cusaddress: '',
+        checkin: startDate.value,
+        checkout: endDate.value,
+        total: 0,
+        totaldiscount: 0,
+        paymentbooking: '',
+        paymentcheckout: '',
+        status: '',
+        statuslate: '',
+        createdate: new Date()
+    })
+
+    useBookings.setBooking(booking.value)
+    console.log(useBookings.currentBooking);
+
 }
 
 const clickback = () => {
@@ -58,7 +85,7 @@ watch(endDate, () => updateStayDates());
 const updateStayDates = () => {
     const formattedStartDate = formatDate(startDate.value);
     const formattedEndDate = formatDate(endDate.value);
-    stayDates.value =`${formattedStartDate} - ${formattedEndDate}`;
+    stayDates.value = `${formattedStartDate} - ${formattedEndDate}`;
 };
 
 const stayDates = ref<string>(''); // Holds the formatted stay dates initially
@@ -66,7 +93,7 @@ const stayDates = ref<string>(''); // Holds the formatted stay dates initially
 // Function to format date as "Tue, Dec 26, 2023"
 const formatDate = (date: Date): string => {
     const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
+    return new Intl.DateTimeFormat('en-US').format(date);
 };
 
 </script>
@@ -170,7 +197,7 @@ const formatDate = (date: Date): string => {
                 </div>
                 <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
                 <div class="mt-2 overflow-y-auto dc-scroll mb-20" v-for="item of roomStore.rooms " :key="item.id">
-                    <RoomCard :image="item.image" :typename="item.roomtype.typename"
+                    <RoomCard :image="item.image" :typename="item.roomtype.typename" sleep="1" area="37"
                         detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" />
                     <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
                         sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk"
