@@ -4,12 +4,14 @@ export interface Activity {
   name: string;
   price: number;
   description: string;
+  image:string;
+
 }
 
 export interface ActivityPerBook {
   id: number;
   qty: number;
-  image:string;
+  
   total: number;
   activities: Activity;   
 }

@@ -4,7 +4,7 @@ const props = defineProps<{
     image: string,
     name: string,
     detail: string,
-    price: string
+    price: number,
     btnadddetails: string;
 }>();
 </script>
@@ -15,7 +15,7 @@ const props = defineProps<{
             <!-- Room Image -->
             <div class=" w-1/3 py-3 pl-5 pr-10 flex " style="justify-content: start; background-color: white;">
                 <div class="flex-1 flex flex-col">
-                    <p class="text-black font-semibold text-lg pb-2">{{ props.name }}</p>
+                    <p class="text-black font-semibold text-lg pb-2">{{ name }}</p>
                     <img :src="props.image" alt="Room Image" class="rounded-lg pic-showroom" />
                 </div>
             </div>
