@@ -5,10 +5,11 @@ export interface RoomType {
   name: string;
   price: number;
   bedSize: number;
-  chromecast: boolean;
-  eletricSheer: boolean;
+  chromeCast: boolean;
+  electricSheer: boolean;
   wifi: boolean;
   bath: boolean;
   water: boolean;
   desk: boolean;
+  description: string;
 }
