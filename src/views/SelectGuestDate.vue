@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import RoomCard from "@/components/RoomCard.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import DatePicker from "vue3-datepicker";
 import { onMounted } from 'vue';
 import { useRoomStore } from '@/store/room.store';
@@ -50,7 +50,27 @@ const applyGuestCount = () => {
 onMounted(async () => {
     await roomStore.getRoomsByType(' ', 'Readyrana');
 })
+
+// Watch for changes in startDate and endDate and update "Your Stay" accordingly
+watch(startDate, () => updateStayDates());
+watch(endDate, () => updateStayDates());
+
+const updateStayDates = () => {
+    const formattedStartDate = formatDate(startDate.value);
+    const formattedEndDate = formatDate(endDate.value);
+    stayDates.value =`${formattedStartDate} - ${formattedEndDate}`;
+};
+
+const stayDates = ref<string>(''); // Holds the formatted stay dates initially
+
+// Function to format date as "Tue, Dec 26, 2023"
+const formatDate = (date: Date): string => {
+    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
 </script>
+
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
@@ -151,7 +171,7 @@ onMounted(async () => {
                 <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
                 <div class="mt-2 overflow-y-auto dc-scroll mb-20" v-for="item of roomStore.rooms " :key="item.id">
                     <RoomCard :image="item.image" :typename="item.roomtype.typename"
-                     detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" />
+                        detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" />
                     <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
                         sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk"
                         price="THB 5,700.00" />
@@ -183,16 +203,17 @@ onMounted(async () => {
                                     </div>
                                 </div>
                                 <div class="flex-2 flex flex-row p-2 pl-5">
-                                    <span class="font-medium">Date :</span>
-                                    <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span>
+                                    <span class="font-medium">Date : </span>
+                                    <!-- <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span> -->
+                                    <span>{{ stayDates }}</span>
                                 </div>
 
                                 <div class="flex-3 flex flex-row p-2 pl-5">
                                     <div class="flex-1 flex flex-col">
                                         <p class="font-medium">Guest</p>
                                         <p>
-                                            <a class="mr-10">Adult : 2</a>
-                                            <a class="ml-10">Children : -</a>
+                                            <a class="mr-10">Adult : {{ adultCount }}</a>
+                                            <a class="ml-10">Children : {{ childrenCount }}</a>
                                         </p>
                                     </div>
                                 </div>
