@@ -1,7 +1,8 @@
 import http from "./axios";
 
 const getAllActivities = () => {
-    return http.get('/activities')
+    return http.get('/activity')
+
 }
 
 export default {getAllActivities}

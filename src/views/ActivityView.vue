@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/ActivityComponent.vue";
-import { ref } from "vue";
+import { useActivityStore } from "@/store/activity.store";
+import { onMounted, ref } from "vue";
 
+const activityStore = useActivityStore();
+onMounted(() => {
+    activityStore.getAllActivities()
+});
 const clickback = () => {
     window.location.href = '/selectRoom'
 }
@@ -23,14 +28,14 @@ const clickcontinue = () => {
             <!-- Left Side:-->
             <div class="flex-1 flex flex-col pt-3 p-10">
                 <div class="mt-2 overflow-y-auto dc-scroll mb-10">
-                    <ActivityComponent image="https://i.pinimg.com/564x/dd/86/aa/dd86aa1ea848e7865c057e1e42e21641.jpg"
-                        name="Buffet Breakfast" detail="Special Deal for International buffet breakfast"
-                        price="Price   300  Baht" btnadddetails="#" />
-                    <ActivityComponent image="https://i.pinimg.com/564x/e8/cd/bf/e8cdbf6d45a21c6d5f0bedccc7343ba9.jpg"
-                        name="Spa " detail="Special Deal for International spa" price="Price   500  Baht"
-                        btnadddetails="#" />
-                    <ActivityComponent image="https://i.pinimg.com/564x/ae/81/66/ae8166050b0eaae9a79d0ba0cd503577.jpg"
-                        name="Event" detail="Special Deal for Event" price="Price   2000  Baht" btnadddetails="#" />
+                    <div v-for="item of activityStore.activities" :key="item.id">
+                        <ActivityComponent :image="item.image"
+                        :name="`${item.name}`" :detail="item.description"
+                        :price="item.price" btnadddetails="#" />
+
+                    </div>
+                  
+                
                 </div>
             </div>
 
@@ -214,6 +219,3 @@ const clickcontinue = () => {
     width: 60%;
 }
 </style>
-
-
-

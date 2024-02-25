@@ -9,7 +9,7 @@ const clickback = () => {
 }
 
 onMounted(async () => {
-    await roomStore.getRoomsByType(' ', 'Readyrana');
+    await roomStore.getRoomsByType('', 'ready');
 })
 
 </script>
@@ -25,7 +25,7 @@ onMounted(async () => {
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
         <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.rooms " :key="item.id">
-          <SelectRoomCard :image="item.image" :typename="item.roomtype.typename"
+          <SelectRoomCard :image="item.image" :typename="item.roomType"
             sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" btnbooknow="#" />
           <!-- <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
             sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00" btnbooknow="#" />
