@@ -2,7 +2,7 @@ export interface Room{
     id:string;
     image:string;
     status:string;
-    roomtype:RoomType;   // REFERENCES room (id) RoomType one to RoomType many
+    roomType:RoomType;   // REFERENCES room (id) RoomType one to RoomType many
 }
 
 export interface RoomType {
@@ -11,7 +11,7 @@ export interface RoomType {
     name: string;
     price: number;
     bedSize: number;
-    chromecast: boolean;
+    chromeCast: boolean;
     eletricSheer: boolean;
     wifi: boolean;
     bath: boolean;

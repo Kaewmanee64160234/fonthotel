@@ -4,12 +4,25 @@ export interface Activity {
   name: string;
   price: number;
   description: string;
+  image:string;
+
 }
 
 export interface ActivityPerBook {
   id: number;
   qty: number;
+  
   total: number;
-  booking: Booking;         // REFERENCES booking (id) Booking one to many ActivityPerBook 
-  activities: Activity;     //REFERENCES activity (id) Activity one to ActivityPerBook many
+  activities: Activity;   
+}
+
+export interface ActivityPerBooking {
+  id: number;
+  booking: Booking;
+  activity: ActivityPerBook[];
+  total: number;
+  status: string;
+  createdate: Date;
+  updatedate: Date;
+
 }

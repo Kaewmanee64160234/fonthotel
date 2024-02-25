@@ -1,8 +1,8 @@
 export interface Promotion {
     id: number;
-    createddate: Date;
-    enddate: Date;
+    createdDate: Date;
+    endDate: Date;
     name: string;
     discount: number;
-    discountpercent: number;
+    discountPercent: number;
 }

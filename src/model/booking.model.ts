@@ -1,3 +1,4 @@
+import { ActivityPerBooking } from "./activity.model";
 import { Brokenequipment } from "./brokenequipment.model";
 import { Customer } from "./customer.model";
 import { Employee } from "./employee.model";
@@ -7,33 +8,35 @@ import { Room} from "./room.model";
 
 export interface Booking {
     id: number;
-    createdate: Date;
-    cusname: string;
-    cuslastname: string;
-    custel: string;
-    cusemail: string;
-    cuscontry: string;
-    cusaddress: string;
-    checkin: Date;
-    checkout: Date;
+    createDate: Date;
+    cusName: string;
+    cusLastName: string;
+    cusTel: string;
+    cusEmail: string;
+    cusCountry: string;
+    cusAddress: string;
+    checkIn: Date;
+    checkOut: Date;
     total: number;
     pledge?: number;
-    totaldiscount: number;
-    paymentbooking: string;
-    paymentcheckout: string;
+    totalDiscount: number;
+    paymentBooking: string;
+    paymentCheckout: string;
     status: string;
-    statuslate: string;
+    statusLate: string;
     adult: number;
     child: number;
-    employee?: Employee[];       // REFERENCES employee (id) Employee one to many Booking
-    customer?: Customer[];       // REFERENCES customer (id) Customer one to many Booking
-    promotion?: Promotion;       // REFERENCES promotion (id) Promotion one to many Booking
+    employee?: Employee;       
+    customer?: Customer;      
+    promotion?: Promotion;
+    bookingDetail?: BookingDetail[];
+    activityPerBooking?: ActivityPerBooking[];      
 }
 
 export interface BookingDetail {
     id: number;
     total: number;
-    room: Room[];             // INTEGER REFERENCES room (id) BookingDetail many to Room_ one
-    booking: Booking[];       // INTEGER REFERENCES booking (id) BookingDetail many to booking one
-    brokenequipment: Brokenequipment[];     // INTEGER REFERENCES brokenequipment (id) BookingDetail many to brokenequipment one
+    room: Room;             
+    booking: Booking;       
+    brokenequipment: Brokenequipment[];    
 }
