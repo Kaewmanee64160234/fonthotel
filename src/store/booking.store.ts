@@ -421,163 +421,163 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log(currentBooking.value);
   };
 
-  async function getBookings() {
-    try {
-        const response = await bookingService.getBooking('asc','Not Comfrim');
-        console.log(response);
+//   async function getBookings() {
+//     try {
+//         const response = await bookingService.getBookings('asc','Not Comfrim');
+//         console.log(response);
 
-        const booking: Booking = {
-            id: response.data.booking_id,
-            createDate: new Date(response.data.booking_create_date),
-            cusName: response.data.booking_cus_name,
-            cusLastName: response.data.booking_cus_lastname,
-            cusTel: response.data.booking_cus_tel,
-            cusEmail: response.data.booking_cus_email,
-            cusCountry: response.data.booking_cus_addr,
-            cusAddress: response.data.booking_cus_addr_des,
-            checkIn: new Date(response.data.booking_checkin),
-            checkOut: new Date(response.data.booking_checkout),
-            total: response.data.booking_total,
-            pledge: response.data.booking_cash_pledge,
-            totalDiscount: response.data.booking_total_discount,
-            paymentBooking: response.data.booking_payment_booking,
-            paymentCheckout: response.data.booking_payment_checkout,
-            status: response.data.booking_status,
-            statusLate: response.data.booking_status_late,
-            adult: response.data.booking_de_adult,
-            child: response.data.booking_de_child,
-            createdDate: new Date(response.data.booking_create_date),
-            bookingDetail: [],
-            activityPerBooking: [],
-            customer: {
-                id: -1,
-                name: "",
-                startDate: new Date(),
-            },
-            promotion: {
-                createdDate: new Date(),
-                discount: 0,
-                discountPercent: 0,
-                endDate: new Date(),
-                id: -1,
-                name: "",
-            },
-            employee: {
-                address: "",
-                dateOfBirth: new Date(),
-                dateStartWork: "",
-                email: "",
-                hourlyRate: 0,
-                id: -1,
-                name: "",
-                position: "",
-                tel: "",
-            },
-        }
-        if (response.data != null) {
-            // booking
-            if (response.data.promotion != null) {
-                const promotion: Promotion = {
-                    id: response.data.promotion.prom_id,
-                    createdDate: response.data.promotion.prom_created_date,
-                    endDate: response.data.promotion.prom_end_date,
-                    name: response.data.promotion.prom_name,
-                    discount: response.data.promotion.prom_discount,
-                    discountPercent: response.data.promotion.prom_discount_pres,
-                }
-                booking.promotion = promotion
-            }
-            if (response.data.promotion != null) {
-                const customer: Customer = {
-                    id: response.data.customer.cus_id,
-                    name: response.data.customer.cus_name,
-                    startDate: response.data.customer.cus_start_date,
-                }
-                booking.customer = customer
-            }
-            if (response.data.promotion != null) {
-                const employee: Employee = {
-                    id: response.data.employee.emp_id,
-                    name: response.data.employee.emp_name,
-                    position: response.data.employee.emp_position,
-                    tel: response.data.employee.emp_tel,
-                    dateOfBirth: response.data.employee.emp_dob,
-                    address: response.data.employee.emp_addr,
-                    email: response.data.employee.emp_email,
-                    dateStartWork: response.data.employee.emp_dsw,
-                    hourlyRate: response.data.employee.emp_hourly_wage,
-                }
-                booking.employee = employee
-            }
+//         const booking: Booking = {
+//             id: response.data.booking_id,
+//             createDate: new Date(response.data.booking_create_date),
+//             cusName: response.data.booking_cus_name,
+//             cusLastName: response.data.booking_cus_lastname,
+//             cusTel: response.data.booking_cus_tel,
+//             cusEmail: response.data.booking_cus_email,
+//             cusCountry: response.data.booking_cus_addr,
+//             cusAddress: response.data.booking_cus_addr_des,
+//             checkIn: new Date(response.data.booking_checkin),
+//             checkOut: new Date(response.data.booking_checkout),
+//             total: response.data.booking_total,
+//             pledge: response.data.booking_cash_pledge,
+//             totalDiscount: response.data.booking_total_discount,
+//             paymentBooking: response.data.booking_payment_booking,
+//             paymentCheckout: response.data.booking_payment_checkout,
+//             status: response.data.booking_status,
+//             statusLate: response.data.booking_status_late,
+//             adult: response.data.booking_de_adult,
+//             child: response.data.booking_de_child,
+//             createdDate: new Date(response.data.booking_create_date),
+//             bookingDetail: [],
+//             activityPerBooking: [],
+//             customer: {
+//                 id: -1,
+//                 name: "",
+//                 startDate: new Date(),
+//             },
+//             promotion: {
+//                 createdDate: new Date(),
+//                 discount: 0,
+//                 discountPercent: 0,
+//                 endDate: new Date(),
+//                 id: -1,
+//                 name: "",
+//             },
+//             employee: {
+//                 address: "",
+//                 dateOfBirth: new Date(),
+//                 dateStartWork: "",
+//                 email: "",
+//                 hourlyRate: 0,
+//                 id: -1,
+//                 name: "",
+//                 position: "",
+//                 tel: "",
+//             },
+//         }
+//         if (response.data != null) {
+//             // booking
+//             if (response.data.promotion != null) {
+//                 const promotion: Promotion = {
+//                     id: response.data.promotion.prom_id,
+//                     createdDate: response.data.promotion.prom_created_date,
+//                     endDate: response.data.promotion.prom_end_date,
+//                     name: response.data.promotion.prom_name,
+//                     discount: response.data.promotion.prom_discount,
+//                     discountPercent: response.data.promotion.prom_discount_pres,
+//                 }
+//                 booking.promotion = promotion
+//             }
+//             if (response.data.promotion != null) {
+//                 const customer: Customer = {
+//                     id: response.data.customer.cus_id,
+//                     name: response.data.customer.cus_name,
+//                     startDate: response.data.customer.cus_start_date,
+//                 }
+//                 booking.customer = customer
+//             }
+//             if (response.data.promotion != null) {
+//                 const employee: Employee = {
+//                     id: response.data.employee.emp_id,
+//                     name: response.data.employee.emp_name,
+//                     position: response.data.employee.emp_position,
+//                     tel: response.data.employee.emp_tel,
+//                     dateOfBirth: response.data.employee.emp_dob,
+//                     address: response.data.employee.emp_addr,
+//                     email: response.data.employee.emp_email,
+//                     dateStartWork: response.data.employee.emp_dsw,
+//                     hourlyRate: response.data.employee.emp_hourly_wage,
+//                 }
+//                 booking.employee = employee
+//             }
 
-            if (response.data.bookingDetail) {
-                for (const i in response.data.bookingDetail) {
-                    console.log(response.data.bookingDetail[i])
-                    const roomType: RoomType = {
-                        id: response.data.bookingDetail[i].room.roomtype.room_type_id,
-                        roomType: response.data.bookingDetail[i].room.roomtype.room_type,
-                        typeName: response.data.bookingDetail[i].room.roomtype.room_type_name,
-                        bedSize: response.data.bookingDetail[i].room.roomtype.room_type_bed_size,
-                        bath: response.data.bookingDetail[i].room.roomtype.room_type_bath,
-                        chromeCast: response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
-                        desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
-                        eletricSheer: response.data.bookingDetail[i].room.roomtype.room_type_electric_sheer,
-                        price: response.data.bookingDetail[i].room.roomtype.room_type_price,
-                        water: response.data.bookingDetail[i].room.roomtype.room_type_water,
-                        wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
-                        descriptions: response.data.bookingDetail[i].room.roomtype.room_type_des,
-                    }
+//             if (response.data.bookingDetail) {
+//                 for (const i in response.data.bookingDetail) {
+//                     console.log(response.data.bookingDetail[i])
+//                     const roomType: RoomType = {
+//                         id: response.data.bookingDetail[i].room.roomtype.room_type_id,
+//                         roomType: response.data.bookingDetail[i].room.roomtype.room_type,
+//                         typeName: response.data.bookingDetail[i].room.roomtype.room_type_name,
+//                         bedSize: response.data.bookingDetail[i].room.roomtype.room_type_bed_size,
+//                         bath: response.data.bookingDetail[i].room.roomtype.room_type_bath,
+//                         chromeCast: response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
+//                         desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
+//                         eletricSheer: response.data.bookingDetail[i].room.roomtype.room_type_electric_sheer,
+//                         price: response.data.bookingDetail[i].room.roomtype.room_type_price,
+//                         water: response.data.bookingDetail[i].room.roomtype.room_type_water,
+//                         wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
+//                         descriptions: response.data.bookingDetail[i].room.roomtype.room_type_des,
+//                     }
 
-                    const room: Room = {
-                        id: response.data.bookingDetail[i].room.room_id,
-                        image: response.data.bookingDetail[i].room.room_img_path,
-                        status: response.data.bookingDetail[i].room.room_status,
-                        roomType: roomType
+//                     const room: Room = {
+//                         id: response.data.bookingDetail[i].room.room_id,
+//                         image: response.data.bookingDetail[i].room.room_img_path,
+//                         status: response.data.bookingDetail[i].room.room_status,
+//                         roomType: roomType
 
-                    }
-                    const bookingDetail: BookingDetail = {
-                        id: response.data.bookingDetail[i].id,
-                        room: room,
-                        total: response.data.bookingDetail[i].total,
+//                     }
+//                     const bookingDetail: BookingDetail = {
+//                         id: response.data.bookingDetail[i].id,
+//                         room: room,
+//                         total: response.data.bookingDetail[i].total,
 
-                    }
-                    booking.bookingDetail?.push(bookingDetail)
-                }
+//                     }
+//                     booking.bookingDetail?.push(bookingDetail)
+//                 }
 
-            }
-            if (response.data.activityPerBooking) {
-                for (const i in response.data.activityPerBooking) {
-                    const activityPerBooking: ActivityPerBooking = {
-                        id: response.data.activityPerBooking[i].id,
-                        // booking: response.data.activityPerBooking.bookings[i].booking,
-                        activity: {
-                            id: response.data.activityPerBooking[i].act_id,
-                            image: response.data.activityPerBooking[i].act_img_path,
-                            name: response.data.activityPerBooking[i].act_name,
-                            price: response.data.activityPerBooking[i].act_price,
-                            description: response.data.activityPerBooking[i].act_des,
-                        },
-                        total: response.data.activityPerBooking[i].total,
-                        createdate: response.data.activityPerBooking[i].createdate,
-                        updatedate: response.data.activityPerBooking[i].updatedate,
-                    }
+//             }
+//             if (response.data.activityPerBooking) {
+//                 for (const i in response.data.activityPerBooking) {
+//                     const activityPerBooking: ActivityPerBooking = {
+//                         id: response.data.activityPerBooking[i].id,
+//                         // booking: response.data.activityPerBooking.bookings[i].booking,
+//                         activity: {
+//                             id: response.data.activityPerBooking[i].act_id,
+//                             image: response.data.activityPerBooking[i].act_img_path,
+//                             name: response.data.activityPerBooking[i].act_name,
+//                             price: response.data.activityPerBooking[i].act_price,
+//                             description: response.data.activityPerBooking[i].act_des,
+//                         },
+//                         total: response.data.activityPerBooking[i].total,
+//                         createdate: response.data.activityPerBooking[i].createdate,
+//                         updatedate: response.data.activityPerBooking[i].updatedate,
+//                     }
 
-                    booking.activityPerBooking?.push(activityPerBooking)
-                }
+//                     booking.activityPerBooking?.push(activityPerBooking)
+//                 }
 
-            }
-            currentBooking.value = booking;
-            setBooking(booking)
-            console.log('Book', currentBooking.value)
+//             }
+//             currentBooking.value = booking;
+//             setBooking(booking)
+//             console.log('Book', currentBooking.value)
 
-        }
+//         }
 
-    } catch (error) {
-        console.log(error);
-    }
+//     } catch (error) {
+//         console.log(error);
+//     }
 
     
-}
+// }
 
   return {
     bookings,
@@ -585,7 +585,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     addBookingDetail,
     getBookingBybookingId,
     setBooking,
-    getBooking,
+    //getBookings,
     currentBooking,
     addAcitivityPerBooking,
     getBookingByCustomerIdLastcreated,

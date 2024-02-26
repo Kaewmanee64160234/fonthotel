@@ -15,10 +15,10 @@ function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
 
-onMounted(async () => {
-  await bookingStore.getBooking();
-  booking.value = bookingStore.currentBooking;
-});
+// onMounted(async () => {
+//   await bookingStore.getBookings();
+//   booking.value = bookingStore.currentBooking;
+// });
 
 let booking = ref<Booking>({
     adult: 0,
@@ -148,14 +148,14 @@ let booking = ref<Booking>({
           </div>
           <div class="overflow-y-auto dc-scroll">
          
-          <HistoryAcceptBookingCard
+          <!-- <HistoryAcceptBookingCard
             :name="`${booking!.cusName}  ${booking!.cusLastName}`"
             :typePayment="booking.paymentBooking"
             :typeRoom="booking.bookingDetail.roomType"
             :activity="booking.activityPerBooking.name"
             :price="booking.total"
             :status="booking.status"
-          />
+          /> -->
          
         </div>
         </div>

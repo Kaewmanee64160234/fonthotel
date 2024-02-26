@@ -48,7 +48,7 @@ const clickcontinue = () => {
         customer: { id: 0, name: '', startDate: new Date() },
         pledge: 0,
         promotion: { id: 0, name: '', discount: 0, discountPercent: 0, createdDate: new Date(), endDate: new Date() },
-        
+
     })
 
     bookingStore.setBooking(booking.value)
@@ -91,7 +91,7 @@ const applyGuestCount = () => {
 };
 onMounted(async () => {
     console.log(paramValue.toString().split(' ')[0]);
-    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(),roomStore.currentStatus);
+    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(), roomStore.currentStatus);
 })
 
 // Watch for changes in startDate and endDate and update "Your Stay" accordingly
@@ -184,7 +184,8 @@ const formatDate = (date: Date): string => {
                                             <!-- Btn Apply -->
                                             <div class="flex-3 flex flex-row p-1 justify-end">
                                                 <div class="flex">
-                                                    <button type="button" class="btn-apply" @click="applyGuestCount">
+                                                    <button type="button" class="btn-apply" @click="applyGuestCount"
+                                                        :disabled="adultCount+childrenCount === 0">
                                                         <a class="text-white text-m text-center">Apply</a>
                                                     </button>
                                                 </div>
@@ -198,7 +199,7 @@ const formatDate = (date: Date): string => {
                         <!-- Check-in date picker -->
                         <div class="btn-date text-left">
                             <label class=""> Check-in </label>
-                            <DatePicker id="check-in" v-model="startDate" 
+                            <DatePicker id="check-in" v-model="startDate"
                                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
                                 style="width: 90%;" placeholder="Select date" />
                         </div>
@@ -213,12 +214,12 @@ const formatDate = (date: Date): string => {
                     </div>
                 </div>
                 <p class="mt-3 text-white font-semibold text-xl ">Select Room</p>
-             
+
                 <div class="mt-2 overflow-y-auto  mb-10 dc-scroll ">
                     <div v-for="item of roomStore.currentRooms " :key="item.id">
-                    <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
-                        detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
-                </div>
+                        <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName"
+                            area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
+                    </div>
                 </div>
             </div>
 
@@ -261,7 +262,7 @@ const formatDate = (date: Date): string => {
 
 
                     <div class="flex-2 flex flex-row justify-center pt-10">
-                        <button class="btn-continue" @click="clickcontinue()">
+                        <button class="btn-continue" @click="clickcontinue()" :disabled="totalGuests === 0">
                             <a>Continue</a>
                         </button>
                     </div>
