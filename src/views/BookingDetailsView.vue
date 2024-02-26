@@ -16,7 +16,7 @@ onMounted(async () => {
 <template>
     <div class="body">
         <div v-for="item of bookingStore.bookings" :key="item.id">
-            <!-- <BookingDetailComponent :imag="item." :name="item.name" :typeroom="item.typeroom" :date=""
+            <!-- <BookingDetailComponent :imag="item.bookingDetail." :name="item.name" :typeroom="item.typeroom" :date=""
                 :adult="item.adult" :children="item.children" :typeroom="item." :total="item.total"
                 :payment="item.paymentbooking" :status="item.status">
             </BookingDetailComponent> -->

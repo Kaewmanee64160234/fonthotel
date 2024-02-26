@@ -8,4 +8,8 @@ const getBookingBybookingid = (id: number) => {
     return http.get('/booking/id' + id)
 }
 
-export default {saveBooking, getBookingBybookingid}
+const getBookingByCustomerIdLastcreated= (id: number) => {
+    return http.get(`booking/customer/${id}/lasted`)
+}
+
+export default {saveBooking, getBookingBybookingid, getBookingByCustomerIdLastcreated}
