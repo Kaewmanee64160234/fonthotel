@@ -20,9 +20,9 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
     };
 
-    const getBookingById = async (id: number) => {
+    const getBookingBybookingId = async (id: number) => {
         try {
-            const response = await bookingService.getBookingById(id);
+            const response = await bookingService.getBookingBybookingid(id);
             if (response.data) {
                 bookings.value = response.data;
             } else {
@@ -40,8 +40,10 @@ export const useBookingsStore = defineStore("bookings", () => {
     function getBooking() {
         return currentBooking.value;
     }
+
     const addAcitivityPerBooking = (activityPerBook:ActivityPerBook)=>{
         currentBooking.value?.activityPerBooking?.push(activityPerBook)
     }
-    return { saveBooking, getBookingById, setBooking, getBooking,currentBooking ,addAcitivityPerBooking};
+    return { saveBooking, getBookingBybookingId, setBooking, getBooking,currentBooking ,addAcitivityPerBooking};
+
 });

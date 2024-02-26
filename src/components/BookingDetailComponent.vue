@@ -1,22 +1,20 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
 
+const props = defineProps<{
+    type: string,
+    img: string,
+    date: Date,
+    name: string,
+    typeroom: string,
+    adult: number,
+    children: number,
+    total: number,
+    payment: string,
+    status: string,
 
-const props = defineProps({
-    type: String,
-    img: String,
-    date: String,
-    name: String,
-    typeroom: String,
-    guest: String,
-    total: String,
-    checkin: String,
-    checkout: String,
-    payment: String,
-    status: String,
+}>();
 
-
-});
 </script>
 
 <template>
@@ -47,25 +45,25 @@ const props = defineProps({
                                         <p class="text-sm text-base text-black">Date: {{ date }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Check-in : After {{ checkin }} PM </p>
+                                        <p class="text-sm text-base text-black">Check-in : After 1:00 PM </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Name: {{ name }} </p>
+                                        <p class="text-sm text-base text-black">Name: {{ props.name }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Check-out : Before {{ checkout }} AM </p>
+                                        <p class="text-sm text-base text-black">Check-out : Before 7:00 AM </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Type Room : {{ typeroom }}</p>
+                                        <p class="text-sm text-base text-black">Type Room : {{ props.typeroom }}</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <h1 class="text-lg font-semibold  text-base text-black">Payment  Information </h1>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Guest: {{ guest  }}  Per Adult -  Per Child</p>
+                                        <p class="text-sm text-base text-black">Guest: {{ props.adult  }}  Per Adult |  {{ props.children }} Per Child</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Payment: {{ payment }} </p>
+                                        <p class="text-sm text-base text-black">Payment: {{ props.payment }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         

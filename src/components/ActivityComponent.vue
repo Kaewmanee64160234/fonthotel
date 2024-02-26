@@ -1,14 +1,37 @@
 <script setup lang="ts">
 import { useBookingsStore } from '@/store/booking.store';
 import { defineProps } from 'vue'
+import { ref } from "vue";
 const useBooking = useBookingsStore();
+
 const props = defineProps<{
     image: string,
     name: string,
     detail: string,
     price: number,
     btnadddetails: string;
+
 }>();
+
+const adultCount = ref(0);
+const childrenCount = ref(0);
+
+const decrementGuest = (type: 'adult' | 'children') => {
+    if (type === 'adult' && adultCount.value > 0) {
+        adultCount.value--;
+    } else if (type === 'children' && childrenCount.value > 0) {
+        childrenCount.value--;
+    }
+};
+const incrementGuest = (type: 'adult' | 'children') => {
+    if (type === 'adult') {
+        adultCount.value++;
+    } else if (type === 'children') {
+        childrenCount.value++;
+    }
+};
+
+
 
 </script>
 <template>
@@ -26,8 +49,8 @@ const props = defineProps<{
             <!-- Room Details -->
             <div class="w-1/3  pt-3 bg-white flex flex-col justify-between">
                 <div>
-                    <p class="text-m text-base text-black mt-10">{{ props.detail }}</p>
-                    <p class="text-m text-base text-black mt-10">{{ props.price }}</p>
+                    <p class="text-m text-base text-black mt-10">{{ detail }}</p>
+                    <p class="text-m text-base text-black mt-10">Price {{ price }} Baht</p>
                 </div>
             </div>
 
@@ -36,14 +59,16 @@ const props = defineProps<{
                 <div class="mt-10">
                     <div class="flex-2 flex flex-row p-1">
                         <div class="flex-2 flex flex-col" style="width: 50%">
-                            <div class="flex items-center py-2 ml-8">
-                                <button type="button" class="btn-minus">
-                                    <a class="text-white text-m text-center ">-</a>
-                                </button>
-                                <a class="mx-4 ">0</a>
-                                <button type="button" class="btn-plus">
-                                    <a class="text-white text-m text-center ">+</a>
-                                </button>
+                            <div class="flex-2 flex flex-col" style="width: 100%">
+                                <div class="flex items-center py-2 ml-8">
+                                    <button type="button" class="btn-minus" @click="decrementGuest('children')">
+                                        <a class="text-white text-m text-center">-</a>
+                                    </button>
+                                    <a class="mx-4">{{ childrenCount }}</a>
+                                    <button type="button" class="btn-plus" @click="incrementGuest('children')">
+                                        <a class="text-white text-m text-center">+</a>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -56,12 +81,12 @@ const props = defineProps<{
                     <div class="flex-2 flex flex-row p-1">
                         <div class="flex-2 flex flex-col" style="width: 50%">
                             <div class="flex items-center py-2 ml-8">
-                                <button type="button" class="btn-minus">
-                                    <a class="text-white text-m text-center ">-</a>
+                                <button type="button" class="btn-minus" @click="decrementGuest('adult')">
+                                    <a class="text-white text-m text-center">-</a>
                                 </button>
-                                <a class="mx-4">0</a>
-                                <button type="button" class="btn-plus">
-                                    <a class="text-white text-m text-center ">+</a>
+                                <a class="mx-4">{{ adultCount }}</a>
+                                <button type="button" class="btn-plus" @click="incrementGuest('adult')">
+                                    <a class="text-white text-m text-center">+</a>
                                 </button>
                             </div>
                         </div>

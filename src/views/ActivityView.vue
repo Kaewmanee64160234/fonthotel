@@ -15,6 +15,9 @@ const clickcontinue = () => {
     window.location.href = '/inputinfo'
 }
 
+
+
+
 </script>
 <template>
     <div class="body">

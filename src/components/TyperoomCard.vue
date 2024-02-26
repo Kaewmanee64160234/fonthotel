@@ -2,19 +2,20 @@
 import { defineProps } from 'vue';
 
 // Define the props for the TyperoomCard component
-const props = defineProps({
-    imgroom: String,
-    roomtype: String,
-    readmore: String,
-    btnbooking: String,
-});
+const props = defineProps<{
+    imgroom: string,
+    roomtype: string,
+    readmore: string,
+    btnbooking: string,
+}>();
+
 </script>
 
 <template>
     <div class="card-container rounded-lg  overflow-hidden">
         <img class="room-image" :src="imgroom" alt="Room Image">
         <div class="card-content p-4 text-center">
-            <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ roomtype }}</h5>
+            <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ props.roomtype }}</h5>
             <a :href="readmore" class="hover:text-white mt-5 block">Read more</a>
             <router-link to="/selectguestdate" class="btn-booking mt-7 inline-block">Book now</router-link>
 
