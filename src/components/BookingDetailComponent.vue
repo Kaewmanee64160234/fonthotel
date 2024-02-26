@@ -32,6 +32,7 @@ const props = defineProps<{
                     <!-- Room Image -->
                     <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
                         <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
+             
                     </div>
 
                     <!-- Room Description -->
