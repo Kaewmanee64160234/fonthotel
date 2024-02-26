@@ -17,6 +17,7 @@ onMounted(async () => {
     await roomStore.getRoomsByType('ready', ' ');
     booking.value = bookingsStore.currentBooking;
     console.log(booking.value);  
+
 })
 
 // Compute the formatted check-in date
@@ -54,6 +55,7 @@ const formatDate = (date: string): string => {
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
         <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.rooms " :key="item.id">
+
           <SelectRoomCard :image="item.image" :typename="item.roomType.typeName"
             sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
           <!-- <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"

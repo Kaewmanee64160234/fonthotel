@@ -7,14 +7,11 @@ export interface Activity {
   image:string;
 
 }
-
-
 export interface ActivityPerBooking {
   id: number;
   booking: Booking;
   activity: Activity;
   total: number;
-  status: string;
   createdate: Date;
   updatedate: Date;
 

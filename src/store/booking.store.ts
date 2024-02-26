@@ -22,8 +22,8 @@ export const useBookingsStore = defineStore("bookings", () => {
         cusName: "",
         cusTel: "",
         createdDate: new Date(),
-        id
-        : 0,
+
+        id : 0,
         paymentBooking: "",
         paymentCheckout: "",
         status: "",
@@ -32,7 +32,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         totalDiscount: 0,
         activityPerBooking: [],
         bookingDetail: [],
-        customer: {id:0,name:"",startDate:new Date()},
+        customer: { id: 0, name: "", startDate: new Date() },
         employee: {
             address: "",
             dateOfBirth: new Date(),
@@ -47,7 +47,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         pledge: 0,
         promotion: {
             createdDate: new Date(),
-            discount    : 0,
+            discount: 0,
             discountPercent: 0,
             endDate: new Date(),
             id: 0,
@@ -69,7 +69,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
     };
 
-    const getBookingBybookingid = async (id: number) => {
+    const getBookingBybookingId = async (id: number) => {
         try {
             const response = await bookingService.getBookingBybookingid(id);
             if (response.data) {
@@ -114,10 +114,10 @@ export const useBookingsStore = defineStore("bookings", () => {
             adult: response.data.booking_de_adult,
             child: response.data.booking_de_child,
 
-            employee:  {
+            employee: {
                 address: "",
                 dateOfBirth: new Date(),
-                dateStartWork: "",  
+                dateStartWork: "",
                 email: "",
                 hourlyRate: 0,
                 id: -1,
@@ -126,17 +126,17 @@ export const useBookingsStore = defineStore("bookings", () => {
                 tel: "",
             },
             customer: {
-                id:-1,
+                id: -1,
                 name: "",
                 startDate: new Date(),
             },
-            promotion:{
+            promotion: {
                 createdDate: new Date(),
-                 discount: 0,
-                 discountPercent: 0,
-                 endDate: new Date(),
-                 id: -1,
-                 name: "",
+                discount: 0,
+                discountPercent: 0,
+                endDate: new Date(),
+                id: -1,
+                name: "",
             },
             createdDate: new Date(response.data.booking_create_date),
             bookingDetail: [],
@@ -144,40 +144,40 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
         if (response.data != null) {
             // booking
-            if(response.data.promotion != null) {
-            const promotion: Promotion  = {
-                id: response.data.promotion.prom_id,
-                createdDate: response.data.promotion.prom_created_date,
-                endDate: response.data.promotion.prom_end_date,
-                name: response.data.promotion.prom_name,
-                discount: response.data.promotion.prom_discount,
-                discountPercent: response.data.promotion.prom_discount_pres,
+            if (response.data.promotion != null) {
+                const promotion: Promotion = {
+                    id: response.data.promotion.prom_id,
+                    createdDate: response.data.promotion.prom_created_date,
+                    endDate: response.data.promotion.prom_end_date,
+                    name: response.data.promotion.prom_name,
+                    discount: response.data.promotion.prom_discount,
+                    discountPercent: response.data.promotion.prom_discount_pres,
+                }
+                booking.promotion = promotion
             }
-            booking.promotion = promotion
-        }
-        if(response.data.promotion != null) {
-            const customer: Customer = {
-                id: response.data.customer.cus_id,
-                name: response.data.customer.cus_name,
-                startDate: response.data.customer.cus_start_date,
+            if (response.data.promotion != null) {
+                const customer: Customer = {
+                    id: response.data.customer.cus_id,
+                    name: response.data.customer.cus_name,
+                    startDate: response.data.customer.cus_start_date,
+                }
+                booking.customer = customer
             }
-            booking.customer = customer
-        }
-        if(response.data.promotion != null) {
-            const employee: Employee = {
-                id: response.data.employee.emp_id,
-                name: response.data.employee.emp_name,
-                position: response.data.employee.emp_position,
-                tel: response.data.employee.emp_tel,
-                dateOfBirth: response.data.employee.emp_dob,
-                address: response.data.employee.emp_addr,
-                email: response.data.employee.emp_email,
-                dateStartWork: response.data.employee.emp_dsw,
-                hourlyRate: response.data.employee.emp_hourly_wage,
+            if (response.data.promotion != null) {
+                const employee: Employee = {
+                    id: response.data.employee.emp_id,
+                    name: response.data.employee.emp_name,
+                    position: response.data.employee.emp_position,
+                    tel: response.data.employee.emp_tel,
+                    dateOfBirth: response.data.employee.emp_dob,
+                    address: response.data.employee.emp_addr,
+                    email: response.data.employee.emp_email,
+                    dateStartWork: response.data.employee.emp_dsw,
+                    hourlyRate: response.data.employee.emp_hourly_wage,
+                }
+                booking.employee = employee
             }
-            booking.employee = employee
-        }
-           
+
             if (response.data.bookingDetail) {
                 for (const i in response.data.bookingDetail) {
                     console.log(response.data.bookingDetail[i])
@@ -208,7 +208,7 @@ export const useBookingsStore = defineStore("bookings", () => {
                         id: response.data.bookingDetail[i].id,
                         room: room,
                         total: response.data.bookingDetail[i].total,
-                       
+
                     }
                     booking.bookingDetail?.push(bookingDetail)
                 }
@@ -243,8 +243,12 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
         return currentBooking;
     }
+    const addAcitivityPerBooking = (activityPerBook:ActivityPerBooking)=>{
+        currentBooking.value.activityPerBooking.push(activityPerBook)
+        console.log(activityPerBook)
+        console.log(currentBooking.value?.activityPerBooking)
+    }
+    return { bookings,saveBooking, getBookingBybookingId, setBooking, getBooking,currentBooking ,addAcitivityPerBooking,getBookingByCustomerIdLastcreated};
 
 
-
-    return { bookings, saveBooking, getBookingBybookingid, setBooking, getBooking, currentBooking, getBookingByCustomerIdLastcreated };
 });
