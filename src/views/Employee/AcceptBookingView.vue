@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import AcceptBookingCard from "@/components/Employee/AcceptBookingCard.vue";
+import { useBookingsStore } from "@/store/booking.store";
 const isDropdownOpen = ref(false);
-
+const bookingStore = useBookingsStore();
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
-  // Handle the filter selection here, e.g., update a query parameter or fetch new data
   isDropdownOpen.value = false;
 };
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
+
+onMounted(async () => {
+  await bookingStore.getBookings('asc','waiting');
+
+});
 </script>
 <template>
   <body>
@@ -95,27 +100,18 @@ function toggleDropdown() {
           </div>
           <div class="overflow-y-auto dc-scroll">
          
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
+            <div v-for="item in bookingStore.bookings" :key="item.id">
+              <AcceptBookingCard
+                :name="`${item.cusName} ${item.cusLastName}`"
+                :typePayment="item.paymentBooking"
+                :typeRoom="item.bookingDetail[0].room.roomType.typeName "
+                :activity="
+                  item.activityPerBooking[0]?.activity?.name ?? 'No activity'
+                "
+                :price="item.total"
+                :status="item.status"
+              />
+            </div>
         </div>
         </div>
       </div>

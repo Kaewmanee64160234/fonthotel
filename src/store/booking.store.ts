@@ -423,9 +423,9 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log(currentBooking.value);
   };
 
-  async function getBookings() {
+  async function getBookings(order: string, status: string) {
     try {
-      const response = await bookingService.getBookings("desc", "all");
+      const response = await bookingService.getBookings(order, status);
       console.log(response.data);
       for (const i in response.data) {
         const booking: Booking = {
