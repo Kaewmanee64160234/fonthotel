@@ -9,7 +9,6 @@ export interface Activity {
 }
 export interface ActivityPerBooking {
   id: number;
-  booking: Booking;
   activity: Activity;
   total: number;
   createdate: Date;

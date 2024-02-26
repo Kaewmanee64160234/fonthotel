@@ -206,7 +206,6 @@ export const useBookingsStore = defineStore("bookings", () => {
 
                     }
                     const bookingDetail: BookingDetail = {
-                        booking: booking,
                         id: response.data.bookingDetail[i].id,
                         room: room,
                         total: response.data.bookingDetail[i].total,
@@ -220,7 +219,7 @@ export const useBookingsStore = defineStore("bookings", () => {
                 for (const i in response.data.activityPerBooking) {
                     const activityPerBooking: ActivityPerBooking = {
                         id: response.data.activityPerBooking[i].id,
-                        booking: response.data.activityPerBooking.bookings[i].booking,
+                        // booking: response.data.activityPerBooking.bookings[i].booking,
                         activity: {
                             id: response.data.activityPerBooking[i].act_id,
                             image: response.data.activityPerBooking[i].act_img_path,
@@ -240,9 +239,10 @@ export const useBookingsStore = defineStore("bookings", () => {
 
             }
             currentBooking.value = booking;
+            setBooking(booking)
+            console.log('Book',currentBooking.value)
 
         }
-        return currentBooking;
     }
     const addAcitivityPerBooking = (activityPerBook:ActivityPerBooking)=>{
         currentBooking.value.activityPerBooking.push(activityPerBook)

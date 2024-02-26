@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Activity, ActivityPerBook } from "@/model/activity.model";
+import { Activity, ActivityPerBooking } from "@/model/activity.model";
 import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
 import { ref } from "vue";
@@ -33,12 +33,14 @@ const incrementGuest = (type: "adult" | "children") => {
 };
 
 const addDetails = (activity_: Activity) => {
-  const activityPerBooking: ActivityPerBook = {
+  const activityPerBooking: ActivityPerBooking = {
     activity: activity_,
 
-    booking: useBooking.currentBooking!,
+  
     id: -1,
-    qty: adultCount.value + childrenCount.value,
+ createdate: new Date(),
+ updatedate
+: new Date(),
     total: (adultCount.value + childrenCount.value) * activity_.price,
   };
   useBooking.addAcitivityPerBooking(activityPerBooking);
