@@ -26,6 +26,8 @@ const saveBooking = async (booking: Booking,customerId:number) => {
     booking_cash_pledge: booking.pledge, // Adjusted from a static value to use `booking.pledge`
     booking_total_discount: booking.totalDiscount,
     booking_payment_booking: booking.paymentBooking,
+    booking_adult:booking.adult,
+    booking_child:booking.child,
     booking_status: booking.status,
     bookingdetail: bookingDetailMapped, // Now uses the mapped booking details
     activity_booking: activityBookingMapped,

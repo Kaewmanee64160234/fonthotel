@@ -86,6 +86,8 @@ const incrementGuest = (type: 'adult' | 'children') => {
 
 const applyGuestCount = () => {
     totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
+    bookingStore.currentBooking.adult = adultCount.value;
+    bookingStore.currentBooking.child = childrenCount.value;
 };
 onMounted(async () => {
     console.log(paramValue.toString().split(' ')[0]);

@@ -268,12 +268,13 @@ export const useBookingsStore = defineStore("bookings", () => {
       total: response.data.booking_total,
       pledge: response.data.booking_cash_pledge,
       totalDiscount: response.data.booking_total_discount,
-      paymentBooking: response.data.booking_payment_checkout,
+      paymentBooking: response.data.booking_payment_booking,
       paymentCheckout: response.data.paymentCheckout,
       status: response.data.booking_status,
       statusLate: response.data.booking_status_late,
-      adult: response.data.booking_de_adult,
-      child: response.data.booking_de_child,
+      
+      adult: response.data.booking_adult,
+      child: response.data.booking_child,
 
       employee: {
         address: "",
