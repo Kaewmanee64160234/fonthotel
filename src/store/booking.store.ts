@@ -423,7 +423,7 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   async function getBookings() {
     try {
-        const response = await bookingService.getBooking('asc','Not Comfrim');
+        const response = await bookingService.getBookings('asc','Not Comfrim');
         console.log(response);
 
         const booking: Booking = {
@@ -548,18 +548,17 @@ export const useBookingsStore = defineStore("bookings", () => {
             if (response.data.activityPerBooking) {
                 for (const i in response.data.activityPerBooking) {
                     const activityPerBooking: ActivityPerBooking = {
-                        id: response.data.activityPerBooking[i].id,
-                        // booking: response.data.activityPerBooking.bookings[i].booking,
-                        activity: {
-                            id: response.data.activityPerBooking[i].act_id,
-                            image: response.data.activityPerBooking[i].act_img_path,
-                            name: response.data.activityPerBooking[i].act_name,
-                            price: response.data.activityPerBooking[i].act_price,
-                            description: response.data.activityPerBooking[i].act_des,
-                        },
-                        total: response.data.activityPerBooking[i].total,
-                        createdate: response.data.activityPerBooking[i].createdate,
-                        updatedate: response.data.activityPerBooking[i].updatedate,
+                      id: response.data.activityPerBooking[i].id,
+                      // booking: response.data.activityPerBooking.bookings[i].booking,
+                      activity: {
+                        id: response.data.activityPerBooking[i].act_id,
+                        image: response.data.activityPerBooking[i].act_img_path,
+                        name: response.data.activityPerBooking[i].act_name,
+                        price: response.data.activityPerBooking[i].act_price,
+                        description: response.data.activityPerBooking[i].act_des,
+                      },
+                      total: response.data.activityPerBooking[i].total,
+                      qty: 0
                     }
 
                     booking.activityPerBooking?.push(activityPerBooking)
@@ -585,7 +584,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     addBookingDetail,
     getBookingBybookingId,
     setBooking,
-    getBooking,
+    getBookings,
     currentBooking,
     addAcitivityPerBooking,
     getBookingByCustomerIdLastcreated,
