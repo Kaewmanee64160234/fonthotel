@@ -105,6 +105,7 @@ onMounted(async () => {
                 :name="`${item.cusName} ${item.cusLastName}`"
                 :typePayment="item.paymentBooking"
                 :typeRoom="item.bookingDetail[0].room.roomType.typeName "
+                :id="item.id"
                 :activity="
                   item.activityPerBooking[0]?.activity?.name ?? 'No activity'
                 "

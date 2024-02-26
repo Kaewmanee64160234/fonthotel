@@ -8,6 +8,7 @@ import { Promotion } from "@/model/promotion.model";
 import { Room, RoomType } from "@/model/room.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useUserStore } from "./user.store";
+import router from "@/router";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
@@ -587,6 +588,21 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
   }
 
+  const confirmBooking = async (id: number,status:string) => {
+    try {
+      const response = await bookingService.confirmBooking(id,status);
+      if (response.data) {
+        
+        console.log(response.data);
+        getBookings("desc", "waiting");
+        window.location.reload();
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     bookings,
     saveBooking,
@@ -597,5 +613,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     currentBooking,
     addAcitivityPerBooking,
     getBookingByCustomerIdLastcreated,
+    confirmBooking
   };
 });
