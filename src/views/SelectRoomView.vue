@@ -5,9 +5,11 @@ import { useRoomStore } from '@/store/room.store';
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking } from "@/model/booking.model";
 import router from "@/router";
+import { useRoute } from "vue-router";
 const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
 const booking = ref<Booking>();
+  const route = useRoute();
 const clickback = () => {
   router.push('/selectguestdate')
 
@@ -19,11 +21,17 @@ onMounted(async () => {
     console.log(booking.value);  
 
 })
+const paramValue = route.params.type;
+
+onMounted(async () => {
+    console.log(paramValue.toString().split(' ')[0]);
+    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(),roomStore.currentStatus);
+})
 
 // Compute the formatted check-in date
 const formattedCheckin = computed(() => {
   if (booking.value) {
-    return formatDate(booking.value.checkIn);
+    return formatDate(booking.value.checkIn.toDateString());
   }
   return "";
 });
@@ -31,7 +39,7 @@ const formattedCheckin = computed(() => {
 // Compute the formatted check-out date
 const formattedCheckout = computed(() => {
   if (booking.value) {
-    return formatDate(booking.value.checkOut);
+    return formatDate(booking.value.checkOut.toDateString());
   }
   return "";
 });
@@ -54,7 +62,7 @@ const formatDate = (date: string): string => {
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.rooms " :key="item.id">
+        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.currentRooms " :key="item.id">
 
           <SelectRoomCard :image="item.image" :typename="item.roomType.typeName"
             sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
