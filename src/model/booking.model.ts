@@ -29,6 +29,7 @@ export interface Booking {
     employee?: Employee;       
     customer: Customer;      
     promotion: Promotion;
+    createdDate:Date;
     bookingDetail: BookingDetail[];
     activityPerBooking: ActivityPerBook[];      
 }
@@ -38,5 +39,5 @@ export interface BookingDetail {
     total: number;
     room: Room;             
     booking: Booking;       
-    brokenequipment: Brokenequipment[];    
+    brokenequipment?: Brokenequipment[];    
 }

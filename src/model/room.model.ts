@@ -8,7 +8,7 @@ export interface Room{
 export interface RoomType {
     id: number;
     roomType: string;
-    name: string;
+    typeName: string;
     price: number;
     bedSize: number;
     chromeCast: boolean;
@@ -17,7 +17,8 @@ export interface RoomType {
     bath: boolean;
     water: boolean;
     desk: boolean;
-    typename: string;
+    descriptions:string;
+
     
 
   }
