@@ -19,6 +19,8 @@ const endDate = ref<Date>(new Date());
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const totalGuests = ref(0);
+const paramValue = route.params.type;
+
 const clickcontinue = () => {
 
     const booking = ref<Booking>({
@@ -51,7 +53,7 @@ const clickcontinue = () => {
 
     bookingStore.setBooking(booking.value)
     console.log(bookingStore.currentBooking);
-    router.push('/selectroom')
+    router.push(`/selectroom/${paramValue.toString().split(' ')[0].toLowerCase()}`)
 }
 
 const clickback = () => {
@@ -81,10 +83,11 @@ const incrementGuest = (type: 'adult' | 'children') => {
         childrenCount.value++;
     }
 };
-const paramValue = route.params.type;
 
 const applyGuestCount = () => {
     totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
+    bookingStore.currentBooking.adult = adultCount.value;
+    bookingStore.currentBooking.child = childrenCount.value;
 };
 onMounted(async () => {
     console.log(paramValue.toString().split(' ')[0]);

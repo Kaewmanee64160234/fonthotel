@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { BookingDetail } from '@/model/booking.model';
+import { Room } from '@/model/room.model';
+import router from '@/router';
+import { useBookingsStore } from '@/store/booking.store';
+import { useRoomStore } from '@/store/room.store';
 import { defineProps } from 'vue'
-
+const roomStore = useRoomStore()
+const bookingsStore = useBookingsStore();
 const props = defineProps<{
   image: string,
   typename: string,
@@ -9,7 +15,19 @@ const props = defineProps<{
   detail: string,
   price: number,
   btnbooknow: string,
+  room:Room
 }>();
+//add bookingDeail
+const addBookingDetail = () => {
+  const bookingDetail:BookingDetail = {
+    id:-1,
+    room: props.room,
+    total: props.room.roomType.price,
+  }
+  bookingsStore.addBookingDetail(bookingDetail);
+  router.push('/activity');
+}
+
 </script>
 
 <template>
@@ -30,7 +48,7 @@ const props = defineProps<{
           <div class="px-5 py-2 font-bold text-base price-room">{{ props.price }}</div>
         </div>
         <div class="text-right px-5">
-          <router-link to="/activity" class="btn-booknow mt-2 mb-3">Book now</router-link>
+          <button class="btn-booknow mt-2 mb-3"  @click.prevent="addBookingDetail()">Book now</button>
         </div>
 
       </div>

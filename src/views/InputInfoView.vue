@@ -2,18 +2,66 @@
 import { onMounted, ref, watch, computed } from 'vue';
 import { useBookingsStore } from '@/store/booking.store';
 import { Booking } from '@/model/booking.model';
+import router from '@/router';
+import { useUserStore } from '@/store/user.store';
 
 const bookingsStore = useBookingsStore();
+const userStore = useUserStore();
+const firstName = ref('');
+const lastName = ref('');
+const mobilePhone = ref('');
+const emailAddress = ref('');
+const country = ref('');
+const description = ref('');
+const promotionId = ref('');
+const paymentMethod = ref('');
+
+
 const booking = ref<Booking>();
-onMounted(() => {
-    bookingsStore.saveBooking();
-});
-const clickback = () => {
+// onMounted(() => {
+//     bookingsStore.saveBooking();
+// });
+const clickBack = () => {
     window.location.href = '/activity'
 }
 
-const clickcontinue = () => {
-    window.location.href = '/bookingdetail'
+const clickContinue = async () => {
+    await bookingsStore.getBookingByCustomerIdLastcreated();
+  booking.value = bookingsStore.currentBooking;
+    router.push('/bookingdetail')
+
+}
+
+const checkPromotion = () => {
+    console.log('checkPromotion');
+}
+
+//validate form
+const validateForm = () => {
+    if (firstName.value === '' || lastName.value === '' || emailAddress.value === '' || country.value === '') {
+        alert('Please fill in the required fields');
+        return false;
+    }
+    return true;
+}
+
+//create function to save booking
+const saveBooking = () => {
+    
+    if (validateForm()) {
+        bookingsStore.currentBooking.cusCountry = country.value;
+        bookingsStore.currentBooking.cusEmail = emailAddress.value;
+        bookingsStore.currentBooking.cusLastName = lastName.value;
+        bookingsStore.currentBooking.cusName = firstName.value;
+        bookingsStore.currentBooking.cusTel = mobilePhone.value;
+        bookingsStore.currentBooking.createdDate = new Date();
+        bookingsStore.currentBooking.paymentBooking = paymentMethod.value;
+        bookingsStore.currentBooking.cusAddress = description.value;
+        bookingsStore.currentBooking.customer =userStore.currentUser.customer;
+
+        bookingsStore.saveBooking();
+        clickContinue()
+    }
 }
 
 </script>
@@ -22,7 +70,7 @@ const clickcontinue = () => {
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
-            <button @click="clickback">
+            <button @click="clickBack">
                 <i style="font-size: 30px" class="far">&#xf359;</i>
             </button>
         </div>
@@ -38,52 +86,65 @@ const clickcontinue = () => {
 
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900">First name*</label>
-                                <input type="text" placeholder="First name" class="dc-input" required>
+                                <input v-model="firstName" type="text" placeholder="First name" class="dc-input" required>
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Last name*</label>
-                                <input type="text" placeholder="Last name" class="dc-input" required>
+                                <input v-model="lastName" type="text" placeholder="Last name" class="dc-input" required>
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Mobile Phone</label>
-                                <input type="tel" placeholder="Mobile Phone" class="dc-input">
+                                <input v-model="mobilePhone" type="tel" placeholder="Mobile Phone" class="dc-input">
                             </div>
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Email Address*</label>
-                                <input type="email" placeholder="Email Address" class="dc-input" required>
+                                <input v-model="emailAddress" type="email" placeholder="Email Address" class="dc-input" required>
                             </div>
                         </div>
 
                         <!-- Address Section -->
                         <div class="mb-2 mt-2">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Country</label>
-                            <select class="form-select dc-input" style="width: 34%;">
-                                <option style="font-size: 13px;">Country</option>
-                                <!-- Populate this list with countries -->
+                            <select v-model="country" class="form-select dc-input" style="width: 34%;">
+                                <option value="Thailand" style="font-size: 13px;">Thailand</option>
+                                <option value="USA" style="font-size: 13px;">USA</option>
+                                <option value="Japan" style="font-size: 13px;">Japan</option>
                             </select>
                         </div>
 
                         <!-- Description Section -->
                         <div class="mb-2">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Description</label>
-                            <textarea class="dc-input" style="height: 7vh; width: 85%;"></textarea>
+                            <textarea v-model="description" class="dc-input" style="height: 7vh; width: 85%;"></textarea>
                         </div>
 
                         <!-- Promotion Section -->
                         <div class="grid gap-2 md:grid-cols-2">
                             <div class="col-1">
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Promotion</label>
-                                <input type="text" placeholder="Code Promotion" class="dc-input mb-2" required
+                                <input v-model="promotionId" type="text" placeholder="Code Promotion" class="dc-input mb-2" required
                                     style="width: 68%;">
                             </div>
 
                             <div class="col-2">
-                                <button class="mt-6 btn-applypromo" id="btnApplypromo">Apply</button>
+                                <button @click="checkPromotion()" class="mt-6 btn-applypromo" id="btnApplypromo">Apply</button>
                             </div>
                         </div>
                         <!-- Payment Information -->
                         <div class="grid gap-2 md:grid-cols-2">
+                            <!-- cretae dropdown payment method -->
                             <div class="col-1">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 ">Payment Method</label>
+                                <select v-model="paymentMethod" class="form-select dc-input" style="width: 70%;">
+                                    <option value="cash" style="font-size: 13px;">cash</option>
+                                    <option value="credit card" style="font-size: 13px;">credit card</option>
+                                    <option value="debit card" style="font-size: 13px;">debit card</option>
+                                    <option value="QR code" style="font-size: 13px;">QR code</option>
+                               
+                                </select>
+                                </div>  
+                            
+                            <!-- <div class="col-1">
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Card Number</label>
                                 <input type="text" placeholder="Card Number" class="dc-input" required style="width: 68%;">
                             </div>
@@ -94,7 +155,7 @@ const clickcontinue = () => {
                             <div class="md:col-2">
                                 <label class="block mb-2 text-sm font-medium text-gray-900">Name on Card*</label>
                                 <input type="text" placeholder="Name on Card" class="dc-input" required style="width: 68%;">
-                            </div>
+                            </div> -->
                         </div>
                     </form>
 
@@ -222,7 +283,7 @@ const clickcontinue = () => {
 
 
                     <div class="flex-2 flex flex-row justify-center pt-3">
-                        <button class="btn-complete" @click="clickcontinue()">
+                        <button  class="btn-complete" @click.prevent="saveBooking()">
                             <a>Complete Booking</a>
                         </button>
                     </div>

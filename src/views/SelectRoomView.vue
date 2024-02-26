@@ -3,11 +3,14 @@ import SelectRoomCard from "@/components/SelectRoomCard.vue";
 import { computed, onMounted, ref } from "vue";
 import { useRoomStore } from '@/store/room.store';
 import { useBookingsStore } from "@/store/booking.store";
-import { Booking } from "@/model/booking.model";
+import { Booking, BookingDetail } from "@/model/booking.model";
 import router from "@/router";
+import { useRoute } from "vue-router";
 const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
+
 const booking = ref<Booking>();
+  const route = useRoute();
 const clickback = () => {
   router.push('/selectguestdate')
 
@@ -19,11 +22,17 @@ onMounted(async () => {
     console.log(booking.value);  
 
 })
+const paramValue = route.params.type;
+
+onMounted(async () => {
+    console.log(paramValue.toString().split(' ')[0]);
+    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(),roomStore.currentStatus);
+})
 
 // Compute the formatted check-in date
 const formattedCheckin = computed(() => {
   if (booking.value) {
-    return formatDate(booking.value.checkIn);
+    return formatDate(booking.value.checkIn.toDateString());
   }
   return "";
 });
@@ -31,7 +40,7 @@ const formattedCheckin = computed(() => {
 // Compute the formatted check-out date
 const formattedCheckout = computed(() => {
   if (booking.value) {
-    return formatDate(booking.value.checkOut);
+    return formatDate(booking.value.checkOut.toDateString());
   }
   return "";
 });
@@ -40,7 +49,12 @@ const formattedCheckout = computed(() => {
 const formatDate = (date: string): string => {
   const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
   return new Date(date).toLocaleDateString('en-US', options);
+
 };
+
+
+
+
 </script>
 
 <template>
@@ -54,18 +68,11 @@ const formatDate = (date: string): string => {
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.rooms " :key="item.id">
+        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.currentRooms " :key="item.id">
 
-          <SelectRoomCard :image="item.image" :typename="item.roomType.typeName"
+          <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName"
             sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
-          <!-- <SelectRoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
-            sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00" btnbooknow="#" />
-          <SelectRoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-            type="Deluxe Twin" sleep="Sleep  2" area="37" detail="Sea View , Smart TV , Work Desk" price="THB 5,700.00"
-            btnbooknow="#" />
-          <SelectRoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-            type="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk" price="THB 6,000.00"
-            btnbooknow="#" /> -->
+       
         </div>
       </div>
 

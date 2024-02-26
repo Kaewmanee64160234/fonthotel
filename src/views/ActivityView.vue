@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/ActivityComponent.vue";
+import router from "@/router";
 import { useActivityStore } from "@/store/activity.store";
 import { onMounted, ref } from "vue";
 
@@ -7,12 +8,12 @@ const activityStore = useActivityStore();
 onMounted(() => {
     activityStore.getAllActivities()
 });
-const clickback = () => {
-    window.location.href = '/selectRoom'
-}
+// const clickback = () => {
+//     window.location.href = '/selectRoom'
+// }
 
 const clickcontinue = () => {
-    window.location.href = '/inputinfo'
+    router.push('/inputinfo')
 }
 
 
@@ -22,7 +23,7 @@ const clickcontinue = () => {
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
-            <button @click="clickback">
+            <button @click="console.log('back')">
                 <i style="font-size: 30px" class="far">&#xf359;</i>
             </button>
         </div>

@@ -37,8 +37,6 @@ export interface Booking {
 export interface BookingDetail {
     id: number;
     total: number;
-
     room: Room;
-    // booking: Booking;
     brokenequipment?: Brokenequipment[];
 }

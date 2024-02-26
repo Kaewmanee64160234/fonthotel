@@ -9,7 +9,7 @@ export interface User {
   password: string;
   role: string;
   employee?:Employee;
-  customer?:Customer;
+  customer:Customer;
 
 
 }

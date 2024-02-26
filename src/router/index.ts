@@ -63,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
 
-    path: '/selectroom',
+    path: '/selectroom/:type',
     name: 'selectroom',
     component: () => import(/* webpackChunkName: "selectroom" */ '../views/SelectRoomView.vue'),
     meta: { hideNavigation: false }

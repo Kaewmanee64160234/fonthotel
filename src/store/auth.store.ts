@@ -22,7 +22,12 @@ export const useAuthStore = defineStore("auth", () => {
           login: response.data.user_login,
           password: response.data.user_password, // Storing password in frontend is usually not advisable.
           role: response.data.user_role,
-          ...(response.data.customer && { customer: response.data.customer }),
+          customer:{
+            id:response.data.customer.cus_id,
+            name:response.data.customer.cus_name,
+            startDate:response.data.customer.cus_start_date
+        
+          },
           ...(response.data.employee && { customer: response.data.employee }),
         };
        userStore.setUser(user__);
@@ -47,7 +52,7 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.removeItem("employee");
     localStorage.removeItem("customer");
     authName.value = "";
-    const currentUser = ref<User>({id:-1,role:'customer',login:'',password:'',username:''});
+    const currentUser = ref<User>({customer:{id:-1,name:'',startDate:new Date()},employee:{id:-1,name:'',address:'',dateOfBirth:new Date(),email:'',hourlyRate:0,position:'',tel:'',dateStartWork:''},id:-1,login:'',password:'',role:'',username:'' });
     userStore.setUser(currentUser.value);
     router.replace("/login");
   };
@@ -66,8 +71,14 @@ export const useAuthStore = defineStore("auth", () => {
           login: response.data.user_login,
           password: response.data.user_password, // Storing password in frontend is usually not advisable.
           role: response.data.user_role,
-          ...(response.data.customer && { customer: response.data.customer }),
-          ...(response.data.employee && { customer: response.data.employee }),
+          customer:{
+            id:response.data.customer.cus_id,
+            name:response.data.customer.cus_name,
+            startDate:response.data.customer.cus_start_date
+        
+          }
+          // ...(response.data.customer && { customer: response.data.customer }),
+        
         };
        userStore.setUser(user__);
        console.log(user__);
