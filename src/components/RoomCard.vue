@@ -25,7 +25,9 @@ const props = defineProps<{
     <div class="w-1/2  pt-3 bg-white flex flex-col justify-between">
       <div>
         <h2 class="text-lg font-bold">{{ props.typename }}</h2>
-        <p class="text-base text-gray-600">Sleep {{ props.sleep }} | {{ props.area }} square metre</p>
+        <p class="text-base text-gray-600" v-if="props.sleep == 'Standard'|| props.sleep == 'Deluxe'|| $props.sleep=='Luxury' ">Sleep 1 </p>
+        <p class="text-base text-gray-600" v-else-if="props.sleep.split(' ')[1] == 'Twin'">Sleep 2 </p>
+        <p class="text-base text-gray-600" v-else-if="props.sleep.split(' ')[1] == 'King'">Sleep 1 </p>
         <!-- <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'Twin'">Sleep 2 {{ props.typename }} </p>
         <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'King'">Sleep 1 {{ props.typename }} </p> -->
         <p class="text-base text-gray-600">{{ props.detail }}</p>

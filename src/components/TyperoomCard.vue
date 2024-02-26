@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/router';
 import { defineProps } from 'vue';
 
 // Define the props for the TyperoomCard component
@@ -9,6 +10,10 @@ const props = defineProps<{
     btnbooking: string,
 }>();
 
+const linkTo = () => {
+    router.push(`/selectguestdate/${props.roomtype}`);
+}
+
 </script>
 
 <template>
@@ -17,7 +22,7 @@ const props = defineProps<{
         <div class="card-content p-4 text-center">
             <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ props.roomtype }}</h5>
             <a :href="readmore" class="hover:text-white mt-5 block">Read more</a>
-            <router-link to="/selectguestdate" class="btn-booking mt-7 inline-block">Book now</router-link>
+            <button @click="linkTo()" class="btn-booking mt-7 inline-block">Book now</button>
 
         </div>
     </div>

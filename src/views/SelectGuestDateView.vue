@@ -8,9 +8,17 @@ import { useRoomStore } from '@/store/room.store';
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking } from "@/model/booking.model";
 import router from "@/router";
+import { useRoute } from "vue-router";
 const roomStore = useRoomStore();
 const bookingStore = useBookingsStore();
+const route = useRoute();
 const isDropdownOpen = ref(false);
+const startDate = ref<Date>(new Date());
+const endDate = ref<Date>(new Date());
+
+const adultCount = ref(0);
+const childrenCount = ref(0);
+const totalGuests = ref(0);
 const clickcontinue = () => {
 
     const booking = ref<Booking>({
@@ -31,7 +39,14 @@ const clickcontinue = () => {
         paymentCheckout: '',
         status: '',
         statusLate: '',
-        createDate: new Date()
+        createDate: new Date(),
+        activityPerBooking: [],
+        bookingDetail: [],
+        createdDate: new Date(),
+        customer: { id: 0, name: '', startDate: new Date() },
+        pledge: 0,
+        promotion: { id: 0, name: '', discount: 0, discountPercent: 0, createdDate: new Date(), endDate: new Date() },
+        
     })
 
     bookingStore.setBooking(booking.value)
@@ -49,12 +64,7 @@ const toggleDropdown = () => {
 const closeDropdown = () => {
     isDropdownOpen.value = false;
 };
-const startDate = ref<Date>(new Date());
-const endDate = ref<Date>(new Date());
 
-const adultCount = ref(0);
-const childrenCount = ref(0);
-const totalGuests = ref(0);
 
 const decrementGuest = (type: 'adult' | 'children') => {
     if (type === 'adult' && adultCount.value > 0) {
@@ -71,12 +81,14 @@ const incrementGuest = (type: 'adult' | 'children') => {
         childrenCount.value++;
     }
 };
+const paramValue = route.params.type;
 
 const applyGuestCount = () => {
     totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
 };
 onMounted(async () => {
-    await roomStore.getRoomsByType('ready', ' ');
+    console.log(paramValue.toString().split(' ')[0]);
+    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(),roomStore.currentStatus);
 })
 
 // Watch for changes in startDate and endDate and update "Your Stay" accordingly
@@ -101,6 +113,7 @@ const formatDate = (date: Date): string => {
 
 <template>
     <div class="body">
+
         <div class="pt-5 pl-5">
             <button @click="clickback">
                 <i style="font-size: 30px" class="far">&#xf359;</i>
@@ -196,19 +209,12 @@ const formatDate = (date: Date): string => {
                         </div>
                     </div>
                 </div>
-                <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
-                <div class="mt-2 overflow-y-auto dc-scroll mb-20" v-for="item of roomStore.rooms " :key="item.id">
-                    <RoomCard :image="item.image" :typename="item.roomType.typeName" sleep="1" area="37"
+                <p class="mt-3 text-white font-semibold text-xl ">Select Room</p>
+             
+                <div class="mt-2 overflow-y-auto  mb-20 " v-for="item of roomStore.currentRooms " :key="item.id">
+                    <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
                         detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
-                    <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" typename="Deluxe"
-                        sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk"
-                        :price="5700.00" />
-                    <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-                    typename="Deluxe Twin" sleep="Sleep  2" area="37" detail="Sea View , Smart TV , Work Desk"
-                        :price="5700.00" />
-                    <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-                    typename="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk"
-                        :price="6000.00" /> -->
+                  
                 </div>
             </div>
 

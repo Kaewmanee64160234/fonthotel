@@ -5,9 +5,7 @@ const getRooms=(status: string) => {
 }
 
 const getRoomsByType = (type: string, status: string) => {
-    //param
-    // console.log('/rooms/status/'+ status + '/room_type_name/' + type)
-    return http.get(`/rooms/status/${status}`) 
+    return http.get(`/rooms/room_status/${status}/room_type/${type}`) 
 }
 
 export default{ getRooms, getRoomsByType}

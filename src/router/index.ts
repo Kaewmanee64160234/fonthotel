@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
 
-    path: '/selectguestdate',
+    path: '/selectguestdate/:type',
     name: 'selectguestdate',
     component: () => import(/* webpackChunkName: "about" */ '../views/SelectGuestDateView.vue'),
     meta: { hideNavigation: false }
