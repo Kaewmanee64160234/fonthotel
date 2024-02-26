@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { onMounted, ref, watch, computed } from 'vue';
+import { useBookingsStore } from '@/store/booking.store';
+import { Booking } from '@/model/booking.model';
 
+const bookingsStore = useBookingsStore();
+const booking = ref<Booking>();
+onMounted(() => {
+    bookingsStore.saveBooking();
+});
 const clickback = () => {
     window.location.href = '/activity'
 }
@@ -9,6 +17,8 @@ const clickcontinue = () => {
 }
 
 </script>
+
+
 <template>
     <div class="body">
         <div class="pt-5 pl-5">
