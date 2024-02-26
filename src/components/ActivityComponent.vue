@@ -36,11 +36,8 @@ const addDetails = (activity_: Activity) => {
   const activityPerBooking: ActivityPerBooking = {
     activity: activity_,
 
-  
+  qty: adultCount.value + childrenCount.value,
     id: -1,
- createdate: new Date(),
- updatedate
-: new Date(),
     total: (adultCount.value + childrenCount.value) * activity_.price,
   };
   useBooking.addAcitivityPerBooking(activityPerBooking);

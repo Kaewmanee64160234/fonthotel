@@ -9,9 +9,9 @@ export interface Activity {
 }
 export interface ActivityPerBooking {
   id: number;
+  qty: number;
   activity: Activity;
   total: number;
-  createdate: Date;
-  updatedate: Date;
+
 
 }
