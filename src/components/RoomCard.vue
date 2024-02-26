@@ -31,7 +31,7 @@ const props = defineProps<{
         <p class="text-base text-gray-600">{{ props.detail }}</p>
         <a href="#" class="text-sm font-semibold">Room Detail</a>
       </div>
-      <div class="px-5 py-2 font-bold text-lg price-room">{{ props.price }}</div>
+      <div class="px-5 py-2 font-bold text-lg price-room">THB {{ props.price }}</div>
     </div>
   </div>
 </div>

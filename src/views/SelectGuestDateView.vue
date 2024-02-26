@@ -17,21 +17,21 @@ const clickcontinue = () => {
         id: -1,
         adult: adultCount.value,
         child: childrenCount.value,
-        cusname: '',
-        cuslastname: '',
-        custel: '',
-        cusemail: '',
-        cuscontry: '',
-        cusaddress: '',
-        checkin: startDate.value,
-        checkout: endDate.value,
+        cusName: '',
+        cusLastName: '',
+        cusTel: '',
+        cusEmail: '',
+        cusCountry: '',
+        cusAddress: '',
+        checkIn: startDate.value,
+        checkOut: endDate.value,
         total: 0,
-        totaldiscount: 0,
-        paymentbooking: '',
-        paymentcheckout: '',
+        totalDiscount: 0,
+        paymentBooking: '',
+        paymentCheckout: '',
         status: '',
-        statuslate: '',
-        createdate: new Date()
+        statusLate: '',
+        createDate: new Date()
     })
 
     bookingStore.setBooking(booking.value)
@@ -198,17 +198,17 @@ const formatDate = (date: Date): string => {
                 </div>
                 <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
                 <div class="mt-2 overflow-y-auto dc-scroll mb-20" v-for="item of roomStore.rooms " :key="item.id">
-                    <RoomCard :image="item.image" :typename="item.roomtype.typename" sleep="1" area="37"
-                        detail="Sea View , Smart TV , Work Desk" :price="item.roomtype.price" />
-                    <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" type="Deluxe"
+                    <RoomCard :image="item.image" :typename="item.roomType.typeName" sleep="1" area="37"
+                        detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
+                    <!-- <RoomCard image="https://bolr-images.s3.amazonaws.com/listings/A11509410-1599358094.jpg" typename="Deluxe"
                         sleep="Sleep  1" area="37" detail="Sea View , Smart TV , Work Desk"
-                        price="THB 5,700.00" />
+                        :price="5700.00" />
                     <RoomCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-                        type="Deluxe Twin" sleep="Sleep  2" area="37" detail="Sea View , Smart TV , Work Desk"
-                        price="THB 5,700.00" />
+                    typename="Deluxe Twin" sleep="Sleep  2" area="37" detail="Sea View , Smart TV , Work Desk"
+                        :price="5700.00" />
                     <RoomCard image="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-                        type="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk"
-                        price="THB 6,000.00" /> -->
+                    typename="Deluxe King" sleep="Sleep  3" area="45" detail="Sea View , Smart TV , Work Desk"
+                        :price="6000.00" /> -->
                 </div>
             </div>
 
