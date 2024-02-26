@@ -4,18 +4,16 @@ import roomService from "@/service/room";
 import { Room, RoomType } from "@/model/room.model";
 
 export const useRoomStore = defineStore("roomStore", () => {
-    const currentRooms = ref<Room[]>([]); // Define rooms as a ref
-    const currentType = ref<string>(''); // Define currentType as a ref
-    const currentStatus = ref<string>('ready'); // Define currentStatus as a ref
+    const rooms = ref<Room[]>([]); // Define rooms as a ref
 
     const getRooms = async (status: string) => {
         try {
             const response = await roomService.getRooms(status);
             if (response.data) {
-                currentRooms.value = response.data
+                rooms.value = response.data
             }
             else {
-                currentRooms.value = []
+                rooms.value = []
             }
 
         } catch (error) {
@@ -26,42 +24,40 @@ export const useRoomStore = defineStore("roomStore", () => {
     const getRoomsByType = async (status: string, type: string) => {
         try {
             const response = await roomService.getRoomsByType(status, type);
-            // console.log(response)
+            console.log(response.data)
             const rooms = <Room[]>([]);
-            if (response.data) {
-               
+            if (response.data == 'ready') {
+                const roomType: RoomType = {
+                    id: response.data.roomType.room_type_id,
+                    roomType: response.data.roomType.room_type,
+                    descriptions: response.data.roomType.room_type_des,
+                    price: response.data.roomType.room_type_price,
+                    bedSize: response.data.roomType.room_type_bed_size,
+                    chromeCast: response.data.roomType.room_type_chromecast,
+                    eletricSheer: response.data.roomType.room_type_electric_sheer,
+                    wifi: response.data.roomType.room_type_wifi,
+                    bath: response.data.roomType.room_type_bath,
+                    water: response.data.roomType.room_type_water,
+                    desk: response.data.roomType.room_type_desk,
+                    typeName: response.data.roomType.room_type_name,
+                }
                 for (const room of response.data) {
-                    const roomType: RoomType = {
-                        id: room.roomtype.room_type_id,
-                        roomType: room.roomtype.room_type,
-                        descriptions: room.roomtype.room_type_des,
-                        price: room.roomtype.room_type_price,
-                        bedSize: room.roomtype.room_type_bed_size,
-                        chromeCast: room.roomtype.room_type_chromecast,
-                        eletricSheer: room.roomtype.room_type_electric_sheer,
-                        wifi: room.roomtype.room_type_wifi,
-                        bath: room.roomtype.room_type_bath,
-                        water: room.roomtype.room_type_water,
-                        desk: room.roomtype.room_type_desk,
-                        typeName: room.roomtype.room_type_name,
-                    }
                     const room_: Room = {
-                        id: room.room_id,
-                        image: room.room_img_path,
-                        status: room.room_status,
-                        roomType: roomType,
+                        id: response.data.room.room_id,
+                        image: response.data.room.room_img_path,
+                        status: response.data.room.room_status,
+                        roomType: response.data.roomType,
                     }
                     rooms.push(room_);
                 }
-                currentRooms.value = rooms;
-                console.log('current room',currentRooms.value);
+                // rooms.value = rooms;
             } else {
-                currentRooms.value = [];
+                // rooms.value = [];
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus };
+    return { rooms, getRooms, getRoomsByType };
 });

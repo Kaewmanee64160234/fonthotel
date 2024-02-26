@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import HistoryAcceptBookingCard from "@/components/Employee/HistoryAcceptBookingCard.vue";
+import { useBookingsStore } from "@/store/booking.store";
+import { Booking } from "@/model/booking.model";
+const bookingStore = useBookingsStore();
 const isDropdownOpen = ref(false);
 
 const selectFilter = (filterOption: any) => {
@@ -11,6 +14,56 @@ const selectFilter = (filterOption: any) => {
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
+
+onMounted(async () => {
+  await bookingStore.getBooking();
+  booking.value = bookingStore.currentBooking;
+});
+
+let booking = ref<Booking>({
+    adult: 0,
+    checkIn: new Date(),
+    checkOut: new Date(),
+    child: 0,
+    createDate: new Date(),
+    cusAddress: "",
+    cusCountry: "",
+    cusEmail: "",
+    cusLastName: "",
+    cusName: "",
+    cusTel: "",
+    createdDate: new Date(),
+    id: 0,
+    paymentBooking: "",
+    paymentCheckout: "",
+    status: "",
+    statusLate: "",
+    total: 0,
+    totalDiscount: 0,
+    activityPerBooking: [],
+    bookingDetail: [],
+    customer: { id: 0, name: "", startDate: new Date() },
+    employee: {
+        address: "",
+        dateOfBirth: new Date(),
+        dateStartWork: '',
+        email: "",
+        hourlyRate: 0,
+        id: 0,
+        name: "",
+        position: "",
+        tel: "",
+    },
+    pledge: 0,
+    promotion: {
+        createdDate: new Date(),
+        discount: 0,
+        discountPercent: 0,
+        endDate: new Date(),
+        id: 0,
+        name: "",
+    },
+});
 </script>
 <template>
   <body>
@@ -18,7 +71,7 @@ function toggleDropdown() {
       <div class="relative card-style">
         <!-- Title and Date/Time -->
         <div class="flex justify-between items-center p-4">
-          <h1 class="text-xl font-bold">Check-out management</h1>
+          <h1 class="text-xl font-bold">Confirm Reservation</h1>
           <div>
             <p>Date: <span class="font-semibold">27 Dec 2023</span></p>
             <p>Time: <span class="font-semibold">6:27 AM</span></p>
@@ -96,29 +149,14 @@ function toggleDropdown() {
           <div class="overflow-y-auto dc-scroll">
          
           <HistoryAcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-            :status="'Confirm Success'"
+            :name="`${booking!.cusName}  ${booking!.cusLastName}`"
+            :typePayment="booking.paymentBooking"
+            :typeRoom="booking.bookingDetail.roomType"
+            :activity="booking.activityPerBooking.name"
+            :price="booking.total"
+            :status="booking.status"
           />
-          <HistoryAcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-            :status="'Waiting Process'"
-          />
-          <HistoryAcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-            :status="'Cancel'"
-          />
+         
         </div>
         </div>
       </div>

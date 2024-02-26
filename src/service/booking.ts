@@ -12,4 +12,8 @@ const getBookingByCustomerIdLastcreated= (id: number) => {
     return http.get(`booking/customer/${id}/lasted`)
 }
 
-export default {saveBooking, getBookingBybookingid, getBookingByCustomerIdLastcreated}
+const getBooking = (time: string, status: string) => {
+    return http.get(`booking/time/${time}/status/${status}`)
+}
+
+export default {saveBooking, getBookingBybookingid, getBookingByCustomerIdLastcreated, getBooking}

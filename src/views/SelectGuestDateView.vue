@@ -211,10 +211,11 @@ const formatDate = (date: Date): string => {
                 </div>
                 <p class="mt-3 text-white font-semibold text-xl ">Select Room</p>
              
-                <div class="mt-2 overflow-y-auto  mb-20 " v-for="item of roomStore.currentRooms " :key="item.id">
+                <div class="mt-2 overflow-y-auto  mb-10 dc-scroll ">
+                    <div v-for="item of roomStore.currentRooms " :key="item.id">
                     <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
                         detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
-                  
+                </div>
                 </div>
             </div>
 
