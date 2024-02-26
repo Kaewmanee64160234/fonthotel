@@ -3,22 +3,27 @@ import BookingDetailComponent from "@/components/BookingDetailComponent.vue";
 import { useBookingsStore } from "@/store/booking.store";
 import { onMounted, ref } from "vue";
 import { Booking } from "@/model/booking.model";
-const booking = ref<Booking>();
+
 const bookingStore = useBookingsStore();
+const booking = ref<Booking>();
 
 onMounted(async () => {
-    await bookingStore.getBookingBybookingid(1);
+    await bookingStore.getBookingByCustomerIdLastcreated();
     booking.value = bookingStore.currentBooking;
-    console.log(booking.value);  
-})
+
+    // Use the custom replacer function for logging
+    // console.log(JSON.stringify(booking.value, replacer, 2));
+});
 </script>
 
 <template>
     <div class="body">
-        <div v-for="item of bookingStore.bookings" :key="item.id">
-            <!-- <BookingDetailComponent :imag="item." :name="item.name" :typeroom="item.typeroom" :date=""
-                :adult="item.adult" :children="item.children" :typeroom="item." :total="item.total"
-                :payment="item.paymentbooking" :status="item.status">
+        <div>
+            {{ booking }}
+            <!-- <BookingDetailComponent :img="`${booking.bookingDetail[0].room.image}`" 
+                :date="booking!.createDate.toString()"  :name="booking!.cusName" 
+                :roomType="booking!.bookingDetail![0].room.roomType.toString()"  :adult="booking!.adult"  :children="booking!.child"
+                :total="booking!.total" :payment="booking!.paymentBooking" :status="booking!.status" >
             </BookingDetailComponent> -->
         </div>
         <!-- <BookingDetailComponent type="DELUXE ROOM"

@@ -1,4 +1,4 @@
-import { ActivityPerBook } from "./activity.model";
+import { ActivityPerBooking } from "./activity.model";
 import { Brokenequipment } from "./brokenequipment.model";
 import { Customer } from "./customer.model";
 import { Employee } from "./employee.model";
@@ -26,18 +26,19 @@ export interface Booking {
     statusLate: string;
     adult: number;
     child: number;
-    employee?: Employee;       
-    customer: Customer;      
+    employee?: Employee;
+    customer: Customer;
     promotion: Promotion;
     createdDate:Date;
     bookingDetail: BookingDetail[];
-    activityPerBooking: ActivityPerBook[];      
+    activityPerBooking: ActivityPerBooking[];
 }
 
 export interface BookingDetail {
     id: number;
     total: number;
-    room: Room;             
-    booking: Booking;       
-    brokenequipment?: Brokenequipment[];    
+
+    room: Room;
+    booking: Booking;
+    brokenequipment?: Brokenequipment[];
 }

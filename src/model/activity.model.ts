@@ -7,11 +7,12 @@ export interface Activity {
   image:string;
 
 }
-
-export interface ActivityPerBook {
+export interface ActivityPerBooking {
   id: number;
-  qty: number;
-  total:number,
-  booking:Booking;
-  activity:Activity;
+  booking: Booking;
+  activity: Activity;
+  total: number;
+  createdate: Date;
+  updatedate: Date;
+
 }
