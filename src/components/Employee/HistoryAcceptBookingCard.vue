@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-const props = defineProps({
-  name: String,
-  typePayment: String,
-  typeRoom: String,
-  activity: String,
-  price: Number,
-  status: String,
-});
+const props = defineProps<{
+  name: string;
+  typePayment: string;
+  typeRoom: string;
+  activity: string;
+  price: number;
+  status: string;
+}>();
 </script>
 <template lang="">
   <div>
@@ -28,11 +28,12 @@ const props = defineProps({
               </h5>
             </div>
           </div>
-          <li class="card-text">{{ typeRoom }}</li>
-          <li class="card-text">{{ activity }}</li>
+          <li  class="card-text">{{ typeRoom }}</li>
+
+          <li v-if="activity !== undefine" class="card-text">{{ activity }}</li>
           <li class="card-text">Check in 26/12/2023 at 1:00 PM</li>
           <div class="flex justify-end items-center mt-4 px-4">
-            <span class="text-xl font-bold">Total: {{ price }}.00 Bath</span>
+            <span class="text-xl font-bold">Total: {{ props.price }}.00 Bath</span>
           </div>
           <div class="flex justify-end items-center mt-4 px-4">
             <span class="text-xl">{{ status }} </span>
@@ -45,7 +46,6 @@ const props = defineProps({
 </template>
 
 <style scoped>
-
 .btn-confirm {
   background-color: #44cc83;
   color: black;

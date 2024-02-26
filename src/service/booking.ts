@@ -46,7 +46,8 @@ const getBookingByCustomerIdLastcreated = (id: number) => {
 
 
 const getBookings = (time: string, status: string) => {
-    return http.get(`booking/time/${time}/status/${status}`)
+    console.log(`/booking/time/${time}/status/${status}`);
+    return http.get(`/booking/time/${time}/status/${status}`)
 }
 
 
