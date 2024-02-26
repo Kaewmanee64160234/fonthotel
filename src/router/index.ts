@@ -96,7 +96,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ReadMoreView.vue'),
     meta: { hideNavigation: true } 
   },
-
+  {
+    path: '/historyConfirmReservation',
+    name: 'historyConfirmReservation',
+    component: () => import('../views/Employee/HistoryAcceptBookingView.vue'), // Ensure the path is correct here
+    meta: { hideNavigation: true } 
+  },
 ]
 
 const router = createRouter({
