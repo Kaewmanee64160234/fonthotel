@@ -33,6 +33,7 @@ const clickcontinue = () => {
                 <div class="mt-2 overflow-y-auto dc-scroll mb-10">
                     <div v-for="item of activityStore.activities" :key="item.id">
                         <ActivityComponent :image="item.image"
+                        :activity="item"
                         :name="`${item.name}`" :detail="item.description"
                         :price="item.price" btnadddetails="#" />
 
