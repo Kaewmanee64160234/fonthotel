@@ -2,11 +2,10 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{
-    type: string,
     img: string,
-    date: Date,
+    date: string,
     name: string,
-    typeroom: string,
+    roomType: string,
     adult: number,
     children: number,
     total: number,
@@ -54,7 +53,7 @@ const props = defineProps<{
                                         <p class="text-sm text-base text-black">Check-out : Before 7:00 AM </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Type Room : {{ props.typeroom }}</p>
+                                        <p class="text-sm text-base text-black">Type Room : {{ props.roomType }}</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <h1 class="text-lg font-semibold  text-base text-black">Payment  Information </h1>

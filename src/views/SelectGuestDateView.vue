@@ -76,7 +76,7 @@ const applyGuestCount = () => {
     totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
 };
 onMounted(async () => {
-    await roomStore.getRoomsByType(' ', 'Readyrana');
+    await roomStore.getRoomsByType('ready', ' ');
 })
 
 // Watch for changes in startDate and endDate and update "Your Stay" accordingly

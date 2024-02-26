@@ -18,7 +18,7 @@ export interface Booking {
     checkIn: Date;
     checkOut: Date;
     total: number;
-    pledge?: number;
+    pledge: number;
     totalDiscount: number;
     paymentBooking: string;
     paymentCheckout: string;
@@ -26,17 +26,18 @@ export interface Booking {
     statusLate: string;
     adult: number;
     child: number;
-    employee?: Employee;       
-    customer?: Customer;      
-    promotion?: Promotion;
-    bookingDetail?: BookingDetail[];
-    activityPerBooking?: ActivityPerBooking[];      
+    employee?: Employee;
+    customer: Customer;
+    promotion: Promotion;
+    bookingDetail: BookingDetail[];
+    createdDate: Date;
+    activityPerBooking: ActivityPerBooking[];
 }
 
 export interface BookingDetail {
     id: number;
     total: number;
-    room: Room;             
-    booking: Booking;       
-    brokenequipment?: Brokenequipment[];    
+    room: Room;
+    booking: Booking;
+    brokenequipment?: Brokenequipment[];
 }

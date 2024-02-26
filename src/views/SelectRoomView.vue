@@ -14,7 +14,7 @@ const clickback = () => {
 }
 
 onMounted(async () => {
-    await roomStore.getRoomsByType(' ', 'Readyrana');
+    await roomStore.getRoomsByType('ready', ' ');
     booking.value = bookingsStore.currentBooking;
     console.log(booking.value);  
 })
