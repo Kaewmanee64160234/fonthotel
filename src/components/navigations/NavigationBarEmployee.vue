@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import router from '@/router';
+import { useAuthStore } from '@/store/auth.store';
+import { useUserStore } from '@/store/user.store';
+
 const gotoAcceptBookingView = () => {
   window.location.href = "/acceptBookingView";
 };
+const authStore = useAuthStore();
+const userStore = useUserStore();
 </script>
 <template>
   <div>
@@ -53,7 +59,9 @@ const gotoAcceptBookingView = () => {
         </div>
         <div class="flex flex-col">
           <div class="flex flex-1 flex-col">
-            <p class="flex">Name: Mongkon Chatthaijarong</p>
+            <a v-if="userStore.currentUser.username==''" @click="authStore.logout()" class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
+            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
+
           </div>
           <div class="flex flex-1 flex-col">
             <p class="flex">Position: Manager</p>

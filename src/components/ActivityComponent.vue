@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useBookingsStore } from '@/store/booking.store';
 import { defineProps } from 'vue'
+const useBooking = useBookingsStore();
 const props = defineProps<{
     image: string,
     name: string,
@@ -7,6 +9,7 @@ const props = defineProps<{
     price: number,
     btnadddetails: string;
 }>();
+
 </script>
 <template>
     <div class="mb-5">

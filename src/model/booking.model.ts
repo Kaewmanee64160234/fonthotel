@@ -1,4 +1,4 @@
-import { ActivityPerBooking } from "./activity.model";
+import { ActivityPerBook } from "./activity.model";
 import { Brokenequipment } from "./brokenequipment.model";
 import { Customer } from "./customer.model";
 import { Employee } from "./employee.model";
@@ -30,7 +30,7 @@ export interface Booking {
     customer?: Customer;      
     promotion?: Promotion;
     bookingDetail?: BookingDetail[];
-    activityPerBooking?: ActivityPerBooking[];      
+    activityPerBooking?: ActivityPerBook[];      
 }
 
 export interface BookingDetail {
