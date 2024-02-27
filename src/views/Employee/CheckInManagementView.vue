@@ -1,0 +1,80 @@
+<script setup lang="ts">
+import CheckinManagementCard from '@/components/Employee/CheckinManagementCard.vue';
+
+</script>
+
+<template>
+    <body>
+        <div class="flex justify-center items-center bigcard">
+            <div class="relative card-style">
+                <div class="flex justify-between items-center p-4">
+                    <h1 class="text-xl font-bold">Check-in management</h1>
+                </div>
+                <div class="p-4">
+                    <!-- Search bar and filter dropdown -->
+                    <div class="flex gap-2 mb-4">
+                        <div class="flex col w-3/5">
+                            <input type="text" placeholder="Search..."
+                                class="form-input rounded-md border-gray-300 shadow-sm w-2/3" />
+                            <button type="button"
+                                class="button-search text-white bg-brown_button hover:bg-brown_button font-medium rounded-lg text-sm px-5 py-2.5 ml-5">
+                                Search
+                            </button>
+                        </div>
+                        <div class="flex col w-1/5 ">
+                            <p class="font-semibold">Date: <span class="font-normal">27 Dec 2023</span></p>
+                        </div>
+                        <div class="flex col w-1/5">
+                            <p class="font-semibold">Time: <span class="font-normal">6:27 AM</span></p>
+                        </div>
+
+                    </div>
+
+                    <div class="container mx-auto p-4 bg-white shadow-lg rounded-lg">
+                        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Name</th>
+                                        <th scope="col" class="px-6 py-3">Date Check-in</th>
+                                        <th scope="col" class="px-6 py-3">Room number</th>
+                                        <th scope="col" class="px-6 py-3">Type room</th>
+                                        <th scope="col" class="px-6 py-3">Guest</th>
+                                        <th scope="col" class="px-6 py-3">Check-in time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <!-- Repeat for other entries -->
+                                        <td class="px-6 py-4">Linlada Pasukjai</td>
+                                        <td class="px-6 py-4">26/12/2023</td>
+                                        <td class="px-6 py-4">701</td>
+                                        <td class="px-6 py-4">Deluxe room</td>
+                                        <td class="px-6 py-4">2</td>
+                                        <td class="px-6 py-4">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</template>
+<style scoped>
+.card-style {
+    top: 20px;
+    width: 90vw;
+    height: 100vh;
+    border-radius: 30px;
+    background-color: rgba(229, 229, 229, 0.758);
+    /* add filter blue */
+    fill-opacity: unset;
+    display: block;
+    /* overflow-y: auto; */
+}
+</style>

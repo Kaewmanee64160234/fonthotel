@@ -108,6 +108,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/HistoryBookingView.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/checkInManagement',
+    name: 'checkInManagement',
+    component: () => import('../views/Employee/CheckInManagementView.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
+    path: '/checkOutManagement',
+    name: 'checkOutManagement',
+    component: () => import('../views/Employee/CheckOutManagementView.vue'),
+    meta: { hideNavigation: false } 
+  },
 ]
 
 const router = createRouter({
