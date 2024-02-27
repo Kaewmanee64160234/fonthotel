@@ -13,8 +13,8 @@ function toggleDropdown() {
 }
 
 onMounted(async () => {
-  await bookingStore.getBookings('asc','waiting');
-
+  await bookingStore.getBookings("asc", "waiting");
+  // console.log(bookingStore.bookings.map((item) => item.bookingDetail.map((item) => console.log(item.room))));
 });
 </script>
 <template>
@@ -51,7 +51,6 @@ onMounted(async () => {
               >
                 Filter V
                 <!-- add icon drow down -->
-           
               </button>
               <div
                 class="dropdown-menu absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
@@ -98,13 +97,18 @@ onMounted(async () => {
             </div>
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
+
           <div class="overflow-y-auto dc-scroll">
-         
             <div v-for="item in bookingStore.bookings" :key="item.id">
+              <!-- Check if bookingDetail exists and has entries before accessing -->
+
               <AcceptBookingCard
+                v-if="item.bookingDetail && item.bookingDetail.length > 0"
                 :name="`${item.cusName} ${item.cusLastName}`"
                 :typePayment="item.paymentBooking"
-                :typeRoom="item.bookingDetail[0].room.roomType.typeName "
+                :typeRoom="
+                  item.bookingDetail[0]?.room?.roomType?.typeName ?? 'Deluxe'
+                "
                 :id="item.id"
                 :activity="
                   item.activityPerBooking[0]?.activity?.name ?? 'No activity'
@@ -113,7 +117,7 @@ onMounted(async () => {
                 :status="item.status"
               />
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -134,7 +138,7 @@ onMounted(async () => {
   margin: 0;
 }
 .card-style {
-  top:20px;
+  top: 20px;
   width: 90vw;
   height: 100vh;
   border-radius: 30px;
@@ -143,16 +147,17 @@ onMounted(async () => {
   fill-opacity: unset;
   display: block;
   /* overflow-y: auto; */
- 
 }
 .overflow-y-auto {
-  max-height: calc(75vh - 160px); /* Adjust max-height as necessary, accounting for the fixed section */
+  max-height: calc(
+    75vh - 160px
+  ); /* Adjust max-height as necessary, accounting for the fixed section */
 }
 /* .bigcard {
   display: flex;
   height: 80vh;
   /* overflow-y: hidden; */
-/* } */ 
+/* } */
 body {
   background-image: url("../../images/image.png");
   background-size: cover;
@@ -179,6 +184,7 @@ body {
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
-  border-radius: 10px;}
+  background-color: #ebbd99;
+  border-radius: 10px;
+}
 </style>

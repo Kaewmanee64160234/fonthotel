@@ -17,6 +17,7 @@ function toggleDropdown() {
 
 onMounted(async () => {
   await bookingStore.getBookings('asc','waiting');
+
   booking.value = bookingStore.currentBooking;
 });
 
@@ -150,7 +151,9 @@ onMounted(async () => {
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll">
+            {{ bookingStore.bookings }}
             <div v-for="item in bookingStore.bookings" :key="item.id">
+              {{ item }}
               <HistoryAcceptBookingCard
                 :name="`${item.cusName} ${item.cusLastName}`"
                 :typePayment="item.paymentBooking"
