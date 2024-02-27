@@ -126,6 +126,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../components/Employee/CompleteCheckin.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/finecheckout',
+    name: 'finecheckouts',
+    component: () => import('../components/Employee/FineCheckout.vue'),
+    meta: { hideNavigation: false } 
+  },
+
 
 ]
 
