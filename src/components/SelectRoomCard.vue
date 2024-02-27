@@ -11,7 +11,6 @@ const props = defineProps<{
   image: string,
   typename: string,
   sleep: string,
-  area: string,
   detail: string,
   price: number,
   btnbooknow: string,
@@ -42,10 +41,10 @@ const addBookingDetail = () => {
       <div class="w-1/2  pt-3 bg-white flex flex-col justify-between">
         <div>
           <h2 class="text-base font-bold">{{ props.typename }}</h2>
-          <p class="text-sm text-gray-600">Sleep {{ props.sleep }} | {{ props.area }} square metre</p>
+          <p class="text-sm text-gray-600">Sleep {{ props.sleep }}</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
           <a href="#" class="text-xs font-semibold">Room Detail</a>
-          <div class="px-5 py-2 font-bold text-base price-room">{{ props.price }}</div>
+          <div class="px-5 py-2 font-bold text-base price-room">THB {{ props.price }}</div>
         </div>
         <div class="text-right px-5">
           <button class="btn-booknow mt-2 mb-3"  @click.prevent="addBookingDetail()">Book now</button>

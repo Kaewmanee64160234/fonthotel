@@ -10,23 +10,23 @@ const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
 
 const booking = ref<Booking>();
-  const route = useRoute();
+const route = useRoute();
 const clickback = () => {
   router.push('/selectguestdate')
 
 }
 
 onMounted(async () => {
-    await roomStore.getRoomsByType('ready', ' ');
-    booking.value = bookingsStore.currentBooking;
-    console.log(booking.value);  
+  await roomStore.getRoomsByType('ready', ' ');
+  booking.value = bookingsStore.currentBooking;
+  console.log(booking.value);
 
 })
 const paramValue = route.params.type;
 
 onMounted(async () => {
-    console.log(paramValue.toString().split(' ')[0]);
-    await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(),roomStore.currentStatus);
+  console.log(paramValue.toString().split(' ')[0]);
+  await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(), roomStore.currentStatus);
 })
 
 // Compute the formatted check-in date
@@ -51,10 +51,6 @@ const formatDate = (date: string): string => {
   return new Date(date).toLocaleDateString('en-US', options);
 
 };
-
-
-
-
 </script>
 
 <template>
@@ -68,11 +64,11 @@ const formatDate = (date: string): string => {
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-10" v-for="item of roomStore.currentRooms " :key="item.id">
-
-          <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName"
-            sleep="1" area="37" detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
-       
+        <div class="mt-2 overflow-y-auto dc-scroll mb-10">
+          <div v-for="item of roomStore.currentRooms " :key="item.id">
+            <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
+              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
+          </div>
         </div>
       </div>
 
