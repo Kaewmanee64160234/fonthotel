@@ -126,6 +126,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../components/Employee/CompleteCheckin.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/checkCheckIn',
+    name: 'checkCheckIn',
+    component: () => import('../views/Employee/CheckCheckInView.vue'),
+    meta: { hideNavigation: false } 
+  },
 
 ]
 
