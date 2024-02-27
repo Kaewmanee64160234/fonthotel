@@ -15,6 +15,7 @@ export const useAuthStore = defineStore("auth", () => {
       const response = await auth.login({ email:email, user_password:password });
       console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      
       if (response != null) {
         const user__: User = {
           id: response.data.user_id,
