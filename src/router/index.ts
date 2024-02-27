@@ -132,6 +132,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../components/Employee/FineCheckout.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/historycustomer',
+    name: 'historycustomers',
+    component: () => import('../components/Employee/HistoryCustomer.vue'),
+    meta: { hideNavigation: false } 
+  },
 
 
 ]
