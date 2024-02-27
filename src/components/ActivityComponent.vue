@@ -16,6 +16,7 @@ const props = defineProps<{
 
 const adultCount = ref(0);
 const childrenCount = ref(0);
+const isAddingDetails = ref(false); 
 
 const decrementGuest = (type: "adult" | "children") => {
   if (type === "adult" && adultCount.value > 0) {
@@ -33,6 +34,7 @@ const incrementGuest = (type: "adult" | "children") => {
 };
 
 const addDetails = (activity_: Activity) => {
+  isAddingDetails.value = true;
   const activityPerBooking: ActivityPerBooking = {
     activity: activity_,
 
@@ -40,7 +42,8 @@ const addDetails = (activity_: Activity) => {
     id: -1,
     total: (adultCount.value + childrenCount.value) * activity_.price,
   };
-  useBooking.addAcitivityPerBooking(activityPerBooking);
+  useBooking.addAcitivityPerBooking(activityPerBooking)
+    
 };
 </script>
 <template>
@@ -91,7 +94,7 @@ const addDetails = (activity_: Activity) => {
                     class="btn-plus"
                     @click="incrementGuest('children')"
                   >
-                    <a class="text-white text-m text-center">+</a>
+                    <a class="text-white text-m text-center ">+</a>
                   </button>
                 </div>
               </div>
@@ -145,8 +148,8 @@ const addDetails = (activity_: Activity) => {
               <router-link
                 to="/activity"
                 class="btn-add-details mb-3"
-                @click="addDetails(activity)"
-                >Add Details</router-link
+                @click="addDetails(activity)" 
+                :disabled="isAddingDetails">Add Details</router-link
               >
             </div>
           </div>
@@ -169,6 +172,12 @@ const addDetails = (activity_: Activity) => {
   width: 40px;
   height: 20px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+
 }
 
 .btn-plus {
@@ -177,6 +186,12 @@ const addDetails = (activity_: Activity) => {
   width: 40px;
   height: 20px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+
 }
 
 .btn-add-details {

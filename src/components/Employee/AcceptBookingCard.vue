@@ -1,12 +1,19 @@
 <script setup lang="ts">
+import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
-const props = defineProps({
-  name: String,
-  typePayment: String,
-  typeRoom: String,
-  activity: String,
-  price: Number,
-});
+const bookingStore = useBookingsStore();
+const props = defineProps<{
+  id: number,
+  name: string,
+  typePayment: string,
+  typeRoom: string,
+  activity: string,
+  price: number,
+}>();
+
+const confirmBooking_ = async (status:string) => {
+  await bookingStore.confirmBooking(props.id,status);
+};
 </script>
 <template lang="">
   <div>
@@ -38,11 +45,14 @@ const props = defineProps({
             <button
               type="button"
               class="btn-confirm focus:outline-none text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 d"
+              @click="confirmBooking_('confirm')"
             >
               Confirm
             </button>
             <button
               type="button"
+              @click="confirmBooking_('cancel')"
+
               class="btn-cancel focus:outline-none text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
               Cancel

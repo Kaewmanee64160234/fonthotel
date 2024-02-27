@@ -17,7 +17,8 @@ function toggleDropdown() {
 
 
 onMounted(async () => {
-  await bookingStore.getBookings();
+  await bookingStore.getBookings("asc", "waiting");
+
   booking.value = bookingStore.currentBooking;
 });
 
@@ -67,8 +68,7 @@ let booking = ref<Booking>({
   },
 });
 onMounted(async () => {
-  await bookingStore.getBookings();
-
+  await bookingStore.getBookings("desc", "all");
 });
 </script>
 <template>
@@ -154,10 +154,15 @@ onMounted(async () => {
           <div class="overflow-y-auto dc-scroll">
 
             <div v-for="item in bookingStore.bookings" :key="item.id">
+              <!-- {{ item }} -->
               <HistoryAcceptBookingCard
+                v-if="item.bookingDetail && item.bookingDetail.length > 0"
                 :name="`${item.cusName} ${item.cusLastName}`"
-                :typePayment="booking.paymentBooking"
-                :typeRoom="item.bookingDetail[0].room.roomType.typeName "
+                :typePayment="item.paymentBooking"
+                :typeRoom="
+                  item.bookingDetail[0]?.room?.roomType?.typeName ?? 'Deluxe'
+                "
+                :id="item.id"
                 :activity="
                   item.activityPerBooking[0]?.activity?.name ?? 'No activity'
                 "

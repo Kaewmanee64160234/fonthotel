@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import AcceptBookingCard from "@/components/Employee/AcceptBookingCard.vue";
+import { useBookingsStore } from "@/store/booking.store";
 const isDropdownOpen = ref(false);
-
+const bookingStore = useBookingsStore();
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
-  // Handle the filter selection here, e.g., update a query parameter or fetch new data
   isDropdownOpen.value = false;
 };
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
+
+onMounted(async () => {
+  await bookingStore.getBookings("asc", "waiting");
+  // console.log(bookingStore.bookings.map((item) => item.bookingDetail.map((item) => console.log(item.room))));
+});
 </script>
 <template>
   <body>
@@ -46,7 +51,6 @@ function toggleDropdown() {
               >
                 Filter V
                 <!-- add icon drow down -->
-           
               </button>
               <div
                 class="dropdown-menu absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
@@ -93,30 +97,27 @@ function toggleDropdown() {
             </div>
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
+
           <div class="overflow-y-auto dc-scroll">
-         
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
-          <AcceptBookingCard
-            :name="'Karen Smith'"
-            :typePayment="'Credit Card'"
-            :typeRoom="'Deluxe Room'"
-            :activity="'Spa Treatment'"
-            :price="7700"
-          />
-        </div>
+            <div v-for="item in bookingStore.bookings" :key="item.id">
+              <!-- Check if bookingDetail exists and has entries before accessing -->
+
+              <AcceptBookingCard
+                v-if="item.bookingDetail && item.bookingDetail.length > 0"
+                :name="`${item.cusName} ${item.cusLastName}`"
+                :typePayment="item.paymentBooking"
+                :typeRoom="
+                  item.bookingDetail[0]?.room?.roomType?.typeName ?? 'Deluxe'
+                "
+                :id="item.id"
+                :activity="
+                  item.activityPerBooking[0]?.activity?.name ?? 'No activity'
+                "
+                :price="item.total"
+                :status="item.status"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -137,7 +138,7 @@ function toggleDropdown() {
   margin: 0;
 }
 .card-style {
-  top:20px;
+  top: 20px;
   width: 90vw;
   height: 100vh;
   border-radius: 30px;
@@ -146,16 +147,17 @@ function toggleDropdown() {
   fill-opacity: unset;
   display: block;
   /* overflow-y: auto; */
- 
 }
 .overflow-y-auto {
-  max-height: calc(75vh - 160px); /* Adjust max-height as necessary, accounting for the fixed section */
+  max-height: calc(
+    75vh - 160px
+  ); /* Adjust max-height as necessary, accounting for the fixed section */
 }
 /* .bigcard {
   display: flex;
   height: 80vh;
   /* overflow-y: hidden; */
-/* } */ 
+/* } */
 body {
   background-image: url("../../images/image.png");
   background-size: cover;
@@ -182,6 +184,7 @@ body {
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
-  border-radius: 10px;}
+  background-color: #ebbd99;
+  border-radius: 10px;
+}
 </style>

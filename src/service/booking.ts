@@ -50,11 +50,21 @@ const getBookings = (time: string, status: string) => {
     return http.get(`/booking/time/${time}/status/${status}`)
 }
 
+const confirmBooking = (id: number,status:string) => {
+    console.log('--------------------------------')
+    console.log(`/booking/${id}`);
+    return http.patch(`/booking/${id}`,{
+        booking_status:status
+    });
+
+}
+
 
 export default {
     saveBooking,
     getBookingBybookingid,
     getBookingByCustomerIdLastcreated, 
-    getBookings
+    getBookings,
+    confirmBooking
 };
 

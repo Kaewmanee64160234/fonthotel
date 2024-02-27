@@ -8,6 +8,7 @@ import { Promotion } from "@/model/promotion.model";
 import { Room, RoomType } from "@/model/room.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useUserStore } from "./user.store";
+import router from "@/router";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
@@ -56,7 +57,53 @@ export const useBookingsStore = defineStore("bookings", () => {
       name: "",
     },
   });
-  const bookings = ref<Booking[]>([]);
+  const bookings = ref<Booking[]>([
+    {
+      adult: 0,
+      checkIn: new Date(),
+      checkOut: new Date(),
+      child: 0,
+      createDate: new Date(),
+      cusAddress: "",
+      cusCountry: "",
+      cusEmail: "",
+      cusLastName: "",
+      cusName: "",
+      cusTel: "",
+      createdDate: new Date(),
+
+      id: 0,
+      paymentBooking: "",
+      paymentCheckout: "",
+      status: "",
+      statusLate: "",
+      total: 0,
+      totalDiscount: 0,
+      activityPerBooking: [],
+      bookingDetail: [],
+      customer: { id: 0, name: "", startDate: new Date() },
+      employee: {
+        address: "",
+        dateOfBirth: new Date(),
+        dateStartWork: "",
+        email: "",
+        hourlyRate: 0,
+        id: 0,
+        name: "",
+        position: "",
+        tel: "",
+      },
+      pledge: 0,
+      promotion: {
+        createdDate: new Date(),
+        discount: 0,
+        discountPercent: 0,
+        endDate: new Date(),
+        id: 0,
+        name: "",
+      },
+    },
+  ]);
 
   const saveBooking = async () => {
     try {
@@ -423,169 +470,115 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log(currentBooking.value);
   };
 
-  async function getBookings() {
+  // Assuming bookingService.getBookings(order, status) retrieves booking data,
+  // including details and associated activities (if any)
+
+  async function getBookings(order: string, status: string) {
     try {
-      const response = await bookingService.getBookings("desc", "all");
-      console.log(response.data);
-      for (const i in response.data) {
-        const booking: Booking = {
-          id: response.data[i].booking_id,
-          createDate: new Date(response.data[i].booking_create_date),
-          cusName: response.data[i].booking_cus_name,
-          cusLastName: response.data[i].booking_cus_lastname,
-          cusTel: response.data[i].booking_cus_tel,
-          cusEmail: response.data[i].booking_cus_email,
-          cusCountry: response.data[i].booking_cus_addr,
-          cusAddress: response.data[i].booking_cus_addr_des,
-          checkIn: new Date(response.data[i].booking_checkin),
-          checkOut: new Date(response.data[i].booking_checkout),
-          total: response.data[i].booking_total,
-          pledge: response.data[i].booking_cash_pledge,
-          totalDiscount: response.data[i].booking_total_discount,
-          paymentBooking: response.data[i].booking_payment_booking,
-          paymentCheckout: response.data[i].booking_payment_checkout,
-          status: response.data[i].booking_status,
-          statusLate: response.data[i].booking_status_late,
-          adult: response.data[i].booking_de_adult,
-          child: response.data[i].booking_de_child,
-          createdDate: new Date(response.data[i].booking_create_date),
-          bookingDetail: [],
-          activityPerBooking: [],
-          customer: {
-            id: -1,
-            name: "",
-            startDate: new Date(),
-          },
-          promotion: {
-            createdDate: new Date(),
-            discount: 0,
-            discountPercent: 0,
-            endDate: new Date(),
-            id: -1,
-            name: "",
-          },
-          employee: {
-            address: "",
-            dateOfBirth: new Date(),
-            dateStartWork: "",
-            email: "",
-            hourlyRate: 0,
-            id: -1,
-            name: "",
-            position: "",
-            tel: "",
-          },
-        };
-        if (response.data[i] != null) {
-          // booking
-          if (response.data[i].promotion != null) {
-            const promotion: Promotion = {
-              id: response.data[i].promotion.prom_id,
-              createdDate: response.data[i].promotion.prom_created_date,
-              endDate: response.data[i].promotion.prom_end_date,
-              name: response.data[i].promotion.prom_name,
-              discount: response.data[i].promotion.prom_discount,
-              discountPercent: response.data[i].promotion.prom_discount_pres,
-            };
-            booking.promotion = promotion;
-          }
-          if (response.data[i].promotion != null) {
-            const customer: Customer = {
-              id: response.data[i].customer.cus_id,
-              name: response.data[i].customer.cus_name,
-              startDate: response.data[i].customer.cus_start_date,
-            };
-            booking.customer = customer;
-          }
-          if (response.data[i].promotion != null) {
-            const employee: Employee = {
-              id: response.data[i].employee.emp_id,
-              name: response.data[i].employee.emp_name,
-              position: response.data[i].employee.emp_position,
-              tel: response.data[i].employee.emp_tel,
-              dateOfBirth: response.data[i].employee.emp_dob,
-              address: response.data[i].employee.emp_addr,
-              email: response.data[i].employee.emp_email,
-              dateStartWork: response.data[i].employee.emp_dsw,
-              hourlyRate: response.data[i].employee.emp_hourly_wage,
-            };
-            booking.employee = employee;
-          }
-
-          if (response.data[i].bookingDetail) {
-            for (const j in response.data[i].bookingDetail) {
-              console.log(response.data[i].bookingDetail[j]);
-              const roomType: RoomType = {
-                id: response.data[i].bookingDetail[j].room.roomtype.room_type_id,
-                roomType:
-                  response.data[i].bookingDetail[j].room.roomtype.room_type,
-                typeName:
-                  response.data[i].bookingDetail[j].room.roomtype.room_type_name,
-                bedSize:
-                  response.data[i].bookingDetail[j].room.roomtype
-                    .room_type_bed_size,
-                bath: response.data[i].bookingDetail[j].room.roomtype
-                  .room_type_bath,
-                chromeCast:
-                  response.data[i].bookingDetail[j].room.roomtype
-                    .room_type_chromecast,
-                desk: response.data[i].bookingDetail[j].room.roomtype
-                  .room_type_desk,
-                eletricSheer:
-                  response.data[i].bookingDetail[j].room.roomtype
-                    .room_type_electric_sheer,
-                price:
-                  response.data[i].bookingDetail[j].room.roomtype.room_type_price,
-                water:
-                  response.data[i].bookingDetail[j].room.roomtype.room_type_water,
-                wifi: response.data[i].bookingDetail[j].room.roomtype
-                  .room_type_wifi,
-                descriptions:
-                  response.data[i].bookingDetail[j].room.roomtype.room_type_des,
-              };
-
-              const room: Room = {
-                id: response.data[i].bookingDetail[j].room.room_id,
-                image: response.data[i].bookingDetail[j].room.room_img_path,
-                status: response.data[i].bookingDetail[j].room.room_status,
-                roomType: roomType,
-              };
-              const bookingDetail: BookingDetail = {
-                id: response.data[i].bookingDetail[j].id,
-                room: room,
-                total: response.data[i].bookingDetail[j].total,
-              };
-              booking.bookingDetail?.push(bookingDetail);
-            }
-          }
-          if (response.data[i].activityPerBooking) {
-            for (const j in response.data[i].activityPerBooking) {
-              const activityPerBooking: ActivityPerBooking = {
-                id: response.data[i].activityPerBooking[j].id,
-                // booking: response.data[i].activityPerBooking.bookings[i].booking,
-                activity: {
-                  id: response.data[i].activityPerBooking[j].act_id,
-                  image: response.data[i].activityPerBooking[j].act_img_path,
-                  name: response.data[i].activityPerBooking[j].act_name,
-                  price: response.data[i].activityPerBooking[j].act_price,
-                  description: response.data[i].activityPerBooking[j].act_des,
+      const response = await bookingService.getBookings(order, status);
+      const bookings_ = response.data.map((bookingData: any) => {
+        // Basic booking information
+        const booking = {
+          id: bookingData.booking_id,
+          createDate: new Date(bookingData.booking_create_date),
+          cusName: bookingData.booking_cus_name,
+          cusLastName: bookingData.booking_cus_lastname,
+          cusTel: bookingData.booking_cus_tel,
+          cusEmail: bookingData.booking_cus_email,
+          cusCountry: bookingData.booking_cus_addr,
+          cusAddress: bookingData.booking_cus_addr_des,
+          checkIn: bookingData.booking_checkin
+            ? new Date(bookingData.booking_checkin)
+            : null,
+          checkOut: bookingData.booking_checkout
+            ? new Date(bookingData.booking_checkout)
+            : null,
+          total: bookingData.booking_total,
+          pledge: bookingData.booking_cash_pledge,
+          totalDiscount: bookingData.booking_total_discount,
+          paymentBooking: bookingData.booking_payment_booking,
+          paymentCheckout: bookingData.booking_payment_checkout,
+          status: bookingData.booking_status,
+          statusLate: bookingData.booking_status_late,
+          adult: bookingData.booking_adult,
+          child: bookingData.booking_child,
+          createdDate: new Date(bookingData.updateDate),
+          customer: bookingData.customer
+            ? {
+                id: bookingData.customer.cus_id,
+                name: bookingData.customer.cus_name,
+                startDate: new Date(bookingData.customer.cus_start_date),
+              }
+            : null,
+          promotion: bookingData.promotion, // Add promotion mapping if needed
+          employee: bookingData.employee
+            ? {
+                id: bookingData.employee.emp_id,
+                name: bookingData.employee.emp_name,
+                position: bookingData.employee.emp_position,
+                tel: bookingData.employee.emp_tel,
+                dateOfBirth: new Date(bookingData.employee.emp_dob),
+                address: bookingData.employee.emp_addr,
+                email: bookingData.employee.emp_email,
+                dateStartWork: new Date(bookingData.employee.emp_dsw),
+                hourlyRate: bookingData.employee.emp_hourly_wage,
+              }
+            : null,
+          bookingDetail: bookingData.bookingDetail
+            ? bookingData.bookingDetail.map((detail: any) => ({
+                id: detail.booking_de_id,
+                room: {
+                  id: detail.room.room_id,
+                  image: detail.room.room_img_path,
+                  status: detail.room.room_status,
+                  roomType: {
+                    id: detail.room.roomtype.room_type_id,
+                    roomType: detail.room.roomtype.room_type,
+                    typeName: detail.room.roomtype.room_type_name,
+                    bedSize: detail.room.roomtype.room_type_bed_size,
+                    // Add other room type details as needed
+                  },
                 },
-                total: response.data[i].activityPerBooking[j].total,
-                qty: 0,
-              };
+                total: detail.total,
+              }))
+            : [],
+          activityPerBooking: bookingData.activityPer
+            ? bookingData.activityPer.map((activity: any) => ({
+                id: activity.id,
+                activity: {
+                  id: activity.activity.id,
+                  name: activity.activity.name,
+                },
+                total: activity.total,
+                qty: activity.qty,
+              }))
+            : [],
+        };
+        console.log(booking);
+        return booking;
+      });
+      bookings.value = [];
 
-              booking.activityPerBooking?.push(activityPerBooking);
-              booking.total = response.data[i].booking_total;
-            }
-          }
-          bookings.value.push(booking);
-        }
+      bookings.value.push(...bookings_);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  }
+
+  // Note: Adapt the structure of activity mapping based on your actual response structure
+
+  const confirmBooking = async (id: number, status: string) => {
+    try {
+      const response = await bookingService.confirmBooking(id, status);
+      if (response.data) {
+        console.log(response.data);
+        getBookings("asc", "waiting");
+
       }
-      console.log(bookings.value);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     bookings,
@@ -597,5 +590,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     currentBooking,
     addAcitivityPerBooking,
     getBookingByCustomerIdLastcreated,
+    confirmBooking,
   };
 });
