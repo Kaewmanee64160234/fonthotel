@@ -45,6 +45,14 @@ const checkPromotion = async (code: string) => {
     //   return;
     }
     if (promotion.discount > 0) {
+        bookingsStore.currentBooking.total=0;
+
+        for (let i = 0; i < bookingsStore.currentBooking.bookingDetail.length; i++) {
+            bookingsStore.currentBooking.total += bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
+        }
+        for (let i = 0; i < bookingsStore.currentBooking.activityPerBooking.length; i++) {
+            bookingsStore.currentBooking.total += bookingsStore.currentBooking.activityPerBooking[i].activity.price;
+        }
 
       bookingsStore.currentBooking.totalDiscount = promotion.discount;
       bookingsStore.currentBooking.promotion = promotion;
@@ -52,6 +60,14 @@ const checkPromotion = async (code: string) => {
         bookingsStore.currentBooking.total - promotion.discount;
       console.log(bookingsStore.currentBooking.total);
     } else if (promotion.discountPercent > 0) {
+        bookingsStore.currentBooking.total=0;
+        for (let i = 0; i < bookingsStore.currentBooking.bookingDetail.length; i++) {
+            bookingsStore.currentBooking.total += bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
+        }
+        for (let i = 0; i < bookingsStore.currentBooking.activityPerBooking.length; i++) {
+            bookingsStore.currentBooking.total += bookingsStore.currentBooking.activityPerBooking[i].activity.id;
+        }
+
       bookingsStore.currentBooking.totalDiscount =
         (bookingsStore.currentBooking.total * promotion.discountPercent) / 100;
       bookingsStore.currentBooking.promotion = promotion;
