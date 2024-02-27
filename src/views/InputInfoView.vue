@@ -33,7 +33,8 @@ const clickContinue = async () => {
   router.push("/bookingdetail");
 };
 
-const checkPromotion = async (code: string) => {
+const checkPromotion = async (code: string,event:Event) => {
+    event.preventDefault();
   const promotion = await promotionStore.findPromotion(code);
   if (promotion) {
     if (promotion.createdDate > new Date()) {
@@ -300,7 +301,7 @@ function formatDateRange(startDate: Date, endDate: Date): string {
 
               <div class="col-2">
                 <button
-                  @click="checkPromotion(promotionId)"
+                  @click="checkPromotion(promotionId,$event)"
                   class="mt-6 btn-applypromo"
                   id="btnApplypromo"
                 >

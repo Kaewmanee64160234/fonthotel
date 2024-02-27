@@ -109,12 +109,23 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideNavigation: false } 
   },
   {
+    path: '/checkInManagement',
+    name: 'checkInManagement',
+    component: () => import('../views/Employee/CheckInManagementView.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
+    path: '/checkOutManagement',
+    name: 'checkOutManagement',
+    component: () => import('../views/Employee/CheckOutManagementView.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
     path: '/complete',
     name: 'completes',
     component: () => import('../components/Employee/CompleteCheckin.vue'),
     meta: { hideNavigation: false } 
   },
-
 
 ]
 
