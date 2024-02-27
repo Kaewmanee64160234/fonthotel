@@ -108,6 +108,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/HistoryBookingView.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/complete',
+    name: 'completes',
+    component: () => import('../components/Employee/CompleteCheckin.vue'),
+    meta: { hideNavigation: false } 
+  },
+
+
 ]
 
 const router = createRouter({
