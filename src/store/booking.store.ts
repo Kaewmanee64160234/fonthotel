@@ -47,7 +47,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       position: "",
       tel: "",
     },
-    pledge: 0,
+    pledge: 1500,
     promotion: {
       createdDate: new Date(),
       discount: 0,

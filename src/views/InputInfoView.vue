@@ -21,7 +21,7 @@ const paymentMethod = ref("");
 
 const booking = ref<Booking>();
 onMounted(() => {
-    promotionStore.getPromotions();
+  promotionStore.getPromotions();
 });
 const clickBack = () => {
   router.push("/activity");
@@ -38,21 +38,31 @@ const checkPromotion = async (code: string) => {
   if (promotion) {
     if (promotion.createdDate > new Date()) {
       alert("Promotion code is expired");
-    //   return;
+      //   return;
     }
     if (promotion.endDate < new Date()) {
       alert("Promotion code is expired");
-    //   return;
+      //   return;
     }
     if (promotion.discount > 0) {
-        bookingsStore.currentBooking.total=0;
+      bookingsStore.currentBooking.total = 0;
 
-        for (let i = 0; i < bookingsStore.currentBooking.bookingDetail.length; i++) {
-            bookingsStore.currentBooking.total += bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
-        }
-        for (let i = 0; i < bookingsStore.currentBooking.activityPerBooking.length; i++) {
-            bookingsStore.currentBooking.total += bookingsStore.currentBooking.activityPerBooking[i].activity.price;
-        }
+      for (
+        let i = 0;
+        i < bookingsStore.currentBooking.bookingDetail.length;
+        i++
+      ) {
+        bookingsStore.currentBooking.total +=
+          bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
+      }
+      for (
+        let i = 0;
+        i < bookingsStore.currentBooking.activityPerBooking.length;
+        i++
+      ) {
+        bookingsStore.currentBooking.total +=
+          bookingsStore.currentBooking.activityPerBooking[i].activity.price;
+      }
 
       bookingsStore.currentBooking.totalDiscount = promotion.discount;
       bookingsStore.currentBooking.promotion = promotion;
@@ -60,13 +70,24 @@ const checkPromotion = async (code: string) => {
         bookingsStore.currentBooking.total - promotion.discount;
       console.log(bookingsStore.currentBooking.total);
     } else if (promotion.discountPercent > 0) {
-        bookingsStore.currentBooking.total=0;
-        for (let i = 0; i < bookingsStore.currentBooking.bookingDetail.length; i++) {
-            bookingsStore.currentBooking.total += bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
-        }
-        for (let i = 0; i < bookingsStore.currentBooking.activityPerBooking.length; i++) {
-            bookingsStore.currentBooking.total += bookingsStore.currentBooking.activityPerBooking[i].activity.id;
-        }
+      bookingsStore.currentBooking.total = 0;
+
+      for (
+        let i = 0;
+        i < bookingsStore.currentBooking.bookingDetail.length;
+        i++
+      ) {
+        bookingsStore.currentBooking.total +=
+          bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
+      }
+      for (
+        let i = 0;
+        i < bookingsStore.currentBooking.activityPerBooking.length;
+        i++
+      ) {
+        bookingsStore.currentBooking.total +=
+          bookingsStore.currentBooking.activityPerBooking[i].activity.id;
+      }
 
       bookingsStore.currentBooking.totalDiscount =
         (bookingsStore.currentBooking.total * promotion.discountPercent) / 100;
@@ -405,10 +426,18 @@ const saveBooking = () => {
                 >
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">Promotion</p>
-                    <p>{{ bookingsStore.currentBooking.promotion.discount ?? bookingsStore.currentBooking.promotion.discountPercent +'%'}}</p>
+                    <p>
+                      {{
+                        bookingsStore.currentBooking.promotion.discount ??
+                        bookingsStore.currentBooking.promotion.discountPercent +
+                          "%"
+                      }}
+                    </p>
                   </div>
                   <div class="flex-2 flex flex-col">
-                    <p>{{ bookingsStore.currentBooking.promotion.name ?? '-'}}</p>
+                    <p>
+                      {{ bookingsStore.currentBooking.promotion.name ?? "-" }}
+                    </p>
                   </div>
                 </div>
 
@@ -438,7 +467,9 @@ const saveBooking = () => {
                     <p class="font-medium">Total:</p>
                   </div>
                   <div class="flex-2 flex flex-col">
-                    <p class="font-medium">THB {{bookingsStore.currentBooking.total }}</p>
+                    <p class="font-medium">
+                      THB {{ bookingsStore.currentBooking.total }}
+                    </p>
                   </div>
                 </div>
 
