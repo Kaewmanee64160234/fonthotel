@@ -12,7 +12,7 @@ const roomStore = useRoomStore();
 const booking = ref<Booking>();
 const route = useRoute();
 const clickback = () => {
-  router.push('/selectguestdate')
+  router.push('/selectguestdate/'+roomStore.currentType)
 
 }
 

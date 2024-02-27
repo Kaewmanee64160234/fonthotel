@@ -47,7 +47,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       position: "",
       tel: "",
     },
-    pledge: 0,
+    pledge: 1500,
     promotion: {
       createdDate: new Date(),
       discount: 0,
@@ -459,12 +459,15 @@ export const useBookingsStore = defineStore("bookings", () => {
   const addBookingDetail = (bookingDetail: BookingDetail) => {
     currentBooking.value.bookingDetail.push(bookingDetail);
     console.log(bookingDetail);
+    currentBooking.value.total = currentBooking.value.total + bookingDetail.room.roomType.price;
     console.log("---------------------------------");
     console.log(currentBooking.value);
   };
 
   const addAcitivityPerBooking = (activityPerBook: ActivityPerBooking) => {
     currentBooking.value.activityPerBooking.push(activityPerBook);
+    currentBooking.value.total = currentBooking.value.total + (activityPerBook.activity.price * activityPerBook.qty);
+
     console.log(activityPerBook);
     console.log("---------------------------------");
     console.log(currentBooking.value);
