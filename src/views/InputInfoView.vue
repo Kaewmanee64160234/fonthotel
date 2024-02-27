@@ -164,6 +164,24 @@ const saveBooking = () => {
     clickContinue();
   }
 };
+
+function formatDateRange(startDate: Date, endDate: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short", // "Tue"
+    year: "numeric", // "2023"
+    month: "short", // "Dec"
+    day: "numeric", // "26"
+  };
+
+  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
+    startDate
+  );
+  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(
+    endDate
+  );
+
+  return `${startFormatted} - ${endFormatted}`;
+}
 </script>
 
 <template>
@@ -368,34 +386,31 @@ const saveBooking = () => {
                   style="width: 100%; font-size: 16px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</p>
-                    <p>2 Adult</p>
+                    <p>{{ formatDateRange(bookingsStore.currentBooking.checkIn,bookingsStore.currentBooking.checkOut) }}</p>
+                    <p>{{ bookingsStore.currentBooking.adult }} Adult</p>
                   </div>
                 </div>
 
                 <div
                   class="flex-3 flex flex-row px-5"
                   style="width: 100%; font-size: 16px"
-                >
+                v-for="item of bookingsStore.currentBooking.bookingDetail" :key="item.id">
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Deluxe</p>
+                    <p class="font-medium">{{item.room.roomType.roomType}}</p>
                   </div>
                   <div class="flex-2 flex flex-col">
-                    <p class="font-medium">THB 5,700.00</p>
+                    <p class="font-medium">THB {{  item.room.roomType.price}}</p>
                   </div>
                 </div>
 
-                <div class="flex-4 flex flex-row pt-2 px-5">
+                <!-- <div class="flex-4 flex flex-row pt-2 px-5">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium" style="font-size: 16px">1 Night</p>
-                    <p style="font-size: 13px">Dec 26, 2023</p>
                   </div>
-                  <div class="flex-2 flex flex-col mt-6">
-                    <p style="font-size: 13px">THB 5,700.00</p>
-                  </div>
-                </div>
+                 
+                </div> -->
 
-                <div
+                <!-- <div
                   class="flex-5 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
                 >
@@ -405,18 +420,22 @@ const saveBooking = () => {
                   <div class="flex-2 flex flex-col">
                     <p class="font-medium">THB 5,700.00</p>
                   </div>
-                </div>
+                </div> -->
+
+               
 
                 <div
                   class="flex-6 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
+                  v-for="book in bookingsStore.currentBooking.activityPerBooking"
+                  :key="book.id"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Buffet Breakfast</p>
-                    <p>Dec 26 / 1 Adult</p>
+                    <p class="font-medium">{{ book.activity.name }}</p>
+                    <p>Guest {{ book.qty }}</p>
                   </div>
                   <div class="flex-2 flex flex-col mt-6">
-                    <p>THB 300.00</p>
+                    <p>THB {{ book.total }}</p>
                   </div>
                 </div>
 
