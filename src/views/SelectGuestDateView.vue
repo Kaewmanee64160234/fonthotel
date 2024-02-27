@@ -20,7 +20,7 @@ const adultCount = ref(0);
 const childrenCount = ref(0);
 const totalGuests = ref(0);
 const paramValue = route.params.type;
-
+roomStore.currentType = paramValue.toString().split(" ")[0].toLowerCase();
 const clickcontinue = () => {
   const booking = ref<Booking>({
     id: -1,
