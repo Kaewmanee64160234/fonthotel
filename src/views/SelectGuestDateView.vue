@@ -56,6 +56,7 @@ const clickcontinue = () => {
     },
   });
 
+
   bookingStore.setBooking(booking.value);
   console.log(bookingStore.currentBooking);
   router.push(
@@ -107,6 +108,23 @@ onMounted(async () => {
 watch(startDate, () => updateStayDates());
 watch(endDate, () => updateStayDates());
 
+// Watch for changes in startDate and ensure it's not in the past
+watch(startDate, (newVal) => {
+  const today = new Date();
+  if (newVal < today) {
+    startDate.value = today; // Set startDate to today if it's in the past
+  }
+});
+
+watch(endDate, (newVal) => {
+  if (newVal < startDate.value) {
+    const nextDay = new Date(newVal);
+    nextDay.setDate(nextDay.getDate() + 1); // Add one day to the startDate
+    endDate.value = nextDay; // Set endDate to be one day after startDate
+  }
+});
+
+
 const updateStayDates = () => {
   const formattedStartDate = formatDate(startDate.value);
   const formattedEndDate = formatDate(endDate.value);
@@ -129,6 +147,7 @@ const formatDate = (date: Date): string => {
 
 <template>
   <div class="body">
+
     <div class="pt-5 pl-5">
       <button @click="clickback">
         <i style="font-size: 30px" class="far">&#xf359;</i>
@@ -139,63 +158,33 @@ const formatDate = (date: Date): string => {
       <div class="flex-1 flex flex-col pt-5 p-10">
         <div class="text-center">
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div
-              class="relative inline-block text-left"
-              @click="toggleDropdown"
-            >
+            <div class="relative inline-block text-left" @click="toggleDropdown">
               <div>
-                <button
-                  type="button"
-                  class="btn-guest text-left m-0 p-0"
-                  id="guest-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
-                  <p>Guest</p>
+                <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
+                  aria-haspopup="true">
+                  <p> Guest</p>
                   <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
                 </button>
 
-                <div
-                  v-if="isDropdownOpen"
-                  @click="closeDropdown"
-                  class="absolute card-selectguest mt-2"
-                  role="guest"
-                  aria-orientation="vertical"
-                  aria-labelledby="guest-button"
-                  tabindex="-1"
-                >
+                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
+                  aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
                   <div class="py-1" role="none">
                     <div>
-                      <a class="text-gray-700 block px-4 py-2 text-sm"
-                        >Select Guests</a
-                      >
+                      <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
                       <hr class="color-line" />
                       <!-- Select Adult -->
                       <div class="flex-1 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a
-                            class="text-black block px-4 py-2 text-sm"
-                            role="menuitem"
-                            tabindex="-1"
-                            id="menu-item-1"
-                            >Adult</a
-                          >
+                          <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            id="menu-item-1">Adult</a>
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button
-                              type="button"
-                              class="btn-minus"
-                              @click="decrementGuest('adult')"
-                            >
+                            <button type="button" class="btn-minus" @click="decrementGuest('adult')">
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ adultCount }}</a>
-                            <button
-                              type="button"
-                              class="btn-plus"
-                              @click="incrementGuest('adult')"
-                            >
+                            <button type="button" class="btn-plus" @click="incrementGuest('adult')">
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -204,29 +193,16 @@ const formatDate = (date: Date): string => {
                       <!-- Select Children -->
                       <div class="flex-2 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a
-                            class="text-gray-700 block px-4 py-2 text-sm"
-                            role="menuitem"
-                            tabindex="-1"
-                            id="menu-item-2"
-                            >Children</a
-                          >
+                          <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            id="menu-item-2">Children</a>
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button
-                              type="button"
-                              class="btn-minus"
-                              @click="decrementGuest('children')"
-                            >
+                            <button type="button" class="btn-minus" @click="decrementGuest('children')">
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ childrenCount }}</a>
-                            <button
-                              type="button"
-                              class="btn-plus"
-                              @click="incrementGuest('children')"
-                            >
+                            <button type="button" class="btn-plus" @click="incrementGuest('children')">
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -235,11 +211,8 @@ const formatDate = (date: Date): string => {
                       <!-- Btn Apply -->
                       <div class="flex-3 flex flex-row p-1 justify-end">
                         <div class="flex">
-                          <button
-                            type="button"
-                            class="btn-apply"
-                            @click="applyGuestCount"
-                          >
+                          <button type="button" class="btn-apply" @click="applyGuestCount"
+                            :disabled="adultCount + childrenCount === 0">
                             <a class="text-white text-m text-center">Apply</a>
                           </button>
                         </div>
@@ -253,41 +226,26 @@ const formatDate = (date: Date): string => {
             <!-- Check-in date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-in </label>
-              <DatePicker
-                id="check-in"
-                v-model="startDate"
+              <DatePicker id="check-in" v-model="startDate" :minDate="Date.now()"
                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                style="width: 90%"
-                placeholder="Select date"
-              />
+                style="width: 90%;" placeholder="Select date" />
             </div>
 
             <!-- Check-out date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-out </label>
-              <DatePicker
-                id="check-out"
-                v-model="endDate"
+              <DatePicker id="check-out" v-model="endDate"
                 class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                placeholder="Select date"
-                style="width: 90%"
-              />
+                placeholder="Select date" style="width: 90%;" />
             </div>
           </div>
         </div>
-        <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
+        <p class="mt-3 text-white font-semibold text-xl ">Select Room</p>
 
-        <div class="mt-2 overflow-y-auto mb-10 dc-scroll">
-            <!-- {{ roomStore.currentRooms }} -->
-          <div v-for="item of roomStore.currentRooms" :key="item.id">
-            <RoomCard
-              :image="item.image"
-              :typename="item.roomType.typeName"
-              :sleep="item.roomType.typeName"
-              area="37"
-              detail="Sea View , Smart TV , Work Desk"
-              :price="item.roomType.price"
-            />
+        <div class="mt-2 overflow-y-auto  mb-10 dc-scroll ">
+          <div v-for="item of roomStore.currentRooms " :key="item.id">
+            <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
+              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
           </div>
         </div>
       </div>
@@ -329,10 +287,162 @@ const formatDate = (date: Date): string => {
             </div>
           </div>
 
+
           <div class="flex-2 flex flex-row justify-center pt-10">
-            <button class="btn-continue" @click="clickcontinue()">
+            <button class="btn-continue" @click="clickcontinue()" :disabled="totalGuests === 0">
               <a>Continue</a>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="pt-5 pl-5">
+        <button @click="clickback">
+          <i style="font-size: 30px" class="far">&#xf359;</i>
+        </button>
+
+      </div>
+      <div class="min-h-screen flex card-container">
+        <!-- Left Side:  -->
+        <div class="flex-1 flex flex-col pt-5 p-10">
+          <div class="text-center">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div class="relative inline-block text-left" @click="toggleDropdown">
+                <div>
+                  <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
+                    aria-haspopup="true">
+                    <p>Guest</p>
+                    <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
+                  </button>
+
+                  <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
+                    aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                      <div>
+                        <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
+                        <hr class="color-line" />
+                        <!-- Select Adult -->
+                        <div class="flex-1 flex flex-row p-1">
+                          <div class="flex-1 flex flex-col" style="width: 50%">
+                            <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                              id="menu-item-1">Adult</a>
+                          </div>
+                          <div class="flex-2 flex flex-col" style="width: 50%">
+                            <div class="flex items-center py-2">
+                              <button type="button" class="btn-minus" @click="decrementGuest('adult')">
+                                <a class="text-white text-m text-center">-</a>
+                              </button>
+                              <a class="mx-4">{{ adultCount }}</a>
+                              <button type="button" class="btn-plus" @click="incrementGuest('adult')">
+                                <a class="text-white text-m text-center">+</a>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Select Children -->
+                        <div class="flex-2 flex flex-row p-1">
+                          <div class="flex-1 flex flex-col" style="width: 50%">
+                            <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                              id="menu-item-2">Children</a>
+                          </div>
+                          <div class="flex-2 flex flex-col" style="width: 50%">
+                            <div class="flex items-center py-2">
+                              <button type="button" class="btn-minus" @click="decrementGuest('children')">
+                                <a class="text-white text-m text-center">-</a>
+                              </button>
+                              <a class="mx-4">{{ childrenCount }}</a>
+                              <button type="button" class="btn-plus" @click="incrementGuest('children')">
+                                <a class="text-white text-m text-center">+</a>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Btn Apply -->
+                        <div class="flex-3 flex flex-row p-1 justify-end">
+                          <div class="flex">
+                            <button type="button" class="btn-apply" @click="applyGuestCount">
+                              <a class="text-white text-m text-center">Apply</a>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Check-in date picker -->
+              <div class="btn-date text-left">
+                <label class=""> Check-in </label>
+                <DatePicker id="check-in" v-model="startDate"
+                  class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
+                  style="width: 90%" placeholder="Select date" />
+              </div>
+
+              <!-- Check-out date picker -->
+              <div class="btn-date text-left">
+                <label class=""> Check-out </label>
+                <DatePicker id="check-out" v-model="endDate"
+                  class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
+                  placeholder="Select date" style="width: 90%" />
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
+
+          <div class="mt-2 overflow-y-auto mb-10 dc-scroll">
+            <!-- {{ roomStore.currentRooms }} -->
+            <div v-for="item of roomStore.currentRooms" :key="item.id">
+              <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
+                detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side:  -->
+        <div class="w-full flex-1 flex justify-center mt-5">
+          <div class="w-full justify-center">
+            <div class="flex-1 flex flex-row justify-center">
+              <div class="card-stay">
+                <p class="text-2xl p-2 pl-5 font-medium">Your Stay</p>
+                <div class="min-h-screen card-container">
+                  <div class="flex-1 flex flex-row p-2 pl-5">
+                    <div class="flex-1 flex flex-col" style="width: 50%">
+                      <p class="font-medium">Check-in</p>
+                      <p>After 1:00 PM</p>
+                    </div>
+
+                    <div class="flex-2 flex flex-col" style="width: 50%">
+                      <p class="font-medium">Check-out</p>
+                      <p>Before 7:00 AM</p>
+                    </div>
+                  </div>
+                  <div class="flex-2 flex flex-row p-2 pl-5">
+                    <span class="font-medium">Date : </span>
+                    <!-- <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span> -->
+                    <span>{{ stayDates }}</span>
+                  </div>
+
+                  <div class="flex-3 flex flex-row p-2 pl-5">
+                    <div class="flex-1 flex flex-col">
+                      <p class="font-medium">Guest</p>
+                      <p>
+                        <a class="mr-10">Adult : {{ adultCount }}</a>
+                        <a class="ml-10">Children : {{ childrenCount }}</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-2 flex flex-row justify-center pt-10">
+              <button class="btn-continue" @click="clickcontinue()">
+                <a>Continue</a>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -15,11 +15,13 @@ function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
 
+
 onMounted(async () => {
   await bookingStore.getBookings("asc", "waiting");
 
   booking.value = bookingStore.currentBooking;
 });
+
 
 let booking = ref<Booking>({
   adult: 0,
@@ -150,7 +152,7 @@ onMounted(async () => {
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll">
-            <!-- {{ bookingStore.bookings }} -->
+
             <div v-for="item in bookingStore.bookings" :key="item.id">
               <!-- {{ item }} -->
               <HistoryAcceptBookingCard
@@ -169,6 +171,7 @@ onMounted(async () => {
               />
             </div>
           </div>
+
         </div>
       </div>
     </div>
