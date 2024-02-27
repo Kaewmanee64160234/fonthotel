@@ -30,7 +30,7 @@ onMounted(() => {
       <!-- Right Side: Menu Items -->
       <div class="flex gap-4">
         <a
-          href="/booking-history"
+          href="/historyBookings"
           class="hover:text-gray-700 text-sm font-judson"
           >BOOKING HISTORY</a
         >

@@ -102,6 +102,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Employee/HistoryAcceptBookingView.vue'), // Ensure the path is correct here
     meta: { hideNavigation: true } 
   },
+  {
+    path: '/historyBookings',
+    name: 'historyBookings',
+    component: () => import('../views/HistoryBookingView.vue'),
+    meta: { hideNavigation: false } 
+  },
 ]
 
 const router = createRouter({

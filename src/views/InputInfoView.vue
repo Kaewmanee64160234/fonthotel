@@ -41,7 +41,7 @@ const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const nameRegex = /^[a-zA-Z]+$/;
     const mobilePhoneRegex = /^\d{10}$/; // regex to match exactly 10 digits
-    if (firstName.value === '' || lastName.value === '' || emailAddress.value === '' || country.value === '') {
+    if (firstName.value === '' || lastName.value === '' || emailAddress.value === '' || country.value === '' || paymentMethod.value === '') {
         alert('Please fill in the required fields');
         return false;
     }
