@@ -425,8 +425,8 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   async function getBookings() {
     try {
-      const response = await bookingService.getBookings("asc", "");
-      console.log(response);
+      const response = await bookingService.getBookings("desc", "all");
+      console.log(response.data);
       for (const i in response.data) {
         const booking: Booking = {
           id: response.data[i].booking_id,
@@ -514,7 +514,7 @@ export const useBookingsStore = defineStore("bookings", () => {
 
           if (response.data[i].bookingDetail) {
             for (const j in response.data[i].bookingDetail) {
-              console.log(response.data[i].bookingDetail[i]);
+              console.log(response.data[i].bookingDetail[j]);
               const roomType: RoomType = {
                 id: response.data[i].bookingDetail[j].room.roomtype.room_type_id,
                 roomType:
@@ -575,11 +575,13 @@ export const useBookingsStore = defineStore("bookings", () => {
               };
 
               booking.activityPerBooking?.push(activityPerBooking);
+              booking.total = response.data[i].booking_total;
             }
           }
           bookings.value.push(booking);
         }
       }
+      console.log(bookings.value);
     } catch (error) {
       console.log(error);
     }

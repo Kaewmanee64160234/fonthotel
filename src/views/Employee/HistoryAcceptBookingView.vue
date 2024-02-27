@@ -15,54 +15,60 @@ function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
 
-// onMounted(async () => {
-//   await bookingStore.getBookings();
-//   booking.value = bookingStore.currentBooking;
-// });
+
+onMounted(async () => {
+  await bookingStore.getBookings();
+  booking.value = bookingStore.currentBooking;
+});
+
 
 let booking = ref<Booking>({
-    adult: 0,
-    checkIn: new Date(),
-    checkOut: new Date(),
-    child: 0,
-    createDate: new Date(),
-    cusAddress: "",
-    cusCountry: "",
-    cusEmail: "",
-    cusLastName: "",
-    cusName: "",
-    cusTel: "",
-    createdDate: new Date(),
+  adult: 0,
+  checkIn: new Date(),
+  checkOut: new Date(),
+  child: 0,
+  createDate: new Date(),
+  cusAddress: "",
+  cusCountry: "",
+  cusEmail: "",
+  cusLastName: "",
+  cusName: "",
+  cusTel: "",
+  createdDate: new Date(),
+  id: 0,
+  paymentBooking: "",
+  paymentCheckout: "",
+  status: "",
+  statusLate: "",
+  total: 0,
+  totalDiscount: 0,
+  activityPerBooking: [],
+  bookingDetail: [],
+  customer: { id: 0, name: "", startDate: new Date() },
+  employee: {
+    address: "",
+    dateOfBirth: new Date(),
+    dateStartWork: "",
+    email: "",
+    hourlyRate: 0,
     id: 0,
-    paymentBooking: "",
-    paymentCheckout: "",
-    status: "",
-    statusLate: "",
-    total: 0,
-    totalDiscount: 0,
-    activityPerBooking: [],
-    bookingDetail: [],
-    customer: { id: 0, name: "", startDate: new Date() },
-    employee: {
-        address: "",
-        dateOfBirth: new Date(),
-        dateStartWork: '',
-        email: "",
-        hourlyRate: 0,
-        id: 0,
-        name: "",
-        position: "",
-        tel: "",
-    },
-    pledge: 0,
-    promotion: {
-        createdDate: new Date(),
-        discount: 0,
-        discountPercent: 0,
-        endDate: new Date(),
-        id: 0,
-        name: "",
-    },
+    name: "",
+    position: "",
+    tel: "",
+  },
+  pledge: 0,
+  promotion: {
+    createdDate: new Date(),
+    discount: 0,
+    discountPercent: 0,
+    endDate: new Date(),
+    id: 0,
+    name: "",
+  },
+});
+onMounted(async () => {
+  await bookingStore.getBookings();
+
 });
 </script>
 <template>
@@ -99,7 +105,6 @@ let booking = ref<Booking>({
               >
                 Filter V
                 <!-- add icon drow down -->
-           
               </button>
               <div
                 class="dropdown-menu absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
@@ -147,17 +152,21 @@ let booking = ref<Booking>({
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll">
-         
-          <!-- <HistoryAcceptBookingCard
-            :name="`${booking!.cusName}  ${booking!.cusLastName}`"
-            :typePayment="booking.paymentBooking"
-            :typeRoom="booking.bookingDetail.roomType"
-            :activity="booking.activityPerBooking.name"
-            :price="booking.total"
-            :status="booking.status"
-          /> -->
-         
-        </div>
+
+            <div v-for="item in bookingStore.bookings" :key="item.id">
+              <HistoryAcceptBookingCard
+                :name="`${item.cusName} ${item.cusLastName}`"
+                :typePayment="booking.paymentBooking"
+                :typeRoom="item.bookingDetail[0].room.roomType.typeName "
+                :activity="
+                  item.activityPerBooking[0]?.activity?.name ?? 'No activity'
+                "
+                :price="item.total"
+                :status="item.status"
+              />
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -178,7 +187,7 @@ let booking = ref<Booking>({
   margin: 0;
 }
 .card-style {
-  top:20px;
+  top: 20px;
   width: 90vw;
   height: 100vh;
   border-radius: 30px;
@@ -187,16 +196,17 @@ let booking = ref<Booking>({
   fill-opacity: unset;
   display: block;
   /* overflow-y: auto; */
- 
 }
 .overflow-y-auto {
-  max-height: calc(75vh - 160px); /* Adjust max-height as necessary, accounting for the fixed section */
+  max-height: calc(
+    75vh - 160px
+  ); /* Adjust max-height as necessary, accounting for the fixed section */
 }
 /* .bigcard {
   display: flex;
   height: 80vh;
   /* overflow-y: hidden; */
-/* } */ 
+/* } */
 body {
   background-image: url("../../images/image.png");
   background-size: cover;
@@ -223,6 +233,7 @@ body {
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
-  border-radius: 10px;}
+  background-color: #ebbd99;
+  border-radius: 10px;
+}
 </style>
