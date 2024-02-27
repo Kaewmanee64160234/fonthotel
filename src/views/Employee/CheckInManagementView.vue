@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CheckinManagementCard from '@/components/Employee/CheckinManagementCard.vue';
 
 </script>
 
