@@ -2,9 +2,11 @@
 import { BookingDetail } from '@/model/booking.model';
 import { Room } from '@/model/room.model';
 import router from '@/router';
+import room from '@/service/room';
 import { useBookingsStore } from '@/store/booking.store';
 import { useRoomStore } from '@/store/room.store';
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
+
 const roomStore = useRoomStore()
 const bookingsStore = useBookingsStore();
 const props = defineProps<{
@@ -28,6 +30,11 @@ const addBookingDetail = () => {
   router.push('/activity');
 }
 
+const clickRoomDetail = () =>  {
+  roomStore.setRoom(room);
+  roomStore.toggleRoomDetail();
+}
+
 </script>
 
 <template>
@@ -44,7 +51,8 @@ const addBookingDetail = () => {
           <h2 class="text-base font-bold">{{ props.typename }}</h2>
           <p class="text-sm text-gray-600">Sleep {{ props.sleep }}</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
-          <a :href="roomDetail" class="text-xs font-semibold">Room Detail</a>
+          <!-- <a :href="roomDetail" class="text-xs font-semibold">Room Detail</a> -->
+          <button @click="clickRoomDetail()"><a class="text-xs font-semibold">Room Detail</a></button>
           <div class="px-5 py-2 font-bold text-base price-room">THB {{ props.price }}</div>
         </div>
         <div class="text-right px-5">

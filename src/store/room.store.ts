@@ -7,7 +7,15 @@ export const useRoomStore = defineStore("roomStore", () => {
     const currentRooms = ref<Room[]>([]); // Define rooms as a ref
     const currentType = ref<string>(''); // Define currentType as a ref
     const currentStatus = ref<string>('ready'); // Define currentStatus as a ref
+    const roomDatail = ref<Room>();
+    const roomDetailCard = ref(false);
 
+    function setRoom(room: Room) {
+        roomDatail.value = room;
+    }
+    function toggleRoomDetail() {
+        roomDetailCard.value = !roomDetailCard.value;
+    }
     const getRooms = async (status: string) => {
         try {
             const response = await roomService.getRooms(status);
@@ -63,5 +71,5 @@ export const useRoomStore = defineStore("roomStore", () => {
         }
     };
 
-    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus };
+    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus, setRoom, roomDatail, toggleRoomDetail, roomDetailCard };
 });
