@@ -168,9 +168,9 @@ const addDetails = (activity_: Activity) => {
 
 .btn-minus {
   background-color: #ff0000;
-  border-radius: 9999px;
+  border-radius: 60%;
   width: 40px;
-  height: 20px;
+  height: 18px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -182,9 +182,9 @@ const addDetails = (activity_: Activity) => {
 
 .btn-plus {
   background-color: #59ce8f;
-  border-radius: 9999px;
+  border-radius: 60%;
   width: 40px;
-  height: 20px;
+  height: 18px;
   text-align: center;
   display: flex;
   justify-content: center;
