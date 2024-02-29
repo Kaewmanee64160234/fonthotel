@@ -151,10 +151,23 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideNavigation: false } 
   },
   {
+<<<<<<< HEAD
     path: '/browsesroom',
     name: 'browsesrooms',
     component: () => import('../views/Employee/BrowsRoomView.vue'),
   }
+=======
+    path: '/historyCheckInOutCus',
+    name: 'historyCheckInOutCus',
+    component: () => import('../views/Employee/HistoryCheckInOutView.vue'),
+    meta: { hideNavigation: false } 
+  },
+
+  
+
+
+ 
+>>>>>>> 160bc0f85967863ee4a629a5c5b68897b62ae603
 
 ]
 

@@ -7,9 +7,7 @@
             <div class="relative card-style">
                 <div class="flex justify-between items-center p-4">
                     <h1 class="text-xl font-bold " style="font-size: 25px;">Check-out management</h1>
-                    <button class="btn-fine">
-                        <a>History Customer</a>
-                    </button>
+
                 </div>
                 <div class="p-4">
                     <!-- Search bar and filter dropdown -->
@@ -31,11 +29,11 @@
 
                     </div>
 
-                    <div class="container mx-auto p-4 bg-white shadow-lg rounded-lg">
-                        <div class="overflow-x-auto shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <div class="container mx-auto bg-white shadow-lg rounded-lg overflow-y-auto dc-scroll">
+                        <div class="shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                                 <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    class="sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">Name</th>
                                         <th scope="col" class="px-6 py-3">Date Check-out</th>
@@ -94,16 +92,18 @@ body {
     /* overflow-y: auto; */
 }
 
-.btn-fine {
-    background-color: #906843;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px #805d3f;
-    font-weight: medium;
-    text-decoration: none;
-    display: inline-block;
-    width: 15%;
-    margin-right: 3%;
+.dc-scroll {
+    padding-right: 5px;
+    max-height: 70vh;
+    overflow: scroll;
 }
-</style>
+
+.dc-scroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.dc-scroll::-webkit-scrollbar-thumb {
+    background-color: #EBBD99;
+    border-radius: 10px;
+}</style>
