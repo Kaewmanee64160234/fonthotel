@@ -12,7 +12,7 @@ const roomStore = useRoomStore();
 const booking = ref<Booking>();
 const route = useRoute();
 const clickback = () => {
-  router.push('/selectguestdate/'+roomStore.currentType)
+  router.push('/selectguestdate/'+roomStore.currentType.split(' ')[0]);
 
 }
 
@@ -30,12 +30,21 @@ onMounted(async () => {
 })
 
 
-// Function to format date as "Tue, Dec 26, 2023"
-const formatDate = (date: string): string => {
-  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-  return new Date(date).toLocaleDateString('en-US', options);
+// const formatDate = (dateStr:string) => {
+//   const date = new Date(dateStr);
+//   return date.toLocaleDateString('en-US', {
+//     weekday: 'short',
+//     year: 'numeric',
+//     month: 'short',
+//     day: 'numeric',
+//   });
+// };
 
-};
+// // Computed property for displaying stay dates
+// const stayDates = computed(() => {
+//   if (!bookingsStore.currentBooking.checkIn || !bookingsStore.currentBooking.checkOut) return '';
+//   return `${formatDate(bookingsStore.currentBooking.checkIn.toDateString())} - ${formatDate(bookingsStore.currentBooking.checkOut.toDateString())} - ${formatDate()}`;
+// });
 
 function formatDateRange(startDate_: Date, endDate_: Date): string {
   // Validate the input dates
@@ -99,7 +108,7 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span>{{dateRangeString}}</span>
+                  <span> {{dateRangeString}}</span>
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">

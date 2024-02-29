@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import router from '@/router';
+import { useBookingsStore } from '@/store/booking.store';
+import { useRoomStore } from '@/store/room.store';
 import { defineProps } from 'vue';
-
+const roomStore = useRoomStore();
 // Define the props for the TyperoomCard component
 const props = defineProps<{
     imgroom: string,
@@ -12,6 +14,7 @@ const props = defineProps<{
 
 const linkTo = () => {
     router.push(`/selectguestdate/${props.roomtype}`);
+    roomStore.currentType = props.roomtype;
 }
 
 </script>

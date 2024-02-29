@@ -18,12 +18,12 @@ const isDropdownOpen = ref(false);
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const totalGuests = ref(0);
-const paramValue = route.params.type;
+
 
 onMounted(async () => {
-  console.log(paramValue.toString().split(" ")[0]);
+  console.log(roomStore.currentType);
   await roomStore.getRoomsByType(
-    paramValue.toString().split(" ")[0].toLowerCase(),
+    roomStore.currentType.toString().split(" ")[0].toLowerCase(),
     roomStore.currentStatus
   );
 });
@@ -38,8 +38,8 @@ const clickcontinue = () => {
     cusEmail: "",
     cusCountry: "",
     cusAddress: "",
-    checkIn: startDate.value,
-    checkOut: endDate.value,
+    checkIn: new Date(startDate.value),
+    checkOut: new Date(endDate.value),
     total: 0,
     totalDiscount: 0,
     paymentBooking: "",
@@ -65,7 +65,7 @@ const clickcontinue = () => {
   bookingStore.setBooking(booking.value);
   console.log(bookingStore.currentBooking);
   router.push(
-    `/selectroom/${paramValue.toString().split(" ")[0].toLowerCase()}`
+    `/selectroom/${roomStore.currentType.toString().split(" ")[0].toLowerCase()}`
   );
 };
 
