@@ -160,16 +160,16 @@
                                 </div>
                                 <div class="flex-1 flex flex-row p-2 pl-5">
 
-                                    <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
-                                        <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 22px;">
+                                    <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px; margin-top: 3%;">
+                                        <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 20px;">
                                             Total : </p>
 
                                         <span class="font-medium"
-                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 25px;">
+                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 23px;">
                                             7,009.00 </span>
 
                                         <span class="font-bold"
-                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 22px;">
+                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 20px;">
                                             Baht</span>
 
 
@@ -291,10 +291,13 @@
 }
 
 .card-stay {
+    
     width: 55%;
-    height: 65vh;
+    height: 75vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    border-radius: 15px;
+
 }
 
 .color-line {
