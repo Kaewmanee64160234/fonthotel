@@ -41,6 +41,7 @@
 
                                 </div>
 
+                                
 
                                 <div class="flex-2 flex flex-row p-2 pl-5" style="width: 100%; font-size: 16px;">
                                     <div class="flex-1 flex flex-col">

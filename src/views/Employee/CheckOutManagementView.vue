@@ -6,7 +6,10 @@
         <div class="flex justify-center items-center bigcard">
             <div class="relative card-style">
                 <div class="flex justify-between items-center p-4">
-                    <h1 class="text-xl font-bold">Check-out management</h1>
+                    <h1 class="text-xl font-bold " style="font-size: 25px;">Check-out management</h1>
+                    <button class="btn-fine">
+                        <a>History Customer</a>
+                    </button>
                 </div>
                 <div class="p-4">
                     <!-- Search bar and filter dropdown -->
@@ -64,6 +67,21 @@
     </body>
 </template>
 <style scoped>
+body {
+    background-image: url("../../images/image.png");
+    background-size: cover;
+    /* Cover the entire screen */
+    background-position: center;
+    /* Center the background image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    width: 100vw;
+    height: 100vh;
+    /* Make sure the div covers the full height of the viewport */
+    position: fixed;
+    /* Optional: Fixes the background to the viewport */
+}
+
 .card-style {
     top: 20px;
     width: 90vw;
@@ -74,5 +92,18 @@
     fill-opacity: unset;
     display: block;
     /* overflow-y: auto; */
+}
+
+.btn-fine {
+    background-color: #906843;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px #805d3f;
+    font-weight: medium;
+    text-decoration: none;
+    display: inline-block;
+    width: 15%;
+    margin-right: 3%;
 }
 </style>

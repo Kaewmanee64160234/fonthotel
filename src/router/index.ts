@@ -126,6 +126,30 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../components/Employee/CompleteCheckin.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/checkCheckIn',
+    name: 'checkCheckIn',
+    component: () => import('../views/Employee/CheckCheckInView.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
+    path: '/finecheckout',
+    name: 'finecheckouts',
+    component: () => import('../components/Employee/FineCheckout.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
+    path: '/historycustomer',
+    name: 'historycustomers',
+    component: () => import('../components/Employee/HistoryCustomer.vue'),
+    meta: { hideNavigation: false } 
+  },
+  {
+    path: '/checkcheckout',
+    name: 'checkcheckouts',
+    component: () => import('../views/Employee/CheckCheckOutView.vue'),
+    meta: { hideNavigation: false } 
+  },
 
 ]
 

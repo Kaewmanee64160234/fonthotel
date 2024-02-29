@@ -9,6 +9,7 @@
                 <div class="flex justify-between items-center p-4">
                     <h1 class="text-xl font-bold">Check-in management</h1>
                 </div>
+                
                 <div class="p-4">
                     <!-- Search bar and filter dropdown -->
                     <div class="flex gap-2 mb-4">
@@ -65,6 +66,20 @@
     </body>
 </template>
 <style scoped>
+body {
+  background-image: url("../../images/image.png");
+  background-size: cover;
+  /* Cover the entire screen */
+  background-position: center;
+  /* Center the background image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  width: 100vw;
+  height: 100vh;
+  /* Make sure the div covers the full height of the viewport */
+  position: fixed;
+  /* Optional: Fixes the background to the viewport */
+}
 .card-style {
     top: 20px;
     width: 90vw;
