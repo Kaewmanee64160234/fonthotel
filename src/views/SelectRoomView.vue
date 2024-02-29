@@ -67,7 +67,7 @@ const formatDate = (date: string): string => {
         <div class="mt-2 overflow-y-auto dc-scroll mb-10">
           <div v-for="item of roomStore.currentRooms " :key="item.id">
             <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
-              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
+              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" roomDetail="/SelectRoomDialog" btnbooknow="#" />
           </div>
         </div>
       </div>

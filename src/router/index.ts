@@ -150,6 +150,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Employee/CheckCheckOutView.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/historyCheckInOutCus',
+    name: 'historyCheckInOutCus',
+    component: () => import('../views/Employee/HistoryCheckInOutView.vue'),
+    meta: { hideNavigation: false } 
+  },
 
 ]
 
