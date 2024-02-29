@@ -14,6 +14,8 @@ const password2Error = ref("");
 const emailError = ref("");
 const showPassword = ref(false);
 const showPassword2 = ref(false);
+const showDialog = ref(false);
+const errorMessage = ref("");
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
 let isValid = true;
@@ -23,15 +25,19 @@ const authStore = useAuthStore();
 const validateForm = () => {
   isValid = true; // Reset isValid to true at the start of validation
   // Email validation for specific domains
-if (!email.value) {
-  emailError.value = "Email is required";
-  isValid = false;
-} else if (!/^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$/.test(email.value)) {
-  emailError.value = "Only Gmail or Hotmail accounts are accepted";
-  isValid = false;
-} else {
-  emailError.value = "";
-}
+  showDialog.value = false;
+  errorMessage.value = "";
+  if (!email.value) {
+    emailError.value = "Email is required";
+    isValid = false;
+  } else if (
+    !/^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$/.test(email.value)
+  ) {
+    emailError.value = "Only Gmail or Hotmail accounts are accepted";
+    isValid = false;
+  } else {
+    emailError.value = "";
+  }
 
   // Updated Username validation
   if (!username.value) {
@@ -75,16 +81,20 @@ watch(username, (newValue) => {
   }
 });
 
-const register = (event: Event) => {
+const register = async (event: Event) => {
   event.preventDefault();
   validateForm();
 
   if (isValid) {
-    showAlert.value = false;
+    showDialog.value = false;
     // Proceed with registration
-    authStore.register(email.value, password.value, username.value);
+    const res  = await authStore.register(email.value, password.value, username.value);
+    if(res == null){
+      errorMessage.value = "Email already registered";
+      showDialog.value = true;
+    }
   } else {
-    showAlert.value = true;
+    showDialog.value = true;
   }
 };
 </script>
@@ -183,26 +193,54 @@ const register = (event: Event) => {
             </button>
           </div>
         </form>
+        
+      </div>
+    </div>
+     <!-- Flowbite Modal for Login Feedback -->
+     <transition name="fade">
+      <div
+        v-if="showDialog"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+      >
         <div
-          v-if="showAlert"
-          class="fixed bottom-0 mx-10 w-1/4 justify-center mb-1"
+          class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+          style="max-width: 90%; margin-top: -20vh"
         >
-          <div
-            class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong class="font-bold">Oops!</strong>
-
-            <ul class="mt-2 list-disc list-inside">
-              <li v-if="usernameError">{{ usernameError }}</li>
-              <li v-if="emailError">{{ emailError }}</li>
-              <li v-if="passwordError">{{ passwordError }}</li>
-              <li v-if="password2Error">{{ password2Error }}</li>
-            </ul>
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+              <strong class="font-bold">Oops!</strong>
+            </h3>
+            <!-- Display errors if any -->
+            <div
+              v-if="
+                usernameError || emailError || passwordError || password2Error
+              "
+              class=" border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3"
+            >
+            
+              <ul class="mt-1 list-disc list-inside text-start">
+                <li v-if="usernameError">{{ usernameError }}</li>
+                <li v-if="emailError">{{ emailError }}</li>
+                <li v-if="passwordError">{{ passwordError }}</li>
+                <li v-if="password2Error">{{ password2Error }}</li>
+                <li v-if="errorMessage">{{ errorMessage }} </li>
+              </ul>
+            </div>
+            <!-- General error message or other content -->
+           
+            <div class="items-center px-4 py-3">
+              <button
+                @click="showDialog = false"
+                id="ok-btn"
+                class="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
+                OK
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 <style scoped>

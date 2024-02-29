@@ -101,8 +101,10 @@ export const useAuthStore = defineStore("auth", () => {
         userStore.setUser(user__);
         console.log(user__);
         router.push("/");
+        
       } else {
         console.error("User does not have customer or employee role");
+        return null;
       }
 
       authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
