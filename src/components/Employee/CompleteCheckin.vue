@@ -41,7 +41,7 @@
 
                                 </div>
 
-                                
+
 
                                 <div class="flex-2 flex flex-row p-2 pl-5" style="width: 100%; font-size: 16px;">
                                     <div class="flex-1 flex flex-col">
@@ -106,19 +106,25 @@
                                 <div class="flex-1 flex flex-row p-2 pl-5">
 
                                     <div class="flex-2 flex flex-col mt-5" style="width: 50%; font-size: 16px;">
-                                        <p  class="font-medium" style="font-size: 20px;">Check-in : </p>
-                                        <p  class="font-medium mt-5" style="font-size: 20px;">Status : </p>
+                                        <p class="font-medium" style="font-size: 20px;">Check-in : </p>
+                                        <p class="font-medium mt-5" style="font-size: 20px;">Status : </p>
 
                                     </div>
                                     <div class="flex-2 flex flex-col mt-5" style="width: 50%; font-size: 16px;">
-                                        <p  style="font-size: 20px;">2:30 PM</p>
-                                        <p  class="mt-5 text-green-600" style="font-size: 20px;">Success</p>
+                                        <p style="font-size: 20px;">2:30 PM</p>
+                                        <p class="mt-5 text-green-600" style="font-size: 20px;">Success</p>
 
                                     </div>
-
-
-                                  
+                                    <div class="flex-2 flex flex-col"
+                                    style="width: 50%; font-size: 16px; display: flex; justify-content: center; align-items: left;">
+                                    <i class='fas fa-check-circle' style='font-size:60px;color:green'></i>
                                 </div>
+
+
+
+
+                                </div>
+                                
 
 
 
