@@ -8,17 +8,17 @@ const clickback = () => {
 
 <template>
     <div class="body">
-        <div class="pt-5 pl-5">
+        <div class="pt-5 pl-5 d-flex justify-between">
             <button @click="clickback">
                 <i style="font-size: 30px" class="far">&#xf359;</i>
             </button>
-            <button class="btn-checkout justify-end">
-                <a>Check out</a>
+            <button class="btn-fine">
+                <a>fine</a>
             </button>
-
         </div>
-    
-        <div class="min-h-screen flex card-container">
+
+
+        <div class="min-h-screen flex card-container mt-3">
             <!-- Left Side: -->
             <div class="flex-1 flex flex-col pt-3 p-10">
                 <div class="card-stay">
@@ -94,7 +94,8 @@ const clickback = () => {
 
                         <div class="flex-9 flex flex-row pt-3 px-5 " style="font-size: 20px;">
                             <div class="flex-1 flex flex-col">
-                                <p class="font-medium">Discount:</p>
+                                <p class="font-bold">Discount:</p>
+                                <p class="font-light" style="font-size: 13px;">(Cash pledge)</p>
                             </div>
                             <div class="flex-2 flex flex-col">
                                 <p class="font-medium"> THB 1,500.00</p>
@@ -171,9 +172,10 @@ const clickback = () => {
 
                             </div>
                         </div>
-                        <div class="flex-2 flex flex-row justify-center pt-20" style="margin-top: 20px;">
-                            <button class="btn-checkout">
-                                <a>Check out</a>
+                        <div class="flex-2 flex flex-row justify-center pt-20  font-sans font-light "
+                            style="margin-top: 20px; font-size: 17px;">
+                            <button class="btn-checkout ">
+                                <a class="">Check out</a>
                             </button>
                         </div>
                     </div>
@@ -245,6 +247,19 @@ const clickback = () => {
     width: 60%;
 }
 
+.btn-fine {
+    background-color: #906843;
+    color: white;
+    padding: 7px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px #805d3f;
+    font-weight: medium;
+    text-decoration: none;
+    display: inline-block;
+    width: 10%;
+    margin-right: 3%;
+}
+
 .color-vertical {
     background-color: #cfcfcf;
     width: 1px;
@@ -257,6 +272,16 @@ const clickback = () => {
     margin: auto;
 }
 
+.d-flex {
+    display: flex;
+    align-items: center;
+    /* Optional, to vertically center the items */
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
 .color-line {
     background-color: #cfcfcf;
     height: 1px;
@@ -265,5 +290,4 @@ const clickback = () => {
     display: flex;
     margin: auto;
     /* Center the line horizontally */
-}
-</style>
+}</style>
