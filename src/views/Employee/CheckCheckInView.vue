@@ -130,26 +130,27 @@ const clickback = () => {
 
                     <div>
                         <div class="flex justify-center items-center mt-10">
-                <dl class="grid gap-x-0 gap-y-16 lg:grid-cols-3 card-zone" style="grid-template-columns: 1fr 0fr 1fr;">
-                    <div class="text-left pl-5 px-2">
-                        <p class="text-sm leading-7 text-gray-600">Zone</p>
-                        <p class="text-center pb-2">C</p>
-                    </div>
-                    <div class="color-line" style="width: 2px;">
-                        <hr/>
-                    </div>
-                    <div class="text-left pl-5 px-2">
-                        <p class="text-sm leading-7 text-gray-600">Room Number</p>
-                        <p class="text-center pb-2">701</p>
-                    </div>
-                </dl>
-            </div>
+                            <dl class="grid gap-x-0 gap-y-16 lg:grid-cols-3 card-zone"
+                                style="grid-template-columns: 1fr 0fr 1fr;">
+                                <div class="text-left pl-5 px-2">
+                                    <p class="text-sm leading-7 text-gray-600">Zone</p>
+                                    <p class="text-center pb-2">C</p>
+                                </div>
+                                <div class="color-vertical" style="width: 2px;">
+                                    <hr />
+                                </div>
+                                <div class="text-left pl-5 px-2">
+                                    <p class="text-sm leading-7 text-gray-600">Room Number</p>
+                                    <p class="text-center pb-2">701</p>
+                                </div>
+                            </dl>
+                        </div>
 
-            <div class="flex-2 flex flex-row justify-center pt-10">
-            <button class="">
-              <a>Continue</a>
-            </button>
-          </div>
+                        <div class="flex-2 flex flex-row justify-center pt-20" style="margin-top: 20px;">
+                            <button class="btn-checkin">
+                                <a>Check-in</a>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,13 +199,35 @@ const clickback = () => {
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
 }
-.color-line {
+.color-vertical {
     background-color: #cfcfcf;
-    width: 1px; /* Set width to 1px for vertical lines */
-    height: 90%; /* Set height to 100% for full vertical extent */
+    width: 1px;
+    /* Set width to 1px for vertical lines */
+    height: 90%;
+    /* Set height to 100% for full vertical extent */
     justify-content: center;
     align-items: center;
     display: flex;
     margin: auto;
+}
+.btn-checkin {
+    background-color: #906843;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px #805d3f;
+    font-weight: medium;
+    text-decoration: none;
+    display: inline-block;
+    width: 60%;
+}
+.color-line {
+  background-color: #cfcfcf;
+  height: 1px;
+  width: 90%;
+  justify-content: center;
+  display: flex;
+  margin: auto;
+  /* Center the line horizontally */
 }
 </style>
