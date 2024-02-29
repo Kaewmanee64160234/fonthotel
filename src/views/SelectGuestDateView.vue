@@ -1,7 +1,7 @@
 <!-- eslint-disable no-undef -->
 <script setup lang="ts">
 import RoomCard from "@/components/RoomCard.vue";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import DatePicker from "vue3-datepicker";
 import { onMounted } from "vue";
 import { useRoomStore } from "@/store/room.store";
@@ -13,14 +13,20 @@ const roomStore = useRoomStore();
 const bookingStore = useBookingsStore();
 const route = useRoute();
 const isDropdownOpen = ref(false);
-const startDate = ref<Date>(new Date());
-const endDate = ref<Date>(new Date());
+
 
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const totalGuests = ref(0);
 const paramValue = route.params.type;
-roomStore.currentType = paramValue.toString().split(" ")[0].toLowerCase();
+
+onMounted(async () => {
+  console.log(paramValue.toString().split(" ")[0]);
+  await roomStore.getRoomsByType(
+    paramValue.toString().split(" ")[0].toLowerCase(),
+    roomStore.currentStatus
+  );
+});
 const clickcontinue = () => {
   const booking = ref<Booking>({
     id: -1,
@@ -55,7 +61,6 @@ const clickcontinue = () => {
       endDate: new Date(),
     },
   });
-
 
   bookingStore.setBooking(booking.value);
   console.log(bookingStore.currentBooking);
@@ -96,58 +101,48 @@ const applyGuestCount = () => {
   bookingStore.currentBooking.adult = adultCount.value;
   bookingStore.currentBooking.child = childrenCount.value;
 };
-onMounted(async () => {
-  console.log(paramValue.toString().split(" ")[0]);
-  await roomStore.getRoomsByType(
-    paramValue.toString().split(" ")[0].toLowerCase(),
-    roomStore.currentStatus
-  );
+const minDate = new Date().toISOString().split('T')[0];
+const startDate = ref(minDate);
+const endDate = ref('');
+
+// Computed property to calculate "tomorrow" based on startDate
+const tomorrow = computed(() => {
+  const result = new Date(startDate.value);
+  result.setDate(result.getDate() + 1);
+  return result.toISOString().split('T')[0];
 });
 
-// Watch for changes in startDate and endDate and update "Your Stay" accordingly
-watch(startDate, () => updateStayDates());
-watch(endDate, () => updateStayDates());
-
-// Watch for changes in startDate and ensure it's not in the past
-watch(startDate, (newVal) => {
-  const today = new Date();
-  if (newVal < today) {
-    startDate.value = today; // Set startDate to today if it's in the past
+// Watchers to ensure dates are within valid ranges
+watch(startDate, (newValue) => {
+  const start = new Date(newValue);
+  const end = new Date(endDate.value);
+  if (start >= end) {
+    const nextDay = new Date(start);
+    nextDay.setDate(nextDay.getDate() + 1);
+    endDate.value = nextDay.toISOString().split('T')[0];
   }
 });
 
-watch(endDate, (newVal) => {
-  if (newVal < startDate.value) {
-    const nextDay = new Date(newVal);
-    nextDay.setDate(nextDay.getDate() + 1); // Add one day to the startDate
-    endDate.value = nextDay; // Set endDate to be one day after startDate
-  }
+// Function to format dates
+const formatDate = (dateStr:string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+};
+
+// Computed property for displaying stay dates
+const stayDates = computed(() => {
+  if (!startDate.value || !endDate.value) return '';
+  return `${formatDate(startDate.value)} - ${formatDate(endDate.value)}`;
 });
-
-
-const updateStayDates = () => {
-  const formattedStartDate = formatDate(startDate.value);
-  const formattedEndDate = formatDate(endDate.value);
-  stayDates.value = `${formattedStartDate} - ${formattedEndDate}`;
-};
-
-const stayDates = ref<string>(""); // Holds the formatted stay dates initially
-
-// Function to format date as "Tue, Dec 26, 2023"
-const formatDate = (date: Date): string => {
-  const options = {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-  return new Intl.DateTimeFormat("en-US", options).format(date);
-};
 </script>
 
 <template>
   <div class="body">
-
     <div class="pt-5 pl-5">
       <button @click="clickback">
         <i style="font-size: 30px" class="far">&#xf359;</i>
@@ -158,33 +153,63 @@ const formatDate = (date: Date): string => {
       <div class="flex-1 flex flex-col pt-5 p-10">
         <div class="text-center">
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="relative inline-block text-left" @click="toggleDropdown">
+            <div
+              class="relative inline-block text-left"
+              @click="toggleDropdown"
+            >
               <div>
-                <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
-                  aria-haspopup="true">
-                  <p> Guest</p>
+                <button
+                  type="button"
+                  class="btn-guest text-left m-0 p-0"
+                  id="guest-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                >
+                  <p>Guest</p>
                   <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
                 </button>
 
-                <div v-if="isDropdownOpen" @click="closeDropdown" class="absolute card-selectguest mt-2" role="guest"
-                  aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
+                <div
+                  v-if="isDropdownOpen"
+                  @click="closeDropdown"
+                  class="absolute card-selectguest mt-2"
+                  role="guest"
+                  aria-orientation="vertical"
+                  aria-labelledby="guest-button"
+                  tabindex="-1"
+                >
                   <div class="py-1" role="none">
                     <div>
-                      <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
+                      <a class="text-gray-700 block px-4 py-2 text-sm"
+                        >Select Guests</a
+                      >
                       <hr class="color-line" />
                       <!-- Select Adult -->
                       <div class="flex-1 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                            id="menu-item-1">Adult</a>
+                          <a
+                            class="text-black block px-4 py-2 text-sm"
+                            role="menuitem"
+                            tabindex="-1"
+                            id="menu-item-1"
+                            >Adult</a
+                          >
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button type="button" class="btn-minus" @click="decrementGuest('adult')">
+                            <button
+                              type="button"
+                              class="btn-minus"
+                              @click="decrementGuest('adult')"
+                            >
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ adultCount }}</a>
-                            <button type="button" class="btn-plus" @click="incrementGuest('adult')">
+                            <button
+                              type="button"
+                              class="btn-plus"
+                              @click="incrementGuest('adult')"
+                            >
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -193,16 +218,29 @@ const formatDate = (date: Date): string => {
                       <!-- Select Children -->
                       <div class="flex-2 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                            id="menu-item-2">Children</a>
+                          <a
+                            class="text-gray-700 block px-4 py-2 text-sm"
+                            role="menuitem"
+                            tabindex="-1"
+                            id="menu-item-2"
+                            >Children</a
+                          >
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button type="button" class="btn-minus" @click="decrementGuest('children')">
+                            <button
+                              type="button"
+                              class="btn-minus"
+                              @click="decrementGuest('children')"
+                            >
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ childrenCount }}</a>
-                            <button type="button" class="btn-plus" @click="incrementGuest('children')">
+                            <button
+                              type="button"
+                              class="btn-plus"
+                              @click="incrementGuest('children')"
+                            >
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -211,8 +249,12 @@ const formatDate = (date: Date): string => {
                       <!-- Btn Apply -->
                       <div class="flex-3 flex flex-row p-1 justify-end">
                         <div class="flex">
-                          <button type="button" class="btn-apply" @click="applyGuestCount"
-                            :disabled="adultCount + childrenCount === 0">
+                          <button
+                            type="button"
+                            class="btn-apply"
+                            @click="applyGuestCount"
+                            :disabled="adultCount + childrenCount === 0"
+                          >
                             <a class="text-white text-m text-center">Apply</a>
                           </button>
                         </div>
@@ -226,26 +268,30 @@ const formatDate = (date: Date): string => {
             <!-- Check-in date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-in </label>
-              <DatePicker id="check-in" v-model="startDate" :minDate="Date.now()"
-                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                style="width: 90%;" placeholder="Select date" />
+
+              <input class=" rounded-lg  text-black p-2"
+              type="date" style="width: 90%;" :min="minDate" v-model="startDate" />
             </div>
 
             <!-- Check-out date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-out </label>
-              <DatePicker id="check-out" v-model="endDate"
-                class="text-right outline-none border-transparent focus:ring-0 focus:border-transparent"
-                placeholder="Select date" style="width: 90%;" />
+              <input style="width: 90%;" type="date" class="rounded-lg  text-black p-2" v-model="endDate" :min="tomorrow"  :disabled="!startDate"/>
             </div>
           </div>
         </div>
-        <p class="mt-3 text-white font-semibold text-xl ">Select Room</p>
+        <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
 
-        <div class="mt-2 overflow-y-auto  mb-10 dc-scroll ">
-          <div v-for="item of roomStore.currentRooms " :key="item.id">
-            <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
-              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" />
+        <div class="mt-2 overflow-y-auto mb-10 dc-scroll">
+          <div v-for="item of roomStore.currentRooms" :key="item.id">
+            <RoomCard
+              :image="item.image"
+              :typename="item.roomType.typeName"
+              :sleep="item.roomType.typeName"
+              area="37"
+              detail="Sea View , Smart TV , Work Desk"
+              :price="item.roomType.price"
+            />
           </div>
         </div>
       </div>
@@ -287,17 +333,20 @@ const formatDate = (date: Date): string => {
             </div>
           </div>
 
-
           <div class="flex-2 flex flex-row justify-center pt-10">
-            <button class="btn-continue" @click="clickcontinue()" :disabled="totalGuests === 0" :class="{ 'disabled-text': totalGuests === 0 }">
+            <button
+              class="btn-continue"
+              @click="clickcontinue()"
+              :disabled="totalGuests === 0"
+              :class="{ 'disabled-text': totalGuests === 0 }"
+            >
               <a>Continue</a>
             </button>
           </div>
         </div>
       </div>
     </div>
-
- </div>
+  </div>
 </template>
 <style scoped>
 .body {

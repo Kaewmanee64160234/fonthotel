@@ -11,6 +11,22 @@ const selectFilter = (filterOption: any) => {
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
+
+function formatDateRange(startDate: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short", // "Tue"
+    year: "numeric", // "2023"
+    month: "short", // "Dec"
+    day: "numeric", // "26"
+  };
+
+  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
+    startDate
+  );
+ 
+
+  return `${startFormatted}`;
+}
 </script>
 
 <template>

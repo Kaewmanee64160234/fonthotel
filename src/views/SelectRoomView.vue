@@ -29,21 +29,6 @@ onMounted(async () => {
   await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(), roomStore.currentStatus);
 })
 
-// Compute the formatted check-in date
-const formattedCheckin = computed(() => {
-  if (booking.value) {
-    return formatDate(booking.value.checkIn.toDateString());
-  }
-  return "";
-});
-
-// Compute the formatted check-out date
-const formattedCheckout = computed(() => {
-  if (booking.value) {
-    return formatDate(booking.value.checkOut.toDateString());
-  }
-  return "";
-});
 
 // Function to format date as "Tue, Dec 26, 2023"
 const formatDate = (date: string): string => {
@@ -51,6 +36,28 @@ const formatDate = (date: string): string => {
   return new Date(date).toLocaleDateString('en-US', options);
 
 };
+
+function formatDateRange(startDate_: Date, endDate_: Date): string {
+  // Validate the input dates
+  if (!(startDate_ instanceof Date) || isNaN(startDate_.getTime()) || !(endDate_ instanceof Date) || isNaN(endDate_.getTime())) {
+    console.error('Invalid date(s) provided');
+    return 'Invalid Date Range'; // Return an error message or handle as appropriate
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short", // "Tue"
+    year: "numeric", // "2023"
+    month: "short", // "Dec"
+    day: "numeric", // "26"
+  };
+
+  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(startDate_);
+  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(endDate_);
+
+  return `${startFormatted} - ${endFormatted}`;
+}
+const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bookingsStore.currentBooking.checkOut);
+
 </script>
 
 <template>
@@ -92,7 +99,7 @@ const formatDate = (date: string): string => {
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span>{{ formattedCheckin }} - {{ formattedCheckout }}</span>
+                  <span>{{dateRangeString}}</span>
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">

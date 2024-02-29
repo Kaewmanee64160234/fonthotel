@@ -5,10 +5,11 @@ import { useRoute } from "vue-router";
 import NavigationBarEmployee from "./components/navigations/NavigationBarEmployee.vue";
 import { useUserStore } from "./store/user.store";
 
-
 const route = useRoute();
 const hideNavigation = computed(() => route.meta.hideNavigation);
 const userStore = useUserStore();
+
+
 
 </script>
 <template>
