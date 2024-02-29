@@ -182,6 +182,12 @@ const props = defineProps<{
 
 
                                     </div>
+                                    <div class="flex-2 flex flex-col"
+                                        style="width: 50%; font-size: 16px; display: flex; justify-content: center; align-items: center;">
+                                        <i class='fas fa-check-circle' style='font-size:60px;color:green'></i>
+                                    </div>
+
+
 
 
                                 </div>
@@ -208,23 +214,6 @@ const props = defineProps<{
 
 
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -320,7 +309,7 @@ const props = defineProps<{
 .card-stay {
 
     width: 55%;
-    height: 75vh;
+    height: 80vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
     border-radius: 15px;
