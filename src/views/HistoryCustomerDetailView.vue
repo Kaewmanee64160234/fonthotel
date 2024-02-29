@@ -1,27 +1,16 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
-
-const props = defineProps<{
-    date: string,
-    name: string,
-    roomType: string,
-    adult: number,
-    children: number,
-    total: number,
-    payment: string,
-    status: string,
-
-}>();
 
 </script>
 
 <template>
-    <div class="body">
-        <div class="min-h-screen flex card-container">
-            <!-- Right Side: -->
-            <div class="w-full flex-1 flex justify-center mt-3">
-                <div class="w-full justify-center">
-                    <div class="flex-1 flex flex-row justify-center">
+    <body>
+        <div class="flex justify-center items-center bigcard">
+            <div class="relative card-style">
+                <div class="flex justify-start items-center p-4">
+                    <h1 class="text-xl font-bold ml-5">History Customer Detail</h1>
+                </div>
+
+                <div class="flex-1 flex flex-row justify-center">
                         <div class="card-stay">
                             <p class="text-base p-2 pl-5 font-sans font-light " style="font-size: 12px;">Complete Check-in
                             </p>
@@ -182,12 +171,6 @@ const props = defineProps<{
 
 
                                     </div>
-                                    <div class="flex-2 flex flex-col"
-                                        style="width: 50%; font-size: 16px; display: flex; justify-content: center; align-items: center;">
-                                        <i class='fas fa-check-circle' style='font-size:60px;color:green'></i>
-                                    </div>
-
-
 
 
                                 </div>
@@ -221,18 +204,19 @@ const props = defineProps<{
                         </div>
                     </div>
 
+           
 
+            
 
-                </div>
             </div>
 
 
         </div>
-    </div>
+    </body>
 </template>
 <style scoped>
-.body {
-
+body {
+    background-image: url("../../images/image.png");
     background-size: cover;
     /* Cover the entire screen */
     background-position: center;
@@ -246,6 +230,26 @@ const props = defineProps<{
     /* Optional: Fixes the background to the viewport */
 }
 
+.card-style {
+    top: 20px;
+    width: 95vw;
+    height: 90vh;
+    border-radius: 30px;
+    background-color: rgba(229, 229, 229, 0.758);
+    /* add filter blue */
+    fill-opacity: unset;
+    display: block;
+    /* overflow-y: auto; */
+}
+.card-stay {
+    
+    width: 80vw;
+    height: 75vh;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    border-radius: 15px;
+
+}
 .flex-2 {
     display: flex;
     flex-direction: row;
@@ -308,8 +312,8 @@ const props = defineProps<{
 
 .card-stay {
 
-    width: 55%;
-    height: 80vh;
+    width: 80vw;
+    height: 75vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
     border-radius: 15px;
@@ -363,9 +367,7 @@ const props = defineProps<{
     background-color: #EBBD99;
     border-radius: 10px;
 }
+
+
 </style>
-
- 
-
-
 
