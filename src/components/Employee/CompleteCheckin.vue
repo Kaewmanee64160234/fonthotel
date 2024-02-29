@@ -41,6 +41,7 @@
 
                                 </div>
 
+                                
 
                                 <div class="flex-2 flex flex-row p-2 pl-5" style="width: 100%; font-size: 16px;">
                                     <div class="flex-1 flex flex-col">
@@ -213,6 +214,8 @@
     height: 80vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    border-radius: 10px;
+
 }
 
 .color-line {

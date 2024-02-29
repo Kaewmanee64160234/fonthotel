@@ -6,13 +6,31 @@ const showPassword = ref(false); // Initially, the password is hidden
 const username = ref("");
 const password = ref("");
 const authStore = useAuthStore();
+const errorMessage = ref("");
 
-const login = (event: Event) => {
+const login = async (event: Event) => {
   event.preventDefault();
-  if (username.value.length > 0 && password.value.length > 0) {
-    authStore.login(username.value, password.value);
+  showDialog.value = false;
+  errorMessage.value = "";
+  if (!username.value || !password.value) {
+    errorMessage.value = "Username and password are required.";
+    showDialog.value = true;
+    return; // Stop the function if validation fails
   }
-};
+  try {
+   const res =  await authStore.login(username.value, password.value);
+ if(res == null){
+    errorMessage.value = "Your username or password is incorrect. Please try again.";
+    showDialog.value = true;
+  }
+    } catch (error) {
+      errorMessage.value =
+        "Your username or password is incorrect. Please try again.";
+      showDialog.value = true;
+    }
+ }
+ 
+const showDialog = ref(false);
 </script>
 
 <template>
@@ -98,6 +116,37 @@ const login = (event: Event) => {
         </form>
       </div>
     </div>
+    <!-- Flowbite Modal for Login Failure -->
+    <!-- Flowbite Modal for Login Feedback -->
+    <transition name="fade">
+      <div
+        v-if="showDialog"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+      >
+        <div
+          class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+          style="max-width: 90%; margin-top: -20vh"
+        >
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+              Login Feedback
+            </h3>
+            <div class="mt-2 px-7 py-3">
+              <p class="text-sm text-gray-500">{{ errorMessage }}</p>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button
+                @click="showDialog = false"
+                id="ok-btn"
+                class="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 <style scoped>
@@ -121,5 +170,13 @@ button {
 }
 .rounded-full {
   border-radius: 9999px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 </style>

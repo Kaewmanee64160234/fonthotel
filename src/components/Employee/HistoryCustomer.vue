@@ -1,4 +1,21 @@
 <script setup lang="ts">
+import { defineProps } from "vue";
+
+const props = defineProps<{
+    date: string,
+    name: string,
+    roomType: string,
+    roomnumber: string,
+    adult: number,
+    activity: string,
+    children: number,
+    total: number,
+    payment: string,
+    status: string,
+    fine: number,
+
+}>();
+
 </script>
 
 <template>
@@ -23,8 +40,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Date : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;"> Tue,Dec 26
-                                            ,2023 - Wed,Dec 27,2023</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.date
+                                        }}</span>
                                     </div>
 
 
@@ -38,8 +55,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Name : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Linlada
-                                            Pasukjai </span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.name
+                                        }}</span>
                                     </div>
 
 
@@ -53,7 +70,8 @@
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Room number :
                                         </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">701</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
+                                            props.roomnumber }}</span>
                                     </div>
 
 
@@ -64,7 +82,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Type Room : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Deluxe </span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
+                                            props.roomType }}</span>
 
                                     </div>
 
@@ -88,8 +107,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Payment :</p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Cardit Card
-                                        </span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
+                                            props.payment }}</span>
 
                                     </div>
                                 </div>
@@ -107,8 +126,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Name : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Linlada
-                                            Pasukjai
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.name
+                                        }}
                                         </span>
 
                                     </div>
@@ -117,8 +136,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Activity : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">1 Buffet
-                                            Breakfast</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
+                                            props.activity }}</span>
 
                                     </div>
 
@@ -126,7 +145,7 @@
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Status :</p>
                                         <span class="text-base font-sans font-light text-green-600"
-                                            style="font-size: 15px;"> Success</span>
+                                            style="font-size: 15px;"> {{ props.status }}</span>
 
                                     </div>
                                 </div>
@@ -135,7 +154,7 @@
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Guest : </p>
                                         <span class="text-base font-sans font-light"
-                                            style="font-size: 15px; margin-right: 5px;">2</span>
+                                            style="font-size: 15px; margin-right: 5px;">{{ props.adult }}</span>
                                         <span class="text-base font-sans font-light" style="font-size: 15px;">Per
                                             Adult</span>
 
@@ -148,7 +167,8 @@
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <span class="text-base font-sans font-light"
-                                            style="font-size: 15px; margin-right: 5px; margin-left: 58px;">0</span>
+                                            style="font-size: 15px; margin-right: 5px; margin-left: 58px;">{{ props.children
+                                            }}</span>
                                         <span class="text-base font-sans font-light"
                                             style="font-size: 15px; margin-right: 20px;">Per Child</span>
 
@@ -161,15 +181,28 @@
                                 <div class="flex-1 flex flex-row p-2 pl-5">
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
-                                        <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 22px;">
+                                        <p class="font-medium" style="display: inline; margin-right: 18px;">Fine : </p>
+                                        <span class="text-base font-sans font-light"
+                                            style="font-size: 15px; margin-right: 5px;">{{ props.fine }}</span>
+                                        
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="flex-1 flex flex-row p-2 pl-5">
+
+                                    <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px; margin-top: 3%;">
+                                        <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 20px;">
                                             Total : </p>
 
                                         <span class="font-medium"
-                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 25px;">
-                                            7,009.00 </span>
+                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 23px;">
+                                            {{ total }}.00</span>
 
                                         <span class="font-bold"
-                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 22px;">
+                                            style="font-size: 15px; display: inline; margin-left: 40px; font-size: 20px;">
                                             Baht</span>
 
 
@@ -291,10 +324,13 @@
 }
 
 .card-stay {
-    width: 55%;
-    height: 65vh;
+
+    width: 80vw;
+    height: 75vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    border-radius: 15px;
+
 }
 
 .color-line {
@@ -323,7 +359,7 @@
 .black-line {
     background-color: black;
     height: 2px;
-    width: 95%;
+    width: 97%;
     justify-content: center;
     display: flex;
     margin: auto;
@@ -343,7 +379,6 @@
 .dc-scroll::-webkit-scrollbar-thumb {
     background-color: #EBBD99;
     border-radius: 10px;
-}
-</style>
+}</style>
 
  

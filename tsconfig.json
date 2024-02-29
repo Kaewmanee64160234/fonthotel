@@ -4,8 +4,12 @@
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
+    "declaration": true,
+    "noImplicitAny": true,
     "moduleResolution": "node",
+    "allowJs": true,
     "skipLibCheck": true,
+    "outDir": "./lib/cjs/",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -24,7 +28,8 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost"
+      "scripthost",
+      "es2015"
     ]
   },
   "include": [
@@ -36,5 +41,6 @@
   ],
   "exclude": [
     "node_modules"
+    , "dist", "lib"
   ]
 }

@@ -66,6 +66,22 @@ const bookingDetailComputed = computed(() => {
 const hasBookingDetails = computed(
   () => booking.value !== null && booking.value.bookingDetail.length > 0
 );
+
+function formatDateRange(startDate: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short", // "Tue"
+    year: "numeric", // "2023"
+    month: "short", // "Dec"
+    day: "numeric", // "26"
+  };
+
+  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
+    startDate
+  );
+
+
+  return `${startFormatted}`;
+}
 </script>
 
 <template>
@@ -75,7 +91,7 @@ const hasBookingDetails = computed(
       <BookingDetailComponent
         v-if="hasBookingDetails"
         :img="`${bookingDetailComputed!.room!.image!.toString()}`"
-        :date="new Date(booking!.createDate!).toLocaleDateString()"
+        :date="formatDateRange(booking!.createDate!)"
         :name="`${booking!.cusName}  ${booking!.cusLastName}`"
         :roomType="bookingDetailComputed!.room.roomType.typeName"
         :adult="booking!.adult"
