@@ -110,10 +110,10 @@ const clickback = () => {
 
 
             <!-- Right Side: -->
-            <div class="flex-1 flex flex-col pt-3 p-10">
+            <div class="flex-1 flex flex-col pt-3 p-10 justify-start items-center ">
                 <div class="card-checkin">
                     <div>
-                        <div class="flex text-2xl font-semibold mt-5 mx-5" style="font-size: 25px;">
+                        <div class="flex text-2xl font-semibold mt-10 mx-5" style="font-size: 25px;">
                             <div class="flex-1 flex flex-col" style="width: 30%;">
                                 <p class="text-center">Check-in</p> <!-- Added text-center class -->
                             </div>
@@ -129,23 +129,30 @@ const clickback = () => {
                     </div>
 
                     <div>
-                        <div class="">
-                            <dl class="grid gap-x-8 gap-y-16 lg:grid-cols-2">
-                                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                                    <dt class="text-base leading-7 text-gray-600">Zone</dt>
-                                    <dd class="text-base leading-7 text-gray-600">C</dd>
-                                </div>
-                                <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-                                    <dt class="text-base leading-7 text-gray-600">Room Number</dt>
-                                    <dd class="text-base leading-7 text-gray-600">701</dd>
-                                </div>
-                            </dl>
-                        </div>
+                        <div class="flex justify-center items-center mt-10">
+                <dl class="grid gap-x-0 gap-y-16 lg:grid-cols-3 card-zone" style="grid-template-columns: 1fr 0fr 1fr;">
+                    <div class="text-left pl-5 px-2">
+                        <p class="text-sm leading-7 text-gray-600">Zone</p>
+                        <p class="text-center pb-2">C</p>
+                    </div>
+                    <div class="color-line" style="width: 2px;">
+                        <hr/>
+                    </div>
+                    <div class="text-left pl-5 px-2">
+                        <p class="text-sm leading-7 text-gray-600">Room Number</p>
+                        <p class="text-center pb-2">701</p>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="flex-2 flex flex-row justify-center pt-10">
+            <button class="">
+              <a>Continue</a>
+            </button>
+          </div>
                     </div>
                 </div>
             </div>
-
-
 
         </div>
     </div>
@@ -177,9 +184,27 @@ const clickback = () => {
 }
 
 .card-checkin {
-    height: 35vh;
+    width: 80%;
+    max-height: 200px;
+    height: 30vh;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+}
+
+.card-zone {
+    width: 80%;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+}
+.color-line {
+    background-color: #cfcfcf;
+    width: 1px; /* Set width to 1px for vertical lines */
+    height: 90%; /* Set height to 100% for full vertical extent */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: auto;
 }
 </style>
