@@ -55,5 +55,6 @@ const props = defineProps<{
 <style scoped>
 .review-card {
   background-color: #FFFCF7;
+  max-width: 350px;
 }
 </style>
