@@ -214,6 +214,8 @@
     height: 80vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+    border-radius: 10px;
+
 }
 
 .color-line {
