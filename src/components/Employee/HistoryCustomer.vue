@@ -5,14 +5,11 @@ const props = defineProps<{
     date: string,
     name: string,
     roomType: string,
-    roomnumber: string,
     adult: number,
-    activity: string,
     children: number,
     total: number,
     payment: string,
     status: string,
-    fine: number,
 
 }>();
 
@@ -40,8 +37,8 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Date : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.date
-                                        }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;"> Tue,Dec 26
+                                            ,2023 - Wed,Dec 27,2023</span>
                                     </div>
 
 
@@ -55,8 +52,8 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Name : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.name
-                                        }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Linlada
+                                            Pasukjai </span>
                                     </div>
 
 
@@ -70,8 +67,7 @@ const props = defineProps<{
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Room number :
                                         </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
-                                            props.roomnumber }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">701</span>
                                     </div>
 
 
@@ -82,8 +78,7 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Type Room : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
-                                            props.roomType }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Deluxe </span>
 
                                     </div>
 
@@ -107,8 +102,8 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Payment :</p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
-                                            props.payment }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Cardit Card
+                                        </span>
 
                                     </div>
                                 </div>
@@ -126,8 +121,8 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Name : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{ props.name
-                                        }}
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">Linlada
+                                            Pasukjai
                                         </span>
 
                                     </div>
@@ -136,8 +131,8 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Activity : </p>
-                                        <span class="text-base font-sans font-light" style="font-size: 15px;">{{
-                                            props.activity }}</span>
+                                        <span class="text-base font-sans font-light" style="font-size: 15px;">1 Buffet
+                                            Breakfast</span>
 
                                     </div>
 
@@ -145,7 +140,7 @@ const props = defineProps<{
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Status :</p>
                                         <span class="text-base font-sans font-light text-green-600"
-                                            style="font-size: 15px;"> {{ props.status }}</span>
+                                            style="font-size: 15px;"> Success</span>
 
                                     </div>
                                 </div>
@@ -154,7 +149,7 @@ const props = defineProps<{
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 5px;">Guest : </p>
                                         <span class="text-base font-sans font-light"
-                                            style="font-size: 15px; margin-right: 5px;">{{ props.adult }}</span>
+                                            style="font-size: 15px; margin-right: 5px;">2</span>
                                         <span class="text-base font-sans font-light" style="font-size: 15px;">Per
                                             Adult</span>
 
@@ -167,8 +162,7 @@ const props = defineProps<{
 
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <span class="text-base font-sans font-light"
-                                            style="font-size: 15px; margin-right: 5px; margin-left: 58px;">{{ props.children
-                                            }}</span>
+                                            style="font-size: 15px; margin-right: 5px; margin-left: 58px;">0</span>
                                         <span class="text-base font-sans font-light"
                                             style="font-size: 15px; margin-right: 20px;">Per Child</span>
 
@@ -183,8 +177,8 @@ const props = defineProps<{
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
                                         <p class="font-medium" style="display: inline; margin-right: 18px;">Fine : </p>
                                         <span class="text-base font-sans font-light"
-                                            style="font-size: 15px; margin-right: 5px;">{{ props.fine }}</span>
-                                        
+                                            style="font-size: 15px; margin-right: 5px;">No Service</span>
+
 
 
                                     </div>
@@ -199,7 +193,7 @@ const props = defineProps<{
 
                                         <span class="font-medium"
                                             style="font-size: 15px; display: inline; margin-left: 40px; font-size: 23px;">
-                                            {{ total }}.00</span>
+                                            7,009.00 </span>
 
                                         <span class="font-bold"
                                             style="font-size: 15px; display: inline; margin-left: 40px; font-size: 20px;">
@@ -325,7 +319,7 @@ const props = defineProps<{
 
 .card-stay {
 
-    width: 80vw;
+    width: 55%;
     height: 75vh;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
@@ -359,7 +353,7 @@ const props = defineProps<{
 .black-line {
     background-color: black;
     height: 2px;
-    width: 97%;
+    width: 95%;
     justify-content: center;
     display: flex;
     margin: auto;
@@ -379,6 +373,10 @@ const props = defineProps<{
 .dc-scroll::-webkit-scrollbar-thumb {
     background-color: #EBBD99;
     border-radius: 10px;
-}</style>
+}
+</style>
 
  
+
+
+

@@ -156,12 +156,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Employee/HistoryCheckInOutView.vue'),
     meta: { hideNavigation: false } 
   },
-  {
-    path: '/historycustomerdetail',
-    name: 'historycustomerdetails',
-    component: () => import('../views/Employee/HistoryCustomerDetail.vue'),
-    meta: { hideNavigation: false } 
-  },
+
+
+
+ 
 
 ]
 
