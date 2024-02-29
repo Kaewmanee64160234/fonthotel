@@ -108,7 +108,7 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span> {{dateRangeString}}</span>
+                  <span class="font-medium"> {{dateRangeString}}</span>
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">
