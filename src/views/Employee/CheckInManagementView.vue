@@ -9,6 +9,7 @@
                 <div class="flex justify-between items-center p-4">
                     <h1 class="text-xl font-bold">Check-in management</h1>
                 </div>
+                
                 <div class="p-4">
                     <!-- Search bar and filter dropdown -->
                     <div class="flex gap-2 mb-4">
