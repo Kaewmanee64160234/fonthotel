@@ -12,10 +12,13 @@ export const useAuthStore = defineStore("auth", () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await auth.login({ email:email, user_password:password });
+      const response = await auth.login({
+        email: email,
+        user_password: password,
+      });
       console.log(response);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      
+
       if (response != null) {
         const user__: User = {
           id: response.data.user_id,
@@ -23,21 +26,19 @@ export const useAuthStore = defineStore("auth", () => {
           login: response.data.user_login,
           password: response.data.user_password, // Storing password in frontend is usually not advisable.
           role: response.data.user_role,
-          customer:{
-            id:response.data.customer.cus_id,
-            name:response.data.customer.cus_name,
-            startDate:response.data.customer.cus_start_date
-        
+          customer: {
+            id: response.data.customer.cus_id,
+            name: response.data.customer.cus_name,
+            startDate: response.data.customer.cus_start_date,
           },
           ...(response.data.employee && { customer: response.data.employee }),
         };
-       userStore.setUser(user__);
-       console.log(user__);
-       router.push('/');
-       
-      } 
-      else {
+        userStore.setUser(user__);
+        console.log(user__);
+        router.push("/");
+      } else {
         console.error("User does not have customer or employee role");
+        return null;
       }
 
       authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
@@ -53,7 +54,25 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.removeItem("employee");
     localStorage.removeItem("customer");
     authName.value = "";
-    const currentUser = ref<User>({customer:{id:-1,name:'',startDate:new Date()},employee:{id:-1,name:'',address:'',dateOfBirth:new Date(),email:'',hourlyRate:0,position:'',tel:'',dateStartWork:''},id:-1,login:'',password:'',role:'',username:'' });
+    const currentUser = ref<User>({
+      customer: { id: -1, name: "", startDate: new Date() },
+      employee: {
+        id: -1,
+        name: "",
+        address: "",
+        dateOfBirth: new Date(),
+        email: "",
+        hourlyRate: 0,
+        position: "",
+        tel: "",
+        dateStartWork: "",
+      },
+      id: -1,
+      login: "",
+      password: "",
+      role: "",
+      username: "",
+    });
     userStore.setUser(currentUser.value);
     router.replace("/login");
   };
@@ -72,21 +91,17 @@ export const useAuthStore = defineStore("auth", () => {
           login: response.data.user_login,
           password: response.data.user_password, // Storing password in frontend is usually not advisable.
           role: response.data.user_role,
-          customer:{
-            id:response.data.customer.cus_id,
-            name:response.data.customer.cus_name,
-            startDate:response.data.customer.cus_start_date
-        
-          }
+          customer: {
+            id: response.data.customer.cus_id,
+            name: response.data.customer.cus_name,
+            startDate: response.data.customer.cus_start_date,
+          },
           // ...(response.data.customer && { customer: response.data.customer }),
-        
         };
-       userStore.setUser(user__);
-       console.log(user__);
-       router.push('/');
-       
-      } 
-      else {
+        userStore.setUser(user__);
+        console.log(user__);
+        router.push("/");
+      } else {
         console.error("User does not have customer or employee role");
       }
 
@@ -101,7 +116,8 @@ export const useAuthStore = defineStore("auth", () => {
   //get User from localStorage
   const getUserFromLocalStorage = () => {
     const userString = localStorage.getItem("user");
-    if (userString) { // Check if userString is truthy, avoiding null or "undefined"
+    if (userString) {
+      // Check if userString is truthy, avoiding null or "undefined"
       try {
         const userObject: User = JSON.parse(userString);
         userStore.setUser(userObject); // Update userStore with the user object
@@ -118,6 +134,13 @@ export const useAuthStore = defineStore("auth", () => {
       isLogin.value = false; // Set isLogin to false since no user is logged in
     }
   };
-  
-  return { login, logout, authName, register,isLogin,getUserFromLocalStorage };
+
+  return {
+    login,
+    logout,
+    authName,
+    register,
+    isLogin,
+    getUserFromLocalStorage,
+  };
 });
