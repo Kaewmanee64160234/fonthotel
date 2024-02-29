@@ -1,72 +1,58 @@
 <script setup lang="ts">
 import SelectRoomCard from "@/components/SelectRoomCard.vue";
 import { computed, onMounted, ref } from "vue";
-import { useRoomStore } from '@/store/room.store';
+import { useRoomStore } from "@/store/room.store";
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking, BookingDetail } from "@/model/booking.model";
 import router from "@/router";
 import { useRoute } from "vue-router";
 const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
+//get param from url
 
 const booking = ref<Booking>();
 const route = useRoute();
 const clickback = () => {
-  router.push('/selectguestdate/'+roomStore.currentType.split(' ')[0]);
-
-}
+  router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
+};
 
 onMounted(async () => {
-  await roomStore.getRoomsByType('ready', ' ');
+  await roomStore.getRoomsByType("ready", roomStore.currentType);
   booking.value = bookingsStore.currentBooking;
   console.log(booking.value);
-
-})
+});
 const paramValue = route.params.type;
 
 onMounted(async () => {
-  console.log(paramValue.toString().split(' ')[0]);
-  await roomStore.getRoomsByType(paramValue.toString().split(' ')[0].toLowerCase(), roomStore.currentStatus);
-})
-
-
-// const formatDate = (dateStr:string) => {
-//   const date = new Date(dateStr);
-//   return date.toLocaleDateString('en-US', {
-//     weekday: 'short',
-//     year: 'numeric',
-//     month: 'short',
-//     day: 'numeric',
-//   });
-// };
-
-// // Computed property for displaying stay dates
-// const stayDates = computed(() => {
-//   if (!bookingsStore.currentBooking.checkIn || !bookingsStore.currentBooking.checkOut) return '';
-//   return `${formatDate(bookingsStore.currentBooking.checkIn.toDateString())} - ${formatDate(bookingsStore.currentBooking.checkOut.toDateString())} - ${formatDate()}`;
-// });
-
-function formatDateRange(startDate_: Date, endDate_: Date): string {
-  // Validate the input dates
-  if (!(startDate_ instanceof Date) || isNaN(startDate_.getTime()) || !(endDate_ instanceof Date) || isNaN(endDate_.getTime())) {
-    console.error('Invalid date(s) provided');
-    return 'Invalid Date Range'; // Return an error message or handle as appropriate
+  localStorage.setItem("roomType", roomStore.currentType);
+  if (
+    paramValue.toString().split(" ")[0].toLowerCase() == null ||
+    paramValue.toString().split(" ")[0].toLowerCase() == undefined
+  ) {
+    //get from localstorage
+    roomStore.currentType = localStorage.getItem("roomType")!;
+  } else {
+    roomStore.currentType = paramValue.toString().split(" ")[0];
   }
+  console.log(roomStore.currentType);
+  await roomStore.getRoomsByType(
+    paramValue.toString().split(" ")[0].toLowerCase(),
+    roomStore.currentStatus
+  );
+});
 
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("default", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
+
+    return `${day}, ${month} ${dayOfMonth}, ${year}`;
   };
 
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(startDate_);
-  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(endDate_);
-
-  return `${startFormatted} - ${endFormatted}`;
+  return formatDate(date1);
 }
-const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bookingsStore.currentBooking.checkOut);
-
 </script>
 
 <template>
@@ -81,9 +67,16 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
       <div class="flex-1 flex flex-col pt-3 p-10">
         <p class="text-white font-semibold text-xl">Select Room</p>
         <div class="mt-2 overflow-y-auto dc-scroll mb-10">
-          <div v-for="item of roomStore.currentRooms " :key="item.id">
-            <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
-              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" btnbooknow="#" />
+          <div v-for="item of roomStore.currentRooms" :key="item.id">
+            <SelectRoomCard
+              :room="item"
+              :image="item.image"
+              :typename="item.roomType.typeName"
+              sleep="1"
+              detail="Sea View , Smart TV , Work Desk"
+              :price="item.roomType.price"
+              btnbooknow="#"
+            />
           </div>
         </div>
       </div>
@@ -108,7 +101,17 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span class="font-medium"> {{dateRangeString}}</span>
+                  <span class="font-medium">
+                    {{
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkIn)
+                      ) +
+                      "-" +
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkOut)
+                      )
+                    }}</span
+                  >
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">
@@ -122,7 +125,6 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -229,7 +231,7 @@ const dateRangeString = formatDateRange(bookingsStore.currentBooking.checkIn, bo
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
+  background-color: #ebbd99;
   border-radius: 10px;
 }
 </style>

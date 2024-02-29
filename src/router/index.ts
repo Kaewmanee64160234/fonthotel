@@ -150,6 +150,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Employee/CheckCheckOutView.vue'),
     meta: { hideNavigation: false } 
   },
+  {
+    path: '/browsesroom',
+    name: 'browsesrooms',
+    component: () => import('../views/Employee/BrowsRoomView.vue'),
+  }
 
 ]
 

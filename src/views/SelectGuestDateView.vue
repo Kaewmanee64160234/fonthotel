@@ -14,19 +14,28 @@ const bookingStore = useBookingsStore();
 const route = useRoute();
 const isDropdownOpen = ref(false);
 
-
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const totalGuests = ref(0);
-
+//get param from url
+const paramValue = route.params.type;
 
 onMounted(async () => {
+  localStorage.setItem("roomType", roomStore.currentType);
+if( paramValue.toString().split(" ")[0].toLowerCase() == null || paramValue.toString().split(" ")[0].toLowerCase() == undefined){
+  //get from localstorage
+  roomStore.currentType = localStorage.getItem("roomType")!;
+}
+else{
+  roomStore.currentType = paramValue.toString().split(" ")[0];
+}
   console.log(roomStore.currentType);
   await roomStore.getRoomsByType(
-    roomStore.currentType.toString().split(" ")[0].toLowerCase(),
+    paramValue.toString().split(" ")[0].toLowerCase(),
     roomStore.currentStatus
   );
 });
+
 const clickcontinue = () => {
   const booking = ref<Booking>({
     id: -1,
@@ -62,10 +71,15 @@ const clickcontinue = () => {
     },
   });
 
+  if(totalGuests.value === 0 || !startDate.value || !endDate.value) return;
   bookingStore.setBooking(booking.value);
   console.log(bookingStore.currentBooking);
+  console.log(JSON.stringify(bookingStore.currentBooking));
   router.push(
-    `/selectroom/${roomStore.currentType.toString().split(" ")[0].toLowerCase()}`
+    `/selectroom/${roomStore.currentType
+      .toString()
+      .split(" ")[0]
+      .toLowerCase()}`
   );
 };
 
@@ -101,15 +115,15 @@ const applyGuestCount = () => {
   bookingStore.currentBooking.adult = adultCount.value;
   bookingStore.currentBooking.child = childrenCount.value;
 };
-const minDate = new Date().toISOString().split('T')[0];
+const minDate = new Date().toISOString().split("T")[0];
 const startDate = ref(minDate);
-const endDate = ref('');
+const endDate = ref("");
 
 // Computed property to calculate "tomorrow" based on startDate
 const tomorrow = computed(() => {
   const result = new Date(startDate.value);
   result.setDate(result.getDate() + 1);
-  return result.toISOString().split('T')[0];
+  return result.toISOString().split("T")[0];
 });
 
 // Watchers to ensure dates are within valid ranges
@@ -119,24 +133,24 @@ watch(startDate, (newValue) => {
   if (start >= end) {
     const nextDay = new Date(start);
     nextDay.setDate(nextDay.getDate() + 1);
-    endDate.value = nextDay.toISOString().split('T')[0];
+    endDate.value = nextDay.toISOString().split("T")[0];
   }
 });
 
 // Function to format dates
-const formatDate = (dateStr:string) => {
+const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 };
 
 // Computed property for displaying stay dates
 const stayDates = computed(() => {
-  if (!startDate.value || !endDate.value) return '';
+  if (!startDate.value || !endDate.value) return "";
   return `${formatDate(startDate.value)} - ${formatDate(endDate.value)}`;
 });
 </script>
@@ -269,14 +283,27 @@ const stayDates = computed(() => {
             <div class="btn-date text-left">
               <label class=""> Check-in </label>
 
-              <input class=" rounded-lg  text-black p-2"
-              type="date" style="width: 90%;" :min="minDate" v-model="startDate" />
+              <input
+                class="rounded-lg text-black p-2"
+                type="date"
+                style="width: 90%"
+                :min="minDate"
+                v-model="startDate"
+              />
             </div>
 
             <!-- Check-out date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-out </label>
-              <input style="width: 90%;" type="date" class="rounded-lg  text-black p-2" v-model="endDate" :min="tomorrow"  :disabled="!startDate"/>
+              <input
+                style="width: 90%"
+                type="date"
+                class="rounded-lg text-black p-2"
+                :min="tomorrow"
+                :disabled="!startDate"
+                v-model="endDate"
+
+              />
             </div>
           </div>
         </div>
@@ -336,11 +363,11 @@ const stayDates = computed(() => {
           <div class="flex-2 flex flex-row justify-center pt-10">
             <button
               class="btn-continue"
-              @click="clickcontinue()"
-              :disabled="totalGuests === 0"
               :class="{ 'disabled-text': totalGuests === 0 }"
+              :disabled="totalGuests === 0 || !startDate || !endDate"
+              @click="clickcontinue()"
             >
-              <a>Continue</a>
+              Continue
             </button>
           </div>
         </div>

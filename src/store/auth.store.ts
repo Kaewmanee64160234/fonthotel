@@ -31,7 +31,17 @@ export const useAuthStore = defineStore("auth", () => {
             name: response.data.customer.cus_name,
             startDate: response.data.customer.cus_start_date,
           },
-          ...(response.data.employee && { customer: response.data.employee }),
+          employee: {
+            address: response.data.employee.emp_addr,
+            id: response.data.employee.emp_id,
+            dateOfBirth: response.data.employee.emp_dob,
+            dateStartWork: response.data.employee.emp_dsw,
+            email: response.data.employee.emp_email,
+            hourlyRate: response.data.employee.emp_hourly_wage,
+            name: response.data.employee.emp_name,
+            position: response.data.employee.emp_position,
+            tel: response.data.employee.emp_tel,
+          },
         };
         userStore.setUser(user__);
         console.log(user__);
@@ -96,12 +106,23 @@ export const useAuthStore = defineStore("auth", () => {
             name: response.data.customer.cus_name,
             startDate: response.data.customer.cus_start_date,
           },
+
+          employee: {
+            address: response.data.employee.emp_addr,
+            id: response.data.employee.emp_id,
+            dateOfBirth: response.data.employee.emp_dob,
+            dateStartWork: response.data.employee.emp_dsw,
+            email: response.data.employee.emp_email,
+            hourlyRate: response.data.employee.emp_hourly_wage,
+            name: response.data.employee.emp_name,
+            position: response.data.employee.emp_position,
+            tel: response.data.employee.emp_tel,
+          },
           // ...(response.data.customer && { customer: response.data.customer }),
         };
         userStore.setUser(user__);
         console.log(user__);
         router.push("/");
-        
       } else {
         console.error("User does not have customer or employee role");
         return null;

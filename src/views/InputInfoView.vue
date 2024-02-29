@@ -160,28 +160,23 @@ const saveBooking = () => {
     bookingsStore.currentBooking.paymentBooking = paymentMethod.value;
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
-
+    console.log(JSON.stringify(bookingsStore.currentBooking));
     bookingsStore.saveBooking();
     clickContinue();
   }
 };
 
-function formatDateRange(startDate: Date, endDate: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
-  };
+function formatTwoDates(date1: Date):string {
+    const formatDate = (date: Date): string => {
+        const day = date.toDateString().split(' ')[0]; // Extracts the day of the week
+        const month = date.toLocaleString('default', { month: 'short' }); // Extracts the abbreviated month
+        const dayOfMonth = date.getDate(); // Extracts the day of the month
+        const year = date.getFullYear(); // Extracts the year
 
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    startDate
-  );
-  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    endDate
-  );
+        return `${day}, ${month} ${dayOfMonth}, ${year}`;
+    };
 
-  return `${startFormatted} - ${endFormatted}`;
+   return formatDate(date1);
 }
 </script>
 
@@ -387,7 +382,7 @@ function formatDateRange(startDate: Date, endDate: Date): string {
                   style="width: 100%; font-size: 16px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p>{{ formatDateRange(bookingsStore.currentBooking.checkIn,bookingsStore.currentBooking.checkOut) }}</p>
+                    <p>{{ formatTwoDates(new Date(bookingsStore.currentBooking.checkIn)) +"-" +formatTwoDates(new Date(bookingsStore.currentBooking.checkOut)) }}</p>
                     <p>{{ bookingsStore.currentBooking.adult }} Adult</p>
                   </div>
                 </div>
