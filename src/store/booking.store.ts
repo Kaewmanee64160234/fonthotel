@@ -641,7 +641,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         (activityPerBooking) =>
           activityPerBooking.activity.id == activityPerBook.activity.id
       );
-      console.log(existingActivityIndex);
+    console.log(existingActivityIndex);
 
     if (existingActivityIndex === -1) {
       currentBooking.value.activityPerBooking.push(activityPerBook);
@@ -661,7 +661,8 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
-  currentBooking.value.total = 0;
+    currentBooking.value.total = 0;
+    currentBooking.value.totalDiscount = 0;
     for (const bookingDetail of currentBooking.value.bookingDetail) {
       currentBooking.value.total += bookingDetail.total;
     }
@@ -804,8 +805,21 @@ export const useBookingsStore = defineStore("bookings", () => {
       (activity) => activity.id == activityPerBooking.id
     );
     currentBooking.value.activityPerBooking.splice(index, 1);
-    currentBooking.value.total =  calculateInitialTotal();
+    currentBooking.value.total = calculateInitialTotal();
     console.log(currentBooking.value.activityPerBooking.length);
+  };
+
+  const removePromotion = () => {
+    currentBooking.value.promotion = {
+      createdDate: new Date(),
+      discount: 0,
+      discountPercent: 0,
+      endDate: new Date(),
+      id: -1,
+      name: "",
+    };
+
+    currentBooking.value.total = calculateInitialTotal();
   };
 
   return {
@@ -821,5 +835,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     confirmBooking,
     getBookingByEmployeeIdLastcreated,
     removeActivityPerBooking,
+    removePromotion,
   };
 });

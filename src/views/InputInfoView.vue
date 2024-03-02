@@ -196,6 +196,10 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
+
+const removePromotion = () => {
+bookingsStore.removePromotion();
+};
 </script>
 
 <template>
@@ -347,18 +351,6 @@ function formatTwoDates(date1: Date): string {
                 </select>
               </div>
 
-              <!-- <div class="col-1">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Card Number</label>
-                                <input type="text" placeholder="Card Number" class="dc-input" required style="width: 68%;">
-                            </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Expiration Date (MM/YY)*</label>
-                                <input type="text" placeholder="MM/YY" class="dc-input" required style="width: 68%;">
-                            </div>
-                            <div class="md:col-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Name on Card*</label>
-                                <input type="text" placeholder="Name on Card" class="dc-input" required style="width: 68%;">
-                            </div> -->
             </div>
           </form>
         </div>
@@ -471,8 +463,8 @@ function formatTwoDates(date1: Date): string {
                   <div
                   class="flex-1 flex flex-col justify-end"
                   >
-                  <div style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 0">
-                      <i  
+                  <div  style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 1">
+                      <i  @click="removePromotion()"
                         class="fas fa-trash-alt"
                         style="color: red; cursor: pointer;"
                       ></i>
