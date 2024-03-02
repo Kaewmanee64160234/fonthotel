@@ -638,7 +638,19 @@ export const useBookingsStore = defineStore("bookings", () => {
   };
 
   const addAcitivityPerBooking = (activityPerBook: ActivityPerBooking) => {
+  const activityPerBook_ = currentBooking.value.activityPerBooking.find( (activityPerBooking) => activityPerBooking.activity.id == activityPerBook.activity.id);
+  if(!activityPerBook_){
+    
     currentBooking.value.activityPerBooking.push(activityPerBook);
+  }else{
+    //replace activityPerBook
+    currentBooking.value.activityPerBooking = currentBooking.value.activityPerBooking.map((activityPerBooking) => {
+      if(activityPerBooking.activity.id == activityPerBook.activity.id){
+        return activityPerBook;
+      }
+      return activityPerBooking;
+    });
+  }
     currentBooking.value.total = currentBooking.value.total + (activityPerBook.activity.price * activityPerBook.qty);
 
     console.log(activityPerBook);
