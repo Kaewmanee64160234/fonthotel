@@ -78,7 +78,7 @@ const hasBookingDetails = computed(
 function formatTwoDates(date1: Date):string {
     const formatDate = (date: Date): string => {
         const day = date.toDateString().split(' ')[0]; // Extracts the day of the week
-        const month = date.toLocaleString('default', { month: 'short' }); // Extracts the abbreviated month
+        const month = date.toLocaleString('en-US', { month: 'short' }); // Extracts the abbreviated month
         const dayOfMonth = date.getDate(); // Extracts the day of the month
         const year = date.getFullYear(); // Extracts the year
 

@@ -31,7 +31,12 @@ export const useAuthStore = defineStore("auth", () => {
             name: response.data.customer.cus_name,
             startDate: response.data.customer.cus_start_date,
           },
-          employee: {
+          
+
+         
+        };
+        if(response.data.employee){
+          user__.employee = {
             address: response.data.employee.emp_addr,
             id: response.data.employee.emp_id,
             dateOfBirth: response.data.employee.emp_dob,
@@ -41,8 +46,8 @@ export const useAuthStore = defineStore("auth", () => {
             name: response.data.employee.emp_name,
             position: response.data.employee.emp_position,
             tel: response.data.employee.emp_tel,
-          },
-        };
+          }
+        }
         userStore.setUser(user__);
         console.log(user__);
         router.push("/");
