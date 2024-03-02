@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { Room } from '@/model/room.model';
+import { useRoomStore } from '@/store/room.store';
 import { defineProps } from 'vue'
-
+const roomStore = useRoomStore()
 const props = defineProps<{
   image: string,
   typename: string,
@@ -8,7 +10,14 @@ const props = defineProps<{
   sleep: string,
   area: string,
   price: number
+  room:Room
 }>();
+
+const clickRoomDetail = () =>  {
+  roomStore.setCurrentRoom(props.room);
+  console.log(props.room);
+  roomStore.toggleRoomDetail();
+}
 
 </script>
 
@@ -31,7 +40,7 @@ const props = defineProps<{
         <!-- <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'Twin'">Sleep 2 {{ props.typename }} </p>
         <p class="text-base text-gray-600" v-if="props.typename.toString().split(' ')[1] == 'King'">Sleep 1 {{ props.typename }} </p> -->
         <p class="text-base text-gray-600">{{ props.detail }}</p>
-        <a href="#" class="text-sm font-semibold">Room Detail</a>
+        <button @click="clickRoomDetail()" class="text-sm font-semibold hover:text-gray-600">Room Detail</button>
       </div>
       <div class="px-5 py-2 font-bold text-lg price-room">THB {{ props.price }}</div>
     </div>

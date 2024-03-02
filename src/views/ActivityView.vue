@@ -178,14 +178,6 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                   class="flex-8 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
                 >
-                  <div class="flex-1 flex flex-col">
-                    <button
-                      href="/selectroom"
-                      class="text-left font-medium hover:text-gray-700 text-sm"
-                    >
-                      Remove All
-                    </button>
-                  </div>
                 </div>
 
                 <div
@@ -193,12 +185,7 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                   style="font-size: 13px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <button
-                      href="/selectroom"
-                      class="text-left font-medium hover:text-gray-700 text-sm"
-                    >
-                      Add room
-                    </button>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
                   </div>
                 </div>
 

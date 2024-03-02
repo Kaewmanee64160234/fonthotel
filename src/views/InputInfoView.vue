@@ -496,9 +496,6 @@ function formatTwoDates(date1: Date): string {
                   class="flex-8 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
                 >
-                  <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Edit | Remove</p>
-                  </div>
                 </div>
 
                 <div
@@ -506,7 +503,7 @@ function formatTwoDates(date1: Date): string {
                   style="font-size: 13px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Add room</p>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
                   </div>
                 </div>
 

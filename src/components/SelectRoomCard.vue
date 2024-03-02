@@ -53,7 +53,7 @@ const clickRoomDetail = () =>  {
           <p class="text-sm text-gray-600">Sleep {{ props.sleep }}</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
           <!-- <a :href="roomDetail" class="text-xs font-semibold">Room Detail</a> -->
-          <button @click="clickRoomDetail()"><a class="text-xs font-semibold">Room Detail</a></button>
+          <button @click="clickRoomDetail()"><a class="text-xs font-semibold hover:text-gray-600">Room Detail</a></button>
           <div class="px-5 py-2 font-bold text-base price-room">THB {{ props.price }}</div>
         </div>
         <div class="text-right px-5">
