@@ -34,6 +34,7 @@ const incrementGuest = (type: "adult" | "children") => {
 };
 
 const addDetails = (activity_: Activity) => {
+  
   isAddingDetails.value = true;
   const activityPerBooking: ActivityPerBooking = {
     activity: activity_,
@@ -145,12 +146,12 @@ const addDetails = (activity_: Activity) => {
 
           <div class="flex-2 flex flex-row justify-end mr-5">
             <div class="text-right pt-5">
-              <router-link
+              <button
                 to="/activity"
-                class="btn-add-details mb-3"
+                :class="adultCount + childrenCount == 0 ? 'btn-add-details-disabled ' : 'btn-add-details'"
                 @click="addDetails(activity)" 
-                :disabled="isAddingDetails">Add Details</router-link
-              >
+                :disabled="adultCount + childrenCount == 0">Add Details
+                </button>
             </div>
           </div>
         </div>
@@ -199,6 +200,18 @@ const addDetails = (activity_: Activity) => {
   color: white;
   padding: 10px 20px;
   box-shadow: 0px 4px 6px #805d3f;
+  font-weight: medium;
+  text-decoration: none;
+  display: inline-block;
+  width: 128px;
+  border-radius: 9999px;
+  text-align: center;
+}
+.btn-add-details-disabled {
+  background-color: #8d8277;
+  color: white;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px #8d8277;
   font-weight: medium;
   text-decoration: none;
   display: inline-block;
