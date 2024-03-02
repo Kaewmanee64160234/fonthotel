@@ -10,6 +10,7 @@ import { Room } from "@/model/room.model";
 const currentRoom = ref<Room>();
 const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
+//get param from url
 
 const booking = ref<Booking>();
 const route = useRoute();
@@ -26,72 +27,47 @@ const clickback = () => {
 };
 
 onMounted(async () => {
-  await roomStore.getRoomsByType("ready", " ");
+
+  await roomStore.getRoomsByType("ready", roomStore.currentType);
+
   booking.value = bookingsStore.currentBooking;
   console.log(booking.value);
 });
 const paramValue = route.params.type;
 
 onMounted(async () => {
-  console.log(paramValue.toString().split(" ")[0]);
+
+  localStorage.setItem("roomType", roomStore.currentType);
+  if (
+    paramValue.toString().split(" ")[0].toLowerCase() == null ||
+    paramValue.toString().split(" ")[0].toLowerCase() == undefined
+  ) {
+    //get from localstorage
+    roomStore.currentType = localStorage.getItem("roomType")!;
+  } else {
+    roomStore.currentType = paramValue.toString().split(" ")[0];
+
+  }
+  console.log(roomStore.currentType);
   await roomStore.getRoomsByType(
     paramValue.toString().split(" ")[0].toLowerCase(),
     roomStore.currentStatus
   );
 });
 
-function setRoom(room: Room) {
-  currentRoom.value = room;
-}
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("en-US", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
 
-// const formatDate = (dateStr:string) => {
-//   const date = new Date(dateStr);
-//   return date.toLocaleDateString('en-US', {
-//     weekday: 'short',
-//     year: 'numeric',
-//     month: 'short',
-//     day: 'numeric',
-//   });
-// };
-
-// // Computed property for displaying stay dates
-// const stayDates = computed(() => {
-//   if (!bookingsStore.currentBooking.checkIn || !bookingsStore.currentBooking.checkOut) return '';
-//   return `${formatDate(bookingsStore.currentBooking.checkIn.toDateString())} - ${formatDate(bookingsStore.currentBooking.checkOut.toDateString())} - ${formatDate()}`;
-// });
-
-function formatDateRange(startDate_: Date, endDate_: Date): string {
-  // Validate the input dates
-  if (
-    !(startDate_ instanceof Date) ||
-    isNaN(startDate_.getTime()) ||
-    !(endDate_ instanceof Date) ||
-    isNaN(endDate_.getTime())
-  ) {
-    console.error("Invalid date(s) provided");
-    return "Invalid Date Range"; // Return an error message or handle as appropriate
-  }
-
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
+    return `${day}, ${month} ${dayOfMonth}, ${year}`;
   };
 
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    startDate_
-  );
-  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    endDate_
-  );
-
-  return `${startFormatted} - ${endFormatted}`;
+  return formatDate(date1);
 }
-const dateRangeString = formatDateRange(
-  bookingsStore.currentBooking.checkIn,
-  bookingsStore.currentBooking.checkOut
-);
+
 </script>
 
 <template>
@@ -134,7 +110,19 @@ const dateRangeString = formatDateRange(
                 </div>
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
-                  <span class="font-medium"> {{ dateRangeString }}</span>
+
+                  <span class="font-medium">
+                    {{
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkIn)
+                      ) +
+                      "-" +
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkOut)
+                      )
+                    }}</span
+                  >
+
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">
@@ -148,6 +136,7 @@ const dateRangeString = formatDateRange(
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -185,7 +174,7 @@ const dateRangeString = formatDateRange(
               <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
                 <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
                   <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
-                    Deluxe
+                    {{ roomStore.curentRoom.roomType.typeName}}
                   </p>
                   <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
                     Sleep 1 | 37 square metre
@@ -208,7 +197,7 @@ const dateRangeString = formatDateRange(
                 <div class="justify-start items-center">
                   <img
                     class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                    src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
+                    :src="roomStore.curentRoom.image"
                     />
                   </div>
               </div>
@@ -227,13 +216,15 @@ const dateRangeString = formatDateRange(
                         City View, Smart TV, Work Desk
                       </p>
                       <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70 ">
-                        {{ props.roomTypeDes }}
+                        {{roomStore.curentRoom.roomType.descriptions}}
                       </p>
                     </div>
+
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

@@ -18,7 +18,8 @@ const country = ref("");
 const description = ref("");
 const promotionId = ref("");
 const paymentMethod = ref("");
-
+const showModal = ref(false);
+const validationMessage = ref("");
 const booking = ref<Booking>();
 onMounted(() => {
   promotionStore.getPromotions();
@@ -33,8 +34,8 @@ const clickContinue = async () => {
   router.push("/bookingdetail");
 };
 
-const checkPromotion = async (code: string,event:Event) => {
-    event.preventDefault();
+const checkPromotion = async (code: string, event: Event) => {
+  event.preventDefault();
   const promotion = await promotionStore.findPromotion(code);
   if (promotion) {
     if (promotion.createdDate > new Date()) {
@@ -107,6 +108,8 @@ const checkPromotion = async (code: string,event:Event) => {
 
 //validate form
 const validateForm = () => {
+  showModal.value = false;
+  validationMessage.value = "";
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameRegex = /^[a-zA-Z]+$/;
   const mobilePhoneRegex = /^\d{10}$/; // regex to match exactly 10 digits
@@ -117,31 +120,40 @@ const validateForm = () => {
     country.value === "" ||
     paymentMethod.value === ""
   ) {
-    alert("Please fill in the required fields");
+    showModal.value = true;
+    validationMessage.value = "Please fill in the required fields";
     return false;
   }
   if (firstName.value.length < 3 || lastName.value.length < 3) {
-    alert("First name and last name must be at least 3 characters long");
+    showModal.value = true;
+    validationMessage.value =
+      "First name and last name must be at least 3 characters long";
     return false;
   }
   if (!nameRegex.test(firstName.value) || !nameRegex.test(lastName.value)) {
-    alert("First name and last name must contain only alphabetic characters");
+    showModal.value = true;
+    validationMessage.value =
+      "First name and last name must contain only alphabetic characters";
     return false;
   }
   // Check if first name and last name contain any numbers
   if (/\d/.test(firstName.value) || /\d/.test(lastName.value)) {
-    alert("First name and last name cannot contain numbers");
+    showModal.value = true;
+    validationMessage.value =
+      "First name and last name cannot contain numbers";
     return false;
   }
   if (!emailRegex.test(emailAddress.value)) {
     // If the email address is not valid, alert the user
-    alert("Please enter a valid email address");
+    showModal.value = true;
+    validationMessage.value = "Please enter a valid email address";
     // Return false to indicate that the form is invalid
     return false;
   }
   // Check if telephone number consists of exactly 10 numeric digits
   if (!mobilePhoneRegex.test(mobilePhone.value)) {
-    alert("Telephone number must be a 10-digit number");
+    showModal.value = true;
+    validationMessage.value = "Telephone number must be a 10-digit number";
     return false;
   }
 
@@ -160,28 +172,23 @@ const saveBooking = () => {
     bookingsStore.currentBooking.paymentBooking = paymentMethod.value;
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
-
+    console.log(JSON.stringify(bookingsStore.currentBooking));
     bookingsStore.saveBooking();
     clickContinue();
   }
 };
 
-function formatDateRange(startDate: Date, endDate: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("default", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
+
+    return `${day}, ${month} ${dayOfMonth}, ${year}`;
   };
 
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    startDate
-  );
-  const endFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    endDate
-  );
-
-  return `${startFormatted} - ${endFormatted}`;
+  return formatDate(date1);
 }
 </script>
 
@@ -301,7 +308,7 @@ function formatDateRange(startDate: Date, endDate: Date): string {
 
               <div class="col-2">
                 <button
-                  @click="checkPromotion(promotionId,$event)"
+                  @click="checkPromotion(promotionId, $event)"
                   class="mt-6 btn-applypromo"
                   id="btnApplypromo"
                 >
@@ -387,7 +394,17 @@ function formatDateRange(startDate: Date, endDate: Date): string {
                   style="width: 100%; font-size: 16px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p>{{ formatDateRange(bookingsStore.currentBooking.checkIn,bookingsStore.currentBooking.checkOut) }}</p>
+                    <p>
+                      {{
+                        formatTwoDates(
+                          new Date(bookingsStore.currentBooking.checkIn)
+                        ) +
+                        "-" +
+                        formatTwoDates(
+                          new Date(bookingsStore.currentBooking.checkOut)
+                        )
+                      }}
+                    </p>
                     <p>{{ bookingsStore.currentBooking.adult }} Adult</p>
                   </div>
                 </div>
@@ -395,12 +412,16 @@ function formatDateRange(startDate: Date, endDate: Date): string {
                 <div
                   class="flex-3 flex flex-row px-5"
                   style="width: 100%; font-size: 16px"
-                v-for="item of bookingsStore.currentBooking.bookingDetail" :key="item.id">
+                  v-for="item of bookingsStore.currentBooking.bookingDetail"
+                  :key="item.id"
+                >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">{{item.room.roomType.roomType}}</p>
+                    <p class="font-medium">{{ item.room.roomType.roomType }}</p>
                   </div>
                   <div class="flex-2 flex flex-col">
-                    <p class="font-medium">THB {{  item.room.roomType.price}}</p>
+                    <p class="font-medium">
+                      THB {{ item.room.roomType.price }}
+                    </p>
                   </div>
                 </div>
 
@@ -423,12 +444,11 @@ function formatDateRange(startDate: Date, endDate: Date): string {
                   </div>
                 </div> -->
 
-               
-
                 <div
                   class="flex-6 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
-                  v-for="book in bookingsStore.currentBooking.activityPerBooking"
+                  v-for="book in bookingsStore.currentBooking
+                    .activityPerBooking"
                   :key="book.id"
                 >
                   <div class="flex-1 flex flex-col">
@@ -534,7 +554,50 @@ function formatDateRange(startDate: Date, endDate: Date): string {
         </div>
       </div>
     </div>
-  </div>
+
+    <transition name="fade">
+      <div
+        v-if="showModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+      >
+        <div
+          class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+          style="max-width: 90%; margin-top: -20vh"
+        >
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+              <strong class="font-bold">Oops! 😯</strong>
+            </h3>
+            <!-- Display errors if any -->
+            <div
+              v-if="
+                validationMessage
+              "
+              class=" text-red-700 px-4 py-3 rounded relative mt-3"
+            >
+            
+              <ul class="mt-1 list-disc list-inside text-start">
+                <li >{{ validationMessage }}</li>
+              
+              </ul>
+            </div>
+            <!-- General error message or other content -->
+           
+            <div class="items-center px-4 py-3">
+              <button
+                @click="showModal = false"
+                id="ok-btn"
+                class="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
+                OK 😥
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+</div>
+
 </template>
 <style scoped>
 .body {

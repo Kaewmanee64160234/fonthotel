@@ -31,7 +31,8 @@ const addBooking = () => {
 }
 
 const clickRoomDetail = () =>  {
-  roomStore.setRoom(room);
+  roomStore.setCurrentRoom(props.room);
+  console.log(props.room);
   roomStore.toggleRoomDetail();
 }
 

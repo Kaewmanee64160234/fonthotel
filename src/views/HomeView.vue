@@ -17,8 +17,6 @@ const rating: Rating = {
   service: 5,
   convenience: 5,
 };
-
-
 </script>
 
 <template>
@@ -110,10 +108,13 @@ const rating: Rating = {
     <div class=" mx-auto  my-8 flex justify-center">
     <div class="grid grid-cols-3 gap-4">
       <!-- First Row -->
-      <div class="overflow-hidden rounded-lg">
+      <router-link to="/browsesroom">
+        <div class="overflow-hidden rounded-lg pointer ">
         <img src="https://i.pinimg.com/564x/9b/d6/2c/9bd62c61cf5e2a1c3a108a9cebbedb61.jpg" alt="Brows Room" class=" image-menu" />
         <p class="text-center mt-2">BROWS ROOM</p>
       </div>
+      </router-link>
+     
       <div class="overflow-hidden rounded-lg">
         <img src="https://i.pinimg.com/564x/90/0e/89/900e8936e256d1a5e6c1e170e80d2b40.jpg" alt="Check-In Management" class=" image-menu" />
         <p class="text-center mt-2">CHECK-IN MANAGEMENT</p>

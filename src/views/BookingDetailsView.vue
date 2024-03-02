@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking } from "@/model/booking.model";
 import BookingDetailComponent from "@/components/BookingDetailComponent.vue";
+import { useUserStore } from "@/store/user.store";
 
 const bookingStore = useBookingsStore();
 let booking = ref<Booking>({
@@ -50,9 +51,16 @@ let booking = ref<Booking>({
     },
 });
 
+const userStore = useUserStore();
 onMounted(async () => {
-  await bookingStore.getBookingByCustomerIdLastcreated();
-  booking.value = bookingStore.currentBooking;
+  if(userStore.currentUser.role === "employee"){
+    await bookingStore.getBookingByEmployeeIdLastcreated();
+    booking.value = bookingStore.currentBooking;
+  }
+  else{
+    await bookingStore.getBookingByCustomerIdLastcreated();
+    booking.value = bookingStore.currentBooking;
+  }
 });
 
 // Computed properties to safely access booking details
@@ -67,31 +75,28 @@ const hasBookingDetails = computed(
   () => booking.value !== null && booking.value.bookingDetail.length > 0
 );
 
-function formatDateRange(startDate: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
-  };
+function formatTwoDates(date1: Date):string {
+    const formatDate = (date: Date): string => {
+        const day = date.toDateString().split(' ')[0]; // Extracts the day of the week
+        const month = date.toLocaleString('en-US', { month: 'short' }); // Extracts the abbreviated month
+        const dayOfMonth = date.getDate(); // Extracts the day of the month
+        const year = date.getFullYear(); // Extracts the year
 
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    startDate
-  );
+        return `${day}, ${month} ${dayOfMonth}, ${year}`;
+    };
 
-
-  return `${startFormatted}`;
+   return formatDate(date1);
 }
 </script>
 
 <template>
   <div class="body">
     <div>
-<!-- {{booking}} -->
+{{userStore.currentUser.role}}
       <BookingDetailComponent
         v-if="hasBookingDetails"
         :img="`${bookingDetailComputed!.room!.image!.toString()}`"
-        :date="formatDateRange(booking!.createDate!)"
+        :date="`${formatTwoDates(new Date(bookingStore.currentBooking.checkIn))}-${formatTwoDates(new Date(bookingStore.currentBooking.checkOut))}`"
         :name="`${booking!.cusName}  ${booking!.cusLastName}`"
         :roomType="bookingDetailComputed!.room.roomType.typeName"
         :adult="booking!.adult"

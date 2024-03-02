@@ -9,6 +9,26 @@ export const useRoomStore = defineStore("roomStore", () => {
     const currentStatus = ref<string>('ready'); // Define currentStatus as a ref
     const roomDatail = ref<Room>();
     const roomDetailCard = ref(false);
+    const curentRoom = ref<Room>({
+       id: '',
+        image: '',
+        status: '',
+        roomType: {
+            id: 0,
+            roomType: '',
+            descriptions: '',
+            price: 0,
+   
+            chromeCast: false,
+            eletricSheer: false,
+            wifi: false,
+            bath: false,
+            water: false,
+            desk: false,
+            typeName: '',
+            bedSize: 1,
+        }
+    });
 
     function setRoom(room: Room) {
         roomDatail.value = room;
@@ -70,6 +90,10 @@ export const useRoomStore = defineStore("roomStore", () => {
             console.log(error);
         }
     };
+    //set current room
+    const setCurrentRoom = (room: Room) => {
+        curentRoom.value = room;
+    }
 
-    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus, setRoom, roomDatail, toggleRoomDetail, roomDetailCard };
+    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus, setRoom, roomDatail, toggleRoomDetail, roomDetailCard,curentRoom, setCurrentRoom };
 });
