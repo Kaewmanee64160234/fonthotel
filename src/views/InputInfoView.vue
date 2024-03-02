@@ -36,14 +36,19 @@ const clickContinue = async () => {
 
 const checkPromotion = async (code: string, event: Event) => {
   event.preventDefault();
+  showModal.value = false;
+  validationMessage.value = "";
   const promotion = await promotionStore.findPromotion(code);
   if (promotion) {
     if (promotion.createdDate > new Date()) {
-      alert("Promotion code is expired");
+      showModal.value = true;
+      validationMessage.value = "Promotion code is expired";
       //   return;
     }
     if (promotion.endDate < new Date()) {
-      alert("Promotion code is expired");
+      showModal.value = true;
+      validationMessage.value = "Promotion code is expired";
+
       //   return;
     }
     if (promotion.discount > 0) {
@@ -99,10 +104,12 @@ const checkPromotion = async (code: string, event: Event) => {
         bookingsStore.currentBooking.totalDiscount;
       console.log(bookingsStore.currentBooking.total);
     } else {
-      alert("Promotion code is invalid");
+      showModal.value = true;
+      validationMessage.value = "Promotion code is invalid";
     }
   } else {
-    alert("Promotion code is invalid");
+    showModal.value = true;
+    validationMessage.value = "Promotion code is invalid";
   }
 };
 
@@ -139,8 +146,7 @@ const validateForm = () => {
   // Check if first name and last name contain any numbers
   if (/\d/.test(firstName.value) || /\d/.test(lastName.value)) {
     showModal.value = true;
-    validationMessage.value =
-      "First name and last name cannot contain numbers";
+    validationMessage.value = "First name and last name cannot contain numbers";
     return false;
   }
   if (!emailRegex.test(emailAddress.value)) {
@@ -425,25 +431,6 @@ function formatTwoDates(date1: Date): string {
                   </div>
                 </div>
 
-                <!-- <div class="flex-4 flex flex-row pt-2 px-5">
-                  <div class="flex-1 flex flex-col">
-                    <p class="font-medium" style="font-size: 16px">1 Night</p>
-                  </div>
-                 
-                </div> -->
-
-                <!-- <div
-                  class="flex-5 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                >
-                  <div class="flex-1 flex flex-col">
-                    <p>Taxes and Fees</p>
-                  </div>
-                  <div class="flex-2 flex flex-col">
-                    <p class="font-medium">THB 5,700.00</p>
-                  </div>
-                </div> -->
-
                 <div
                   class="flex-6 flex flex-row pt-2 px-5"
                   style="font-size: 13px"
@@ -461,32 +448,48 @@ function formatTwoDates(date1: Date): string {
                 </div>
 
                 <div
-                  class="flex-7 flex flex-row pt-2 px-5"
+                  class="flex flex-row pt-2 px-5 items-center"
                   style="font-size: 13px"
                 >
-                  <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Promotion</p>
-                    <p>
-                      {{
-                        bookingsStore.currentBooking.promotion.discount ??
-                        bookingsStore.currentBooking.promotion.discountPercent +
-                          "%"
-                      }}
-                    </p>
-                  </div>
-                  <div class="flex-2 flex flex-col">
-                    <p>
-                      {{ bookingsStore.currentBooking.promotion.name ?? "-" }}
-                    </p>
-                  </div>
-                  <div
-                      class="flex-3 flex flex-col"
-                      v-if="
-                        bookingsStore.currentBooking.totalDiscount > 0
-                      "
-                    >
-                      <i class="fas fa-trash-alt" style="color: red"></i>
+                
+                
+                  <div class="flex-1 flex flex-row justify-space-around">
+                    <div class="flex-1 flex flex-col">
+                      <div>
+                        <p class="font-medium">Promotion</p>
+                      </div>
+                      <div  >
+                        <p>
+                          {{
+                            bookingsStore.currentBooking.promotion.name ?? "-"
+                          }}
+                        </p>
+                      </div>
                     </div>
+                  </div>
+
+                  <div
+                  class="flex-1 flex flex-col justify-end"
+                  >
+                  <div style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 0">
+                      <i  
+                        class="fas fa-trash-alt"
+                        style="color: red; cursor: pointer;"
+                      ></i>
+                    </div>
+                    <div style="text-align: right;">
+                      <p>
+                        {{
+                          bookingsStore.currentBooking.promotion.discount ??
+                          bookingsStore.currentBooking.promotion
+                            .discountPercent + "%"
+                        }}
+                      </p>
+                    </div>
+                    
+                  </div>
+
+                 
                 </div>
 
                 <div
@@ -578,19 +581,15 @@ function formatTwoDates(date1: Date): string {
             </h3>
             <!-- Display errors if any -->
             <div
-              v-if="
-                validationMessage
-              "
-              class=" text-red-700 px-4 py-3 rounded relative mt-3"
+              v-if="validationMessage"
+              class="text-red-700 px-4 py-3 rounded relative mt-3"
             >
-            
               <ul class="mt-1 list-disc list-inside text-start">
-                <li >{{ validationMessage }}</li>
-              
+                <li>{{ validationMessage }}</li>
               </ul>
             </div>
             <!-- General error message or other content -->
-           
+
             <div class="items-center px-4 py-3">
               <button
                 @click="showModal = false"
@@ -604,9 +603,9 @@ function formatTwoDates(date1: Date): string {
         </div>
       </div>
     </transition>
-</div>
-
+  </div>
 </template>
+
 <style scoped>
 .body {
   background-image: url("../images/image.png");

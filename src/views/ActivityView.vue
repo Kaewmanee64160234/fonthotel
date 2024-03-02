@@ -165,7 +165,6 @@ const clickcontinue = () => {
                         {{ bookingStore.currentBooking.promotion.name ?? "-" }}
                       </p>
                     </div>
-                    
                   </div>
                 </div>
                 <div
