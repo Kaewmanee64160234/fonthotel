@@ -22,13 +22,15 @@ const paramValue = route.params.type;
 
 onMounted(async () => {
   localStorage.setItem("roomType", roomStore.currentType);
-if( paramValue.toString().split(" ")[0].toLowerCase() == null || paramValue.toString().split(" ")[0].toLowerCase() == undefined){
-  //get from localstorage
-  roomStore.currentType = localStorage.getItem("roomType")!;
-}
-else{
-  roomStore.currentType = paramValue.toString().split(" ")[0];
-}
+  if (
+    paramValue.toString().split(" ")[0].toLowerCase() == null ||
+    paramValue.toString().split(" ")[0].toLowerCase() == undefined
+  ) {
+    //get from localstorage
+    roomStore.currentType = localStorage.getItem("roomType")!;
+  } else {
+    roomStore.currentType = paramValue.toString().split(" ")[0];
+  }
   console.log(roomStore.currentType);
   await roomStore.getRoomsByType(
     paramValue.toString().split(" ")[0].toLowerCase(),
@@ -71,7 +73,7 @@ const clickcontinue = () => {
     },
   });
 
-  if(totalGuests.value === 0 || !startDate.value || !endDate.value) return;
+  if (totalGuests.value === 0 || !startDate.value || !endDate.value) return;
   bookingStore.setBooking(booking.value);
   console.log(bookingStore.currentBooking);
   console.log(JSON.stringify(bookingStore.currentBooking));
@@ -111,10 +113,13 @@ const incrementGuest = (type: "adult" | "children") => {
 };
 
 const applyGuestCount = () => {
-  totalGuests.value = adultCount.value + childrenCount.value; // Update totalGuests
+  totalGuests.value = adultCount.value + childrenCount.value;
   bookingStore.currentBooking.adult = adultCount.value;
   bookingStore.currentBooking.child = childrenCount.value;
+  // Explicitly close the dropdown
+  closeDropdown();
 };
+
 const minDate = new Date().toISOString().split("T")[0];
 const startDate = ref(minDate);
 const endDate = ref("");
@@ -184,7 +189,7 @@ const stayDates = computed(() => {
                 </button>
 
                 <div
-                  v-if="isDropdownOpen"
+                  v-if="isDropdownOpen === true"
                   @click="closeDropdown"
                   class="absolute card-selectguest mt-2"
                   role="guest"
@@ -265,7 +270,7 @@ const stayDates = computed(() => {
                         <div class="flex">
                           <button
                             type="button"
-                            class="btn-apply"
+                            :class=" adultCount + childrenCount === 0 ? 'disable-btn-apply ' : 'btn-apply'"
                             @click="applyGuestCount"
                             :disabled="adultCount + childrenCount === 0"
                           >
@@ -302,7 +307,6 @@ const stayDates = computed(() => {
                 :min="tomorrow"
                 :disabled="!startDate"
                 v-model="endDate"
-
               />
             </div>
           </div>
@@ -458,6 +462,14 @@ const stayDates = computed(() => {
 
 .btn-apply {
   background-color: #ebbd99;
+  color: #ffffff;
+  width: 59px;
+  height: 27px;
+  border-radius: 9999px;
+  justify-content: end;
+}
+.disable-btn-apply {
+  background-color: #ac9c8f;
   color: #ffffff;
   width: 59px;
   height: 27px;
