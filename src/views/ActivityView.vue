@@ -12,8 +12,8 @@ onMounted(() => {
   activityStore.getAllActivities();
 });
 const clickback = () => {
-    router.push(`/selectroom/${roomStore.currentStatus}`);
-}
+  router.push(`/selectroom/${roomStore.currentStatus}`);
+};
 function formatDateRange(startDate: Date, endDate: Date): string {
   const options: Intl.DateTimeFormatOptions = {
     weekday: "short", // "Tue"
@@ -133,7 +133,6 @@ const clickcontinue = () => {
                   v-for="book in bookingStore.currentBooking.activityPerBooking"
                   :key="book.id"
                 >
-                
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.activity.name }}</p>
                     <p>Guest {{ book.qty }}</p>
@@ -142,8 +141,8 @@ const clickcontinue = () => {
                     <p>THB {{ book.total }}</p>
                   </div>
                   <div class="flex-3 flex flex-col">
-                    <i class='fas fa-trash-alt' style='color:red'></i>
-                    </div>
+                    <i class="fas fa-trash-alt" style="color: red"></i>
+                  </div>
                 </div>
 
                 <div class="flex-1 flex flex-col">
@@ -165,9 +164,6 @@ const clickcontinue = () => {
                       <p>
                         {{ bookingStore.currentBooking.promotion.name ?? "-" }}
                       </p>
-                    </div>
-                    <div class="flex-3 flex flex-col">
-                    <i class='fas fa-trash-alt' style='color:red'></i>
                     </div>
                   </div>
                 </div>

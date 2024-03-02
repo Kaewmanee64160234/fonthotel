@@ -53,7 +53,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       discount: 0,
       discountPercent: 0,
       endDate: new Date(),
-      id: 0,
+      id: -1,
       name: "",
     },
   });
