@@ -133,6 +133,7 @@ const clickcontinue = () => {
                   v-for="book in bookingStore.currentBooking.activityPerBooking"
                   :key="book.id"
                 >
+                
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.activity.name }}</p>
                     <p>Guest {{ book.qty }}</p>
@@ -140,6 +141,9 @@ const clickcontinue = () => {
                   <div class="flex-2 flex flex-col mt-6">
                     <p>THB {{ book.total }}</p>
                   </div>
+                  <div class="flex-3 flex flex-col">
+                    <i class='fas fa-trash-alt' style='color:red'></i>
+                    </div>
                 </div>
 
                 <div class="flex-1 flex flex-col">
@@ -162,6 +166,9 @@ const clickcontinue = () => {
                         {{ bookingStore.currentBooking.promotion.name ?? "-" }}
                       </p>
                     </div>
+                    <div class="flex-3 flex flex-col">
+                    <i class='fas fa-trash-alt' style='color:red'></i>
+                    </div>
                   </div>
                 </div>
                 <div
@@ -169,7 +176,7 @@ const clickcontinue = () => {
                   style="font-size: 13px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Edit | Remove</p>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-700 text-sm">Remove All</button>
                   </div>
                 </div>
 
@@ -178,7 +185,7 @@ const clickcontinue = () => {
                   style="font-size: 13px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Add room</p>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-700 text-sm">Add room</button>
                   </div>
                 </div>
 

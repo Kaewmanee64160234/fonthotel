@@ -145,7 +145,7 @@ const addDetails = (activity_: Activity) => {
           </div>
 
           <div class="flex-2 flex flex-row justify-end mr-5">
-            <div class="text-right pt-5">
+            <div class="text-right">
               <button
                 to="/activity"
                 :class="adultCount + childrenCount == 0 ? 'btn-add-details-disabled ' : 'btn-add-details'"

@@ -15,13 +15,6 @@ const roomStore = useRoomStore();
 const booking = ref<Booking>();
 const route = useRoute();
 
-const props = defineProps<{
-  image: string,
-  roomTypeName: string,
-  roomTypeDes: string,
-  detail: string,
-  room: Room
-}>();
 const clickback = () => {
   router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
 };
