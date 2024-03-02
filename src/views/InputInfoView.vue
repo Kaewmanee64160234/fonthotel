@@ -6,6 +6,7 @@ import router from "@/router";
 import { useUserStore } from "@/store/user.store";
 import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
+import { useRoomStore } from "@/store/room.store";
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -21,6 +22,7 @@ const paymentMethod = ref("");
 const showModal = ref(false);
 const validationMessage = ref("");
 const booking = ref<Booking>();
+const roomStore = useRoomStore();
 onMounted(() => {
   promotionStore.getPromotions();
 });
@@ -33,6 +35,11 @@ const clickContinue = async () => {
   booking.value = bookingsStore.currentBooking;
   router.push("/bookingdetail");
 };
+
+const routerToAddRoom = ()=>{
+  router.push(`/selectroom/${roomStore.currentType}`);
+
+}
 
 const checkPromotion = async (code: string, event: Event) => {
   event.preventDefault();
@@ -495,7 +502,7 @@ bookingsStore.removePromotion();
                   style="font-size: 13px"
                 >
                   <div class="flex-1 flex flex-col">
-                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
+                    <button @click="routerToAddRoom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
                   </div>
                 </div>
 
