@@ -479,6 +479,14 @@ function formatTwoDates(date1: Date): string {
                       {{ bookingsStore.currentBooking.promotion.name ?? "-" }}
                     </p>
                   </div>
+                  <div
+                      class="flex-3 flex flex-col"
+                      v-if="
+                        bookingsStore.currentBooking.totalDiscount > 0
+                      "
+                    >
+                      <i class="fas fa-trash-alt" style="color: red"></i>
+                    </div>
                 </div>
 
                 <div
