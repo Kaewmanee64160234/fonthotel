@@ -36,6 +36,7 @@ onMounted(async () => {
     paramValue.toString().split(" ")[0].toLowerCase(),
     roomStore.currentStatus
   );
+
 });
 
 const clickcontinue = () => {
@@ -270,7 +271,11 @@ const stayDates = computed(() => {
                         <div class="flex">
                           <button
                             type="button"
-                            :class=" adultCount + childrenCount === 0 ? 'disable-btn-apply ' : 'btn-apply'"
+                            :class="
+                              adultCount + childrenCount === 0
+                                ? 'disable-btn-apply '
+                                : 'btn-apply'
+                            "
                             @click="applyGuestCount"
                             :disabled="adultCount + childrenCount === 0"
                           >
@@ -313,7 +318,10 @@ const stayDates = computed(() => {
         </div>
         <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
 
-        <div class="mt-2 overflow-y-auto mb-10 dc-scroll">
+        <div
+          class="mt-2 overflow-y-auto mb-10 dc-scroll"
+          v-if="roomStore.currentRooms.length > 0"
+        >
           <div v-for="item of roomStore.currentRooms" :key="item.id">
             <RoomCard
               :image="item.image"
@@ -324,6 +332,11 @@ const stayDates = computed(() => {
               :price="item.roomType.price"
             />
           </div>
+        </div>
+        <div v-else>
+          <p class="text-white font-semibold text-xl text-center" >
+            No Room Available
+          </p>
         </div>
       </div>
 
