@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/ActivityComponent.vue";
+import { Activity, ActivityPerBooking } from "@/model/activity.model";
 import router from "@/router";
 import { useActivityStore } from "@/store/activity.store";
 import { useBookingsStore } from "@/store/booking.store";
@@ -33,6 +34,12 @@ function formatDateRange(startDate: Date, endDate: Date): string {
 }
 const clickcontinue = () => {
   router.push("/inputinfo");
+};
+
+const clickRemove = (activityPer:ActivityPerBooking) => {
+  //remove activityPer from currentBooking
+  bookingStore.removeActivityPerBooking(activityPer);
+
 };
 </script>
 <template>
@@ -141,7 +148,7 @@ const clickcontinue = () => {
                     <p>THB {{ book.total }}</p>
                   </div>
                   <div class="flex-3 flex flex-col">
-                    <i class="fas fa-trash-alt" style="color: red"></i>
+                    <i class="fas fa-trash-alt" style="color: red" @click="clickRemove(book)"></i>
                   </div>
                 </div>
 

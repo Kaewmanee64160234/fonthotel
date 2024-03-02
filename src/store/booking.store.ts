@@ -768,6 +768,13 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
   };
 
+  const removeActivityPerBooking = (activityPerBooking: ActivityPerBooking) => {
+    currentBooking.value.activityPerBooking = currentBooking.value.activityPerBooking.filter(
+      (activity) => activity.id !== activityPerBooking.id
+    );
+    currentBooking.value.total = currentBooking.value.total - activityPerBooking.total;
+  };
+
   return {
     bookings,
     saveBooking,
@@ -779,6 +786,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     addAcitivityPerBooking,
     getBookingByCustomerIdLastcreated,
     confirmBooking,
-    getBookingByEmployeeIdLastcreated
+    getBookingByEmployeeIdLastcreated,
+    removeActivityPerBooking
   };
 });
