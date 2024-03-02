@@ -37,10 +37,12 @@ const clickcontinue = () => {
 };
 
 const clickRemove = (activityPer:ActivityPerBooking) => {
-  //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
 
 };
+
+//wacth bookingStore.currentBooking
+
 </script>
 <template>
   <div class="body">

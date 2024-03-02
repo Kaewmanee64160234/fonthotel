@@ -43,7 +43,7 @@ const addDetails = (activity_: Activity) => {
     id: -1,
     total: (adultCount.value + childrenCount.value) * activity_.price,
   };
-  useBooking.addAcitivityPerBooking(activityPerBooking)
+  useBooking.addActivityPerBooking(activityPerBooking)
     
 };
 </script>
