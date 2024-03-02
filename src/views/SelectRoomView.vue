@@ -1,18 +1,26 @@
 <script setup lang="ts">
 import SelectRoomCard from "@/components/SelectRoomCard.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, defineProps } from "vue";
 import { useRoomStore } from "@/store/room.store";
 import { useBookingsStore } from "@/store/booking.store";
 import { Booking, BookingDetail } from "@/model/booking.model";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { Room } from "@/model/room.model";
-const currentRoom = ref<Room>(); 
+const currentRoom = ref<Room>();
 const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
 
 const booking = ref<Booking>();
 const route = useRoute();
+
+const props = defineProps<{
+  image: string,
+  roomTypeName: string,
+  roomTypeDes: string,
+  detail: string,
+  room: Room
+}>();
 const clickback = () => {
   router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
 };
@@ -99,16 +107,9 @@ const dateRangeString = formatDateRange(
         <p class="text-white font-semibold text-xl">Select Room</p>
         <div class="mt-2 overflow-y-auto dc-scroll mb-10">
           <div v-for="item of roomStore.currentRooms" :key="item.id">
-            <SelectRoomCard 
-              :room="item"
-              :image="item.image"
-              :typename="item.roomType.typeName"
-              sleep="1"
-              detail="Sea View , Smart TV , Work Desk"
-              :price="item.roomType.price"
-              roomDetail="/SelectRoomDialog"
-              btnbooknow="#"
-            />
+            <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
+              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" roomDetail="/SelectRoomDialog"
+              btnbooknow="#" />
           </div>
         </div>
       </div>
@@ -151,123 +152,84 @@ const dateRangeString = formatDateRange(
         </div>
       </div>
     </div>
-
+    <!-- --- Dialog RoomDetail --- -->
     <div v-if="roomStore.roomDetailCard == true"
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
-    >
-      <div
-        class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-        style="max-width: 90%; margin-top: -20vh"
-      >
-        <!-- The container for the overlay and cards -->
-        <div class="flex justify-center items-center bigcard">
-          <!-- Added classes for centering -->
-          <div class="grid relative card-style items-center mt-10">
-            <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
-              <!-- Center alignment -->
-              <div class="flex grid grid-cols-2">
-                <p
-                  class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                >
-                  Room Detail
-                </p>
-                <a
-                  href="#"
-                  class="flex items-center justify-end text-right mr-10"
-                >
-           
-                  <svg
-                    @click="roomStore.toggleRoomDetail()"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-              <div>
-                <hr class="hr-style" />
-              </div>
-            </div>
-            <div
-              class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10"
-            >
-              <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
-                <p
-                  class="text-sm text-gray-900 dark:text-white mb-4 font-semibold"
-                >
-                  Deluxe
-                </p>
-                <p
-                  class="text-xs text-gray-900 dark:text-white mb-4 opacity-70"
-                >
-                  Sleep 1 | 37 square metre
-                </p>
-                <p class="text-sm text-gray-900 dark:text-white font-semibold">
-                  Room Amenities
-                </p>
-                <ul class="list-disc mb-10">
-                  <li
-                    class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                  >
-                    Free Wifi
-                  </li>
-                  <li
-                    class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                  >
-                    Accessible Room
-                  </li>
-                  <li
-                    class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                  >
-                    Non-smoking
-                  </li>
-                </ul>
-              </div>
-              <div class="justify-start items-center">
-                <img
-                  class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                  src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
-              <!-- Center alignment -->
-              <div>
-                <hr class="hr-style" />
-              </div>
-            </div>
-            <div class="flex grid gap-8 grid-rows-1 items-left">
-              <div class="flex grid grid-rows-1 flex-col items-right ml-10">
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+      <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        style="max-width: 90%; margin-top: -20vh">
+        <div class="body-roomDetail">
+          <!-- The container for the overlay and cards -->
+          <div class="flex justify-center items-center bigcard-roomDetail">
+            <!-- Added classes for centering -->
+            <div class="grid relative card-style-roomDetail items-center mt-10">
+              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
                 <!-- Center alignment -->
-                <div class="text-center">
-                  <div class="flex flex-wrap justify-between items-center pt-5">
-                    <p
-                      class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                    >
-                      City View, Smart TV, Work Desk
-                    </p>
-                    <p
-                      class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                    >
-                      Contemporary, yet elegant and functional. Each Deluxe room
-                      at Carlton Hotel Bangkok Sukhumvit offers floor to ceiling
-                      sound proofed windows with stunning city view, electric
-                      blinds and blackout curtains, a work desk, electronic
-                      safe, minibar fridge, 49 inch smart TV's and complimentary
-                      coffee and tea making facilities. Bathroom with separate
-                      rain shower, bathtub and wash-let toilet, generous
-                      wardrobes, wide luggage rack and open hanging space.
-                    </p>
+                <div class="flex grid grid-cols-2">
+                  <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                    Room Detail
+                  </p>
+                  <a href="#" class="flex items-center justify-end text-right mr-10">
+
+                    <svg @click="roomStore.toggleRoomDetail()" xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                      </path>
+                    </svg>
+                  </a>
+                </div>
+                <div>
+                  <hr class="hr-style-roomDetail" />
+                </div>
+              </div>
+              <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
+                <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
+                  <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
+                    Deluxe
+                  </p>
+                  <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
+                    Sleep 1 | 37 square metre
+                  </p>
+                  <p class="text-sm text-gray-900 dark:text-white font-semibold">
+                    Room Amenities
+                  </p>
+                  <ul class="list-disc mb-10">
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                      Free Wifi
+                    </li>
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                      Accessible Room
+                    </li>
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                      Non-smoking
+                    </li>
+                  </ul>
+                </div>
+                <div class="justify-start items-center">
+                  <img
+                    class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
+                    src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
+                    />
+                  </div>
+              </div>
+              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
+                <!-- Center alignment -->
+                <div>
+                  <hr class="hr-style-roomDetail" />
+                </div>
+              </div>
+              <div class="flex grid gap-8 grid-rows-1 items-left">
+                <div class="flex grid grid-rows-1 flex-col items-right ml-10">
+                  <!-- Center alignment -->
+                  <div class="text-center">
+                    <div class="flex flex-wrap justify-between items-center pt-5">
+                      <p class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                        City View, Smart TV, Work Desk
+                      </p>
+                      <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70 ">
+                        {{ props.roomTypeDes }}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -278,6 +240,7 @@ const dateRangeString = formatDateRange(
     </div>
   </div>
 </template>
+
 <style scoped>
 .body {
   background-image: url("../images/image.png");
@@ -299,29 +262,6 @@ const dateRangeString = formatDateRange(
   height: 234px;
 }
 
-.btn-guest,
-.btn-date {
-  border-color: #000000;
-  background-color: #ffffff;
-  padding-top: 5px;
-  padding-left: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
-  font-weight: medium;
-  display: inline-block;
-  width: 15vw;
-  height: 75px;
-}
-
-.btn-guest {
-  justify-items: flex-start;
-  top: 0;
-  left: 0;
-  padding: 0;
-  margin: 0;
-  padding-left: 10px;
-}
-
 .card-stay {
   width: 80%;
   height: 35vh;
@@ -330,40 +270,9 @@ const dateRangeString = formatDateRange(
   box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
 }
 
-.card-selectguest {
-  background-color: #fffcf7;
-  width: 229px;
-  /* height: 1px; */
-  border-radius: 10px;
-}
-
 .color-line {
   background-color: #bebebe;
   height: 2px;
-}
-
-.btn-minus {
-  background-color: #ff0000;
-  border-radius: 9999px;
-  width: 24.22px;
-  height: 24.22px;
-  text-align: center;
-}
-
-.btn-plus {
-  background-color: #59ce8f;
-  border-radius: 9999px;
-  width: 24.22px;
-  height: 24.22px;
-}
-
-.btn-apply {
-  background-color: #ebbd99;
-  color: #ffffff;
-  width: 59px;
-  height: 27px;
-  border-radius: 9999px;
-  justify-content: end;
 }
 
 .dc-scroll {
@@ -380,5 +289,40 @@ const dateRangeString = formatDateRange(
 .dc-scroll::-webkit-scrollbar-thumb {
   background-color: #ebbd99;
   border-radius: 10px;
+}
+
+/* ---- Room Detail ---- */
+.body-roomDetail {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.card-style-roomDetail {
+  width: 57vw;
+  height: 55vh;
+  border-radius: 10px;
+  background-color: #fffcf7;
+  /* add filter blue */
+  fill-opacity: unset;
+  display: block;
+}
+
+.bigcard-roomDetail {
+  display: flex;
+  height: 80vh;
+}
+
+.font-judson-roomDetail {
+  font-family: "Judson";
+}
+
+.hr-style-roomDetail {
+  margin-right: 50%;
+  /* Adjust margin as needed */
+  width: 95%;
+  border: 1px solid #eeeeee;
 }
 </style>

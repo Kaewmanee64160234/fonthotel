@@ -20,7 +20,7 @@ const props = defineProps<{
   room:Room
 }>();
 //add bookingDeail
-const addBookingDetail = () => {
+const addBooking = () => {
   const bookingDetail:BookingDetail = {
     id:-1,
     room: props.room,
@@ -56,7 +56,7 @@ const clickRoomDetail = () =>  {
           <div class="px-5 py-2 font-bold text-base price-room">THB {{ props.price }}</div>
         </div>
         <div class="text-right px-5">
-          <button class="btn-booknow mt-2 mb-3"  @click.prevent="addBookingDetail()">Book now</button>
+          <button class="btn-booknow mt-2 mb-3"  @click.prevent="addBooking()">Book now</button>
         </div>
 
       </div>
