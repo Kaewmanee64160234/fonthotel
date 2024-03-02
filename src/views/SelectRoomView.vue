@@ -196,7 +196,7 @@ function formatTwoDates(date1: Date): string {
                 <p
                   class="text-sm text-gray-900 dark:text-white mb-4 font-semibold"
                 >
-                  Deluxe
+                  {{ roomStore.curentRoom.roomType.typeName}}
                 </p>
                 <p
                   class="text-xs text-gray-900 dark:text-white mb-4 opacity-70"
@@ -227,7 +227,7 @@ function formatTwoDates(date1: Date): string {
               <div class="justify-start items-center">
                 <img
                   class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                  src="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
+                  :src="roomStore.curentRoom.image"
                   alt=""
                 />
               </div>
@@ -251,14 +251,7 @@ function formatTwoDates(date1: Date): string {
                     <p
                       class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
                     >
-                      Contemporary, yet elegant and functional. Each Deluxe room
-                      at Carlton Hotel Bangkok Sukhumvit offers floor to ceiling
-                      sound proofed windows with stunning city view, electric
-                      blinds and blackout curtains, a work desk, electronic
-                      safe, minibar fridge, 49 inch smart TV's and complimentary
-                      coffee and tea making facilities. Bathroom with separate
-                      rain shower, bathtub and wash-let toilet, generous
-                      wardrobes, wide luggage rack and open hanging space.
+                      {{roomStore.curentRoom.roomType.descriptions}}
                     </p>
                   </div>
                 </div>
