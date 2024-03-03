@@ -43,21 +43,16 @@ const cancelBooking = async () => {
       </div>
 
       <!-- Room Details -->
-      <div class="w-2/3  pt-15 bg-white flex flex-col justify-between">
-        <div class="flex justify-end">
-          <button class="pt-3 pr-3">
-          <i class='fas fa-pen card-icon items-center' style='color:orange'></i>
-          </button>
-          <button class="pt-3 pr-3" @click="cancelBooking()" v-if="booking.status != 'cancel'" >
-          <i class='fas fa-trash-alt card-icon items-center' style='color:red' ></i>
-          </button>
-        </div>
+      <div class="w-2/3  pt-20 bg-white flex flex-col justify-between">
         <div>
-          <li class="card-text">{{ props.typeRoom }}</li>
+          <li class="card-text ">{{ props.typeRoom }}</li>
           <li class="card-text">{{ props.activity }}</li>
           <li class="card-text">{{ props.dateCheckIn}} at 1:00 PM</li>
           <li class="card-text">Guest: {{ props.guest }}</li>
-          <li class="card-text">Status: {{ props.status }}</li>
+          <li v-if="props.status == 'waiting'" class="card-text text-orange-400">Status: {{ props.status }}</li>
+          <li v-else-if="props.status == 'cancel'" class="card-text" style="color: red;">Status: {{ props.status }}</li>
+          <li v-else-if="props.status == 'confirm'" class="card-text" style="color: cadetblue;">Status: {{ props.status }}</li>
+          <li v-else-if="props.status == 'finish'" class="card-text" style="color: seagreen;">Status: {{ props.status }}</li>
         </div>
         <div class="flex justify-end items-center px-4">
           <span class="text-xl font-bold">Total: {{ price }}.00 Bath</span>
@@ -65,6 +60,9 @@ const cancelBooking = async () => {
         <div class="flex justify-end">
           <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3">
             More Detail
+          </button>
+          <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="cancelBooking()" v-if="booking.status != 'cancel'" >
+          <p>Cancel</p>
           </button>
         </div>
 
@@ -94,24 +92,20 @@ const cancelBooking = async () => {
   object-fit: cover;
 }
 
-.card-icon {
-  width: 30px;
-  height: 30px;
-  max-width: 50px;
-  max-height: 50px;
+.btn-cancel {
+  width: 128px;
+  max-width: 128px;
   border-radius: 9999px;
-  background-color: #f5d9c2;
+  background-color: #dc3030;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 4px 6px #e7bb96;
+  box-shadow: 0px 4px 6px #cd2323;
+  text-align: center;
+  display: inline-block;
+  color: rgb(255, 255, 255);
 }
 
-.card-icon i {
-  margin: 0; /* To reset the default margin of <i> element */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 </style>
 
