@@ -93,9 +93,7 @@ const linkTo = () => {
               <img src="../images/work-space.png" alt="work" class="facility-icon" />
               <span>Working desk</span>
             </div>
-            <div v-else>
-              <p>No facilities available</p>
-            </div>
+          
           </div>
         </div>
       </div>
