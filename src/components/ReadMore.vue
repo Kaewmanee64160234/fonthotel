@@ -1,5 +1,9 @@
+
 <script lang="ts" setup>
 import { defineProps } from "vue";
+import { useRoomStore } from '@/store/room.store';
+import router from "@/router";
+const roomStore = useRoomStore();
 const clickback = () => {
   window.location.href = '/'
 }
@@ -8,15 +12,22 @@ const props = defineProps({
   type: String,
   description: String,
   img: String,
-  topic: String,
-
+  bed: Number,
+  tv: Boolean,
   electric: Boolean,
   wifi: Boolean,
   water: Boolean,
   bath: Boolean,
   path: String,
   desk: Boolean,
+
 });
+const linkTo = () => {
+    router.push(`/selectguestdate/${props.type}`);
+   
+}
+
+
 </script>
 
 <template>
@@ -27,19 +38,20 @@ const props = defineProps({
       </button>
     </div>
     <div class="absolute top-0 right-0 p-8">
-      <a :href="path" class="btn-booking text-center">Book now</a>
+      <button @click="linkTo()" class="btn-booking  inline-block ">Book now</button>
+
     </div>
     <!-- Container for the room details -->
     <div class="flex justify-center items-center min-h-screen">
       <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[80%] mx-auto ">
         <!-- Title above the image -->
-        <h1 class="text-xl font-judson px-5 pt-2 ml-10 mt-5">{{ type }}</h1>
+        <h1 class="text-xl font-judson px-5 pt-2 ml-10 mt-5">{{ type }} ROOM </h1>
 
         <!-- Image and Description Container -->
         <div class="md:flex pl-8">
           <!-- Room Image -->
           <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
-            <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
+            <img :src="img" alt="Room Image" class=" room-image object-cover  h-auto max-w-full rounded-lg" />
           </div>
 
           <!-- Room Description -->
@@ -53,15 +65,14 @@ const props = defineProps({
         <div class="mt-4 pl-8">
           <h1 class="text-base font-judson  md:w-1/2 flex p-4 ml-5">FACILITIES</h1>
           <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-            <!-- Facility 1 -->
-            <!-- <div v-if="bed" class="facility-item text-base font-judson  ">
+            <div v-if="bed" class="facility-item text-base font-judson  ">
               <img src="../images/bed.png" alt="Bed" class="facility-icon" />
               <span>{{ bed }}</span>
-            </div> -->
-            <!-- <div v-if="tv" class="facility-item text-base font-judson">
+            </div>
+            <div v-if="tv" class="facility-item text-base font-judson">
               <img src="../images/television.png" alt="TV" class="facility-icon" />
               <span>Chrome cast & Apple mirror apps</span>
-            </div> -->
+            </div>
             <div v-if="electric" class="facility-item text-base font-judson">
               <img src="../images/smart-curtain.png" alt="Electric" class="facility-icon" />
               <span>Electric curtain and sheer</span>
@@ -158,4 +169,16 @@ const props = defineProps({
 .font-judson {
   font-family: 'Judson';
 }
+.room-image {
+    /*height: 220px; /* Fixed height for the image */
+    border-radius: 20px;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    padding: 10px;
+    margin-right: 10px;
+    /* Adjust margin as needed */
+    margin-left: 10px;
+}
 </style>
+
