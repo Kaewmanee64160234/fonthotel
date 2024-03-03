@@ -18,7 +18,10 @@ const userStore = useUserStore();
   />
 
   <NavigationBar
-    v-if="!hideNavigation && userStore.currentUser?.role === 'customer'"
+    v-else-if="!hideNavigation && userStore.currentUser?.role === 'customer'"
+  />
+  <NavigationBar
+  v-else-if="!hideNavigation"
   />
   <router-view class="relative" />
 

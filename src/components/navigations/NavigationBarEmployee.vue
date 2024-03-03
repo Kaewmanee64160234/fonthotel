@@ -8,6 +8,11 @@ const gotoAcceptBookingView = () => {
 };
 const authStore = useAuthStore();
 const userStore = useUserStore();
+//logout
+const logout = () => {
+  authStore.logout();
+  router.push('/login');
+};
 </script>
 <template>
   <div>
@@ -16,7 +21,6 @@ const userStore = useUserStore();
       <div class="flex items-center gap-4">
         <div class="flex gap-4">
           <img src="../../images/logo.png" alt="Hotel California Logo" class="h-12" />
-          <a href="/login" class="hover:text-gray-700 text-sm font-judson flex items-center">LOGOUT</a>
         </div>
         <!-- Dropdown Menu for ABOUT CUSTOMER -->
 
@@ -67,6 +71,8 @@ const userStore = useUserStore();
             <p class="flex">Position: Manager</p>
           </div>
         </div>
+        <a @click="logout" href="/login" class="hover:text-gray-700 text-sm font-judson flex items-center">LOGOUT</a>
+
       </div>
     </nav>
   </div>
