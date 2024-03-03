@@ -624,6 +624,9 @@ const stayDates = computed(() => {
   box-shadow: 0px 4px 6px #8d8277;
   color: white;
 }
+.disabled-text:hover {
+      background-color: #968e88;
+    }
 /* ---- Room Detail ---- */
 .body-roomDetail {
   width: 100vw;
