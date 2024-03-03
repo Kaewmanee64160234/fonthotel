@@ -5,6 +5,20 @@ import { Room, RoomType } from "@/model/room.model";
 
 export const useRoomStore = defineStore("roomStore", () => {
     const currentRooms = ref<Room[]>([]); // Define rooms as a ref
+    const currnentRoomType = ref<RoomType>({
+        id: 0,
+        roomType: '',
+        descriptions: '',
+        price: 0,
+        bedSize: 0,
+        chromeCast: false,
+        eletricSheer: false,
+        wifi: false,
+        bath: false,
+        water: false,
+        desk: false,
+        typeName: '',
+    }); // Define roomType as a ref
     const currentType = ref<string>(''); // Define currentType as a ref
     const currentStatus = ref<string>('ready'); // Define currentStatus as a ref
     const roomDatail = ref<Room>();
@@ -94,6 +108,50 @@ export const useRoomStore = defineStore("roomStore", () => {
     const setCurrentRoom = (room: Room) => {
         curentRoom.value = room;
     }
+    //getTypeRoomByTypeName
+    const getTypeRoomByTypeName = async (typeName: string) => {
+        try {
+            const response = await roomService.getTypeRoomByTypeName(typeName);
+            if (response.data) {
+                currnentRoomType.value = {
+                    id: response.data.room_type_id,
+                    roomType: response.data.room_type,
+                    descriptions: response.data.room_type_des,
+                    price: response.data.room_type_price,
+                    bedSize: response.data.room_type_bed_size,
+                    chromeCast: response.data.room_type_chromecast,
+                    eletricSheer: response.data.room_type_electric_sheer,
+                    wifi: response.data.room_type_wifi,
+                    bath: response.data.room_type_bath,
+                    water: response.data.room_type_water,
+                    desk: response.data.room_type_desk,
+                    typeName: response.data.room_type_name,
+                  
+                
+                }
+                console.log('current room type',currnentRoomType.value);
+                console.log('response',response.data);
+            }
+            else {
+                currnentRoomType.value = {
+                    id: 0,
+                    roomType: '',
+                    descriptions: '',
+                    price: 0,
+                    bedSize: 0,
+                    chromeCast: false,
+                    eletricSheer: false,
+                    wifi: false,
+                    bath: false,
+                    water: false,
+                    desk: false,
+                    typeName: '',
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus, setRoom, roomDatail, toggleRoomDetail, roomDetailCard,curentRoom, setCurrentRoom };
+    return { currentRooms, getRooms, getRoomsByType,currentType,currentStatus, setRoom, roomDatail, toggleRoomDetail, roomDetailCard,curentRoom, setCurrentRoom ,getTypeRoomByTypeName,currnentRoomType};
 });

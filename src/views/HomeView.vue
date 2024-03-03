@@ -43,10 +43,10 @@ const rating: Rating = {
             <!-- <TyperoomCard :imgroom="item.image"
               readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" /> -->
             <TyperoomCard imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
-              readmore="/readmoreview"  roomtype="STANDARD ROOM" btnbooking="/selectguestdate" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmoreview"
+              readmore="/readmoreview/standard"  roomtype="STANDARD ROOM" btnbooking="/selectguestdate" />
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg" readmore="/readmoreview/deluxe"
               roomtype="DELUXE ROOM" btnbooking="/selectguestdate" />
-            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="/readmoreview"
+            <TyperoomCard imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg" readmore="/readmoreview/luxury"
               roomtype="LUXURY ROOM" btnbooking="/selectguestdate" />
 
           </div>

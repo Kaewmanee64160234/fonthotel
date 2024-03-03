@@ -11,6 +11,7 @@ import { useUserStore } from "./user.store";
 import router from "@/router";
 
 export const useBookingsStore = defineStore("bookings", () => {
+
   const userStore = useUserStore();
   const currentBooking = ref<Booking>({
     adult: 0,
@@ -821,6 +822,7 @@ export const useBookingsStore = defineStore("bookings", () => {
 
     currentBooking.value.total = calculateInitialTotal();
   };
+
 
   return {
     bookings,

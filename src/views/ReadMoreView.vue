@@ -1,5 +1,16 @@
 <script setup lang="ts">
 import ReadMore from "@/components/ReadMore.vue";
+import { useRoomStore } from "@/store/room.store";
+import { onMounted } from "vue";
+// get Params from URL
+import { useRoute } from "vue-router";
+const route = useRoute();
+const type = route.params.type;
+const roomStore = useRoomStore();
+
+onMounted(async () => {
+   await roomStore.getTypeRoomByTypeName(type.toString());
+});
 const clickback = () => {
     window.location.href = '/'
 }
@@ -11,10 +22,10 @@ const text =
     <div class="body">
         <div class="absolute top-0 right-0 p-10"></div>
         
-        <ReadMore :type="'DELUXE ROOM'" :description="text"
-            :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'"
-            :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" :bed="'1.8 m king size bed'"
-            :tv="true" :electric="true" :wifi="true" :water="true" :bath="true" :path="'/selectguestdate'" :desk="true">
+        <ReadMore :type="roomStore.currnentRoomType?.typeName.toUpperCase()" :description="text"
+            :img="'https://i.pinimg.com/564x/18/67/30/186730dda082cd67f174c0802088d400.jpg'" :price="roomStore.currnentRoomType?.price" :rating="4.5"
+            :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" 
+            :electric="roomStore.currnentRoomType.eletricSheer" :wifi="roomStore.currnentRoomType.wifi" :water="roomStore.currnentRoomType.water" :bath="roomStore.currnentRoomType.bath" :path="'/selectguestdate'" :desk="true">
         </ReadMore>
     </div>
 </template>
