@@ -60,6 +60,9 @@ const linkTo = () => {
     display: inline-block;
     width: 210px;
 }
+.btn-booking:hover {
+      background-color: #9e754f;
+    }
 
 .font-roomtype {
     font-family: 'Judson';

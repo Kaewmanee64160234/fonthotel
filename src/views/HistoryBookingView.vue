@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import HistoryBookingCard from "@/components/HistoryBookingCard.vue";
+import { Booking } from "@/model/booking.model";
+import { useBookingsStore } from "@/store/booking.store";
 const isDropdownOpen = ref(false);
-
+const bookingStore = useBookingsStore();
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
   // Handle the filter selection here, e.g., update a query parameter or fetch new data
@@ -23,10 +25,58 @@ function formatDateRange(startDate: Date): string {
   const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
     startDate
   );
- 
 
   return `${startFormatted}`;
 }
+
+let booking = ref<Booking>({
+  adult: 0,
+  checkIn: new Date(),
+  checkOut: new Date(),
+  child: 0,
+  createDate: new Date(),
+  cusAddress: "",
+  cusCountry: "",
+  cusEmail: "",
+  cusLastName: "",
+  cusName: "",
+  cusTel: "",
+  createdDate: new Date(),
+  id: 0,
+  paymentBooking: "",
+  paymentCheckout: "",
+  status: "",
+  statusLate: "",
+  total: 0,
+  totalDiscount: 0,
+  activityPerBooking: [],
+  bookingDetail: [],
+  customer: { id: 0, name: "", startDate: new Date() },
+  employee: {
+    address: "",
+    dateOfBirth: new Date(),
+    dateStartWork: "",
+    email: "",
+    hourlyRate: 0,
+    id: 0,
+    name: "",
+    position: "",
+    tel: "",
+  },
+  pledge: 0,
+  promotion: {
+    createdDate: new Date(),
+    discount: 0,
+    discountPercent: 0,
+    endDate: new Date(),
+    id: 0,
+    name: "",
+  },
+});
+// onMounted(async () => {
+//   await bookingStore.get();
+
+// });
 </script>
 
 <template>
@@ -44,38 +94,65 @@ function formatDateRange(startDate: Date): string {
         <div class="p-4">
           <!-- Search bar and filter dropdown -->
           <div class="flex gap-2 mb-4">
-            <input type="text" placeholder="Search..." class="form-input rounded-md border-gray-300 shadow-sm w-1/3" />
-            <button type="button"
-              class="button-search text-white bg-brown_button hover:bg-brown_button font-medium rounded-lg text-sm px-5 py-2.5">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="form-input rounded-md border-gray-300 shadow-sm w-1/3"
+            />
+            <button
+              type="button"
+              class="button-search text-white bg-brown_button hover:bg-brown_button font-medium rounded-lg text-sm px-5 py-2.5"
+            >
               Search
             </button>
             <div class="relative">
-              <button type="button"
+              <button
+                type="button"
                 class="button-search text-white bg-brown_button hover:bg-brown_button font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
-                @click="toggleDropdown">
+                @click="toggleDropdown"
+              >
                 Filter V
                 <!-- add icon drow down -->
-
               </button>
               <div
                 class="dropdown-menu absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-                v-show="isDropdownOpen">
-                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownButton">
+                v-show="isDropdownOpen"
+              >
+                <ul
+                  class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownButton"
+                >
                   <li>
-                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="#"
-                      @click="selectFilter('newest')">Newest</a>
+                    <a
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      href="#"
+                      @click="selectFilter('newest')"
+                      >Newest</a
+                    >
                   </li>
                   <li>
-                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="#"
-                      @click="selectFilter('oldest')">Oldest</a>
+                    <a
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      href="#"
+                      @click="selectFilter('oldest')"
+                      >Oldest</a
+                    >
                   </li>
                   <li>
-                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="#"
-                      @click="selectFilter('notConfirmed')">Not Confirmed</a>
+                    <a
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      href="#"
+                      @click="selectFilter('notConfirmed')"
+                      >Not Confirmed</a
+                    >
                   </li>
                   <li>
-                    <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="#"
-                      @click="selectFilter('canceled')">Canceled</a>
+                    <a
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      href="#"
+                      @click="selectFilter('canceled')"
+                      >Canceled</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -83,16 +160,28 @@ function formatDateRange(startDate: Date): string {
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll">
-
-            <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
+            <div v-for="item in bookingStore.bookings" :key="item.id">
+              <HistoryBookingCard
+                v-if="item.bookingDetail && item.bookingDetail.length > 0"
+                :image="item.bookingDetail[0]?.room?.image"
+                :name="`${item.cusName} ${item.cusLastName}`"
+                :typePayment="item.paymentBooking"
+                :typeRoom="item.bookingDetail[0]?.room?.roomType?.typeName"
+                :activity="
+                  item.activityPerBooking[0]?.activity?.name ?? 'No activity'
+                "
+                :guest="item.adult + item.child"
+                :status="item.status"
+                :price="item.total"
+                :dateCheckIn="item.checkIn.toDateString()"
+              />
+              <!-- <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
               :name="'Karen Smith'" :typePayment="'Credit Card'" :typeRoom="'Deluxe Room'" :activity="'Spa Treatment'"
               :guest="2" :status="'Completed'" :price="7700" />
             <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
               :name="'Karen Smith'" :typePayment="'Credit Card'" :typeRoom="'Deluxe Room'" :activity="'Spa Treatment'"
-              :guest="2" :status="'Completed'" :price="7700" />
-            <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-              :name="'Karen Smith'" :typePayment="'Credit Card'" :typeRoom="'Deluxe Room'" :activity="'Spa Treatment'"
-              :guest="2" :status="'Completed'" :price="7700" />
+              :guest="2" :status="'Completed'" :price="7700" /> -->
+            </div>
           </div>
         </div>
       </div>
@@ -126,7 +215,6 @@ function formatDateRange(startDate: Date): string {
   fill-opacity: unset;
   display: block;
   /* overflow-y: auto; */
-
 }
 
 .overflow-y-auto {
@@ -140,7 +228,7 @@ function formatDateRange(startDate: Date): string {
   /* overflow-y: hidden; */
 /* } */
 body {
-  background-image: url('../images/image.png');
+  background-image: url("../images/image.png");
   background-size: cover;
   /* Cover the entire screen */
   background-position: center;
@@ -166,7 +254,7 @@ body {
 }
 
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
+  background-color: #ebbd99;
   border-radius: 10px;
 }
 </style>

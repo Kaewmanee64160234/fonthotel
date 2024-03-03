@@ -165,7 +165,7 @@ const stayDates = computed(() => {
   <div class="body">
     <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px" class="far">&#xf359;</i>
+        <i style="font-size: 30px" class="far ">&#xf359;</i>
       </button>
     </div>
     <div class="min-h-screen flex card-container">
@@ -555,6 +555,9 @@ const stayDates = computed(() => {
   height: 24.22px;
   text-align: center;
 }
+.btn-minus:hover {
+      background-color: #e31111;
+    }
 
 .btn-plus {
   background-color: #59ce8f;
@@ -562,6 +565,9 @@ const stayDates = computed(() => {
   width: 24.22px;
   height: 24.22px;
 }
+.btn-plus:hover {
+      background-color: #2fc072;
+    }
 
 .btn-apply {
   background-color: #ebbd99;
@@ -579,6 +585,9 @@ const stayDates = computed(() => {
   border-radius: 9999px;
   justify-content: end;
 }
+.btn-apply:hover {
+      background-color: #c08c62;
+    }
 
 .btn-continue {
   background-color: #906843;
@@ -591,6 +600,9 @@ const stayDates = computed(() => {
   display: inline-block;
   width: 60%;
 }
+.btn-continue:hover {
+      background-color: #9e754f;
+    }
 
 .dc-scroll {
   padding-right: 5px;
@@ -609,6 +621,7 @@ const stayDates = computed(() => {
 }
 .disabled-text {
   background-color: #968e88;
+  box-shadow: 0px 4px 6px #8d8277;
   color: white;
 }
 /* ---- Room Detail ---- */

@@ -36,12 +36,13 @@ const clickcontinue = () => {
   router.push("/inputinfo");
 };
 
-const clickRemove = (activityPer:ActivityPerBooking) => {
+const clickRemove = (activityPer: ActivityPerBooking) => {
   //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
 
 };
 </script>
+
 <template>
   <div class="body">
     <div class="pt-5 pl-5">
@@ -55,14 +56,8 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
       <div class="flex-1 flex flex-col pt-3 p-10">
         <div class="mt-2 overflow-y-auto dc-scroll mb-10">
           <div v-for="item of activityStore.activities" :key="item.id">
-            <ActivityComponent
-              :image="`${item.image}`"
-              :activity="item"
-              :name="`${item.name}`"
-              :detail="item.description"
-              :price="item.price"
-              btnadddetails="#"
-            />
+            <ActivityComponent :image="`${item.image}`" :activity="item" :name="`${item.name}`"
+              :detail="item.description" :price="item.price" btnadddetails="#" />
           </div>
         </div>
       </div>
@@ -72,44 +67,32 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
         <div class="w-full justify-center">
           <div class="flex-1 flex flex-row justify-center">
             <div class="card-stay overflow-y-auto dc-scroll">
-              <p
-                class="text-2xl p-2 pl-5 font-semibold"
-                style="font-size: 23px"
-              >
+              <p class="text-2xl p-2 pl-5 font-semibold" style="font-size: 23px">
                 Your Stay
               </p>
               <div class="card-container">
                 <div class="flex-1 flex flex-row p-2 pl-5">
-                  <div
-                    class="flex-1 flex flex-col"
-                    style="width: 50%; font-size: 16px"
-                  >
+                  <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px">
                     <p class="font-medium">Check-in</p>
                     <p>After 1:00 PM</p>
                   </div>
 
-                  <div
-                    class="flex-2 flex flex-col"
-                    style="width: 50%; font-size: 16px"
-                  >
+                  <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                     <p class="font-medium">Check-out</p>
                     <p>Before 7:00 AM</p>
                   </div>
                 </div>
                 <hr class="color-line" />
 
-                <div
-                  class="flex-2 flex flex-row p-2 pl-5"
-                  style="width: 100%; font-size: 16px"
-                >
+                <div class="flex-2 flex flex-row p-2 pl-5" style="width: 100%; font-size: 16px">
                   <div class="flex-1 flex flex-col">
                     <p>
                       {{
-                        formatDateRange(
-                          bookingStore.currentBooking.checkIn,
-                          bookingStore.currentBooking.checkOut
-                        )
-                      }}
+        formatDateRange(
+          bookingStore.currentBooking.checkIn,
+          bookingStore.currentBooking.checkOut
+        )
+      }}
                     </p>
                     <p>
                       {{ bookingStore.currentBooking.adult }} Adult |
@@ -118,12 +101,8 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                   </div>
                 </div>
 
-                <div
-                  class="flex-3 flex flex-row px-5"
-                  style="width: 100%; font-size: 16px"
-                  v-for="book in bookingStore.currentBooking.bookingDetail"
-                  :key="book.id"
-                >
+                <div class="flex-3 flex flex-row px-5" style="width: 100%; font-size: 16px"
+                  v-for="book in bookingStore.currentBooking.bookingDetail" :key="book.id">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.room.roomType.roomType }}</p>
                   </div>
@@ -134,17 +113,13 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                   </div>
                 </div>
 
-                <div
-                  class="flex-6 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                  v-for="book in bookingStore.currentBooking.activityPerBooking"
-                  :key="book.id"
-                >
+                <div class="flex-6 flex flex-row pt-2 px-5" style="font-size: 13px"
+                  v-for="book in bookingStore.currentBooking.activityPerBooking" :key="book.id">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.activity.name }}</p>
                     <p>Guest {{ book.qty }}</p>
                   </div>
-                  <div class="flex-2 flex flex-col mt-6">
+                  <div class="flex-2 flex flex-col justify-end text-right">
                     <p>THB {{ book.total }}</p>
                   </div>
                   <div class="flex-3 flex flex-col">
@@ -153,18 +128,15 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                 </div>
 
                 <div class="flex-1 flex flex-col">
-                  <div
-                    class="flex-7 flex flex-row pt-2 px-5"
-                    style="font-size: 13px"
-                  >
+                  <div class="flex-7 flex flex-row pt-2 px-5" style="font-size: 13px">
                     <div class="flex-1 flex flex-col">
                       <p class="font-medium">Promotion</p>
                       <p>
                         {{
-                          bookingStore.currentBooking.promotion.discount ??
-                          bookingStore.currentBooking.promotion
-                            .discountPercent + "%"
-                        }}
+        bookingStore.currentBooking.promotion.discount ??
+        bookingStore.currentBooking.promotion
+          .discountPercent + "%"
+      }}
                       </p>
                     </div>
                     <div class="flex-2 flex flex-col">
@@ -174,18 +146,13 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                     </div>
                   </div>
                 </div>
-                <div
-                  class="flex-8 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                >
+                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                 </div>
 
-                <div
-                  class="flex-8 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                >
+                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                   <div class="flex-1 flex flex-col">
-                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add
+                      room</button>
                   </div>
                 </div>
 
@@ -193,10 +160,7 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
                   <hr class="color-line" />
                 </div>
 
-                <div
-                  class="flex-9 flex flex-row pt-3 px-5"
-                  style="font-size: 20px"
-                >
+                <div class="flex-9 flex flex-row pt-3 px-5" style="font-size: 20px">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">Total:</p>
                   </div>
@@ -220,6 +184,7 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .body {
   background-image: url("../images/image.png");
@@ -257,6 +222,7 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
   display: flex;
   margin: auto;
 }
+
 .dc-scroll {
   padding-right: 5px;
   max-height: 80vh;
@@ -272,6 +238,7 @@ const clickRemove = (activityPer:ActivityPerBooking) => {
   background-color: #ebbd99;
   border-radius: 10px;
 }
+
 .btn-continue {
   background-color: #906843;
   color: white;

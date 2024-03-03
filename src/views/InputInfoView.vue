@@ -6,6 +6,7 @@ import router from "@/router";
 import { useUserStore } from "@/store/user.store";
 import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
+import { ActivityPerBooking } from "@/model/activity.model";
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -21,11 +22,18 @@ const paymentMethod = ref("");
 const showModal = ref(false);
 const validationMessage = ref("");
 const booking = ref<Booking>();
+const bookingStore = useBookingsStore();
 onMounted(() => {
   promotionStore.getPromotions();
 });
 const clickBack = () => {
   router.push("/activity");
+};
+
+const clickRemove = (activityPer: ActivityPerBooking) => {
+  //remove activityPer from currentBooking
+  bookingStore.removeActivityPerBooking(activityPer);
+
 };
 
 const clickContinue = async () => {
@@ -218,64 +226,27 @@ function formatTwoDates(date1: Date): string {
               <!-- Contact Info -->
 
               <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >First name*</label
-                >
-                <input
-                  v-model="firstName"
-                  type="text"
-                  placeholder="First name"
-                  class="dc-input"
-                  required
-                />
+                <label class="block mb-2 text-sm font-medium text-gray-900">First name*</label>
+                <input v-model="firstName" type="text" placeholder="First name" class="dc-input" required />
               </div>
               <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Last name*</label
-                >
-                <input
-                  v-model="lastName"
-                  type="text"
-                  placeholder="Last name"
-                  class="dc-input"
-                  required
-                />
+                <label class="block mb-2 text-sm font-medium text-gray-900">Last name*</label>
+                <input v-model="lastName" type="text" placeholder="Last name" class="dc-input" required />
               </div>
               <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Mobile Phone</label
-                >
-                <input
-                  v-model="mobilePhone"
-                  type="tel"
-                  placeholder="Mobile Phone"
-                  class="dc-input"
-                />
+                <label class="block mb-2 text-sm font-medium text-gray-900">Mobile Phone</label>
+                <input v-model="mobilePhone" type="tel" placeholder="Mobile Phone" class="dc-input" />
               </div>
               <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Email Address*</label
-                >
-                <input
-                  v-model="emailAddress"
-                  type="email"
-                  placeholder="Email Address"
-                  class="dc-input"
-                  required
-                />
+                <label class="block mb-2 text-sm font-medium text-gray-900">Email Address*</label>
+                <input v-model="emailAddress" type="email" placeholder="Email Address" class="dc-input" required />
               </div>
             </div>
 
             <!-- Address Section -->
             <div class="mb-2 mt-2">
-              <label class="block mb-2 text-sm font-medium text-gray-900"
-                >Country</label
-              >
-              <select
-                v-model="country"
-                class="form-select dc-input"
-                style="width: 34%"
-              >
+              <label class="block mb-2 text-sm font-medium text-gray-900">Country</label>
+              <select v-model="country" class="form-select dc-input" style="width: 34%">
                 <option value="Thailand" style="font-size: 13px">
                   Thailand
                 </option>
@@ -286,38 +257,20 @@ function formatTwoDates(date1: Date): string {
 
             <!-- Description Section -->
             <div class="mb-2">
-              <label class="block mb-2 text-sm font-medium text-gray-900"
-                >Description</label
-              >
-              <textarea
-                v-model="description"
-                class="dc-input"
-                style="height: 7vh; width: 85%"
-              ></textarea>
+              <label class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+              <textarea v-model="description" class="dc-input" style="height: 7vh; width: 85%"></textarea>
             </div>
 
             <!-- Promotion Section -->
             <div class="grid gap-2 md:grid-cols-2">
               <div class="col-1">
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Promotion</label
-                >
-                <input
-                  v-model="promotionId"
-                  type="text"
-                  placeholder="Code Promotion"
-                  class="dc-input mb-2"
-                  required
-                  style="width: 68%"
-                />
+                <label class="block mb-2 text-sm font-medium text-gray-900">Promotion</label>
+                <input v-model="promotionId" type="text" placeholder="Code Promotion" class="dc-input mb-2" required
+                  style="width: 68%" />
               </div>
 
               <div class="col-2">
-                <button
-                  @click="checkPromotion(promotionId, $event)"
-                  class="mt-6 btn-applypromo"
-                  id="btnApplypromo"
-                >
+                <button @click="checkPromotion(promotionId, $event)" class="mt-6 btn-applypromo" id="btnApplypromo">
                   Apply
                 </button>
               </div>
@@ -326,14 +279,8 @@ function formatTwoDates(date1: Date): string {
             <div class="grid gap-2 md:grid-cols-2">
               <!-- cretae dropdown payment method -->
               <div class="col-1">
-                <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Payment Method</label
-                >
-                <select
-                  v-model="paymentMethod"
-                  class="form-select dc-input"
-                  style="width: 70%"
-                >
+                <label class="block mb-2 text-sm font-medium text-gray-900">Payment Method</label>
+                <select v-model="paymentMethod" class="form-select dc-input" style="width: 70%">
                   <option value="cash" style="font-size: 13px">cash</option>
                   <option value="credit card" style="font-size: 13px">
                     credit card
@@ -369,58 +316,42 @@ function formatTwoDates(date1: Date): string {
         <div class="w-full justify-center">
           <div class="flex-1 flex flex-row justify-center">
             <div class="card-stay overflow-y-auto dc-scroll">
-              <p
-                class="text-2xl p-2 pl-5 font-semibold"
-                style="font-size: 23px"
-              >
+              <p class="text-2xl p-2 pl-5 font-semibold" style="font-size: 23px">
                 Your Stay
               </p>
               <div class="card-container">
                 <div class="flex-1 flex flex-row p-2 pl-5">
-                  <div
-                    class="flex-1 flex flex-col"
-                    style="width: 50%; font-size: 16px"
-                  >
+                  <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px">
                     <p class="font-medium">Check-in</p>
                     <p>After 1:00 PM</p>
                   </div>
 
-                  <div
-                    class="flex-2 flex flex-col"
-                    style="width: 50%; font-size: 16px"
-                  >
+                  <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                     <p class="font-medium">Check-out</p>
                     <p>Before 7:00 AM</p>
                   </div>
                 </div>
                 <hr class="color-line" />
 
-                <div
-                  class="flex-2 flex flex-row p-2 pl-5"
-                  style="width: 100%; font-size: 16px"
-                >
+                <div class="flex-2 flex flex-row p-2 pl-5" style="width: 100%; font-size: 16px">
                   <div class="flex-1 flex flex-col">
                     <p>
                       {{
-                        formatTwoDates(
-                          new Date(bookingsStore.currentBooking.checkIn)
-                        ) +
-                        "-" +
-                        formatTwoDates(
-                          new Date(bookingsStore.currentBooking.checkOut)
-                        )
-                      }}
+        formatTwoDates(
+          new Date(bookingsStore.currentBooking.checkIn)
+        ) +
+        "-" +
+        formatTwoDates(
+          new Date(bookingsStore.currentBooking.checkOut)
+        )
+      }}
                     </p>
                     <p>{{ bookingsStore.currentBooking.adult }} Adult</p>
                   </div>
                 </div>
 
-                <div
-                  class="flex-3 flex flex-row px-5"
-                  style="width: 100%; font-size: 16px"
-                  v-for="item of bookingsStore.currentBooking.bookingDetail"
-                  :key="item.id"
-                >
+                <div class="flex-3 flex flex-row px-5" style="width: 100%; font-size: 16px"
+                  v-for="item of bookingsStore.currentBooking.bookingDetail" :key="item.id">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ item.room.roomType.roomType }}</p>
                   </div>
@@ -431,86 +362,68 @@ function formatTwoDates(date1: Date): string {
                   </div>
                 </div>
 
-                <div
-                  class="flex-6 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                  v-for="book in bookingsStore.currentBooking
-                    .activityPerBooking"
-                  :key="book.id"
-                >
+                <div class="flex-6 flex flex-row pt-2 px-5" style="font-size: 13px" v-for="book in bookingsStore.currentBooking
+        .activityPerBooking" :key="book.id">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.activity.name }}</p>
                     <p>Guest {{ book.qty }}</p>
                   </div>
-                  <div class="flex-2 flex flex-col mt-6">
+                  <div class="flex-1 flex flex-col justify-end text-right">
                     <p>THB {{ book.total }}</p>
+                  </div>
+                  <div class="flex-3 flex flex-col">
+                    <i class="fas fa-trash-alt" style="color: red" @click="clickRemove(book)"></i>
                   </div>
                 </div>
 
-                <div
-                  class="flex flex-row pt-2 px-5 items-center"
-                  style="font-size: 13px"
-                >
-                
-                
+                <div class="flex flex-row pt-2 px-5 items-center" style="font-size: 13px">
+
+
                   <div class="flex-1 flex flex-row justify-space-around">
                     <div class="flex-1 flex flex-col">
                       <div>
                         <p class="font-medium">Promotion</p>
                       </div>
-                      <div  >
+                      <div>
                         <p>
                           {{
-                            bookingsStore.currentBooking.promotion.name ?? "-"
-                          }}
+        bookingsStore.currentBooking.promotion.name ?? "-"
+      }}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div
-                  class="flex-1 flex flex-col justify-end"
-                  >
-                  <div style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 0">
-                      <i  
-                        class="fas fa-trash-alt"
-                        style="color: red; cursor: pointer;"
-                      ></i>
+                  <div class="flex-1 flex flex-col justify-end">
+                    <div style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 0">
+                      <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i>
                     </div>
                     <div style="text-align: right;">
                       <p>
                         {{
-                          bookingsStore.currentBooking.promotion.discount ??
-                          bookingsStore.currentBooking.promotion
-                            .discountPercent + "%"
+        bookingsStore.currentBooking.promotion.discount ??
+        bookingsStore.currentBooking.promotion
+          .discountPercent + "%"
                         }}
                       </p>
                     </div>
-                    
+
                   </div>
 
-                 
+
                 </div>
 
-                <div
-                  class="flex-8 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                >
+                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                 </div>
 
-                <div
-                  class="flex-8 flex flex-row pt-2 px-5"
-                  style="font-size: 13px"
-                >
+                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                   <div class="flex-1 flex flex-col">
-                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
+                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add
+                      room</button>
                   </div>
                 </div>
 
-                <div
-                  class="flex-9 flex flex-row pt-3 px-5"
-                  style="font-size: 20px"
-                >
+                <div class="flex-9 flex flex-row pt-3 px-5" style="font-size: 20px">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">Total:</p>
                   </div>
@@ -525,10 +438,7 @@ function formatTwoDates(date1: Date): string {
                   <hr class="color-line" />
                 </div>
 
-                <div
-                  class="flex-9 flex flex-row pt-2 px-5"
-                  style="font-size: 20px"
-                >
+                <div class="flex-9 flex flex-row pt-2 px-5" style="font-size: 20px">
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">Cash pledge</p>
                   </div>
@@ -537,10 +447,7 @@ function formatTwoDates(date1: Date): string {
                   </div>
                 </div>
 
-                <div
-                  class="flex-8 flex flex-row pt-2 px-5"
-                  style="font-size: 12px"
-                >
+                <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 12px">
                   <div class="flex-1 flex flex-col">
                     <p class="text-red-500">
                       (This cash pledge is confirmation of your stay at our
@@ -564,23 +471,16 @@ function formatTwoDates(date1: Date): string {
     </div>
 
     <transition name="fade">
-      <div
-        v-if="showModal"
-        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
-      >
-        <div
-          class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-          style="max-width: 90%; margin-top: -20vh"
-        >
+      <div v-if="showModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+        <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+          style="max-width: 90%; margin-top: -20vh">
           <div class="mt-3 text-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
               <strong class="font-bold">Oops! 😯</strong>
             </h3>
             <!-- Display errors if any -->
-            <div
-              v-if="validationMessage"
-              class="text-red-700 px-4 py-3 rounded relative mt-3"
-            >
+            <div v-if="validationMessage" class="text-red-700 px-4 py-3 rounded relative mt-3">
               <ul class="mt-1 list-disc list-inside text-start">
                 <li>{{ validationMessage }}</li>
               </ul>
@@ -588,11 +488,8 @@ function formatTwoDates(date1: Date): string {
             <!-- General error message or other content -->
 
             <div class="items-center px-4 py-3">
-              <button
-                @click="showModal = false"
-                id="ok-btn"
-                class="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
-              >
+              <button @click="showModal = false" id="ok-btn"
+                class="px-4 py-2 bg-gray-800 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 OK 😥
               </button>
             </div>

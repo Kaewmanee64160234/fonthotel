@@ -9,6 +9,7 @@ const props = defineProps<{
   price: number,
   guest: number,
   status: string,
+  dateCheckIn: string,
 }>();
 </script>
 
@@ -28,11 +29,19 @@ const props = defineProps<{
       </div>
 
       <!-- Room Details -->
-      <div class="w-2/3  pt-20 bg-white flex flex-col justify-between">
+      <div class="w-2/3  pt-15 bg-white flex flex-col justify-between">
+        <div class="flex justify-end">
+          <button class="pt-3 pr-3">
+          <i class='fas fa-pen card-icon items-center' style='color:orange'></i>
+          </button>
+          <button class="pt-3 pr-3">
+          <i class='fas fa-trash-alt card-icon items-center' style='color:red'></i>
+          </button>
+        </div>
         <div>
           <li class="card-text">{{ props.typeRoom }}</li>
           <li class="card-text">{{ props.activity }}</li>
-          <li class="card-text">Check in: 26/12/2023 at 1:00 PM</li>
+          <li class="card-text">{{ props.dateCheckIn}} at 1:00 PM</li>
           <li class="card-text">Guest: {{ props.guest }}</li>
           <li class="card-text">Status: {{ props.status }}</li>
         </div>
@@ -69,6 +78,26 @@ const props = defineProps<{
   height: 80%;
   width: 100%;
   object-fit: cover;
+}
+
+.card-icon {
+  width: 30px;
+  height: 30px;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 9999px;
+  background-color: #f5d9c2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 6px #e7bb96;
+}
+
+.card-icon i {
+  margin: 0; /* To reset the default margin of <i> element */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 
