@@ -174,7 +174,7 @@ const validateForm = () => {
 };
 
 //create function to save booking
-const saveBooking = () => {
+const saveBooking = async () => {
   if (validateForm()) {
     bookingsStore.currentBooking.cusCountry = country.value;
     bookingsStore.currentBooking.cusEmail = emailAddress.value;
@@ -186,7 +186,7 @@ const saveBooking = () => {
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
     console.log(JSON.stringify(bookingsStore.currentBooking));
-    bookingsStore.saveBooking();
+    await bookingsStore.saveBooking();
     clickContinue();
   }
 };
