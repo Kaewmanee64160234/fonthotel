@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { Booking } from "@/model/booking.model";
+import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
+
+const bookingStore = useBookingsStore();
 const props = defineProps<{
   image: string,
   name: string,
@@ -8,9 +12,19 @@ const props = defineProps<{
   activity: string,
   price: number,
   guest: number,
+  booking: Booking,
   status: string,
   dateCheckIn: string,
 }>();
+// create function cancelBooking
+const cancelBooking = async () => {
+  try {
+   await bookingStore.confirmBookingByCustomerOrEmployee(props.booking.id, "cancel");
+  
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <template>
@@ -34,8 +48,8 @@ const props = defineProps<{
           <button class="pt-3 pr-3">
           <i class='fas fa-pen card-icon items-center' style='color:orange'></i>
           </button>
-          <button class="pt-3 pr-3">
-          <i class='fas fa-trash-alt card-icon items-center' style='color:red'></i>
+          <button class="pt-3 pr-3" @click="cancelBooking()" v-if="booking.status != 'cancel'" >
+          <i class='fas fa-trash-alt card-icon items-center' style='color:red' ></i>
           </button>
         </div>
         <div>

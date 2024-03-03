@@ -3,8 +3,10 @@ import { onMounted, ref } from "vue";
 import HistoryBookingCard from "@/components/HistoryBookingCard.vue";
 import { Booking } from "@/model/booking.model";
 import { useBookingsStore } from "@/store/booking.store";
+import { useUserStore } from "@/store/user.store";
 const isDropdownOpen = ref(false);
 const bookingStore = useBookingsStore();
+const userStore = useUserStore();
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
   // Handle the filter selection here, e.g., update a query parameter or fetch new data
@@ -73,10 +75,15 @@ let booking = ref<Booking>({
     name: "",
   },
 });
-// onMounted(async () => {
-//   await bookingStore.get();
+onMounted(async () => {
+  if (userStore.currentUser.customer) {
+    await bookingStore.getBookingByCustomerId(userStore.currentUser.customer!.id!);
+  }
+  if (userStore.currentUser.employee) {
+    await bookingStore.getBookingByEmployeeId(userStore.currentUser.employee!.id!);
+  }
 
-// });
+});
 </script>
 
 <template>
@@ -170,17 +177,12 @@ let booking = ref<Booking>({
                 :activity="
                   item.activityPerBooking[0]?.activity?.name ?? 'No activity'
                 "
+                :booking="item"
                 :guest="item.adult + item.child"
                 :status="item.status"
                 :price="item.total"
                 :dateCheckIn="item.checkIn.toDateString()"
               />
-              <!-- <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-              :name="'Karen Smith'" :typePayment="'Credit Card'" :typeRoom="'Deluxe Room'" :activity="'Spa Treatment'"
-              :guest="2" :status="'Completed'" :price="7700" />
-            <HistoryBookingCard image="https://i.pinimg.com/564x/cc/6b/38/cc6b388c40948d96657694f04884846d.jpg"
-              :name="'Karen Smith'" :typePayment="'Credit Card'" :typeRoom="'Deluxe Room'" :activity="'Spa Treatment'"
-              :guest="2" :status="'Completed'" :price="7700" /> -->
             </div>
           </div>
         </div>

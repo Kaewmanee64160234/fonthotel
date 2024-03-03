@@ -11,7 +11,6 @@ import { useUserStore } from "./user.store";
 import router from "@/router";
 
 export const useBookingsStore = defineStore("bookings", () => {
-
   const userStore = useUserStore();
   const currentBooking = ref<Booking>({
     adult: 0,
@@ -800,6 +799,25 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
   };
 
+  const confirmBookingByCustomerOrEmployee = async (
+    id: number,
+    status: string
+  ) => {
+    try {
+      const response = await bookingService.confirmBooking(id, status);
+      if (response.data) {
+        console.log("----------------------------------------------------");
+        console.log(response.data);
+        if (userStore.currentUser.role == "customer") {
+          await getBookingByCustomerId(userStore.currentUser.customer!.id!);
+        } else {
+          await getBookingByEmployeeId(userStore.currentUser.employee!.id!);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const removeActivityPerBooking = (activityPerBooking: ActivityPerBooking) => {
     //remove activityPer
     const index = currentBooking.value.activityPerBooking.findIndex(
@@ -823,6 +841,182 @@ export const useBookingsStore = defineStore("bookings", () => {
     currentBooking.value.total = calculateInitialTotal();
   };
 
+  // create function getBookingByCustomerId
+  const getBookingByCustomerId = async (id: number) => {
+    const response = await bookingService.getBookingByCustomerId(id);
+    const bookings_ = response.data.map((bookingData: any) => {
+      // Basic booking information
+      const booking = {
+        id: bookingData.booking_id,
+        createDate: new Date(bookingData.booking_create_date),
+        cusName: bookingData.booking_cus_name,
+        cusLastName: bookingData.booking_cus_lastname,
+        cusTel: bookingData.booking_cus_tel,
+        cusEmail: bookingData.booking_cus_email,
+        cusCountry: bookingData.booking_cus_addr,
+        cusAddress: bookingData.booking_cus_addr_des,
+        checkIn: bookingData.booking_checkin
+          ? new Date(bookingData.booking_checkin)
+          : null,
+        checkOut: bookingData.booking_checkout
+          ? new Date(bookingData.booking_checkout)
+          : null,
+        total: bookingData.booking_total,
+        pledge: bookingData.booking_cash_pledge,
+        totalDiscount: bookingData.booking_total_discount,
+        paymentBooking: bookingData.booking_payment_booking,
+        paymentCheckout: bookingData.booking_payment_checkout,
+        status: bookingData.booking_status,
+        statusLate: bookingData.booking_status_late,
+        adult: bookingData.booking_adult,
+        child: bookingData.booking_child,
+        createdDate: new Date(bookingData.updateDate),
+        customer: bookingData.customer
+          ? {
+              id: bookingData.customer.cus_id,
+              name: bookingData.customer.cus_name,
+              startDate: new Date(bookingData.customer.cus_start_date),
+            }
+          : null,
+        promotion: bookingData.promotion, // Add promotion mapping if needed
+        employee: bookingData.employee
+          ? {
+              id: bookingData.employee.emp_id,
+              name: bookingData.employee.emp_name,
+              position: bookingData.employee.emp_position,
+              tel: bookingData.employee.emp_tel,
+              dateOfBirth: new Date(bookingData.employee.emp_dob),
+              address: bookingData.employee.emp_addr,
+              email: bookingData.employee.emp_email,
+              dateStartWork: new Date(bookingData.employee.emp_dsw),
+              hourlyRate: bookingData.employee.emp_hourly_wage,
+            }
+          : null,
+        bookingDetail: bookingData.bookingDetail
+          ? bookingData.bookingDetail.map((detail: any) => ({
+              id: detail.booking_de_id,
+              room: {
+                id: detail.room.room_id,
+                image: detail.room.room_img_path,
+                status: detail.room.room_status,
+                roomType: {
+                  id: detail.room.roomtype.room_type_id,
+                  roomType: detail.room.roomtype.room_type,
+                  typeName: detail.room.roomtype.room_type_name,
+                  bedSize: detail.room.roomtype.room_type_bed_size,
+                  // Add other room type details as needed
+                },
+              },
+              total: detail.total,
+            }))
+          : [],
+        activityPerBooking: bookingData.activityPer
+          ? bookingData.activityPer.map((activity: any) => ({
+              id: activity.id,
+              activity: {
+                id: activity.activity.id,
+                name: activity.activity.name,
+              },
+              total: activity.total,
+              qty: activity.qty,
+            }))
+          : [],
+      };
+      console.log(booking);
+      return booking;
+    });
+    bookings.value = [];
+
+    bookings.value.push(...bookings_);
+  };
+  // create function getBookingByEmployeeId
+  const getBookingByEmployeeId = async (id: number) => {
+    const response = await bookingService.getBookingByEmployeeId(id);
+    const bookings_ = response.data.map((bookingData: any) => {
+      // Basic booking information
+      const booking = {
+        id: bookingData.booking_id,
+        createDate: new Date(bookingData.booking_create_date),
+        cusName: bookingData.booking_cus_name,
+        cusLastName: bookingData.booking_cus_lastname,
+        cusTel: bookingData.booking_cus_tel,
+        cusEmail: bookingData.booking_cus_email,
+        cusCountry: bookingData.booking_cus_addr,
+        cusAddress: bookingData.booking_cus_addr_des,
+        checkIn: bookingData.booking_checkin
+          ? new Date(bookingData.booking_checkin)
+          : null,
+        checkOut: bookingData.booking_checkout
+          ? new Date(bookingData.booking_checkout)
+          : null,
+        total: bookingData.booking_total,
+        pledge: bookingData.booking_cash_pledge,
+        totalDiscount: bookingData.booking_total_discount,
+        paymentBooking: bookingData.booking_payment_booking,
+        paymentCheckout: bookingData.booking_payment_checkout,
+        status: bookingData.booking_status,
+        statusLate: bookingData.booking_status_late,
+        adult: bookingData.booking_adult,
+        child: bookingData.booking_child,
+        createdDate: new Date(bookingData.updateDate),
+        customer: bookingData.customer
+          ? {
+              id: bookingData.customer.cus_id,
+              name: bookingData.customer.cus_name,
+              startDate: new Date(bookingData.customer.cus_start_date),
+            }
+          : null,
+        promotion: bookingData.promotion, // Add promotion mapping if needed
+        employee: bookingData.employee
+          ? {
+              id: bookingData.employee.emp_id,
+              name: bookingData.employee.emp_name,
+              position: bookingData.employee.emp_position,
+              tel: bookingData.employee.emp_tel,
+              dateOfBirth: new Date(bookingData.employee.emp_dob),
+              address: bookingData.employee.emp_addr,
+              email: bookingData.employee.emp_email,
+              dateStartWork: new Date(bookingData.employee.emp_dsw),
+              hourlyRate: bookingData.employee.emp_hourly_wage,
+            }
+          : null,
+        bookingDetail: bookingData.bookingDetail
+          ? bookingData.bookingDetail.map((detail: any) => ({
+              id: detail.booking_de_id,
+              room: {
+                id: detail.room.room_id,
+                image: detail.room.room_img_path,
+                status: detail.room.room_status,
+                roomType: {
+                  id: detail.room.roomtype.room_type_id,
+                  roomType: detail.room.roomtype.room_type,
+                  typeName: detail.room.roomtype.room_type_name,
+                  bedSize: detail.room.roomtype.room_type_bed_size,
+                  // Add other room type details as needed
+                },
+              },
+              total: detail.total,
+            }))
+          : [],
+        activityPerBooking: bookingData.activityPer
+          ? bookingData.activityPer.map((activity: any) => ({
+              id: activity.id,
+              activity: {
+                id: activity.activity.id,
+                name: activity.activity.name,
+              },
+              total: activity.total,
+              qty: activity.qty,
+            }))
+          : [],
+      };
+      console.log(booking);
+      return booking;
+    });
+    bookings.value = [];
+
+    bookings.value.push(...bookings_);
+  };
 
   return {
     bookings,
@@ -838,5 +1032,8 @@ export const useBookingsStore = defineStore("bookings", () => {
     getBookingByEmployeeIdLastcreated,
     removeActivityPerBooking,
     removePromotion,
+    getBookingByCustomerId,
+    getBookingByEmployeeId,
+    confirmBookingByCustomerOrEmployee,
   };
 });
