@@ -9,24 +9,30 @@ const type = route.params.type;
 const roomStore = useRoomStore();
 
 onMounted(async () => {
-   await roomStore.getTypeRoomByTypeName(type.toString());
+    await roomStore.getTypeRoomByTypeName(type.toString());
 });
 const clickback = () => {
     window.location.href = '/'
 }
-const text =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+
 </script>
 
 <template>
     <div class="body">
         <div class="absolute top-0 right-0 p-10"></div>
-        
-        <ReadMore :type="roomStore.currnentRoomType?.typeName.toUpperCase()" :description="text"
-            :img="'https://i.pinimg.com/564x/18/67/30/186730dda082cd67f174c0802088d400.jpg'" :price="roomStore.currnentRoomType?.price" :rating="4.5"
-            :topic="'Luxury Hotel With Golf Course in Zhejiang, Anji, China | JW Marriott'" 
-            :electric="roomStore.currnentRoomType.eletricSheer" :wifi="roomStore.currnentRoomType.wifi" :water="roomStore.currnentRoomType.water" :bath="roomStore.currnentRoomType.bath" :path="'/selectguestdate'" :desk="true">
+
+        <ReadMore :type="roomStore.currnentRoomType?.typeName.toUpperCase()"
+            :description="roomStore.currnentRoomType.descriptions"
+            :img="'https://i.pinimg.com/564x/18/67/30/186730dda082cd67f174c0802088d400.jpg'"
+            :tv="roomStore.currnentRoomType.chromeCast" :electric="roomStore.currnentRoomType.eletricSheer" :bed="roomStore.currnentRoomType.bedSize"
+            :wifi="roomStore.currnentRoomType.wifi" :water="roomStore.currnentRoomType.water"
+            :bath="roomStore.currnentRoomType.bath"  :desk="roomStore.currnentRoomType.desk">
+
         </ReadMore>
+
+
+
+
     </div>
 </template>
 
