@@ -6,11 +6,8 @@ import router from "@/router";
 import { useUserStore } from "@/store/user.store";
 import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
-<<<<<<< HEAD
 import { ActivityPerBooking } from "@/model/activity.model";
-=======
 import { useRoomStore } from "@/store/room.store";
->>>>>>> c3fc9c00d16a8180baee67829d9b4563cad5ae2c
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -26,11 +23,8 @@ const paymentMethod = ref("");
 const showModal = ref(false);
 const validationMessage = ref("");
 const booking = ref<Booking>();
-<<<<<<< HEAD
 const bookingStore = useBookingsStore();
-=======
 const roomStore = useRoomStore();
->>>>>>> c3fc9c00d16a8180baee67829d9b4563cad5ae2c
 onMounted(() => {
   promotionStore.getPromotions();
 });
