@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Activity, ActivityPerBooking } from "@/model/activity.model";
 import { useBookingsStore } from "@/store/booking.store";
-import { defineProps } from "vue";
+import { computed, defineProps } from "vue";
 import { ref } from "vue";
 const useBooking = useBookingsStore();
 
@@ -17,6 +17,7 @@ const props = defineProps<{
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const isAddingDetails = ref(false); 
+
 
 const decrementGuest = (type: "adult" | "children") => {
   if (type === "adult" && adultCount.value > 0) {
@@ -43,9 +44,10 @@ const addDetails = (activity_: Activity) => {
     id: -1,
     total: (adultCount.value + childrenCount.value) * activity_.price,
   };
-  useBooking.addAcitivityPerBooking(activityPerBooking)
+  useBooking.addActivityPerBooking(activityPerBooking)
     
 };
+
 </script>
 <template>
   <div class="mb-5">

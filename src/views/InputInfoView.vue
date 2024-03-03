@@ -6,7 +6,11 @@ import router from "@/router";
 import { useUserStore } from "@/store/user.store";
 import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
+<<<<<<< HEAD
 import { ActivityPerBooking } from "@/model/activity.model";
+=======
+import { useRoomStore } from "@/store/room.store";
+>>>>>>> c3fc9c00d16a8180baee67829d9b4563cad5ae2c
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -22,7 +26,11 @@ const paymentMethod = ref("");
 const showModal = ref(false);
 const validationMessage = ref("");
 const booking = ref<Booking>();
+<<<<<<< HEAD
 const bookingStore = useBookingsStore();
+=======
+const roomStore = useRoomStore();
+>>>>>>> c3fc9c00d16a8180baee67829d9b4563cad5ae2c
 onMounted(() => {
   promotionStore.getPromotions();
 });
@@ -41,6 +49,11 @@ const clickContinue = async () => {
   booking.value = bookingsStore.currentBooking;
   router.push("/bookingdetail");
 };
+
+const routerToAddRoom = ()=>{
+  router.push(`/selectroom/${roomStore.currentType}`);
+
+}
 
 const checkPromotion = async (code: string, event: Event) => {
   event.preventDefault();
@@ -175,7 +188,7 @@ const validateForm = () => {
 };
 
 //create function to save booking
-const saveBooking = () => {
+const saveBooking = async () => {
   if (validateForm()) {
     bookingsStore.currentBooking.cusCountry = country.value;
     bookingsStore.currentBooking.cusEmail = emailAddress.value;
@@ -187,7 +200,7 @@ const saveBooking = () => {
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
     console.log(JSON.stringify(bookingsStore.currentBooking));
-    bookingsStore.saveBooking();
+    await bookingsStore.saveBooking();
     clickContinue();
   }
 };
@@ -204,6 +217,10 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
+
+const removePromotion = () => {
+bookingsStore.removePromotion();
+};
 </script>
 
 <template>
@@ -294,18 +311,6 @@ function formatTwoDates(date1: Date): string {
                 </select>
               </div>
 
-              <!-- <div class="col-1">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Card Number</label>
-                                <input type="text" placeholder="Card Number" class="dc-input" required style="width: 68%;">
-                            </div>
-                            <div>
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Expiration Date (MM/YY)*</label>
-                                <input type="text" placeholder="MM/YY" class="dc-input" required style="width: 68%;">
-                            </div>
-                            <div class="md:col-2">
-                                <label class="block mb-2 text-sm font-medium text-gray-900">Name on Card*</label>
-                                <input type="text" placeholder="Name on Card" class="dc-input" required style="width: 68%;">
-                            </div> -->
             </div>
           </form>
         </div>
@@ -393,10 +398,14 @@ function formatTwoDates(date1: Date): string {
                       </div>
                     </div>
                   </div>
-
-                  <div class="flex-1 flex flex-col justify-end">
-                    <div style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 0">
-                      <i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i>
+                  <div
+                  class="flex-1 flex flex-col justify-end"
+                  >
+                  <div  style="text-align: right;" v-if="bookingsStore.currentBooking.totalDiscount > 1">
+                      <i  @click="removePromotion()"
+                        class="fas fa-trash-alt"
+                        style="color: red; cursor: pointer;"
+                      ></i>
                     </div>
                     <div style="text-align: right;">
                       <p>
@@ -418,8 +427,7 @@ function formatTwoDates(date1: Date): string {
 
                 <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                   <div class="flex-1 flex flex-col">
-                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add
-                      room</button>
+                    <button @click="routerToAddRoom" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
                   </div>
                 </div>
 

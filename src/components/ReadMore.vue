@@ -9,8 +9,7 @@ const props = defineProps({
   description: String,
   img: String,
   topic: String,
-  bed: String,
-  tv: Boolean,
+
   electric: Boolean,
   wifi: Boolean,
   water: Boolean,
@@ -55,14 +54,14 @@ const props = defineProps({
           <h1 class="text-base font-judson  md:w-1/2 flex p-4 ml-5">FACILITIES</h1>
           <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             <!-- Facility 1 -->
-            <div v-if="bed" class="facility-item text-base font-judson  ">
+            <!-- <div v-if="bed" class="facility-item text-base font-judson  ">
               <img src="../images/bed.png" alt="Bed" class="facility-icon" />
               <span>{{ bed }}</span>
-            </div>
-            <div v-if="tv" class="facility-item text-base font-judson">
+            </div> -->
+            <!-- <div v-if="tv" class="facility-item text-base font-judson">
               <img src="../images/television.png" alt="TV" class="facility-icon" />
               <span>Chrome cast & Apple mirror apps</span>
-            </div>
+            </div> -->
             <div v-if="electric" class="facility-item text-base font-judson">
               <img src="../images/smart-curtain.png" alt="Electric" class="facility-icon" />
               <span>Electric curtain and sheer</span>

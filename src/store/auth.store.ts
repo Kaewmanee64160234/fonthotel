@@ -27,14 +27,21 @@ export const useAuthStore = defineStore("auth", () => {
           password: response.data.user_password, // Storing password in frontend is usually not advisable.
           role: response.data.user_role,
           customer: {
-            id: response.data.customer.cus_id,
-            name: response.data.customer.cus_name,
-            startDate: response.data.customer.cus_start_date,
+            id: -1,
+            name: "",
+            startDate: new Date(),
           },
           
 
          
         };
+        if(response.data.customer){
+          user__.customer = {
+            id: response.data.customer.cus_id,
+            name: response.data.customer.cus_name,
+            startDate: response.data.customer.cus_start_date,
+          }
+        }
         if(response.data.employee){
           user__.employee = {
             address: response.data.employee.emp_addr,

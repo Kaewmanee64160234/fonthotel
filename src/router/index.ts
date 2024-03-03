@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideNavigation: true },
   },
   {
-    path: "/readmoreview",
+    path: "/readmoreview/:type",
     name: "readmoreview",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

@@ -37,10 +37,17 @@ const clickcontinue = () => {
 };
 
 const clickRemove = (activityPer: ActivityPerBooking) => {
-  //remove activityPer from currentBooking
+
   bookingStore.removeActivityPerBooking(activityPer);
 
 };
+
+const routerToAddRoom = ()=>{
+  router.push(`/selectroom/${roomStore.currentType}`);
+
+}
+//wacth bookingStore.currentBooking
+
 </script>
 
 <template>
@@ -151,8 +158,7 @@ const clickRemove = (activityPer: ActivityPerBooking) => {
 
                 <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                   <div class="flex-1 flex flex-col">
-                    <button href="/selectroom" class="text-left font-medium hover:text-gray-600 text-sm">Add
-                      room</button>
+                    <button @click="routerToAddRoom()" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
                   </div>
                 </div>
 

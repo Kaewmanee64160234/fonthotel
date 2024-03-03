@@ -21,11 +21,12 @@ const linkTo = () => {
 
 <template>
     <div class="card-container rounded-lg  overflow-hidden">
-        <img class="room-image" :src="imgroom" alt="Room Image">
+        <img class="room-image transform transition-all duration-300 hover:scale-125 " @click="linkTo()"  :src="imgroom" alt="Room Image">
+
         <div class="card-content p-4 text-center">
             <h5 class="font-roomtype text-xl font-medium mb-2 mt-5">{{ props.roomtype }}</h5>
             <a :href="readmore" class="hover:text-white mt-5 block">Read more</a>
-            <button @click="linkTo()" class="btn-booking mt-7 inline-block">Book now</button>
+            <button @click="linkTo()" class="btn-booking mt-7 inline-block transform transition-all duration-250 hover:scale-125">Book now</button>
 
         </div>
     </div>

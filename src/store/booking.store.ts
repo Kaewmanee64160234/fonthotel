@@ -11,6 +11,7 @@ import { useUserStore } from "./user.store";
 import router from "@/router";
 
 export const useBookingsStore = defineStore("bookings", () => {
+
   const userStore = useUserStore();
   const currentBooking = ref<Booking>({
     adult: 0,
@@ -107,7 +108,7 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   const saveBooking = async () => {
     try {
-      if(userStore.currentUser.role == "customer"){
+      if (userStore.currentUser.role == "customer") {
         const response = await bookingService.saveBooking(
           currentBooking.value,
           userStore.currentUser.customer!.id!
@@ -117,7 +118,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         } else {
           bookings.value = [];
         }
-      }else{
+      } else {
         const response = await bookingService.saveBookingEmployee(
           currentBooking.value,
           userStore.currentUser.employee!.id!
@@ -128,7 +129,6 @@ export const useBookingsStore = defineStore("bookings", () => {
           bookings.value = [];
         }
       }
-   
     } catch (error) {
       console.log(error);
     }
@@ -492,7 +492,6 @@ export const useBookingsStore = defineStore("bookings", () => {
       paymentCheckout: response.data.paymentCheckout,
       status: response.data.booking_status,
       statusLate: response.data.booking_status_late,
-         
 
       adult: response.data.booking_adult,
       child: response.data.booking_child,
@@ -625,38 +624,72 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log("---------------------------------");
       console.log("Book", currentBooking.value);
     }
-  }
-
+  };
 
   //add bookingDetail
   const addBookingDetail = (bookingDetail: BookingDetail) => {
     currentBooking.value.bookingDetail.push(bookingDetail);
     console.log(bookingDetail);
-    currentBooking.value.total = currentBooking.value.total + bookingDetail.room.roomType.price;
+    currentBooking.value.total =
+      currentBooking.value.total + bookingDetail.room.roomType.price;
     console.log("---------------------------------");
     console.log(currentBooking.value);
   };
 
-  const addAcitivityPerBooking = (activityPerBook: ActivityPerBooking) => {
-  const activityPerBook_ = currentBooking.value.activityPerBooking.find( (activityPerBooking) => activityPerBooking.activity.id == activityPerBook.activity.id);
-  if(!activityPerBook_){
-    
-    currentBooking.value.activityPerBooking.push(activityPerBook);
-  }else{
-    //replace activityPerBook
-    currentBooking.value.activityPerBooking = currentBooking.value.activityPerBooking.map((activityPerBooking) => {
-      if(activityPerBooking.activity.id == activityPerBook.activity.id){
-        return activityPerBook;
+  const addActivityPerBooking = (activityPerBook: ActivityPerBooking) => {
+    const existingActivityIndex =
+      currentBooking.value.activityPerBooking.findIndex(
+        (activityPerBooking) =>
+          activityPerBooking.activity.id == activityPerBook.activity.id
+      );
+    console.log(existingActivityIndex);
+
+    if (existingActivityIndex === -1) {
+      currentBooking.value.activityPerBooking.push(activityPerBook);
+    } else {
+      currentBooking.value.activityPerBooking[existingActivityIndex].qty =
+        activityPerBook.qty;
+      currentBooking.value.activityPerBooking[existingActivityIndex].total =
+        activityPerBook.qty * activityPerBook.activity.price;
+    }
+
+    const initialTotal = calculateInitialTotal(); // Implement this function based on your booking model
+    currentBooking.value.total = initialTotal;
+
+    console.log("---------------------------------");
+    console.log(currentBooking.value.total);
+  };
+
+  // Calculate the initial total cost of the booking
+  function calculateInitialTotal() {
+    currentBooking.value.total = 0;
+    currentBooking.value.totalDiscount = 0;
+    for (const bookingDetail of currentBooking.value.bookingDetail) {
+      currentBooking.value.total += bookingDetail.total;
+    }
+    for (const activityPerBooking of currentBooking.value.activityPerBooking) {
+      currentBooking.value.total += activityPerBooking.total;
+    }
+    //discount
+    if (currentBooking.value.promotion) {
+      //if percent
+      if (currentBooking.value.promotion.discountPercent) {
+        currentBooking.value.total =
+          currentBooking.value.total -
+          (currentBooking.value.total *
+            currentBooking.value.promotion.discountPercent) /
+            100;
+      } else {
+        //if discount
+        if (currentBooking.value.promotion.discount) {
+          currentBooking.value.total =
+            currentBooking.value.total -
+            currentBooking.value.promotion.discount;
+        }
       }
-      return activityPerBooking;
-    });
+    }
+    return currentBooking.value.total;
   }
-    currentBooking.value.total = currentBooking.value.total + (activityPerBook.activity.price * activityPerBook.qty);
-
-    console.log(activityPerBook);
-    console.log("---------------------------------");
-    console.log(currentBooking.value);
-  };
 
   // Assuming bookingService.getBookings(order, status) retrieves booking data,
   // including details and associated activities (if any)
@@ -761,7 +794,6 @@ export const useBookingsStore = defineStore("bookings", () => {
       if (response.data) {
         console.log(response.data);
         getBookings("asc", "waiting");
-
       }
     } catch (error) {
       console.log(error);
@@ -769,11 +801,28 @@ export const useBookingsStore = defineStore("bookings", () => {
   };
 
   const removeActivityPerBooking = (activityPerBooking: ActivityPerBooking) => {
-    currentBooking.value.activityPerBooking = currentBooking.value.activityPerBooking.filter(
-      (activity) => activity.id !== activityPerBooking.id
+    //remove activityPer
+    const index = currentBooking.value.activityPerBooking.findIndex(
+      (activity) => activity.id == activityPerBooking.id
     );
-    currentBooking.value.total = currentBooking.value.total - activityPerBooking.total;
+    currentBooking.value.activityPerBooking.splice(index, 1);
+    currentBooking.value.total = calculateInitialTotal();
+    console.log(currentBooking.value.activityPerBooking.length);
   };
+
+  const removePromotion = () => {
+    currentBooking.value.promotion = {
+      createdDate: new Date(),
+      discount: 0,
+      discountPercent: 0,
+      endDate: new Date(),
+      id: -1,
+      name: "",
+    };
+
+    currentBooking.value.total = calculateInitialTotal();
+  };
+
 
   return {
     bookings,
@@ -783,10 +832,11 @@ export const useBookingsStore = defineStore("bookings", () => {
     setBooking,
     getBookings,
     currentBooking,
-    addAcitivityPerBooking,
+    addActivityPerBooking,
     getBookingByCustomerIdLastcreated,
     confirmBooking,
     getBookingByEmployeeIdLastcreated,
-    removeActivityPerBooking
+    removeActivityPerBooking,
+    removePromotion,
   };
 });
