@@ -67,7 +67,7 @@ function formatTwoDates(date1: Date): string {
   <div class="body">
     <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px" class="far">&#xf359;</i>
+        <i style="font-size: 30px; color:#F5EEE6" class="far">&#xf359;</i>
       </button>
     </div>
     <div class="min-h-screen flex card-container">

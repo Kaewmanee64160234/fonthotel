@@ -165,7 +165,7 @@ const stayDates = computed(() => {
   <div class="body">
     <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px" class="far ">&#xf359;</i>
+        <i style="font-size: 30px; color:#F5EEE6" class="far ">&#xf359;</i>
       </button>
     </div>
     <div class="min-h-screen flex card-container">
@@ -624,6 +624,9 @@ const stayDates = computed(() => {
   box-shadow: 0px 4px 6px #8d8277;
   color: white;
 }
+.disabled-text:hover {
+      background-color: #968e88;
+    }
 /* ---- Room Detail ---- */
 .body-roomDetail {
   width: 100vw;

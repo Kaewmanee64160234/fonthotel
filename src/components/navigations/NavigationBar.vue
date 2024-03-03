@@ -11,6 +11,7 @@ onMounted(() => {
   authStore.getUserFromLocalStorage();
 });
 </script>
+
 <template>
   <div>
     <nav class="flex items-center justify-between p-4 bg-beige">
@@ -48,12 +49,19 @@ onMounted(() => {
           class="hover:text-gray-700 text-sm font-judson flex items-center"
           >LOGOUT</a
         >
+
       </div>
     </nav>
   </div>
 </template>
+
 <style scoped>
 .bg-beige {
-  background-color: #dfcdb6; /* Replace with the actual color code for your beige background */
+  background-color: #dfcdb6;
+  /* Replace with the actual color code for your beige background */
+}
+
+.dropdown {
+  z-index: 999999999999999999999999;
 }
 </style>

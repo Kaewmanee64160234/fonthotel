@@ -14,14 +14,17 @@ const logout = () => {
   router.push('/login');
 };
 </script>
+
 <template>
   <div>
     <nav class="flex items-center justify-between p-4 bg-beige">
       <!-- Left Side: Logo and Navigation -->
+
       <div class="flex items-center gap-4">
         <div class="flex gap-4">
           <img src="../../images/logo.png" alt="Hotel California Logo" class="h-12" />
         </div>
+
         <!-- Dropdown Menu for ABOUT CUSTOMER -->
 
         <!-- Other navigation items... -->
@@ -63,9 +66,12 @@ const logout = () => {
         </div>
         <div class="flex flex-col">
           <div class="flex flex-1 flex-col">
-            <a v-if="userStore.currentUser.username==''" @click="authStore.logout()" class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
-            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
-
+            <a v-if="userStore.currentUser.username == ''" @click="authStore.logout()"
+              class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
+            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson"> {{
+            userStore.currentUser.username }}</a>
+            <a v-if="userStore.currentUser.username == ''" href="/login"
+              class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>
           </div>
           <div class="flex flex-1 flex-col">
             <p class="flex">Position: Manager</p>

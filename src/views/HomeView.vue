@@ -39,6 +39,7 @@ const rating: Rating = {
             </div>
           </router-link>
 
+
           <div class="overflow-hidden rounded-lg">
             <img
               src="https://i.pinimg.com/564x/90/0e/89/900e8936e256d1a5e6c1e170e80d2b40.jpg"
@@ -55,6 +56,7 @@ const rating: Rating = {
             />
             <p class="text-center mt-2">CHECK-OUT MANAGEMENT</p>
           </div>
+
 
           <!-- Second Row -->
           <div class="overflow-hidden rounded-lg">
@@ -111,6 +113,7 @@ const rating: Rating = {
             <!-- <div class="flex flex-wrap justify-center items-center gap-5" v-for="item of  roomStore.rooms " :key="item.id"> -->
             <!-- <TyperoomCard :imgroom="item.image"
               readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" /> -->
+
             <TyperoomCard
               imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
               readmore="/readmoreview/standard"
@@ -129,6 +132,7 @@ const rating: Rating = {
               roomtype="LUXURY ROOM"
               btnbooking="/selectguestdate"
             />
+
           </div>
         </div>
       </div>
@@ -146,6 +150,7 @@ const rating: Rating = {
 
       <div class="overflow-x-auto ml-10" style="white-space: nowrap">
         <div class="flex flex-row ml-10 mb-7">
+
           <ReviewComponent
             :name="'Kaewmanee'"
             :imageUrl="'https://images.unsplash.com/photo-1682687218147-9806132dc697?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'"
@@ -198,6 +203,7 @@ const rating: Rating = {
       </div>
     </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -207,6 +213,7 @@ const rating: Rating = {
   object-fit: cover;
   border-radius: 20px;
 }
+
 .body {
   background-image: url("../images/image.png");
   background-size: cover;
@@ -231,6 +238,7 @@ const rating: Rating = {
   fill-opacity: unset;
   display: block;
 }
+
 .card-style {
   width: 90vw;
   height: 500px;
@@ -245,17 +253,21 @@ const rating: Rating = {
   display: flex;
   height: 65vh;
 }
+
 .font-judson {
   font-family: "Judson";
 }
+
 .dc-scroll {
   max-height: 100vh;
   overflow: scroll;
 }
+
 .dc-scroll::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
 .dc-scroll::-webkit-scrollbar-thumb {
   background-color: #ebbd99;
   border-radius: 10px;
