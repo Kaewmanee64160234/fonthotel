@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import router from "@/router";
 import { useAuthStore } from "@/store/auth.store";
+import Swal from "sweetalert2";
 import { ref, watch } from "vue";
 
 const showAlert = ref(false);
@@ -101,7 +103,17 @@ const register = async (event: Event) => {
         showDialog.value = true;
         
       }
+      if (res === true) {
+        await Swal.fire({
+          title: 'Registration Successful!',
+          text: 'You can now log in with your credentials.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        // Redirect to login page
+       router.push('/login');
       
+      }
     }else{
       showDialog.value = true;
     }
