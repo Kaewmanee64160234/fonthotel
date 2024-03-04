@@ -23,8 +23,7 @@ let isValid = true;
 const authStore = useAuthStore();
 
 const validateForm = () => {
-  isValid = true; // Reset isValid to true at the start of validation
-  // Email validation for specific domains
+  isValid = true; 
   showDialog.value = false;
 
   if (!email.value) {
@@ -102,21 +101,9 @@ const register = async (event: Event) => {
         showDialog.value = true;
         
       }
-      else{
-        //clear the form
-        email.value = "";
-        password.value = "";
-        password2.value = "";
-        username.value = "";
-        // c;ear the error messages
-        emailError.value = "";
-        passwordError.value = "";
-        password2Error.value = "";
-        usernameError.value = "";
-        errorMessage.value = "";
-        showDialog.value = false;
-        isValid = true;
-      }
+      
+    }else{
+      showDialog.value = true;
     }
   } catch (error) {
     errorMessage.value = "Email already registered";
