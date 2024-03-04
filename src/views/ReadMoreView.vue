@@ -23,10 +23,8 @@ const clickback = () => {
 
         <ReadMore :type="roomStore.currnentRoomType?.typeName.toUpperCase()"
             :description="roomStore.currnentRoomType.descriptions"
-
             :img="'https://i.pinimg.com/564x/7d/2c/19/7d2c1963c8c1883f7bcd70d6775472b5.jpg'"
-            :tv="roomStore.currnentRoomType.chromeCast" :electric="roomStore.currnentRoomType.eletricSheer" :bed="roomStore.currnentRoomType.bedSize"
-
+            :tv="roomStore.currnentRoomType.chromeCast" :electric="roomStore.currnentRoomType.electricSheer" :bed="roomStore.currnentRoomType.bedSize"
             :wifi="roomStore.currnentRoomType.wifi" :water="roomStore.currnentRoomType.water"
             :bath="roomStore.currnentRoomType.bath"  :desk="roomStore.currnentRoomType.desk">
         </ReadMore>
