@@ -24,7 +24,11 @@ const logout = () => {
         <div class="flex gap-4">
           <img src="../../images/logo.png" alt="Hotel California Logo" class="h-12" />
         </div>
-
+        <a
+          href="/"
+          class="hover:text-gray-700 text-sm font-judson"
+          >HOME</a
+        >
         <!-- Dropdown Menu for ABOUT CUSTOMER -->
 
         <!-- Other navigation items... -->
@@ -32,7 +36,7 @@ const logout = () => {
 
       <!-- Right Side: User Info and Notifications -->
       <div class="flex items-center gap-4 justify-center">
-        <a href="#" class="hover:text-gray-700 text-sm font-judson">BROWSE ROOM</a>
+        <a href="/browsesroom" class="hover:text-gray-700 text-sm font-judson">BROWSE ROOM</a>
         <a href="#" class="hover:text-gray-700 text-sm font-judson">DASHBOARD</a>
         <div class="group inline-block relative">
           <a href="#" class="hover:text-gray-700 text-sm font-judson inline-flex items-center">
@@ -43,11 +47,11 @@ const logout = () => {
           </a>
           <ul class="absolute hidden text-gray-700 pt-1 group-hover:block dropdown text-center">
             <li class="">
-              <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">CHECK-IN
+              <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="/checkInManagement">CHECK-IN
                 MANAGEMENT</a>
             </li>
             <li class="">
-              <a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">CHECK-OUT
+              <a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="/checkOutManagement">CHECK-OUT
                 MANAGEMENT</a>
             </li>
             <li class="">

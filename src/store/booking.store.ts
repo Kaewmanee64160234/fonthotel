@@ -13,6 +13,7 @@ import { RoomType } from "@/model/roomtype.model";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
+  const moreDetailCard = ref(false);
   const currentBooking = ref<Booking>({
     adult: 0,
     checkIn: new Date(),
@@ -314,6 +315,9 @@ export const useBookingsStore = defineStore("bookings", () => {
   function getBooking() {
     return currentBooking.value;
   }
+  function toggleMoreDetail() {
+    moreDetailCard.value = !moreDetailCard.value;
+}
 
   async function getBookingByCustomerIdLastcreated() {
     const response = await bookingService.getBookingByCustomerIdLastcreated(
@@ -672,7 +676,10 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log("---------------------------------");
     console.log(currentBooking.value.total);
   };
-
+    //set Current Booking
+    const setCurrentBooking = (booking: Booking) => {
+      currentBooking.value = booking;
+  }
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
     currentBooking.value.total = 0;
@@ -1049,5 +1056,8 @@ export const useBookingsStore = defineStore("bookings", () => {
     getBookingByCustomerId,
     getBookingByEmployeeId,
     confirmBookingByCustomerOrEmployee,
+    toggleMoreDetail,
+    setCurrentBooking,
+    moreDetailCard,
   };
 });
