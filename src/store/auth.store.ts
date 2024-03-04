@@ -31,18 +31,15 @@ export const useAuthStore = defineStore("auth", () => {
             name: "",
             startDate: new Date(),
           },
-          
-
-         
         };
-        if(response.data.customer){
+        if (response.data.customer) {
           user__.customer = {
             id: response.data.customer.cus_id,
             name: response.data.customer.cus_name,
             startDate: response.data.customer.cus_start_date,
-          }
+          };
         }
-        if(response.data.employee){
+        if (response.data.employee) {
           user__.employee = {
             address: response.data.employee.emp_addr,
             id: response.data.employee.emp_id,
@@ -53,7 +50,7 @@ export const useAuthStore = defineStore("auth", () => {
             name: response.data.employee.emp_name,
             position: response.data.employee.emp_position,
             tel: response.data.employee.emp_tel,
-          }
+          };
         }
         userStore.setUser(user__);
         console.log(user__);
@@ -106,45 +103,54 @@ export const useAuthStore = defineStore("auth", () => {
   ) => {
     try {
       const response = await auth.authenticate(email, password, username);
-      if (response != null) {
-        const user__: User = {
-          id: response.data.user_id,
-          username: response.data.user_name,
-          login: response.data.user_login,
-          password: response.data.user_password, // Storing password in frontend is usually not advisable.
-          role: response.data.user_role,
-          customer: {
-            id: response.data.customer.cus_id,
-            name: response.data.customer.cus_name,
-            startDate: response.data.customer.cus_start_date,
-          },
+ 
+        //check if status is 404 email is already exist
+        if (response.status === 409) {
+          return response;
+        }
+        if (response.data != null) {
+          // Assuming response.data has the structure you expect, proceed as before
+          const user__: User = {
+            id: response.data.user_id,
+            username: response.data.user_name,
+            login: response.data.user_login,
+            password: response.data.user_password, // Storing password in frontend is usually not advisable.
+            role: response.data.user_role,
+            customer: {
+              id: response.data.customer.cus_id,
+              name: response.data.customer.cus_name,
+              startDate: response.data.customer.cus_start_date,
+            },
 
-          employee: {
-            address: response.data.employee.emp_addr,
-            id: response.data.employee.emp_id,
-            dateOfBirth: response.data.employee.emp_dob,
-            dateStartWork: response.data.employee.emp_dsw,
-            email: response.data.employee.emp_email,
-            hourlyRate: response.data.employee.emp_hourly_wage,
-            name: response.data.employee.emp_name,
-            position: response.data.employee.emp_position,
-            tel: response.data.employee.emp_tel,
-          },
-          // ...(response.data.customer && { customer: response.data.customer }),
-        };
-        userStore.setUser(user__);
-        console.log(user__);
-        router.push("/");
-      } else {
-        console.error("User does not have customer or employee role");
-        return null;
-      }
+            // ...(response.data.customer && { customer: response.data.customer }),
+          };
+          if (response.data.employee) {
+            user__.employee = {
+              address: response.data.employee.emp_addr,
+              id: response.data.employee.emp_id,
+              dateOfBirth: response.data.employee.emp_dob,
+              dateStartWork: response.data.employee.emp_dsw,
+              email: response.data.employee.emp_email,
+              hourlyRate: response.data.employee.emp_hourly_wage,
+              name: response.data.employee.emp_name,
+              position: response.data.employee.emp_position,
+              tel: response.data.employee.emp_tel,
+            };
+          }
+          userStore.setUser(user__);
+          console.log(user__);
+          router.push("/");
+        }
+      
 
       authName.value = JSON.parse(JSON.stringify(localStorage.getItem("user")));
       isLogin.value = true;
       router.push("/");
     } catch (error) {
       console.log(error);
+      // throw error;
+      return null;
+    
     }
   };
 

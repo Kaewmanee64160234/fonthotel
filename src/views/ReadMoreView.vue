@@ -24,10 +24,9 @@ const clickback = () => {
         <ReadMore :type="roomStore.currnentRoomType?.typeName.toUpperCase()"
             :description="roomStore.currnentRoomType.descriptions"
             :img="'https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg'"
-            :tv="roomStore.currnentRoomType.chromeCast" :electric="roomStore.currnentRoomType.eletricSheer" :bed="roomStore.currnentRoomType.bedSize"
+            :tv="roomStore.currnentRoomType.chromeCast" :electric="roomStore.currnentRoomType.electricSheer" :bed="roomStore.currnentRoomType.bedSize"
             :wifi="roomStore.currnentRoomType.wifi" :water="roomStore.currnentRoomType.water"
             :bath="roomStore.currnentRoomType.bath"  :desk="roomStore.currnentRoomType.desk">
-
         </ReadMore>
 
 

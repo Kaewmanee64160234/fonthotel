@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import roomService from "@/service/room";
-import { Room, RoomType } from "@/model/room.model";
+import { Room } from "@/model/room.model";
+import { RoomType } from "@/model/roomtype.model";
+
 
 export const useRoomStore = defineStore("roomStore", () => {
     const currentRooms = ref<Room[]>([]); // Define rooms as a ref
@@ -12,12 +14,19 @@ export const useRoomStore = defineStore("roomStore", () => {
         price: 0,
         bedSize: 0,
         chromeCast: false,
-        eletricSheer: false,
+        electricSheer: false,
         wifi: false,
         bath: false,
         water: false,
         desk: false,
         typeName: '',
+        maxAdult: 0,
+        maxChildren: 0,
+        sleep: 0,
+
+        
+        
+        
     }); // Define roomType as a ref
     const currentType = ref<string>(''); // Define currentType as a ref
     const currentStatus = ref<string>('ready'); // Define currentStatus as a ref
@@ -34,13 +43,16 @@ export const useRoomStore = defineStore("roomStore", () => {
             price: 0,
    
             chromeCast: false,
-            eletricSheer: false,
+            electricSheer: false,
             wifi: false,
             bath: false,
             water: false,
             desk: false,
             typeName: '',
             bedSize: 1,
+            maxAdult: 1,
+            maxChildren: 1,
+            sleep: 1,
         }
     });
 
@@ -80,12 +92,15 @@ export const useRoomStore = defineStore("roomStore", () => {
                         price: room.roomtype.room_type_price,
                         bedSize: room.roomtype.room_type_bed_size,
                         chromeCast: room.roomtype.room_type_chromecast,
-                        eletricSheer: room.roomtype.room_type_electric_sheer,
+                        electricSheer: room.roomtype.room_type_electric_sheer,
                         wifi: room.roomtype.room_type_wifi,
                         bath: room.roomtype.room_type_bath,
                         water: room.roomtype.room_type_water,
                         desk: room.roomtype.room_type_desk,
                         typeName: room.roomtype.room_type_name,
+                        maxAdult: room.roomtype.max_adult,
+                        maxChildren: room.roomtype.max_children,
+                        sleep: room.roomtype.sleep,
                     }
                     const room_: Room = {
                         id: room.room_id,
@@ -120,12 +135,15 @@ export const useRoomStore = defineStore("roomStore", () => {
                     price: response.data.room_type_price,
                     bedSize: response.data.room_type_bed_size,
                     chromeCast: response.data.room_type_chromecast,
-                    eletricSheer: response.data.room_type_electric_sheer,
+                    electricSheer: response.data.room_type_electric_sheer,
                     wifi: response.data.room_type_wifi,
                     bath: response.data.room_type_bath,
                     water: response.data.room_type_water,
                     desk: response.data.room_type_desk,
                     typeName: response.data.room_type_name,
+                    maxAdult: response.data.max_adult,
+                    maxChildren: response.data.max_children,
+                    sleep: response.data.sleep,
                   
                 
                 }
@@ -140,12 +158,15 @@ export const useRoomStore = defineStore("roomStore", () => {
                     price: 0,
                     bedSize: 0,
                     chromeCast: false,
-                    eletricSheer: false,
+                    electricSheer: false,
                     wifi: false,
                     bath: false,
                     water: false,
                     desk: false,
                     typeName: '',
+                    maxAdult: 0,
+                    maxChildren: 0,
+                    sleep: 0,
                 }
             }
         } catch (error) {

@@ -26,7 +26,7 @@ const validateForm = () => {
   isValid = true; // Reset isValid to true at the start of validation
   // Email validation for specific domains
   showDialog.value = false;
-  errorMessage.value = "";
+
   if (!email.value) {
     emailError.value = "Email is required";
     isValid = false;
@@ -82,18 +82,32 @@ watch(username, (newValue) => {
 });
 
 const register = async (event: Event) => {
-  event.preventDefault();
-  validateForm();
+  try {
+    event.preventDefault();
+    validateForm();
 
-  if (isValid) {
-    showDialog.value = false;
-    // Proceed with registration
-    const res  = await authStore.register(email.value, password.value, username.value);
-    if(res == null){
+    if (isValid) {
+      showDialog.value = false;
+      // Proceed with registration
+      const res = await authStore.register(
+        email.value,
+        password.value,
+        username.value
+      );
+      console.log(res);
+
+      if (res === null) {
+        console.log("Setting error message and showing dialog");
+        errorMessage.value = "Email already registered";
+        showDialog.value = true;
+      }
+    } else {
       errorMessage.value = "Email already registered";
+
       showDialog.value = true;
     }
-  } else {
+  } catch (error) {
+    errorMessage.value = "Email already registered";
     showDialog.value = true;
   }
 };
@@ -193,11 +207,10 @@ const register = async (event: Event) => {
             </button>
           </div>
         </form>
-        
       </div>
     </div>
-     <!-- Flowbite Modal for Login Feedback -->
-     <transition name="fade">
+    <!-- Flowbite Modal for Login Feedback -->
+    <transition name="fade">
       <div
         v-if="showDialog"
         class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
@@ -213,21 +226,21 @@ const register = async (event: Event) => {
             <!-- Display errors if any -->
             <div
               v-if="
-                usernameError || emailError || passwordError || password2Error
+                usernameError || emailError || passwordError || password2Error || errorMessage
               "
-              class=" border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3"
+              class="border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3"
             >
-            
               <ul class="mt-1 list-disc list-inside text-start">
+                <li v-if="errorMessage" >{{ errorMessage }}</li>
                 <li v-if="usernameError">{{ usernameError }}</li>
                 <li v-if="emailError">{{ emailError }}</li>
                 <li v-if="passwordError">{{ passwordError }}</li>
                 <li v-if="password2Error">{{ password2Error }}</li>
-                <li v-if="errorMessage">{{ errorMessage }} </li>
+                
               </ul>
             </div>
             <!-- General error message or other content -->
-           
+
             <div class="items-center px-4 py-3">
               <button
                 @click="showDialog = false"
