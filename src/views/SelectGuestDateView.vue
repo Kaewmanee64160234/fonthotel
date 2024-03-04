@@ -319,7 +319,7 @@ const stayDates = computed(() => {
         <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
 
         <div
-          class="mt-2 overflow-y-auto mb-10 dc-scroll"
+          class="mt-2 overflow-y-auto mb-20 p-3 dc-scroll"
           v-if="roomStore.currentRooms.length > 0"
         >
           <div v-for="item of roomStore.currentRooms" :key="item.id">
