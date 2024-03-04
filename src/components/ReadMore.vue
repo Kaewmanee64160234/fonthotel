@@ -113,6 +113,9 @@ const linkTo = () => {
   display: inline-block;
   width: 150px;
 }
+.btn-booking:hover {
+      background-color: #9e754f;
+    }
 
 .facility-item {
   padding-top: 5px;

@@ -16,7 +16,7 @@ const clickback = () => {
       <div class="relative card-style">
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
-          <div class="grid gap-4 grid-cols-2">
+          <div class="grid gap-4 grid-cols-2 text-sm">
             <button type="button" class="button-style">
               Edit review
             </button>
@@ -246,12 +246,7 @@ body {
   color: white;
   background-color: #906843;
   border-radius: 8px;
-  font-weight: 500;
-  /* Use font-medium if needed */
-  font-size: 14px;
-  /* Use text-sm if needed */
   padding: 10px 20px;
-  /* Adjust px values as needed */
   box-shadow: 0px 4px 6px #805d3f;
 }
 

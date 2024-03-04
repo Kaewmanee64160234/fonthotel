@@ -227,11 +227,6 @@ onMounted(async () => {
   /* Adjust max-height as necessary, accounting for the fixed section */
 }
 
-/* .bigcard {
-  display: flex;
-  height: 80vh;
-  /* overflow-y: hidden; */
-/* } */
 body {
   background-image: url("../images/image.png");
   background-size: cover;

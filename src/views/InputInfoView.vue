@@ -676,6 +676,9 @@ const removePromotion = () => {
   font-size: 13px;
   height: 6vh;
 }
+.btn-applypromo:hover {
+      background-color: #9e754f;
+    }
 
 .btn-complete {
   background-color: #906843;
@@ -688,6 +691,9 @@ const removePromotion = () => {
   display: inline-block;
   width: 60%;
 }
+.btn-complete:hover {
+      background-color: #9e754f;
+    }
 
 .card-stay {
   width: 80%;

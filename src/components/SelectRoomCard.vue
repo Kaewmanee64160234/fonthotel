@@ -17,12 +17,12 @@ const props = defineProps<{
   price: number,
   roomDetail: string,
   btnbooknow: string,
-  room:Room
+  room: Room
 }>();
 //add bookingDeail
 const addBooking = () => {
-  const bookingDetail:BookingDetail = {
-    id:-1,
+  const bookingDetail: BookingDetail = {
+    id: -1,
     room: props.room,
     total: props.room.roomType.price,
   }
@@ -30,7 +30,7 @@ const addBooking = () => {
   router.push('/activity');
 }
 
-const clickRoomDetail = () =>  {
+const clickRoomDetail = () => {
   roomStore.setCurrentRoom(props.room);
   console.log(props.room);
   roomStore.toggleRoomDetail();
@@ -53,15 +53,16 @@ const clickRoomDetail = () =>  {
           <p class="text-sm text-gray-600">Sleep {{ props.sleep }}</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
           <!-- <a :href="roomDetail" class="text-xs font-semibold">Room Detail</a> -->
-          <button @click="clickRoomDetail()"><a class="text-xs font-semibold hover:text-gray-600">Room Detail</a></button>
+          <button @click="clickRoomDetail()"><a class="text-xs font-semibold hover:text-gray-600">Room
+              Detail</a></button>
           <div class="px-5 py-2 font-bold text-base price-room">THB {{ props.price }}</div>
         </div>
         <div class="text-right px-5">
-          <button class="btn-booknow mt-2 mb-3"  @click.prevent="addBooking()">Book now</button>
+          <button class="btn-booknow mt-2 mb-3" @click.prevent="addBooking()">Book now</button>
         </div>
 
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -91,6 +92,9 @@ const clickRoomDetail = () =>  {
   text-align: center;
 }
 
+.btn-booknow:hover {
+  background-color: #9e754f;
+}
+
 /* Add any additional styling you want here */
 </style>
-

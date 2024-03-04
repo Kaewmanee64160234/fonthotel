@@ -26,7 +26,7 @@ const logout = () => {
         </div>
         <a
           href="/"
-          class="hover:text-gray-700 text-sm font-judson"
+          class="font-semibold hover:text-white text-base font-judson flex items-center"
           >HOME</a
         >
         <!-- Dropdown Menu for ABOUT CUSTOMER -->
@@ -35,15 +35,15 @@ const logout = () => {
       </div>
 
       <!-- Right Side: User Info and Notifications -->
-      <div class="flex items-center gap-4 justify-center">
-        <a href="/browsesroom" class="hover:text-gray-700 text-sm font-judson">BROWSE ROOM</a>
-        <a href="#" class="hover:text-gray-700 text-sm font-judson">DASHBOARD</a>
+      <div class="flex items-center gap-5 justify-center">
+        <a href="/browsesroom" class="font-semibold hover:text-white text-base font-judson">BROWSE ROOM</a>
+        <a href="#" class="font-semibold hover:text-white text-base font-judson">DASHBOARD</a>
         <div class="group inline-block relative">
-          <a href="#" class="hover:text-gray-700 text-sm font-judson inline-flex items-center">
+          <a href="#" class="font-semibold hover:text-white text-base font-judson">
             ABOUT CUSTOMER
-            <svg class="fill-current h-2 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <!-- <svg class="fill-current h-2 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path d="M5.9 7.5L10 11.6l4.1-4.1 1.4 1.4-5.5 5.5-5.5-5.5z" />
-            </svg>
+            </svg> -->
           </a>
           <ul class="absolute hidden text-gray-700 pt-1 group-hover:block dropdown text-center">
             <li class="">
@@ -61,7 +61,7 @@ const logout = () => {
           </ul>
         </div>
         <button type="button">
-          <span class="hover:text-gray-700 text-sm font-judson">PROMOTION MANAGEMENT</span>
+          <span class="font-semibold hover:text-white text-base font-judson">PROMOTION MANAGEMENT</span>
         </button>
         <div class="flex hover:text-gray-700 text-sm font-judson justify-center">
           <button @click="gotoAcceptBookingView">
@@ -72,16 +72,16 @@ const logout = () => {
           <div class="flex flex-1 flex-col">
             <a v-if="userStore.currentUser.username == ''" @click="authStore.logout()"
               class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
-            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson"> {{
+            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson font-semibold"> {{
             userStore.currentUser.username }}</a>
             <a v-if="userStore.currentUser.username == ''" href="/login"
               class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>
           </div>
           <div class="flex flex-1 flex-col">
-            <p class="flex">Position: Manager</p>
+            <p class="flex font-semibold">Position: Manager</p>
           </div>
         </div>
-        <a @click="logout" href="/login" class="hover:text-gray-700 text-sm font-judson flex items-center">LOGOUT</a>
+        <a @click="logout" href="/login" class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>
 
       </div>
     </nav>

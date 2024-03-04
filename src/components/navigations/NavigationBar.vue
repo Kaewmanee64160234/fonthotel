@@ -24,7 +24,7 @@ onMounted(() => {
         />
         <a
           href="/"
-          class="flex hover:text-gray-700 text-sm font-judson items-center justify-center"
+          class="font-semibold hover:text-white text-base font-judson flex items-center"
           >HOME</a
         >
       </div>
@@ -33,25 +33,25 @@ onMounted(() => {
       <div class="flex gap-4">
         <a
           href="/historyBookings"
-          class="hover:text-gray-700 text-sm font-judson"
+          class="font-semibold hover:text-white text-base font-judson"
           >BOOKING HISTORY</a
         >
         <a
           v-if="userStore.currentUser.username == ''"
           href="/login"
-          class="hover:text-gray-700 text-sm font-judson"
+          class="font-semibold hover:text-white text-base font-judson"
           >LOGIN</a
         >
         <a
           v-if="userStore.currentUser.username != ''"
-          class="hover:text-gray-700 text-sm font-judson"
+          class="font-semibold text-base font-judson"
         >
           {{ userStore.currentUser.username }}</a
         >
         <a
           v-if="userStore.currentUser.username != ''"
           @click="authStore.logout()"
-          class="hover:text-gray-700 text-sm font-judson flex items-center"
+          class="font-semibold hover:text-white text-base font-judson"
           >LOGOUT</a
         >
 
