@@ -100,11 +100,23 @@ const register = async (event: Event) => {
         console.log("Setting error message and showing dialog");
         errorMessage.value = "Email already registered";
         showDialog.value = true;
+        
       }
-    } else {
-      errorMessage.value = "Email already registered";
-
-      showDialog.value = true;
+      else{
+        //clear the form
+        email.value = "";
+        password.value = "";
+        password2.value = "";
+        username.value = "";
+        // c;ear the error messages
+        emailError.value = "";
+        passwordError.value = "";
+        password2Error.value = "";
+        usernameError.value = "";
+        errorMessage.value = "";
+        showDialog.value = false;
+        isValid = true;
+      }
     }
   } catch (error) {
     errorMessage.value = "Email already registered";
@@ -205,6 +217,16 @@ const register = async (event: Event) => {
             >
               Register
             </button>
+          </div>
+          <div class="text-center mt-4">
+            <p class="font text-sm">
+              Already have an account?
+              <a
+                href="/login"
+                class="font-bold text-black hover:text-black-800"
+                >login</a
+              >
+            </p>
           </div>
         </form>
       </div>
