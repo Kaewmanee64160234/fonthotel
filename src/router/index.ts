@@ -178,6 +178,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/Employee/HistoryCheckInOutView.vue"),
     meta: { hideNavigation: false },
   },
+  {
+    path: "/historyBookingDetails",
+    name: "historyBookingDetails",
+    component: () => import("../views/HistoryCustomerDetailView.vue"),
+    meta: { hideNavigation: false },
+  },
 ];
 
 const router = createRouter({

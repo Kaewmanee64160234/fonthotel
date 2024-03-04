@@ -174,7 +174,7 @@ const clickback = () => {
             </div>
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
-          <div class="overflow-y-auto dc-scroll">
+          <div class="overflow-y-auto dc-scroll pb-20">
             <div v-for="item in bookingStore.bookings" :key="item.id">
               <HistoryBookingCard
                 v-if="item.bookingDetail && item.bookingDetail.length > 0"
