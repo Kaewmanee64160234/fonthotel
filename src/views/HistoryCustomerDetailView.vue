@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const clickback = () => {
-  window.location.href = "/";
+  window.location.href = "/historyBookings";
 };
 </script>
 
 <template>
+
   <body>
     <div class="pt-5 pl-5">
       <button @click="clickback">
@@ -13,329 +14,175 @@ const clickback = () => {
     </div>
     <div class="flex justify-center items-center bigcard">
       <div class="relative card-style">
-        <div class="flex justify-start items-center p-4">
-          <h1 class="text-xl font-bold ml-5">History Customer Detail</h1>
+        <div class="flex justify-between items-center p-4">
+          <h1 class="text-xl font-bold">History Booking</h1>
+          <div class="grid gap-4 grid-cols-2">
+            <button type="button" class="button-style">
+              Edit review
+            </button>
+            <button type="button" class="button-style">
+              Add review
+            </button>
+          </div>
         </div>
 
         <div class="flex-1 flex flex-row justify-center">
           <div class="card-stay">
             <div class="card-container">
               <div class="flex-1 flex flex-row p-2 pl-5 mt-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Date :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                  >
-                    Tue,Dec 26 ,2023 - Wed,Dec 27,2023</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px">
+                    Tue,Dec 26 ,2023 - Wed,Dec 27,2023</span>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Check-in :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                  >
-                    2:30 PM</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px">
+                    2:30 PM</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Name :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >Linlada Pasukjai
+                  <span class="text-base font-sans" style="font-size: 15px">Linlada Pasukjai
                   </span>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Check-out :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >6:30 AM</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px">6:30 AM</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Room number :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >701</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px">701</span>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Type Room :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >Deluxe
+                  <span class="text-base font-sans" style="font-size: 15px">Deluxe
                   </span>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Payment Information
                   </p>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="text-base font-sans"
-                    style="display: inline; margin-left: 100px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="text-base font-sans" style="display: inline; margin-left: 100px">
                     Sleep 1 | 37 square metre
                   </p>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Payment :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >Cardit Card
+                  <span class="text-base font-sans" style="font-size: 15px">Cardit Card
                   </span>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="text-base font-sans"
-                    style="display: inline; margin-left: 100px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="text-base font-sans" style="display: inline; margin-left: 100px">
                     Sea View , Smart TV , Work Desk
                   </p>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Name :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >Linlada Pasukjai
+                  <span class="text-base font-sans" style="font-size: 15px">Linlada Pasukjai
                   </span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Activity :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >1 Buffet Breakfast</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px">1 Buffet Breakfast</span>
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Status :
                   </p>
-                  <span
-                    class="text-base font-sans text-green-600"
-                    style="font-size: 15px"
-                  >
-                    Success</span
-                  >
+                  <span class="text-base font-sans text-green-600" style="font-size: 15px">
+                    Success</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 5px">
                     Guest :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px; margin-right: 5px"
-                    >2</span
-                  >
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px"
-                    >Per Adult</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 5px">2</span>
+                  <span class="text-base font-sans" style="font-size: 15px">Per Adult</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <span
-                    class="text-base font-sans"
-                    style="
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <span class="text-base font-sans" style="
                       font-size: 15px;
                       margin-right: 5px;
                       margin-left: 58px;
-                    "
-                    >0</span
-                  >
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px; margin-right: 20px"
-                    >Per Child</span
-                  >
+                    ">0</span>
+                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 20px">Per Child</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 18px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <p class="font-medium" style="display: inline; margin-right: 18px">
                     Fine :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px; margin-right: 5px"
-                    >No Service</span
-                  >
+                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 5px">No Service</span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px;"
-                >
-                  <p
-                    class="font-bold"
-                    style="display: inline; margin-right: 5px; font-size: 20px"
-                  >
+                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
+                  <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 20px">
                     Total :
                   </p>
 
-                  <span
-                    class="font-medium"
-                    style="
+                  <span class="font-medium" style="
                       font-size: 15px;
                       display: inline;
                       margin-left: 40px;
                       font-size: 23px;
-                    "
-                  >
+                    ">
                     7,009.00
                   </span>
 
-                  <span
-                    class="font-bold"
-                    style="
+                  <span class="font-bold" style="
                       font-size: 15px;
                       display: inline;
                       margin-left: 40px;
                       font-size: 20px;
-                    "
-                  >
-                    Baht</span
-                  >
+                    ">
+                    Baht</span>
                 </div>
               </div>
             </div>
@@ -345,6 +192,7 @@ const clickback = () => {
     </div>
   </body>
 </template>
+
 <style scoped>
 body {
   background-image: url("../images/image.png");
@@ -372,6 +220,7 @@ body {
   display: block;
   /* overflow-y: auto; */
 }
+
 .card-stay {
   width: 70vw;
   height: 75vh;
@@ -379,6 +228,7 @@ body {
   box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
   border-radius: 15px;
 }
+
 .flex-2 {
   display: flex;
   flex-direction: row;
@@ -390,5 +240,22 @@ body {
 .card-container {
   max-width: 100vw;
   height: 234px;
+}
+
+.button-style {
+  color: white;
+  background-color: #906843;
+  border-radius: 8px;
+  font-weight: 500;
+  /* Use font-medium if needed */
+  font-size: 14px;
+  /* Use text-sm if needed */
+  padding: 10px 20px;
+  /* Adjust px values as needed */
+  box-shadow: 0px 4px 6px #805d3f;
+}
+
+.button-style:hover {
+  background-color: #9e754f;
 }
 </style>

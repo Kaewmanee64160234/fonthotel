@@ -7,6 +7,8 @@ import { useUserStore } from "@/store/user.store";
 const isDropdownOpen = ref(false);
 const bookingStore = useBookingsStore();
 const userStore = useUserStore();
+const currentTime = new Date().toLocaleTimeString();
+
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
   // Handle the filter selection here, e.g., update a query parameter or fetch new data
@@ -16,20 +18,13 @@ function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
 
-function formatDateRange(startDate: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short", // "Tue"
-    year: "numeric", // "2023"
-    month: "short", // "Dec"
-    day: "numeric", // "26"
-  };
-
-  const startFormatted = new Intl.DateTimeFormat("en-US", options).format(
-    startDate
-  );
-
-  return `${startFormatted}`;
-}
+const currentDate = new Date();
+const currentFormattedDate = new Intl.DateTimeFormat("en-US", {
+  weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+}).format(currentDate);
 
 let booking = ref<Booking>({
   adult: 0,
@@ -84,26 +79,26 @@ onMounted(async () => {
   }
 
 });
-const clickback = () => {
-  window.location.href = "/";
-};
+// const clickback = () => {
+//   window.location.href = "/";
+// };
 </script>
 
 <template>
   <body>
-    <div class="pt-5 pl-5">
+    <!-- <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px; color:#F5EEE6" class="far">&#xf359;</i>
+        <i style="font-size: 30px; color:#F5EEE6" class="far ">&#xf359;</i>
       </button>
-    </div>
+    </div> -->
     <div class="flex justify-center items-center bigcard">
       <div class="relative card-style">
         <!-- Title and Date/Time -->
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div>
-            <p>Date: <span class="font-semibold">27 Dec 2023</span></p>
-            <p>Time: <span class="font-semibold">6:27 AM</span></p>
+            <p>Date: <span class="font-semibold">{{ currentFormattedDate }}</span></p>
+            <p>Time: <span class="font-semibold">{{ currentTime }}</span></p>
           </div>
         </div>
         <div class="p-4">

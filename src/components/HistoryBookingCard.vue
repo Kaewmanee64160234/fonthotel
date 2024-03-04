@@ -3,7 +3,10 @@ import { Booking } from "@/model/booking.model";
 import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
 import Swal from "sweetalert2";
-
+import router from "@/router";
+const clickMoreDetail = () => {
+  router.push('/historyBookingDetails');
+};
 const bookingStore = useBookingsStore();
 const props = defineProps<{
   image: string,
@@ -92,7 +95,7 @@ const clickConfirmCancel = (bookingId: number) => {
             <span class="text-xl font-bold">Total: {{ price }}.00 Bath</span>
           </div>
           <div class="flex justify-end">
-            <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3">
+            <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3" @click="clickMoreDetail">
               More Detail
             </button>
             <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id)"
