@@ -26,6 +26,9 @@ onMounted(async () => {
   booking.value = bookingsStore.currentBooking;
   console.log(booking.value);
 });
+const showDialog = ref(false);
+const dialogMessage = ref('');
+
 const paramValue = route.params.type;
 
 onMounted(async () => {
