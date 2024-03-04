@@ -5,10 +5,11 @@ import { Booking, BookingDetail } from "@/model/booking.model";
 import { Employee } from "@/model/employee.model";
 import { Customer } from "@/model/customer.model";
 import { Promotion } from "@/model/promotion.model";
-import { Room, RoomType } from "@/model/room.model";
+import { Room } from "@/model/room.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useUserStore } from "./user.store";
 import router from "@/router";
+import { RoomType } from "@/model/roomtype.model";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
@@ -242,7 +243,7 @@ export const useBookingsStore = defineStore("bookings", () => {
                     .room_type_chromecast,
                 desk: response.data.bookingDetail[i].room.roomtype
                   .room_type_desk,
-                eletricSheer:
+                electricSheer:
                   response.data.bookingDetail[i].room.roomtype
                     .room_type_electric_sheer,
                 price:
@@ -253,6 +254,10 @@ export const useBookingsStore = defineStore("bookings", () => {
                   .room_type_wifi,
                 descriptions:
                   response.data.bookingDetail[i].room.roomtype.room_type_des,
+                  maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
+                  maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
+                  sleep: response.data.bookingDetail[i].room.roomtype.sleep,
+                  
               };
 
               const room: Room = {
@@ -409,6 +414,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         for (const i in response.data.bookingDetail) {
           console.log(response.data.bookingDetail[i]);
           const roomType: RoomType = {
+          
             id: response.data.bookingDetail[i].room.roomtype.room_type_id,
             roomType: response.data.bookingDetail[i].room.roomtype.room_type,
             typeName:
@@ -419,7 +425,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             chromeCast:
               response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
             desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
-            eletricSheer:
+            electricSheer:
               response.data.bookingDetail[i].room.roomtype
                 .room_type_electric_sheer,
             price: response.data.bookingDetail[i].room.roomtype.room_type_price,
@@ -427,6 +433,11 @@ export const useBookingsStore = defineStore("bookings", () => {
             wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
             descriptions:
               response.data.bookingDetail[i].room.roomtype.room_type_des,
+              maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
+              maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
+              sleep: response.data.bookingDetail[i].room.roomtype.sleep,
+              
+          
           };
 
           const room: Room = {
@@ -577,7 +588,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             chromeCast:
               response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
             desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
-            eletricSheer:
+            electricSheer:
               response.data.bookingDetail[i].room.roomtype
                 .room_type_electric_sheer,
             price: response.data.bookingDetail[i].room.roomtype.room_type_price,
@@ -585,6 +596,9 @@ export const useBookingsStore = defineStore("bookings", () => {
             wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
             descriptions:
               response.data.bookingDetail[i].room.roomtype.room_type_des,
+              maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
+              maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
+              sleep: response.data.bookingDetail[i].room.roomtype.sleep,
           };
 
           const room: Room = {

@@ -101,7 +101,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/bookingdetail",
     name: "bookingdetail",
     component: () => import("../views/BookingDetailsView.vue"),
-    meta: { hideNavigation: true },
+    meta: { hideNavigation: false },
+
+
   },
   {
     path: "/readmoreview/:type",

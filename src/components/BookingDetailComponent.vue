@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import router from "@/router";
 import { defineProps } from "vue";
 
 const props = defineProps<{
@@ -14,25 +15,45 @@ const props = defineProps<{
 
 }>();
 
+const clickback = () => {
+    window.location.href = '/'
+}
+const linkTo = () => {
+    router.push(`/`);
+
+}
+
+
 </script>
 
 <template>
     <div class="body">
+        <div class="absolute top-0 right-0 p-8">
+            <!-- <button @click="clickback">
+                <i style="font-size: 30px; color:#F5EEE6" class="far fa-arrow-alt-circle-right"></i>
+            </button>
+           -->
+            <div class="absolute top-0 right-0 p-8">
+                <button @click="linkTo()" class="btn-home-view  inline-block ">Home View</button>
+
+            </div>
+
+        </div>
 
         <!-- Container for the room details -->
         <div class="flex justify-center items-center min-h-screen">
             <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto  ">
                 <!-- Title above the image -->
                 <h1 class="text-2xl font-judson px-5 pt-2 ml-10 mt-5 text-center">Booking details</h1>
-                
-                
+
+
 
                 <!-- Image and Description Container -->
                 <div class="md:flex pl-8">
                     <!-- Room Image -->
                     <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
                         <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
-             
+
                     </div>
 
                     <!-- Room Description -->
@@ -57,35 +78,38 @@ const props = defineProps<{
                                         <p class="text-sm text-base text-black">Type Room : {{ props.roomType }}</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-semibold  text-base text-black">Payment  Information </h1>
+                                        <h1 class="text-lg font-semibold  text-base text-black">Payment Information
+                                        </h1>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Guest: {{ props.adult  }}  Per Adult |  {{ props.children }} Per Child</p>
+                                        <p class="text-sm text-base text-black">Guest: {{ props.adult }} Per Adult | {{
+                    props.children }} Per Child</p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <p class="text-sm text-base text-black">Payment: {{ props.payment }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        
+
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Name: {{name }} </p>
+                                        <p class="text-sm text-base text-black">Name: {{ name }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
-                                        
+
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <p class="text-sm text-base text-black text-green-600">Status: {{status }} </p>
                                     </div>
-   
+
                                 </div>
                                 <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
                                     <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-semibold  text-base text-black ">Total : {{ total }} Baht</h1>
+                                        <h1 class="text-lg font-semibold  text-base text-black ">Total : {{ total }}
+                                            Baht</h1>
                                     </div>
-                                  
+
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -102,7 +126,7 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-.btn-booking {
+.btn-home-view {
     background-color: #906843;
     color: white;
     padding: 10px 20px;
@@ -181,6 +205,3 @@ const props = defineProps<{
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
 }
 </style>
-
-
-

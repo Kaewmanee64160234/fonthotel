@@ -3,6 +3,7 @@ import http from "./axios";
 
 
 const  authenticate = async (email: string, password: string, username: string) =>{
+  
 console.log({
   email,
   user_name: username,
