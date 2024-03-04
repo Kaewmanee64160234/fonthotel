@@ -84,10 +84,18 @@ onMounted(async () => {
   }
 
 });
+const clickback = () => {
+  window.location.href = "/";
+};
 </script>
 
 <template>
   <body>
+    <div class="pt-5 pl-5">
+      <button @click="clickback">
+        <i style="font-size: 30px; color:#F5EEE6" class="far">&#xf359;</i>
+      </button>
+    </div>
     <div class="flex justify-center items-center bigcard">
       <div class="relative card-style">
         <!-- Title and Date/Time -->

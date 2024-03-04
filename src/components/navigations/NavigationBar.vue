@@ -22,6 +22,11 @@ onMounted(() => {
           alt="Hotel California Logo"
           class="h-12"
         />
+        <a
+          href="/"
+          class="flex hover:text-gray-700 text-sm font-judson items-center justify-center"
+          >HOME</a
+        >
       </div>
 
       <!-- Right Side: Menu Items -->
