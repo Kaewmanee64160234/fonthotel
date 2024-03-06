@@ -638,7 +638,7 @@ const stayDates = computed(() => {
 
 .card-style-roomDetail {
   width: 57vw;
-  height: 55vh;
+  height: 65vh;
   border-radius: 10px;
   background-color: #fffcf7;
   /* add filter blue */
