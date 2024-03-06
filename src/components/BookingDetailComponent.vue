@@ -1,5 +1,9 @@
 <script lang="ts" setup>
+import { ActivityPerBooking } from "@/model/activity.model";
 import router from "@/router";
+import activity from "@/service/activity";
+import promotion from "@/service/promotion";
+import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
 
 const props = defineProps<{
@@ -12,6 +16,8 @@ const props = defineProps<{
     total: number,
     payment: string,
     status: string,
+    promotion: number,
+    activity: ActivityPerBooking[],
 
 }>();
 
@@ -22,6 +28,7 @@ const linkTo = () => {
     router.push(`/`);
 
 }
+const bookingStore = useBookingsStore();
 
 
 </script>
@@ -89,13 +96,19 @@ const linkTo = () => {
                                         <p class="text-sm text-base text-black">Payment: {{ props.payment }} </p>
                                     </div>
                                     <div class="facility-item text-base font-judson">
+                                        <p class="text-sm text-base text-black"> Promotion: {{ promotion }}</p>
 
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <p class="text-sm text-base text-black">Name: {{ name }} </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-
+                                    <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                                        <p class="text-sm text-base text-black">
+                                            Activity : {{ activity }}
+                                        </p>
+                                        <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0"
+                                            class="text-base font-sans" style="font-size: 15px">
+                                            No activity</span>
                                     </div>
                                     <div class="facility-item text-base font-judson">
                                         <p class="text-sm text-base text-black text-green-600">Status: {{status }} </p>
@@ -199,7 +212,7 @@ const linkTo = () => {
 
 .card-stay {
     width: 50vw;
-    height: 46vh;
+    height: 55vh;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
