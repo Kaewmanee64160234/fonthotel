@@ -99,11 +99,6 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 0db3575c16497976a0c558e731897cb119fc27b3
 </script>
 
 <template>
