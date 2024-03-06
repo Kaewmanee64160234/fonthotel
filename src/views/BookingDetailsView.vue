@@ -92,7 +92,7 @@ function formatTwoDates(date1: Date):string {
 <template>
   <div class="body">
     <div>
-{{userStore.currentUser.role}}
+
       <BookingDetailComponent
         v-if="hasBookingDetails"
         :img="`${bookingDetailComputed!.room!.image!.toString()}`"
@@ -106,12 +106,7 @@ function formatTwoDates(date1: Date):string {
         :status="booking!.status"
       />
     </div>
-    <!-- <BookingDetailComponent type="DELUXE ROOM"
-            :img="'https://i.pinimg.com/564x/f9/cd/83/f9cd83db4e00175770998abeca0f3299.jpg'"
-            :date="Date" :name="' Linlada Pasukjai '" :typeroom="'  Deluxe  '"
-            :adult="0" :children="0" :total="7009" :checkin="' 1:00'" :checkout="'  7:00'" :payment="'Cardit Card'"
-            :status="'Success'">
-        </BookingDetailComponent> -->
+   
   </div>
 </template>
 

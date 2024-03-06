@@ -8,6 +8,7 @@ import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useRoomStore } from "@/store/room.store";
+import Swal from 'sweetalert2'
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -131,60 +132,28 @@ const checkPromotion = async (code: string, event: Event) => {
     validationMessage.value = "Promotion code is invalid";
   }
 };
-
-//validate form
 const validateForm = () => {
-  showModal.value = false;
-  validationMessage.value = "";
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameRegex = /^[a-zA-Z]+$/;
-  const mobilePhoneRegex = /^\d{10}$/; // regex to match exactly 10 digits
-  if (
-    firstName.value === "" ||
-    lastName.value === "" ||
-    emailAddress.value === "" ||
-    country.value === "" ||
-    paymentMethod.value === ""
-  ) {
-    showModal.value = true;
-    validationMessage.value = "Please fill in the required fields";
-    return false;
-  }
-  if (firstName.value.length < 3 || lastName.value.length < 3) {
-    showModal.value = true;
-    validationMessage.value =
-      "First name and last name must be at least 3 characters long";
+  const mobilePhoneRegex = /^\d{10}$/;
+  if (!firstName.value || !lastName.value || !emailAddress.value || !country.value || !paymentMethod.value) {
+    Swal.fire('Validation Error', 'Please fill in the required fields', 'error');
     return false;
   }
   if (!nameRegex.test(firstName.value) || !nameRegex.test(lastName.value)) {
-    showModal.value = true;
-    validationMessage.value =
-      "First name and last name must contain only alphabetic characters";
-    return false;
-  }
-  // Check if first name and last name contain any numbers
-  if (/\d/.test(firstName.value) || /\d/.test(lastName.value)) {
-    showModal.value = true;
-    validationMessage.value = "First name and last name cannot contain numbers";
+    Swal.fire('Validation Error', 'First name and last name must contain only alphabetic characters', 'error');
     return false;
   }
   if (!emailRegex.test(emailAddress.value)) {
-    // If the email address is not valid, alert the user
-    showModal.value = true;
-    validationMessage.value = "Please enter a valid email address";
-    // Return false to indicate that the form is invalid
+    Swal.fire('Validation Error', 'Please enter a valid email address', 'error');
     return false;
   }
-  // Check if telephone number consists of exactly 10 numeric digits
   if (!mobilePhoneRegex.test(mobilePhone.value)) {
-    showModal.value = true;
-    validationMessage.value = "Telephone number must be a 10-digit number";
+    Swal.fire('Validation Error', 'Telephone number must be a 10-digit number', 'error');
     return false;
   }
-
   return true;
 };
-
 //create function to save booking
 const saveBooking = async () => {
   if (validateForm()) {
@@ -199,6 +168,8 @@ const saveBooking = async () => {
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
     console.log(JSON.stringify(bookingsStore.currentBooking));
     await bookingsStore.saveBooking();
+    //add sweet alert
+    await Swal.fire('Booking Success', 'Your booking has been saved', 'success');
     clickContinue();
   }
 };
