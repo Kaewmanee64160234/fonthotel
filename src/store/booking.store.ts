@@ -676,10 +676,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log("---------------------------------");
     console.log(currentBooking.value.total);
   };
-    //set Current Booking
-    const setCurrentBooking = (booking: Booking) => {
-      currentBooking.value = booking;
-  }
+
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
     currentBooking.value.total = 0;
@@ -1038,6 +1035,10 @@ export const useBookingsStore = defineStore("bookings", () => {
 
     bookings.value.push(...bookings_);
   };
+      // set current room
+      const setCurrentBooking = (booking: Booking) => {
+        currentBooking.value = booking;
+    }
 
   return {
     bookings,
@@ -1057,7 +1058,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     getBookingByEmployeeId,
     confirmBookingByCustomerOrEmployee,
     toggleMoreDetail,
-    setCurrentBooking,
     moreDetailCard,
+    setCurrentBooking
   };
 });

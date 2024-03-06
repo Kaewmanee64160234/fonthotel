@@ -1,6 +1,6 @@
 export interface Brokenequipment {
     id: number;
     name: string;
-    qty: number;
+    cost: number;
     note: string;
 }

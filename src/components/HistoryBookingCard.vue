@@ -5,6 +5,7 @@ import { defineProps } from "vue";
 import Swal from "sweetalert2";
 import router from "@/router";
 const clickMoreDetail = () => {
+  bookingStore.currentBooking = props.booking;
   router.push('/historyBookingDetails');
 };
 const bookingStore = useBookingsStore();
@@ -19,7 +20,9 @@ const props = defineProps<{
   booking: Booking,
   status: string,
   dateCheckIn: string,
+  createdDate: Date,
 }>();
+
 
 const cancelBooking = async (bookingId: number) => {
   try {
@@ -79,7 +82,7 @@ const clickConfirmCancel = (bookingId: number) => {
         <!-- Room Details -->
         <div class="w-2/3 pt-15 bg-white flex flex-col justify-between">
           <div class="flex justify-end">
-          <p class='items-center p-3'>Created Date:</p>
+          <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
         </div>
           <div>
             <li class="card-text ">{{ props.typeRoom }}</li>

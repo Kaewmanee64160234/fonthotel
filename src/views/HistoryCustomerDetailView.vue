@@ -1,15 +1,37 @@
 <script setup lang="ts">
+import { useBookingsStore } from "@/store/booking.store";
+
 const clickback = () => {
   window.location.href = "/historyBookings";
 };
+// Function to format dates
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+// const formatTime = new Date().toLocaleTimeString();
+const formatTime = (dateString: string): string => {
+  const date = new Date(dateString);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amOrPm = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 || 12; // Convert hours to 12-hour format
+  const formattedMinutes = minutes.toString().padStart(2, "0"); // Ensure minutes are two digits
+  return `${formattedHours}:${formattedMinutes} ${amOrPm}`; // Combine hours, minutes, and AM/PM
+};
+const bookingStore = useBookingsStore();
 </script>
 
 <template>
-
   <body>
     <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px; color:#F5EEE6" class="far ">&#xf359;</i>
+        <i style="font-size: 30px; color: #f5eee6" class="far">&#xf359;</i>
       </button>
     </div>
     <div class="flex justify-center items-center bigcard">
@@ -17,12 +39,8 @@ const clickback = () => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div class="grid gap-4 grid-cols-2 text-sm">
-            <button type="button" class="button-style">
-              Edit review
-            </button>
-            <button type="button" class="button-style">
-              Add review
-            </button>
+            <button type="button" class="button-style">Edit review</button>
+            <button type="button" class="button-style">Add review</button>
           </div>
         </div>
 
@@ -30,159 +48,326 @@ const clickback = () => {
           <div class="card-stay">
             <div class="card-container">
               <div class="flex-1 flex flex-row p-2 pl-5 mt-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Date :
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">
-                    Tue,Dec 26 ,2023 - Wed,Dec 27,2023</span>
+                  </span
+                  >{{ formatDate(bookingStore.currentBooking.checkIn) }} -
+                  {{ formatDate(bookingStore.currentBooking.checkOut) }}
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Check-in :
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">
-                    2:30 PM</span>
+                    {{ formatTime(bookingStore.currentBooking.checkIn) }}
+                  </span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Name :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">Linlada Pasukjai
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >{{ bookingStore.currentBooking.cusName }}
+                    {{ bookingStore.currentBooking.cusLastName }}
                   </span>
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Check-out :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">6:30 AM</span>
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >{{ formatTime(bookingStore.currentBooking.checkOut) }}
+                  </span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Room number :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">701</span>
+                  <span class="text-base font-sans" style="font-size: 15px">{{
+                    bookingStore.currentBooking.bookingDetail[0].room.id
+                  }}</span>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Type Room :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">Deluxe
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >{{
+                      bookingStore.currentBooking.bookingDetail[0].room.roomType
+                        .typeName
+                    }}
                   </span>
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Payment Information
                   </p>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="text-base font-sans" style="display: inline; margin-left: 100px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="text-base font-sans"
+                    style="display: inline; margin-left: 100px"
+                  >
                     Sleep 1 | 37 square metre
                   </p>
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Payment :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">Cardit Card
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >{{ bookingStore.currentBooking.paymentBooking }}
                   </span>
                 </div>
               </div>
 
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="text-base font-sans" style="display: inline; margin-left: 100px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="text-base font-sans"
+                    style="display: inline; margin-left: 100px"
+                  >
                     Sea View , Smart TV , Work Desk
                   </p>
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Name :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">Linlada Pasukjai
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >{{ bookingStore.currentBooking.cusName }}
+                    {{ bookingStore.currentBooking.cusLastName }}
                   </span>
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Activity :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">1 Buffet Breakfast</span>
+                  <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0" class="text-base font-sans" style="font-size: 15px">
+                    No activity</span
+                  >
                 </div>
 
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Status :
                   </p>
-                  <span class="text-base font-sans text-green-600" style="font-size: 15px">
-                    Success</span>
+                  <span
+                    v-if="bookingStore.currentBooking.status == 'waiting'"
+                    class="card-text text-orange-400"
+                  >
+                    {{ bookingStore.currentBooking.status }}</span
+                  >
+                  <span
+                    v-else-if="bookingStore.currentBooking.status == 'cancel'"
+                    class="card-text"
+                    style="color: red"
+                    >{{ bookingStore.currentBooking.status }}
+                  </span>
+                  <span
+                    v-else-if="bookingStore.currentBooking.status == 'confirm'"
+                    class="card-text"
+                    style="color: cadetblue"
+                    >{{ bookingStore.currentBooking.status }}</span
+                  >
+                  <span
+                    v-else-if="bookingStore.currentBooking.status == 'finish'"
+                    class="card-text"
+                    style="color: seagreen"
+                    >{{ bookingStore.currentBooking.status }}</span
+                  >
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
                     Guest :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 5px">2</span>
-                  <span class="text-base font-sans" style="font-size: 15px">Per Adult</span>
+                  <span
+                    class="text-base font-sans"
+                    style="font-size: 15px; margin-right: 5px"
+                    >{{ bookingStore.currentBooking.adult }}</span
+                  >
+                  <span class="text-base font-sans" style="font-size: 15px"
+                    >Per Adult</span
+                  >
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <span class="text-base font-sans" style="
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <span
+                    class="text-base font-sans"
+                    style="
                       font-size: 15px;
                       margin-right: 5px;
                       margin-left: 58px;
-                    ">0</span>
-                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 20px">Per Child</span>
+                    "
+                    >{{ bookingStore.currentBooking.child }}</span
+                  >
+                  <span
+                    class="text-base font-sans"
+                    style="font-size: 15px; margin-right: 20px"
+                    >Per Child</span
+                  >
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 18px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 18px"
+                  >
                     Fine :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px; margin-right: 5px">No Service</span>
+                  <span
+                    class="text-base font-sans"
+                    style="font-size: 15px; margin-right: 5px"
+                    >{{
+                      bookingStore.currentBooking.bookingDetail[0]
+                        .brokenequipment?.cost
+                    }}</span
+                  >
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
-                <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px;">
-                  <p class="font-bold" style="display: inline; margin-right: 5px; font-size: 20px">
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                  <p
+                    class="font-bold"
+                    style="display: inline; margin-right: 5px; font-size: 20px"
+                  >
                     Total :
                   </p>
 
-                  <span class="font-medium" style="
+                  <span
+                    class="font-medium"
+                    style="
                       font-size: 15px;
                       display: inline;
                       margin-left: 40px;
                       font-size: 23px;
-                    ">
-                    7,009.00
+                    "
+                  >
+                    {{ bookingStore.currentBooking.total }}
                   </span>
 
-                  <span class="font-bold" style="
+                  <span
+                    class="font-bold"
+                    style="
                       font-size: 15px;
                       display: inline;
                       margin-left: 40px;
                       font-size: 20px;
-                    ">
-                    Baht</span>
+                    "
+                  >
+                    Baht</span
+                  >
                 </div>
               </div>
             </div>
