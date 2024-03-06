@@ -111,7 +111,7 @@ const bookingStore = useBookingsStore();
                     Check-out :
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px"
-                    >{{ formatTime(bookingStore.currentBooking.checkOut) }}
+                    >{{ formatTime(bookingStore.currentBooking!.checkOut) }}
                   </span>
                 </div>
               </div>
@@ -222,20 +222,47 @@ const bookingStore = useBookingsStore();
                   </span>
                 </div>
               </div>
-              <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
-                    Activity :
-                  </p>
-                  <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0" class="text-base font-sans" style="font-size: 15px">
-                    No activity</span
-                  >
+              <div class="flex-1 flex flex-row">
+                <div class="flex-1 flex flex-row  pl-5">
+                  <p class="font-medium">
+                        Activity :
+                      </p>
+                  <div class="flex-1 flex flex-col pl-5">
+                    <!-- Changed to flex-col for vertical layout -->
+                    <div class="flex-2" style="width: 100%; font-size: 16px">
+                      <!-- Removed flex directives here for direct control -->
+                    
+                      <span
+                        v-if="
+                          bookingStore.currentBooking.activityPerBooking
+                            .length == 0
+                        "
+                        class="text-base font-sans"
+                        style="font-size: 15px"
+                      >
+                        No activity
+                      </span>
+                      <!-- Unordered list for activities -->
+                      <ul
+                        v-else
+                        class="text-base font-sans"
+                        style="
+                          font-size: 15px;
+                          list-style-type: disc;
+                          padding-left: 20px;
+                        "
+                      >
+                        <li
+                          v-for="activityPerBooking in bookingStore
+                            .currentBooking.activityPerBooking"
+                          :key="activityPerBooking.id"
+                        >
+                          {{ activityPerBooking.qty }}
+                          {{ activityPerBooking.activity.name }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
 
                 <div
@@ -327,14 +354,7 @@ const bookingStore = useBookingsStore();
                   >
                     Fine :
                   </p>
-                  <span
-                    class="text-base font-sans"
-                    style="font-size: 15px; margin-right: 5px"
-                    >{{
-                      bookingStore.currentBooking.bookingDetail[0]
-                        .brokenequipment?.cost
-                    }}</span
-                  >
+                  
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">

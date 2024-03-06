@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import router from "@/router";
 const clickMoreDetail = () => {
   bookingStore.currentBooking = props.booking;
-  // router.push('/historyBookingDetails');
+  console.log(JSON.stringify(bookingStore.currentBooking));
+  router.push('/historyBookingDetails');
 };
 const bookingStore = useBookingsStore();
 const props = defineProps<{
