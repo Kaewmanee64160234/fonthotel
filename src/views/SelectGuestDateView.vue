@@ -39,9 +39,7 @@ onMounted(async () => {
 });
 
 const clickcontinue = () => {
-  if (totalGuests.value === 0) {
-    //cannot just child
-    if(adultCount.value === 0&& childrenCount.value > 0){
+  if(adultCount.value === 0 && childrenCount.value > 0){
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -50,6 +48,9 @@ const clickcontinue = () => {
       return; // Prevent further execution
 
     }
+  if (totalGuests.value === 0) {
+    //cannot just child
+    
     Swal.fire({
       icon: "error",
       title: "Oops...",

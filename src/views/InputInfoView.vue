@@ -136,10 +136,7 @@ const validateForm = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameRegex = /^[a-zA-Z]+$/;
   const mobilePhoneRegex = /^\d{10}$/;
-  if (!firstName.value || !lastName.value || !emailAddress.value || !country.value || !paymentMethod.value) {
-    Swal.fire('Validation Error', 'Please fill in the required fields', 'error');
-    return false;
-  }
+  
   if (!nameRegex.test(firstName.value) || !nameRegex.test(lastName.value)) {
     Swal.fire('Validation Error', 'First name and last name must contain only alphabetic characters', 'error');
     return false;
@@ -150,6 +147,21 @@ const validateForm = () => {
   }
   if (!mobilePhoneRegex.test(mobilePhone.value)) {
     Swal.fire('Validation Error', 'Telephone number must be a 10-digit number', 'error');
+    return false;
+  }
+  //country
+  if (country.value === "") {
+    Swal.fire('Validation Error', 'Please select a country', 'error');
+    return false;
+  }
+  //description
+  if (description.value === "") {
+    Swal.fire('Validation Error', 'Please enter an address', 'error');
+    return false;
+  }
+  //payment method
+  if (paymentMethod.value === "") {
+    Swal.fire('Validation Error', 'Please select a payment method', 'error');
     return false;
   }
   return true;

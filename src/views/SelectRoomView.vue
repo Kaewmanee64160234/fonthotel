@@ -6,6 +6,7 @@ import { useBookingsStore } from "@/store/booking.store";
 import { Booking, BookingDetail } from "@/model/booking.model";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import Swal from "sweetalert2";
 import { Room } from "@/model/room.model";
 const currentRoom = ref<Room>();
 const bookingsStore = useBookingsStore();
@@ -63,6 +64,7 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
+
 
 </script>
 
