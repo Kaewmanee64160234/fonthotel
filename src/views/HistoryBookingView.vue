@@ -26,6 +26,19 @@ const currentFormattedDate = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
 }).format(currentDate);
 
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  }).format(date);
+};
 let booking = ref<Booking>({
   adult: 0,
   checkIn: new Date(),
@@ -185,6 +198,7 @@ onMounted(async () => {
                 :status="item.status"
                 :price="item.total"
                 :dateCheckIn="item.checkIn.toDateString()"
+                :createdDate="formatDate(item.createdDate)"
               />
             </div>
           </div>
