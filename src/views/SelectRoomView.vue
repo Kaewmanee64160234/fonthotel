@@ -57,22 +57,18 @@ const applyGuestCount = () => {
   closeDropdown();
 };
 
-
-
 onMounted(async () => {
-
   await roomStore.getRoomsByType("ready", roomStore.currentType);
 
   booking.value = bookingsStore.currentBooking;
   console.log(booking.value);
 });
 const showDialog = ref(false);
-const dialogMessage = ref('');
+const dialogMessage = ref("");
 
 const paramValue = route.params.type;
 
 onMounted(async () => {
-
   localStorage.setItem("roomType", roomStore.currentType);
   if (
     paramValue.toString().split(" ")[0].toLowerCase() == null ||
@@ -82,7 +78,6 @@ onMounted(async () => {
     roomStore.currentType = localStorage.getItem("roomType")!;
   } else {
     roomStore.currentType = paramValue.toString().split(" ")[0];
-
   }
   console.log(roomStore.currentType);
   await roomStore.getRoomsByType(
@@ -103,47 +98,77 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
-
 </script>
 
 <template>
   <div class="body">
     <div class="pt-5 pl-5">
       <button @click="clickback">
-        <i style="font-size: 30px; color:#F5EEE6" class="far">&#xf359;</i>
+        <i style="font-size: 30px; color: #f5eee6" class="far">&#xf359;</i>
       </button>
     </div>
     <div class="min-h-screen flex card-container">
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div v-if="bookingsStore.currentBooking.bookingDetail.length > 0" class="relative inline-block text-left" @click="toggleDropdown">
+          <div
+            v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
+            class="relative inline-block text-left"
+            @click="toggleDropdown"
+          >
             <div>
-              <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
-                aria-haspopup="true">
+              <button
+                type="button"
+                class="btn-guest text-left m-0 p-0"
+                id="guest-button"
+                aria-expanded="true"
+                aria-haspopup="true"
+              >
                 <p>Guest</p>
                 <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
               </button>
 
-              <div v-if="isDropdownOpen === true" @click="closeDropdown" class="absolute card-selectguest mt-2"
-                role="guest" aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
+              <div
+                v-if="isDropdownOpen === true"
+                @click="closeDropdown"
+                class="absolute card-selectguest mt-2"
+                role="guest"
+                aria-orientation="vertical"
+                aria-labelledby="guest-button"
+                tabindex="-1"
+              >
                 <div class="py-1" role="none">
                   <div>
-                    <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm"
+                      >Select Guests</a
+                    >
                     <hr class="color-line" />
                     <!-- Select Adult -->
                     <div class="flex-1 flex flex-row p-1">
                       <div class="flex-1 flex flex-col" style="width: 50%">
-                        <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                          id="menu-item-1">Adult</a>
+                        <a
+                          class="text-black block px-4 py-2 text-sm"
+                          role="menuitem"
+                          tabindex="-1"
+                          id="menu-item-1"
+                          >Adult</a
+                        >
                       </div>
                       <div class="flex-2 flex flex-col" style="width: 50%">
                         <div class="flex items-center py-2">
-                          <button type="button" class="btn-minus" @click="decrementGuest('adult')">
+                          <button
+                            type="button"
+                            class="btn-minus"
+                            @click="decrementGuest('adult')"
+                          >
                             <a class="text-white text-m text-center">-</a>
                           </button>
                           <a class="mx-4">{{ adultCount }}</a>
-                          <button type="button" class="btn-plus" @click="incrementGuest('adult')">
+                          <button
+                            type="button"
+                            class="btn-plus"
+                            @click="incrementGuest('adult')"
+                          >
                             <a class="text-white text-m text-center">+</a>
                           </button>
                         </div>
@@ -152,16 +177,29 @@ function formatTwoDates(date1: Date): string {
                     <!-- Select Children -->
                     <div class="flex-2 flex flex-row p-1">
                       <div class="flex-1 flex flex-col" style="width: 50%">
-                        <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                          id="menu-item-2">Children</a>
+                        <a
+                          class="text-gray-700 block px-4 py-2 text-sm"
+                          role="menuitem"
+                          tabindex="-1"
+                          id="menu-item-2"
+                          >Children</a
+                        >
                       </div>
                       <div class="flex-2 flex flex-col" style="width: 50%">
                         <div class="flex items-center py-2">
-                          <button type="button" class="btn-minus" @click="decrementGuest('children')">
+                          <button
+                            type="button"
+                            class="btn-minus"
+                            @click="decrementGuest('children')"
+                          >
                             <a class="text-white text-m text-center">-</a>
                           </button>
                           <a class="mx-4">{{ childrenCount }}</a>
-                          <button type="button" class="btn-plus" @click="incrementGuest('children')">
+                          <button
+                            type="button"
+                            class="btn-plus"
+                            @click="incrementGuest('children')"
+                          >
                             <a class="text-white text-m text-center">+</a>
                           </button>
                         </div>
@@ -170,10 +208,16 @@ function formatTwoDates(date1: Date): string {
                     <!-- Btn Apply -->
                     <div class="flex-3 flex flex-row p-1 justify-end">
                       <div class="flex">
-                        <button type="button" :class="adultCount + childrenCount === 0
-          ? 'disable-btn-apply '
-          : 'btn-apply'
-        " @click="applyGuestCount" :disabled="adultCount + childrenCount === 0">
+                        <button
+                          type="button"
+                          :class="
+                            adultCount + childrenCount === 0
+                              ? 'disable-btn-apply '
+                              : 'btn-apply'
+                          "
+                          @click="applyGuestCount"
+                          :disabled="adultCount + childrenCount === 0"
+                        >
                           <a class="text-white text-m text-center">Apply</a>
                         </button>
                       </div>
@@ -183,24 +227,31 @@ function formatTwoDates(date1: Date): string {
               </div>
             </div>
           </div>
-
-
-
         </div>
-        <div class="flex-1 flex flex-row p-2 ">
-          <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px;">
+        <div class="flex-1 flex flex-row p-2">
+          <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px">
             <p class="text-white font-semibold text-xl">Select Room</p>
           </div>
           <div class="inline-flex">
-            <button v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
-              class=" hover:bg-gray-400 text-white  font-semibold  py-2 px-4 rounded-s-lg rounded-e-lg ">
+            <button
+              v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
+              @click="roomStore.getRoomsByType('Standard', 'ready')"
+              class="hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded-s-lg rounded-e-lg"
+            >
               Standard
             </button>
-            <button v-if="bookingsStore.currentBooking.bookingDetail.length > 0" class=" hover:bg-gray-400 text-white   font-semibold py-2 px-4 rounded-s-lg rounded-e-lg ">
+            <button
+              v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
+              @click="roomStore.getRoomsByType('Deluxe', 'ready')"
+              class="hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded-s-lg rounded-e-lg"
+            >
               Deluxe
             </button>
-            <button v-if="bookingsStore.currentBooking.bookingDetail.length > 0" class="  hover:bg-gray-400 text-white   font-semibold py-2 px-4 rounded-s-lg rounded-e-lg ">
-
+            <button
+              v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
+              @click="roomStore.getRoomsByType('Luxury', 'ready')"
+              class="hover:bg-gray-400 text-white font-semibold py-2 px-4 rounded-s-lg rounded-e-lg"
+            >
               Luxury
             </button>
           </div>
@@ -208,9 +259,16 @@ function formatTwoDates(date1: Date): string {
 
         <div class="mt-2 overflow-y-auto dc-scroll mb-20">
           <div v-for="item of roomStore.currentRooms" :key="item.id">
-            <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
-              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" roomDetail="/SelectRoomDialog"
-              btnbooknow="#" />
+            <SelectRoomCard
+              :room="item"
+              :image="item.image"
+              :typename="item.roomType.typeName"
+              sleep="1"
+              detail="Sea View , Smart TV , Work Desk"
+              :price="item.roomType.price"
+              roomDetail="/SelectRoomDialog"
+              btnbooknow="#"
+            />
           </div>
         </div>
       </div>
@@ -236,17 +294,17 @@ function formatTwoDates(date1: Date): string {
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date :</span>
 
-                  <span class="font-medium">
+                  <span>
                     {{
-        formatTwoDates(
-          new Date(bookingsStore.currentBooking.checkIn)
-        ) +
-        "-" +
-        formatTwoDates(
-          new Date(bookingsStore.currentBooking.checkOut)
-        )
-      }}</span>
-
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkIn)
+                      ) +
+                      "-" +
+                      formatTwoDates(
+                        new Date(bookingsStore.currentBooking.checkOut)
+                      )
+                    }}</span
+                  >
                 </div>
 
                 <div class="flex-3 flex flex-row p-2 pl-5">
@@ -260,34 +318,52 @@ function formatTwoDates(date1: Date): string {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
     <!-- --- Dialog RoomDetail --- -->
-    <div v-if="roomStore.roomDetailCard == true"
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-      <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-        style="max-width: 90%; margin-top: -20vh">
+    <div
+      v-if="roomStore.roomDetailCard == true"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
+    >
+      <div
+        class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        style="max-width: 90%; margin-top: -20vh"
+      >
         <div class="body-roomDetail">
           <!-- The container for the overlay and cards -->
           <div class="flex justify-center items-center bigcard-roomDetail">
             <!-- Added classes for centering -->
             <div class="grid relative card-style-roomDetail items-center mt-10">
-              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
+              <div
+                class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5"
+              >
                 <!-- Center alignment -->
                 <div class="flex grid grid-cols-2">
-                  <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                  <p
+                    class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
+                  >
                     Room Detail
                   </p>
-                  <a href="#" class="flex items-center justify-end text-right mr-10">
-
-                    <svg @click="roomStore.toggleRoomDetail()" xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                      </path>
+                  <a
+                    href="#"
+                    class="flex items-center justify-end text-right mr-10"
+                  >
+                    <svg
+                      @click="roomStore.toggleRoomDetail()"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
                     </svg>
                   </a>
                 </div>
@@ -295,25 +371,41 @@ function formatTwoDates(date1: Date): string {
                   <hr class="hr-style-roomDetail" />
                 </div>
               </div>
-              <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
-                <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
-                  <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
+              <div
+                class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10"
+              >
+                <div
+                  class="flex grid grid-rows-1 grid-cols-1 items-center pt-5"
+                >
+                  <p
+                    class="text-sm text-gray-900 dark:text-white mb-4 font-semibold"
+                  >
                     {{ roomStore.curentRoom.roomType.typeName }}
                   </p>
-                  <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
+                  <p
+                    class="text-xs text-gray-900 dark:text-white mb-4 opacity-70"
+                  >
                     Sleep 1 | 37 square metre
                   </p>
-                  <p class="text-sm text-gray-900 dark:text-white font-semibold">
+                  <p
+                    class="text-sm text-gray-900 dark:text-white font-semibold"
+                  >
                     Room Amenities
                   </p>
                   <ul class="list-disc mb-10">
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                    <li
+                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
+                    >
                       Free Wifi
                     </li>
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                    <li
+                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
+                    >
                       Accessible Room
                     </li>
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                    <li
+                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
+                    >
                       Non-smoking
                     </li>
                   </ul>
@@ -321,10 +413,13 @@ function formatTwoDates(date1: Date): string {
                 <div class="justify-start items-center">
                   <img
                     class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                    :src="roomStore.curentRoom.image" />
+                    :src="roomStore.curentRoom.image"
+                  />
                 </div>
               </div>
-              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
+              <div
+                class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5"
+              >
                 <!-- Center alignment -->
                 <div>
                   <hr class="hr-style-roomDetail" />
@@ -334,20 +429,24 @@ function formatTwoDates(date1: Date): string {
                 <div class="flex grid grid-rows-1 flex-col items-right ml-10">
                   <!-- Center alignment -->
                   <div class="text-center">
-                    <div class="flex flex-wrap justify-between items-center pt-5">
-                      <p class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                    <div
+                      class="flex flex-wrap justify-between items-center pt-5"
+                    >
+                      <p
+                        class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70"
+                      >
                         City View, Smart TV, Work Desk
                       </p>
-                      <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70 ">
+                      <p
+                        class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
+                      >
                         {{ roomStore.curentRoom.roomType.descriptions }}
                       </p>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
