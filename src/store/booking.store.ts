@@ -109,6 +109,7 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   const saveBooking = async () => {
     try {
+      calculateInitialTotal();
       if (userStore.currentUser.role == "customer") {
         const response = await bookingService.saveBooking(
           currentBooking.value,
@@ -135,171 +136,85 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
   };
 
+  // Function to map a single booking object
+  function mapOneBooking(bookingData: any) {
+    const booking: Booking = {
+      id: bookingData.booking_id,
+      createDate: new Date(bookingData.booking_create_date),
+      cusName: bookingData.booking_cus_name,
+      cusLastName: bookingData.booking_cus_lastname,
+      cusTel: bookingData.booking_cus_tel,
+      cusEmail: bookingData.booking_cus_email,
+      cusCountry: bookingData.booking_cus_addr,
+      cusAddress: bookingData.booking_cus_addr_des,
+      checkIn: new Date(bookingData.booking_checkin),
+      checkOut: new Date(bookingData.booking_checkout),
+      total: bookingData.booking_total,
+      pledge: bookingData.booking_cash_pledge,
+      totalDiscount: bookingData.booking_total_discount,
+      paymentBooking: bookingData.booking_payment_booking,
+      paymentCheckout: bookingData.booking_payment_checkout,
+      status: bookingData.booking_status,
+      statusLate: bookingData.booking_status_late,
+      adult: bookingData.booking_adult,
+      child: bookingData.booking_child,
+      createdDate: new Date(bookingData.updateDate),
+      customer: {
+        id: bookingData.customer.cus_id,
+        name: bookingData.customer.cus_name,
+        startDate: new Date(bookingData.customer.cus_start_date),
+      },
+      promotion: bookingData.promotion, // Map promotion as needed
+      employee: bookingData.employee
+        ? {
+            id: bookingData.employee.emp_id,
+            name: bookingData.employee.emp_name,
+            position: bookingData.employee.emp_position,
+            tel: bookingData.employee.emp_tel,
+            dateOfBirth: new Date(bookingData.employee.emp_dob),
+            address: bookingData.employee.emp_addr,
+            email: bookingData.employee.emp_email,
+            dateStartWork: bookingData.employee.emp_dsw, // Change type to string
+            hourlyRate: bookingData.employee.emp_hourly_wage,
+          }
+        : undefined,
+      bookingDetail: bookingData.bookingDetail
+        ? bookingData.bookingDetail.map((detail: any) => ({
+            id: detail.booking_de_id,
+            room: {
+              id: detail.room.room_id,
+              image: detail.room.room_img_path,
+              status: detail.room.room_status,
+              roomType: {
+                id: detail.room.roomtype.room_type_id,
+                roomType: detail.room.roomtype.room_type,
+                typeName: detail.room.roomtype.room_type_name,
+                bedSize: detail.room.roomtype.room_type_bed_size,
+              },
+            },
+            total: detail.total,
+          }))
+        : [],
+      activityPerBooking: bookingData.activityPer
+        ? bookingData.activityPer.map((activity: any) => ({
+            id: activity.id,
+            activity: {
+              id: activity.activity.id,
+              name: activity.activity.name,
+            },
+            total: activity.total,
+            qty: activity.qty,
+          }))
+        : [],
+    };
+    return booking;
+  }
+
   const getBookingBybookingId = async (id: number) => {
     try {
       const response = await bookingService.getBookingBybookingid(id);
       if (response.data) {
-        const booking: Booking = {
-          id: response.data.booking_id,
-          createDate: response.data.booking_create_date,
-          cusName: response.data.booking_cus_name,
-          cusLastName: response.data.booking_cus_lastname,
-          cusTel: response.data.booking_cus_tel,
-          cusEmail: response.data.booking_cus_email,
-          cusCountry: response.data.booking_cus_addr,
-          cusAddress: response.data.booking_cus_addr_des,
-          checkIn: response.data.booking_checkin,
-          checkOut: response.data.booking_checkout,
-          total: response.data.booking_total,
-          pledge: response.data.booking_cash_pledge,
-          totalDiscount: response.data.booking_total_discount,
-          paymentBooking: response.data.booking_payment_checkout,
-          paymentCheckout: response.data.paymentCheckout,
-          status: response.data.booking_status,
-          statusLate: response.data.booking_status_late,
-          adult: response.data.booking_de_adult,
-          child: response.data.booking_de_child,
-
-          employee: {
-            address: "",
-            dateOfBirth: new Date(),
-            dateStartWork: "",
-            email: "",
-            hourlyRate: 0,
-            id: -1,
-            name: "",
-            position: "",
-            tel: "",
-          },
-          customer: {
-            id: -1,
-            name: "",
-            startDate: new Date(),
-          },
-          promotion: {
-            createdDate: new Date(),
-            discount: 0,
-            discountPercent: 0,
-            endDate: new Date(),
-            id: -1,
-            name: "",
-          },
-          createdDate: new Date(response.data.booking_create_date),
-          bookingDetail: [],
-          activityPerBooking: [],
-        };
-        if (response.data != null) {
-          // booking
-          if (response.data.promotion != null) {
-            const promotion: Promotion = {
-              id: response.data.promotion.prom_id,
-              createdDate: response.data.promotion.prom_created_date,
-              endDate: response.data.promotion.prom_end_date,
-              name: response.data.promotion.prom_name,
-              discount: response.data.promotion.prom_discount,
-              discountPercent: response.data.promotion.prom_discount_pres,
-            };
-            booking.promotion = promotion;
-          }
-          if (response.data.promotion != null) {
-            const customer: Customer = {
-              id: response.data.customer.cus_id,
-              name: response.data.customer.cus_name,
-              startDate: response.data.customer.cus_start_date,
-            };
-            booking.customer = customer;
-          }
-          if (response.data.promotion != null) {
-            const employee: Employee = {
-              id: response.data.employee.emp_id,
-              name: response.data.employee.emp_name,
-              position: response.data.employee.emp_position,
-              tel: response.data.employee.emp_tel,
-              dateOfBirth: response.data.employee.emp_dob,
-              address: response.data.employee.emp_addr,
-              email: response.data.employee.emp_email,
-              dateStartWork: response.data.employee.emp_dsw,
-              hourlyRate: response.data.employee.emp_hourly_wage,
-            };
-            booking.employee = employee;
-          }
-
-          if (response.data.bookingDetail) {
-            for (const i in response.data.bookingDetail) {
-              console.log(response.data.bookingDetail[i]);
-              const roomType: RoomType = {
-                id: response.data.bookingDetail[i].room.roomtype.room_type_id,
-                roomType:
-                  response.data.bookingDetail[i].room.roomtype.room_type,
-                typeName:
-                  response.data.bookingDetail[i].room.roomtype.room_type_name,
-                bedSize:
-                  response.data.bookingDetail[i].room.roomtype
-                    .room_type_bed_size,
-                bath: response.data.bookingDetail[i].room.roomtype
-                  .room_type_bath,
-                chromeCast:
-                  response.data.bookingDetail[i].room.roomtype
-                    .room_type_chromecast,
-                desk: response.data.bookingDetail[i].room.roomtype
-                  .room_type_desk,
-                electricSheer:
-                  response.data.bookingDetail[i].room.roomtype
-                    .room_type_electric_sheer,
-                price:
-                  response.data.bookingDetail[i].room.roomtype.room_type_price,
-                water:
-                  response.data.bookingDetail[i].room.roomtype.room_type_water,
-                wifi: response.data.bookingDetail[i].room.roomtype
-                  .room_type_wifi,
-                descriptions:
-                  response.data.bookingDetail[i].room.roomtype.room_type_des,
-                  maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
-                  maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
-                  sleep: response.data.bookingDetail[i].room.roomtype.sleep,
-                  
-              };
-
-              const room: Room = {
-                id: response.data.bookingDetail[i].room.room_id,
-                image: response.data.bookingDetail[i].room.room_img_path,
-                status: response.data.bookingDetail[i].room.room_status,
-                roomType: roomType,
-              };
-              const bookingDetail: BookingDetail = {
-                id: response.data.bookingDetail[i].id,
-                room: room,
-                total: response.data.bookingDetail[i].total,
-              };
-              booking.bookingDetail?.push(bookingDetail);
-            }
-          }
-          if (response.data.activityPerBooking) {
-            for (const i in response.data.activityPerBooking) {
-              const activityPerBooking: ActivityPerBooking = {
-                id: response.data.activityPerBooking[i].id,
-                // booking: response.data.activityPerBooking.bookings[i].booking,
-                activity: {
-                  id: response.data.activityPerBooking[i].act_id,
-                  image: response.data.activityPerBooking[i].act_img_path,
-                  name: response.data.activityPerBooking[i].act_name,
-                  price: response.data.activityPerBooking[i].act_price,
-                  description: response.data.activityPerBooking[i].act_des,
-                },
-                total: response.data.activityPerBooking[i].total,
-                // createdate: response.data.activityPerBooking[i].createdate,
-                // updatedate: response.data.activityPerBooking[i].updatedate,
-                qty: response.data.activityPerBooking[i].qty,
-              };
-
-              booking.activityPerBooking?.push(activityPerBooking);
-            }
-          }
-          currentBooking.value = booking;
-          setBooking(booking);
-          console.log("---------------------------------");
-          console.log("Book", currentBooking.value);
-        }
+        currentBooking.value = mapOneBooking(response.data);
       } else {
         bookings.value = [];
       }
@@ -310,6 +225,8 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   function setBooking(booking: Booking) {
     currentBooking.value = { ...booking };
+    calculateInitialTotal();
+
     return currentBooking;
   }
   function getBooking() {
@@ -317,169 +234,20 @@ export const useBookingsStore = defineStore("bookings", () => {
   }
   function toggleMoreDetail() {
     moreDetailCard.value = !moreDetailCard.value;
-}
+  }
 
   async function getBookingByCustomerIdLastcreated() {
     const response = await bookingService.getBookingByCustomerIdLastcreated(
       userStore.currentUser.customer!.id!
     );
-    console.log(response);
-    const booking: Booking = {
-      id: response.data.booking_id,
-      createDate: response.data.booking_create_date,
-      cusName: response.data.booking_cus_name,
-      cusLastName: response.data.booking_cus_lastname,
-      cusTel: response.data.booking_cus_tel,
-      cusEmail: response.data.booking_cus_email,
-      cusCountry: response.data.booking_cus_addr,
-      cusAddress: response.data.booking_cus_addr_des,
-      checkIn: response.data.booking_checkin,
-      checkOut: response.data.booking_checkout,
-      total: response.data.booking_total,
-      pledge: response.data.booking_cash_pledge,
-      totalDiscount: response.data.booking_total_discount,
-      paymentBooking: response.data.booking_payment_booking,
-      paymentCheckout: response.data.paymentCheckout,
-      status: response.data.booking_status,
-      statusLate: response.data.booking_status_late,
+    console.log("response", response.data);
 
-      adult: response.data.booking_adult,
-      child: response.data.booking_child,
-
-      employee: {
-        address: "",
-        dateOfBirth: new Date(),
-        dateStartWork: "",
-        email: "",
-        hourlyRate: 0,
-        id: -1,
-        name: "",
-        position: "",
-        tel: "",
-      },
-      customer: {
-        id: -1,
-        name: "",
-        startDate: new Date(),
-      },
-      promotion: {
-        createdDate: new Date(),
-        discount: 0,
-        discountPercent: 0,
-        endDate: new Date(),
-        id: -1,
-        name: "",
-      },
-      createdDate: new Date(response.data.booking_create_date),
-      bookingDetail: [],
-      activityPerBooking: [],
-    };
     if (response.data != null) {
-      // booking
-      if (response.data.promotion != null) {
-        const promotion: Promotion = {
-          id: response.data.promotion.prom_id,
-          createdDate: response.data.promotion.prom_created_date,
-          endDate: response.data.promotion.prom_end_date,
-          name: response.data.promotion.prom_name,
-          discount: response.data.promotion.prom_discount,
-          discountPercent: response.data.promotion.prom_discount_pres,
-        };
-        booking.promotion = promotion;
-      }
-      if (response.data.promotion != null) {
-        const customer: Customer = {
-          id: response.data.customer.cus_id,
-          name: response.data.customer.cus_name,
-          startDate: response.data.customer.cus_start_date,
-        };
-        booking.customer = customer;
-      }
-      if (response.data.promotion != null) {
-        const employee: Employee = {
-          id: response.data.employee.emp_id,
-          name: response.data.employee.emp_name,
-          position: response.data.employee.emp_position,
-          tel: response.data.employee.emp_tel,
-          dateOfBirth: response.data.employee.emp_dob,
-          address: response.data.employee.emp_addr,
-          email: response.data.employee.emp_email,
-          dateStartWork: response.data.employee.emp_dsw,
-          hourlyRate: response.data.employee.emp_hourly_wage,
-        };
-        booking.employee = employee;
-      }
-
-      if (response.data.bookingDetail) {
-        for (const i in response.data.bookingDetail) {
-          console.log(response.data.bookingDetail[i]);
-          const roomType: RoomType = {
-          
-            id: response.data.bookingDetail[i].room.roomtype.room_type_id,
-            roomType: response.data.bookingDetail[i].room.roomtype.room_type,
-            typeName:
-              response.data.bookingDetail[i].room.roomtype.room_type_name,
-            bedSize:
-              response.data.bookingDetail[i].room.roomtype.room_type_bed_size,
-            bath: response.data.bookingDetail[i].room.roomtype.room_type_bath,
-            chromeCast:
-              response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
-            desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
-            electricSheer:
-              response.data.bookingDetail[i].room.roomtype
-                .room_type_electric_sheer,
-            price: response.data.bookingDetail[i].room.roomtype.room_type_price,
-            water: response.data.bookingDetail[i].room.roomtype.room_type_water,
-            wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
-            descriptions:
-              response.data.bookingDetail[i].room.roomtype.room_type_des,
-              maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
-              maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
-              sleep: response.data.bookingDetail[i].room.roomtype.sleep,
-              
-          
-          };
-
-          const room: Room = {
-            id: response.data.bookingDetail[i].room.room_id,
-            image: response.data.bookingDetail[i].room.room_img_path,
-            status: response.data.bookingDetail[i].room.room_status,
-            roomType: roomType,
-          };
-          const bookingDetail: BookingDetail = {
-            id: response.data.bookingDetail[i].id,
-            room: room,
-            total: response.data.bookingDetail[i].total,
-          };
-          booking.bookingDetail?.push(bookingDetail);
-        }
-      }
-      if (response.data.activityPerBooking) {
-        for (const i in response.data.activityPerBooking) {
-          const activityPerBooking: ActivityPerBooking = {
-            id: response.data.activityPerBooking[i].id,
-            // booking: response.data.activityPerBooking.bookings[i].booking,
-            activity: {
-              id: response.data.activityPerBooking[i].act_id,
-              image: response.data.activityPerBooking[i].act_img_path,
-              name: response.data.activityPerBooking[i].act_name,
-              price: response.data.activityPerBooking[i].act_price,
-              description: response.data.activityPerBooking[i].act_des,
-            },
-            total: response.data.activityPerBooking[i].total,
-            // createdate: response.data.activityPerBooking[i].createdate,
-            // updatedate: response.data.activityPerBooking[i].updatedate,
-            qty: response.data.activityPerBooking[i].qty,
-          };
-
-          booking.activityPerBooking?.push(activityPerBooking);
-        }
-      }
-      currentBooking.value = booking;
-      setBooking(booking);
-      console.log("---------------------------------");
-      console.log("Book", currentBooking.value);
+      currentBooking.value = mapOneBooking(response.data);
     }
+
+    console.log("---------------------------------");
+    console.log("Book", currentBooking.value);
   }
 
   //get bookings by employee id last created
@@ -487,160 +255,12 @@ export const useBookingsStore = defineStore("bookings", () => {
     const response = await bookingService.getBookingByEmployeeIdLastcreated(
       userStore.currentUser.employee!.id!
     );
-    console.log(response);
-    const booking: Booking = {
-      id: response.data.booking_id,
-      createDate: response.data.booking_create_date,
-      cusName: response.data.booking_cus_name,
-      cusLastName: response.data.booking_cus_lastname,
-      cusTel: response.data.booking_cus_tel,
-      cusEmail: response.data.booking_cus_email,
-      cusCountry: response.data.booking_cus_addr,
-      cusAddress: response.data.booking_cus_addr_des,
-      checkIn: new Date(response.data.booking_checkin),
-      checkOut: new Date(response.data.booking_checkout),
-      total: response.data.booking_total,
-      pledge: response.data.booking_cash_pledge,
-      totalDiscount: response.data.booking_total_discount,
-      paymentBooking: response.data.booking_payment_booking,
-      paymentCheckout: response.data.paymentCheckout,
-      status: response.data.booking_status,
-      statusLate: response.data.booking_status_late,
-
-      adult: response.data.booking_adult,
-      child: response.data.booking_child,
-
-      employee: {
-        address: "",
-        dateOfBirth: new Date(),
-        dateStartWork: "",
-        email: "",
-        hourlyRate: 0,
-        id: -1,
-        name: "",
-        position: "",
-        tel: "",
-      },
-      customer: {
-        id: -1,
-        name: "",
-        startDate: new Date(),
-      },
-      promotion: {
-        createdDate: new Date(),
-        discount: 0,
-        discountPercent: 0,
-        endDate: new Date(),
-        id: -1,
-        name: "",
-      },
-      createdDate: new Date(response.data.booking_create_date),
-      bookingDetail: [],
-      activityPerBooking: [],
-    };
     if (response.data != null) {
-      // booking
-      if (response.data.promotion != null) {
-        const promotion: Promotion = {
-          id: response.data.promotion.prom_id,
-          createdDate: response.data.promotion.prom_created_date,
-          endDate: response.data.promotion.prom_end_date,
-          name: response.data.promotion.prom_name,
-          discount: response.data.promotion.prom_discount,
-          discountPercent: response.data.promotion.prom_discount_pres,
-        };
-        booking.promotion = promotion;
-      }
-      if (response.data.promotion != null) {
-        const customer: Customer = {
-          id: response.data.customer.cus_id,
-          name: response.data.customer.cus_name,
-          startDate: response.data.customer.cus_start_date,
-        };
-        booking.customer = customer;
-      }
-      if (response.data.promotion != null) {
-        const employee: Employee = {
-          id: response.data.employee.emp_id,
-          name: response.data.employee.emp_name,
-          position: response.data.employee.emp_position,
-          tel: response.data.employee.emp_tel,
-          dateOfBirth: response.data.employee.emp_dob,
-          address: response.data.employee.emp_addr,
-          email: response.data.employee.emp_email,
-          dateStartWork: response.data.employee.emp_dsw,
-          hourlyRate: response.data.employee.emp_hourly_wage,
-        };
-        booking.employee = employee;
-      }
-
-      if (response.data.bookingDetail) {
-        for (const i in response.data.bookingDetail) {
-          console.log(response.data.bookingDetail[i]);
-          const roomType: RoomType = {
-            id: response.data.bookingDetail[i].room.roomtype.room_type_id,
-            roomType: response.data.bookingDetail[i].room.roomtype.room_type,
-            typeName:
-              response.data.bookingDetail[i].room.roomtype.room_type_name,
-            bedSize:
-              response.data.bookingDetail[i].room.roomtype.room_type_bed_size,
-            bath: response.data.bookingDetail[i].room.roomtype.room_type_bath,
-            chromeCast:
-              response.data.bookingDetail[i].room.roomtype.room_type_chromecast,
-            desk: response.data.bookingDetail[i].room.roomtype.room_type_desk,
-            electricSheer:
-              response.data.bookingDetail[i].room.roomtype
-                .room_type_electric_sheer,
-            price: response.data.bookingDetail[i].room.roomtype.room_type_price,
-            water: response.data.bookingDetail[i].room.roomtype.room_type_water,
-            wifi: response.data.bookingDetail[i].room.roomtype.room_type_wifi,
-            descriptions:
-              response.data.bookingDetail[i].room.roomtype.room_type_des,
-              maxAdult: response.data.bookingDetail[i].room.roomtype.max_adult,
-              maxChildren: response.data.bookingDetail[i].room.roomtype.max_children,
-              sleep: response.data.bookingDetail[i].room.roomtype.sleep,
-          };
-
-          const room: Room = {
-            id: response.data.bookingDetail[i].room.room_id,
-            image: response.data.bookingDetail[i].room.room_img_path,
-            status: response.data.bookingDetail[i].room.room_status,
-            roomType: roomType,
-          };
-          const bookingDetail: BookingDetail = {
-            id: response.data.bookingDetail[i].id,
-            room: room,
-            total: response.data.bookingDetail[i].total,
-          };
-          booking.bookingDetail?.push(bookingDetail);
-        }
-      }
-      if (response.data.activityPerBooking) {
-        for (const i in response.data.activityPerBooking) {
-          const activityPerBooking: ActivityPerBooking = {
-            id: response.data.activityPerBooking[i].id,
-            // booking: response.data.activityPerBooking.bookings[i].booking,
-            activity: {
-              id: response.data.activityPerBooking[i].act_id,
-              image: response.data.activityPerBooking[i].act_img_path,
-              name: response.data.activityPerBooking[i].act_name,
-              price: response.data.activityPerBooking[i].act_price,
-              description: response.data.activityPerBooking[i].act_des,
-            },
-            total: response.data.activityPerBooking[i].total,
-            // createdate: response.data.activityPerBooking[i].createdate,
-            // updatedate: response.data.activityPerBooking[i].updatedate,
-            qty: response.data.activityPerBooking[i].qty,
-          };
-
-          booking.activityPerBooking?.push(activityPerBooking);
-        }
-      }
-      currentBooking.value = booking;
-      setBooking(booking);
-      console.log("---------------------------------");
-      console.log("Book", currentBooking.value);
+      currentBooking.value = mapOneBooking(response.data);
     }
+
+    console.log("---------------------------------");
+    console.log("Book", currentBooking.value);
   };
 
   //add bookingDetail
@@ -651,6 +271,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       currentBooking.value.total + bookingDetail.room.roomType.price;
     console.log("---------------------------------");
     console.log(currentBooking.value);
+    calculateInitialTotal();
   };
 
   const addActivityPerBooking = (activityPerBook: ActivityPerBooking) => {
@@ -670,42 +291,53 @@ export const useBookingsStore = defineStore("bookings", () => {
         activityPerBook.qty * activityPerBook.activity.price;
     }
 
-    const initialTotal = calculateInitialTotal(); // Implement this function based on your booking model
-    currentBooking.value.total = initialTotal;
+    calculateInitialTotal(); // Implement this function based on your booking model
 
     console.log("---------------------------------");
     console.log(currentBooking.value.total);
   };
 
+
+
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
     currentBooking.value.total = 0;
     currentBooking.value.totalDiscount = 0;
+
+    // Calculate the number of days in the stay
+    const checkInDate = new Date(currentBooking.value.checkIn);
+    const checkOutDate = new Date(currentBooking.value.checkOut);
+    const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
+    const dayDiff = timeDiff / (1000 * 3600 * 24);
+
+    // Ensure dayDiff is at least 1 to account for same-day check-in and check-out
+    const numberOfDays = dayDiff > 0 ? dayDiff : 1;
+    console.log("Number of days: ", numberOfDays);
+
     for (const bookingDetail of currentBooking.value.bookingDetail) {
-      currentBooking.value.total += bookingDetail.total;
+      // Multiply the price by the number of days
+      currentBooking.value.total += bookingDetail.total * numberOfDays;
     }
     for (const activityPerBooking of currentBooking.value.activityPerBooking) {
       currentBooking.value.total += activityPerBooking.total;
     }
-    //discount
+    // Discount calculations
     if (currentBooking.value.promotion) {
-      //if percent
       if (currentBooking.value.promotion.discountPercent) {
+        // Apply percent discount
         currentBooking.value.total =
           currentBooking.value.total -
           (currentBooking.value.total *
             currentBooking.value.promotion.discountPercent) /
             100;
-      } else {
-        //if discount
-        if (currentBooking.value.promotion.discount) {
-          currentBooking.value.total =
-            currentBooking.value.total -
-            currentBooking.value.promotion.discount;
-        }
+      } else if (currentBooking.value.promotion.discount) {
+        // Apply flat discount
+        currentBooking.value.total =
+          currentBooking.value.total - currentBooking.value.promotion.discount;
       }
     }
-    return currentBooking.value.total;
+
+    console.log("Total: ", currentBooking.value.total);
   }
 
   // Assuming bookingService.getBookings(order, status) retrieves booking data,
@@ -716,86 +348,9 @@ export const useBookingsStore = defineStore("bookings", () => {
       const response = await bookingService.getBookings(order, status);
       const bookings_ = response.data.map((bookingData: any) => {
         // Basic booking information
-        const booking = {
-          id: bookingData.booking_id,
-          createDate: new Date(bookingData.booking_create_date),
-          cusName: bookingData.booking_cus_name,
-          cusLastName: bookingData.booking_cus_lastname,
-          cusTel: bookingData.booking_cus_tel,
-          cusEmail: bookingData.booking_cus_email,
-          cusCountry: bookingData.booking_cus_addr,
-          cusAddress: bookingData.booking_cus_addr_des,
-          checkIn: bookingData.booking_checkin
-            ? new Date(bookingData.booking_checkin)
-            : null,
-          checkOut: bookingData.booking_checkout
-            ? new Date(bookingData.booking_checkout)
-            : null,
-          total: bookingData.booking_total,
-          pledge: bookingData.booking_cash_pledge,
-          totalDiscount: bookingData.booking_total_discount,
-          paymentBooking: bookingData.booking_payment_booking,
-          paymentCheckout: bookingData.booking_payment_checkout,
-          status: bookingData.booking_status,
-          statusLate: bookingData.booking_status_late,
-          adult: bookingData.booking_adult,
-          child: bookingData.booking_child,
-          createdDate: new Date(bookingData.updateDate),
-          customer: bookingData.customer
-            ? {
-                id: bookingData.customer.cus_id,
-                name: bookingData.customer.cus_name,
-                startDate: new Date(bookingData.customer.cus_start_date),
-              }
-            : null,
-          promotion: bookingData.promotion, // Add promotion mapping if needed
-          employee: bookingData.employee
-            ? {
-                id: bookingData.employee.emp_id,
-                name: bookingData.employee.emp_name,
-                position: bookingData.employee.emp_position,
-                tel: bookingData.employee.emp_tel,
-                dateOfBirth: new Date(bookingData.employee.emp_dob),
-                address: bookingData.employee.emp_addr,
-                email: bookingData.employee.emp_email,
-                dateStartWork: new Date(bookingData.employee.emp_dsw),
-                hourlyRate: bookingData.employee.emp_hourly_wage,
-              }
-            : null,
-          bookingDetail: bookingData.bookingDetail
-            ? bookingData.bookingDetail.map((detail: any) => ({
-                id: detail.booking_de_id,
-                room: {
-                  id: detail.room.room_id,
-                  image: detail.room.room_img_path,
-                  status: detail.room.room_status,
-                  roomType: {
-                    id: detail.room.roomtype.room_type_id,
-                    roomType: detail.room.roomtype.room_type,
-                    typeName: detail.room.roomtype.room_type_name,
-                    bedSize: detail.room.roomtype.room_type_bed_size,
-                    // Add other room type details as needed
-                  },
-                },
-                total: detail.total,
-              }))
-            : [],
-          activityPerBooking: bookingData.activityPer
-            ? bookingData.activityPer.map((activity: any) => ({
-                id: activity.id,
-                activity: {
-                  id: activity.activity.id,
-                  name: activity.activity.name,
-                },
-                total: activity.total,
-                qty: activity.qty,
-              }))
-            : [],
-        };
-        console.log(booking);
+        const booking = mapOneBooking(bookingData);
         return booking;
       });
-      bookings.value = [];
 
       bookings.value.push(...bookings_);
     } catch (error) {
@@ -842,7 +397,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       (activity) => activity.id == activityPerBooking.id
     );
     currentBooking.value.activityPerBooking.splice(index, 1);
-    currentBooking.value.total = calculateInitialTotal();
+    calculateInitialTotal();
     console.log(currentBooking.value.activityPerBooking.length);
   };
 
@@ -856,7 +411,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       name: "",
     };
 
-    currentBooking.value.total = calculateInitialTotal();
+    calculateInitialTotal();
   };
 
   // create function getBookingByCustomerId
@@ -864,82 +419,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     const response = await bookingService.getBookingByCustomerId(id);
     const bookings_ = response.data.map((bookingData: any) => {
       // Basic booking information
-      const booking = {
-        id: bookingData.booking_id,
-        createDate: new Date(bookingData.booking_create_date),
-        cusName: bookingData.booking_cus_name,
-        cusLastName: bookingData.booking_cus_lastname,
-        cusTel: bookingData.booking_cus_tel,
-        cusEmail: bookingData.booking_cus_email,
-        cusCountry: bookingData.booking_cus_addr,
-        cusAddress: bookingData.booking_cus_addr_des,
-        checkIn: bookingData.booking_checkin
-          ? new Date(bookingData.booking_checkin)
-          : null,
-        checkOut: bookingData.booking_checkout
-          ? new Date(bookingData.booking_checkout)
-          : null,
-        total: bookingData.booking_total,
-        pledge: bookingData.booking_cash_pledge,
-        totalDiscount: bookingData.booking_total_discount,
-        paymentBooking: bookingData.booking_payment_booking,
-        paymentCheckout: bookingData.booking_payment_checkout,
-        status: bookingData.booking_status,
-        statusLate: bookingData.booking_status_late,
-        adult: bookingData.booking_adult,
-        child: bookingData.booking_child,
-        createdDate: new Date(bookingData.updateDate),
-        customer: bookingData.customer
-          ? {
-              id: bookingData.customer.cus_id,
-              name: bookingData.customer.cus_name,
-              startDate: new Date(bookingData.customer.cus_start_date),
-            }
-          : null,
-        promotion: bookingData.promotion, // Add promotion mapping if needed
-        employee: bookingData.employee
-          ? {
-              id: bookingData.employee.emp_id,
-              name: bookingData.employee.emp_name,
-              position: bookingData.employee.emp_position,
-              tel: bookingData.employee.emp_tel,
-              dateOfBirth: new Date(bookingData.employee.emp_dob),
-              address: bookingData.employee.emp_addr,
-              email: bookingData.employee.emp_email,
-              dateStartWork: new Date(bookingData.employee.emp_dsw),
-              hourlyRate: bookingData.employee.emp_hourly_wage,
-            }
-          : null,
-        bookingDetail: bookingData.bookingDetail
-          ? bookingData.bookingDetail.map((detail: any) => ({
-              id: detail.booking_de_id,
-              room: {
-                id: detail.room.room_id,
-                image: detail.room.room_img_path,
-                status: detail.room.room_status,
-                roomType: {
-                  id: detail.room.roomtype.room_type_id,
-                  roomType: detail.room.roomtype.room_type,
-                  typeName: detail.room.roomtype.room_type_name,
-                  bedSize: detail.room.roomtype.room_type_bed_size,
-                  // Add other room type details as needed
-                },
-              },
-              total: detail.total,
-            }))
-          : [],
-        activityPerBooking: bookingData.activityPer
-          ? bookingData.activityPer.map((activity: any) => ({
-              id: activity.id,
-              activity: {
-                id: activity.activity.id,
-                name: activity.activity.name,
-              },
-              total: activity.total,
-              qty: activity.qty,
-            }))
-          : [],
-      };
+      const booking = mapOneBooking(bookingData);
       console.log(booking);
       return booking;
     });
@@ -947,87 +427,13 @@ export const useBookingsStore = defineStore("bookings", () => {
 
     bookings.value.push(...bookings_);
   };
+
   // create function getBookingByEmployeeId
   const getBookingByEmployeeId = async (id: number) => {
     const response = await bookingService.getBookingByEmployeeId(id);
     const bookings_ = response.data.map((bookingData: any) => {
       // Basic booking information
-      const booking = {
-        id: bookingData.booking_id,
-        createDate: new Date(bookingData.booking_create_date),
-        cusName: bookingData.booking_cus_name,
-        cusLastName: bookingData.booking_cus_lastname,
-        cusTel: bookingData.booking_cus_tel,
-        cusEmail: bookingData.booking_cus_email,
-        cusCountry: bookingData.booking_cus_addr,
-        cusAddress: bookingData.booking_cus_addr_des,
-        checkIn: bookingData.booking_checkin
-          ? new Date(bookingData.booking_checkin)
-          : null,
-        checkOut: bookingData.booking_checkout
-          ? new Date(bookingData.booking_checkout)
-          : null,
-        total: bookingData.booking_total,
-        pledge: bookingData.booking_cash_pledge,
-        totalDiscount: bookingData.booking_total_discount,
-        paymentBooking: bookingData.booking_payment_booking,
-        paymentCheckout: bookingData.booking_payment_checkout,
-        status: bookingData.booking_status,
-        statusLate: bookingData.booking_status_late,
-        adult: bookingData.booking_adult,
-        child: bookingData.booking_child,
-        createdDate: new Date(bookingData.updateDate),
-        customer: bookingData.customer
-          ? {
-              id: bookingData.customer.cus_id,
-              name: bookingData.customer.cus_name,
-              startDate: new Date(bookingData.customer.cus_start_date),
-            }
-          : null,
-        promotion: bookingData.promotion, // Add promotion mapping if needed
-        employee: bookingData.employee
-          ? {
-              id: bookingData.employee.emp_id,
-              name: bookingData.employee.emp_name,
-              position: bookingData.employee.emp_position,
-              tel: bookingData.employee.emp_tel,
-              dateOfBirth: new Date(bookingData.employee.emp_dob),
-              address: bookingData.employee.emp_addr,
-              email: bookingData.employee.emp_email,
-              dateStartWork: new Date(bookingData.employee.emp_dsw),
-              hourlyRate: bookingData.employee.emp_hourly_wage,
-            }
-          : null,
-        bookingDetail: bookingData.bookingDetail
-          ? bookingData.bookingDetail.map((detail: any) => ({
-              id: detail.booking_de_id,
-              room: {
-                id: detail.room.room_id,
-                image: detail.room.room_img_path,
-                status: detail.room.room_status,
-                roomType: {
-                  id: detail.room.roomtype.room_type_id,
-                  roomType: detail.room.roomtype.room_type,
-                  typeName: detail.room.roomtype.room_type_name,
-                  bedSize: detail.room.roomtype.room_type_bed_size,
-                  // Add other room type details as needed
-                },
-              },
-              total: detail.total,
-            }))
-          : [],
-        activityPerBooking: bookingData.activityPer
-          ? bookingData.activityPer.map((activity: any) => ({
-              id: activity.id,
-              activity: {
-                id: activity.activity.id,
-                name: activity.activity.name,
-              },
-              total: activity.total,
-              qty: activity.qty,
-            }))
-          : [],
-      };
+      const booking = mapOneBooking(bookingData);
       console.log(booking);
       return booking;
     });
@@ -1041,6 +447,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
 
   return {
+    calculateInitialTotal,
     bookings,
     saveBooking,
     addBookingDetail,

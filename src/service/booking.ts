@@ -22,7 +22,7 @@ const saveBooking = async (booking: Booking, customerId: number) => {
     booking_cus_addr: booking.cusCountry,
     booking_cus_addr_des: booking.cusAddress,
     booking_cash_pledge: booking.pledge, // Adjusted from a static value to use `booking.pledge`
-    booking_total_discount: booking.totalDiscount,
+
     booking_payment_booking: booking.paymentBooking,
     booking_adult: booking.adult,
     booking_child: booking.child,
@@ -31,6 +31,8 @@ const saveBooking = async (booking: Booking, customerId: number) => {
     activity_booking: activityBookingMapped,
     booking_checkin: booking.checkIn,
     booking_checkout: booking.checkOut,
+    booking_total_discount: booking.totalDiscount,
+    booking_total: booking.total,
   };
   console.log(JSON.stringify(payload));
   return await http.post("/booking", payload);
