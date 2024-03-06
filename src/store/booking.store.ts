@@ -401,6 +401,19 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log(currentBooking.value.activityPerBooking.length);
   };
 
+  // removeRoomPerBooking
+  const removeRoomPerBooking = (room: Room) => {
+    // Remove room from booking
+    const index = currentBooking.value.bookingDetail.findIndex(
+      (booking) => booking.room.id === room.id
+    );
+    if (index !== -1) {
+      currentBooking.value.bookingDetail.splice(index, 1);
+      calculateInitialTotal();
+      console.log(currentBooking.value.bookingDetail.length);
+    }
+  };
+
   const removePromotion = () => {
     currentBooking.value.promotion = {
       createdDate: new Date(),
@@ -466,6 +479,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     confirmBookingByCustomerOrEmployee,
     toggleMoreDetail,
     moreDetailCard,
-    setCurrentBooking
+    setCurrentBooking,
+    removeRoomPerBooking
   };
 });

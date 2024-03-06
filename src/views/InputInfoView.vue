@@ -397,6 +397,9 @@ const removePromotion = () => {
                       THB {{ item.room.roomType.price }}
                     </p>
                   </div>
+                  <div class="flex-3 flex flex-col">
+                    <i class="fas fa-trash-alt" style="color: red" ></i>
+                  </div>
                 </div>
 
                 <div

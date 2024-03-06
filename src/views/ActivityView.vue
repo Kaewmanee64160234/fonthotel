@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/ActivityComponent.vue";
 import { Activity, ActivityPerBooking } from "@/model/activity.model";
+import { Room } from "@/model/room.model";
+import { RoomType } from "@/model/roomtype.model";
 import router from "@/router";
 import { useActivityStore } from "@/store/activity.store";
 import { useBookingsStore } from "@/store/booking.store";
@@ -37,12 +39,13 @@ const clickcontinue = () => {
 };
 
 const clickRemove = (activityPer: ActivityPerBooking) => {
-
   bookingStore.removeActivityPerBooking(activityPer);
-
 };
 
-const routerToAddRoom = ()=>{
+const clickRemoveRoom = (room: Room) => {
+  bookingStore.removeRoomPerBooking(room);
+};
+const routerToAddRoom = () => {
   router.push(`/selectroom/${roomStore.currentType}`);
 
 }
@@ -114,10 +117,13 @@ const routerToAddRoom = ()=>{
                   <div class="flex-1 flex flex-col">
                     <p class="font-medium">{{ book.room.roomType.roomType }}</p>
                   </div>
-                  <div class="flex-2 flex flex-col">
+                  <div class="flex-2 flex flex-col pr-3">
                     <p class="font-medium">
                       THB {{ book.room.roomType.price }}
                     </p>
+                  </div>
+                  <div class="flex-3 flex flex-col justify-center items-center">
+                    <i class="fas fa-trash-alt" style="color: red" @click="clickRemoveRoom(book.room)"></i>
                   </div>
                 </div>
 
@@ -137,7 +143,7 @@ const routerToAddRoom = ()=>{
 
                 <div class="flex-1 flex flex-col">
                   <div class="flex-7 flex flex-row pt-2 px-5" style="font-size: 13px">
-                    <div class="flex-1 flex flex-col">
+                    <div class="flex-1 flex flex-col" >
                       <p class="font-medium">Promotion</p>
                       <p>
                         {{
@@ -159,7 +165,8 @@ const routerToAddRoom = ()=>{
 
                 <div class="flex-8 flex flex-row pt-2 px-5" style="font-size: 13px">
                   <div class="flex-1 flex flex-col">
-                    <button @click="routerToAddRoom()" class="text-left font-medium hover:text-gray-600 text-sm">Add room</button>
+                    <button @click="routerToAddRoom()" class="text-left font-medium hover:text-gray-600 text-sm">Add
+                      room</button>
                   </div>
                 </div>
 
@@ -257,7 +264,8 @@ const routerToAddRoom = ()=>{
   display: inline-block;
   width: 60%;
 }
+
 .btn-continue:hover {
-      background-color: #9e754f;
-    }
+  background-color: #9e754f;
+}
 </style>
