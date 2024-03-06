@@ -241,13 +241,13 @@ function formatTwoDates(date1: Date): string {
             <p class="text-white font-semibold text-xl">Select Room</p>
           </div>
           <div class="inline-flex">
-            <button v-if="roomStore.currentRooms" class=" hover:bg-gray-400 text-white  font-semibold  py-2 px-4 ">
+            <button v-if="roomStore.currentRooms" class=" hover:bg-gray-400 text-white  font-semibold  py-2 px-4 rounded-s-lg rounded-e-lg ">
               Standard
             </button>
-            <button class=" hover:bg-gray-400 text-white   font-semibold py-2 px-4  ">
+            <button class=" hover:bg-gray-400 text-white   font-semibold py-2 px-4 rounded-s-lg rounded-e-lg ">
               Deluxe
             </button>
-            <button class="  hover:bg-gray-400 text-white   font-semibold py-2 px-4 ">
+            <button class="  hover:bg-gray-400 text-white   font-semibold py-2 px-4 rounded-s-lg rounded-e-lg ">
 
               Luxury
             </button>
