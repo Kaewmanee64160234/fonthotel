@@ -39,13 +39,24 @@ const clickRemove = (activityPer: ActivityPerBooking) => {
 };
 
 const clickContinue = async () => {
+
   if (userStore.currentUser.customer.id != -1) {
     await bookingsStore.getBookingByCustomerIdLastcreated();
     booking.value = bookingsStore.currentBooking;
+    await Swal.fire(
+      "Booking Success",
+      "Your booking has been saved",
+      "success"
+    );
     router.push("/bookingdetail");
   } else {
     await bookingsStore.getBookingByEmployeeIdLastcreated();
     booking.value = bookingsStore.currentBooking;
+    await Swal.fire(
+      "Booking Success",
+      "Your booking has been saved",
+      "success"
+    );
     router.push("/bookingdetail");
   }
 };
@@ -66,7 +77,7 @@ const checkPromotion = async (code: string, event: Event) => {
       return;
     }
     bookingStore.currentBooking.promotion = promotion;
-    bookingsStore.currentBooking.total = bookingStore.calculateInitialTotal();
+     bookingStore.calculateInitialTotal();
     Swal.fire({
       icon: "success",
       title: "Success",
@@ -141,14 +152,11 @@ const saveBooking = async () => {
     bookingsStore.currentBooking.paymentBooking = paymentMethod.value;
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
+    
     console.log(JSON.stringify(bookingsStore.currentBooking));
     await bookingsStore.saveBooking();
     //add sweet alert
-    await Swal.fire(
-      "Booking Success",
-      "Your booking has been saved",
-      "success"
-    );
+    
     clickContinue();
   }
 };
@@ -426,7 +434,7 @@ const removePromotion = () => {
                       <div>
                         <p>
                           {{
-                            bookingsStore.currentBooking.promotion.name ?? "-"
+                           bookingsStore.currentBooking.promotion?.name 
                           }}
                         </p>
                       </div>
@@ -446,9 +454,8 @@ const removePromotion = () => {
                     <div style="text-align: right">
                       <p>
                         {{
-                          bookingsStore.currentBooking.promotion.discount ??
-                          bookingsStore.currentBooking.promotion
-                            .discountPercent + "%"
+                          bookingsStore.currentBooking.promotion?.discount ??
+                          bookingsStore.currentBooking.promotion?.discountPercent + "%"
                         }}
                       </p>
                     </div>
