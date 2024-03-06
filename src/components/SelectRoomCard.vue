@@ -38,7 +38,26 @@ const clickRoomDetail = () => {
 function checkRoomCapacity(bookingDetail: BookingDetail) {
   console.log(props.room.roomType.maxAdult);
   console.log(props.room.roomType.maxChildren);
+if(bookingsStore.currentBooking.bookingDetail.length > 1){
+  // total gust - total that already book
+  let totalGuest = bookingsStore.currentBooking.adult + bookingsStore.currentBooking.child;
+  let totalBooked = 0;
+  bookingsStore.currentBooking.bookingDetail.forEach((booking) => {
+    totalBooked += booking.room.roomType.maxAdult + booking.room.roomType.maxChildren;
+  });
+  if (totalGuest > totalBooked) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: `The selected room cannot accommodate adult: ${bookingsStore.currentBooking.adult} and children: ${bookingsStore.currentBooking.child},May I suggest you to select more room or change the room?`,
+    });
+    return;
+  } else {
+    bookingsStore.addBookingDetail(bookingDetail);
+    router.push("/activity");
+  }
 
+}else{
   if (
     props.room.roomType.maxAdult < bookingsStore.currentBooking.adult ||
     bookingsStore.currentBooking.adult > props.room.roomType.maxChildren
@@ -54,6 +73,10 @@ function checkRoomCapacity(bookingDetail: BookingDetail) {
     bookingsStore.addBookingDetail(bookingDetail);
     router.push("/activity");
   }
+}
+ 
+
+  
 }
 </script>
 

@@ -99,6 +99,7 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
+
 </script>
 
 <template>
