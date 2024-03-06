@@ -257,4 +257,7 @@ const routerToAddRoom = ()=>{
   display: inline-block;
   width: 60%;
 }
+.btn-continue:hover {
+      background-color: #9e754f;
+    }
 </style>

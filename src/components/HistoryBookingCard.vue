@@ -3,7 +3,10 @@ import { Booking } from "@/model/booking.model";
 import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
 import Swal from "sweetalert2";
-
+import router from "@/router";
+const clickMoreDetail = () => {
+  router.push('/historyBookingDetails');
+};
 const bookingStore = useBookingsStore();
 const props = defineProps<{
   image: string,
@@ -62,7 +65,7 @@ const clickConfirmCancel = (bookingId: number) => {
     <div class="mb-5">
       <div class=" flex rounded-lg shadow-lg overflow-hidden " style="height: 45vh;">
         <!-- Room Image -->
-        <div class=" w-1/3 py-3 pl-5 pr-10   flex " style="justify-content: start; background-color: white;">
+        <div class=" w-1/3 py-3 pl-5 pr-10 flex " style="justify-content: start; background-color: white;">
           <div class="flex-1 flex flex-col">
             <h5 class="card-title text-lg font-semibold mb-2 ml-3">
               {{ name }}
@@ -74,7 +77,10 @@ const clickConfirmCancel = (bookingId: number) => {
         </div>
 
         <!-- Room Details -->
-        <div class="w-2/3 pt-20 bg-white flex flex-col justify-between">
+        <div class="w-2/3 pt-15 bg-white flex flex-col justify-between">
+          <div class="flex justify-end">
+          <p class='items-center p-3'>Created Date:</p>
+        </div>
           <div>
             <li class="card-text ">{{ props.typeRoom }}</li>
             <li class="card-text">{{ props.activity }}</li>
@@ -92,7 +98,7 @@ const clickConfirmCancel = (bookingId: number) => {
             <span class="text-xl font-bold">Total: {{ price }}.00 Bath</span>
           </div>
           <div class="flex justify-end">
-            <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3">
+            <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3" @click="clickMoreDetail">
               More Detail
             </button>
             <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id)"
@@ -125,6 +131,9 @@ const clickConfirmCancel = (bookingId: number) => {
   border-radius: 9999px;
   text-align: center;
 }
+.btn-moreDetail:hover {
+      background-color: #9e754f;
+    }
 
 .pic-showroom {
   height: 80%;
@@ -145,6 +154,9 @@ const clickConfirmCancel = (bookingId: number) => {
   display: inline-block;
   color: rgb(255, 255, 255);
 }
+.btn-cancel:hover {
+      background-color: #ff0000;
+    }
 
 .btn-yes {
   background-color: #abd398;
@@ -157,4 +169,5 @@ const clickConfirmCancel = (bookingId: number) => {
   width: 50px;
   border-radius: 9999px;
 }
+
 </style>

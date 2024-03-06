@@ -54,34 +54,4 @@ const clickback = () => {
     left: 0;
 }
 
-.card-style {
-    width: 92vw;
-    height: 80vh;
-    border-radius: 30px;
-    background-color: rgba(229, 229, 229, 0.758);
-    /* add filter blue */
-    fill-opacity: unset;
-    display: block;
-}
-
-.bigcard {
-    display: flex;
-    height: 80vh;
-}
-
-.font-judson {
-    font-family: "Judson";
-}
-
-.btn-booking {
-    background-color: #906843;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px #805d3f;
-    font-weight: medium;
-    text-decoration: none;
-    display: inline-block;
-    width: 150px;
-}
 </style>
