@@ -14,6 +14,7 @@ const roomStore = useRoomStore();
 onMounted(() => {
   activityStore.getAllActivities();
 });
+
 const clickback = () => {
   router.push(`/selectroom/${roomStore.currentStatus}`);
 };

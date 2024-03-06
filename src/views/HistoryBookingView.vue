@@ -26,19 +26,28 @@ const currentFormattedDate = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
 }).format(currentDate);
 
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: true,
-  }).format(date);
-};
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("default", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
+
+    // Extracts hours, minutes, and AM/PM
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12; // Converts 0 to 12 for 12AM
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Adds leading 0 if needed
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds; // Adds leading 0 if needed
+  
+    return `${day}, ${month} ${dayOfMonth}, ${year} ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
+  };
+
+  return formatDate(date1);
+}
+
 let booking = ref<Booking>({
   adult: 0,
   checkIn: new Date(),
@@ -91,6 +100,14 @@ onMounted(async () => {
     await bookingStore.getBookingByEmployeeId(userStore.currentUser.employee!.id!);
   }
 
+});
+onMounted(() => {
+  if (bookingStore.currentBooking.id) {
+    bookingStore.getBookingByCustomerId(bookingStore.currentBooking.id);
+  }
+  else {
+    bookingStore.getBookingByEmployeeId(bookingStore.currentBooking.id);
+  }
 });
 // const clickback = () => {
 //   window.location.href = "/";
@@ -180,12 +197,13 @@ onMounted(async () => {
                 </ul>
               </div>
             </div>
+           
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll pb-20">
             <div v-for="item in bookingStore.bookings" :key="item.id">
+             
               <HistoryBookingCard
-                v-if="item.bookingDetail && item.bookingDetail.length > 0"
                 :image="item.bookingDetail[0]?.room?.image"
                 :name="`${item.cusName} ${item.cusLastName}`"
                 :typePayment="item.paymentBooking"
@@ -198,7 +216,7 @@ onMounted(async () => {
                 :status="item.status"
                 :price="item.total"
                 :dateCheckIn="item.checkIn.toDateString()"
-                :createdDate="formatDate(item.createdDate)"
+                :createdDate="formatTwoDates(new Date(item.createdDate))"
               />
             </div>
           </div>

@@ -197,13 +197,13 @@ export const useBookingsStore = defineStore("bookings", () => {
         : [],
       activityPerBooking: bookingData.activityPer
         ? bookingData.activityPer.map((activity: any) => ({
-            id: activity.id,
+            id: activity.act_rec_id,
             activity: {
-              id: activity.activity.id,
-              name: activity.activity.name,
+              id: activity.activity.act_id,
+              name: activity.activity.act_name,
             },
-            total: activity.total,
-            qty: activity.qty,
+            total: activity.act_rec_total_price,
+            qty: activity.act_rec_qty,
           }))
         : [],
     };
@@ -436,7 +436,6 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
-    bookings.value = [];
 
     bookings.value.push(...bookings_);
   };
@@ -450,7 +449,6 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
-    bookings.value = [];
 
     bookings.value.push(...bookings_);
   };

@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import router from "@/router";
 const clickMoreDetail = () => {
   bookingStore.currentBooking = props.booking;
-  router.push('/historyBookingDetails');
+  // router.push('/historyBookingDetails');
 };
 const bookingStore = useBookingsStore();
 const props = defineProps<{
@@ -20,7 +20,7 @@ const props = defineProps<{
   booking: Booking,
   status: string,
   dateCheckIn: string,
-  createdDate: Date,
+  createdDate: string,
 }>();
 
 

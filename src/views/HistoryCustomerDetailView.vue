@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import router from "@/router";
+import booking from "@/service/booking";
 import { useBookingsStore } from "@/store/booking.store";
+import { onMounted } from "vue";
 
 const clickback = () => {
-  window.location.href = "/historyBookings";
+  router.push("/historyBookings");
 };
+
 // Function to format dates
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
@@ -30,7 +34,7 @@ const bookingStore = useBookingsStore();
 <template>
   <body>
     <div class="pt-5 pl-5">
-      <button @click="clickback">
+      <button @click="clickback()">
         <i style="font-size: 30px; color: #f5eee6" class="far">&#xf359;</i>
       </button>
     </div>
