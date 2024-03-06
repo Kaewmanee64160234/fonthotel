@@ -1,4 +1,5 @@
 <!-- eslint-disable no-undef -->
+
 <script setup lang="ts">
 import RoomCard from "@/components/RoomCard.vue";
 import { computed, ref, watch } from "vue";
@@ -41,7 +42,7 @@ onMounted(async () => {
 const clickcontinue = () => {
   if (totalGuests.value === 0) {
     //cannot just child
-    if(adultCount.value === 0&& childrenCount.value > 0){
+    if (adultCount.value === 0 && childrenCount.value > 0) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -207,63 +208,33 @@ const stayDates = computed(() => {
       <div class="flex-1 flex flex-col pt-5 p-10">
         <div class="text-center">
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div
-              class="relative inline-block text-left"
-              @click="toggleDropdown"
-            >
+            <div class="relative inline-block text-left" @click="toggleDropdown">
               <div>
-                <button
-                  type="button"
-                  class="btn-guest text-left m-0 p-0"
-                  id="guest-button"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
+                <button type="button" class="btn-guest text-left m-0 p-0" id="guest-button" aria-expanded="true"
+                  aria-haspopup="true">
                   <p>Guest</p>
                   <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
                 </button>
 
-                <div
-                  v-if="isDropdownOpen === true"
-                  @click="closeDropdown"
-                  class="absolute card-selectguest mt-2"
-                  role="guest"
-                  aria-orientation="vertical"
-                  aria-labelledby="guest-button"
-                  tabindex="-1"
-                >
+                <div v-if="isDropdownOpen === true" @click="closeDropdown" class="absolute card-selectguest mt-2"
+                  role="guest" aria-orientation="vertical" aria-labelledby="guest-button" tabindex="-1">
                   <div class="py-1" role="none">
                     <div>
-                      <a class="text-gray-700 block px-4 py-2 text-sm"
-                        >Select Guests</a
-                      >
+                      <a class="text-gray-700 block px-4 py-2 text-sm">Select Guests</a>
                       <hr class="color-line" />
                       <!-- Select Adult -->
                       <div class="flex-1 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a
-                            class="text-black block px-4 py-2 text-sm"
-                            role="menuitem"
-                            tabindex="-1"
-                            id="menu-item-1"
-                            >Adult</a
-                          >
+                          <a class="text-black block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            id="menu-item-1">Adult</a>
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button
-                              type="button"
-                              class="btn-minus"
-                              @click="decrementGuest('adult')"
-                            >
+                            <button type="button" class="btn-minus" @click="decrementGuest('adult')">
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ adultCount }}</a>
-                            <button
-                              type="button"
-                              class="btn-plus"
-                              @click="incrementGuest('adult')"
-                            >
+                            <button type="button" class="btn-plus" @click="incrementGuest('adult')">
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -272,29 +243,16 @@ const stayDates = computed(() => {
                       <!-- Select Children -->
                       <div class="flex-2 flex flex-row p-1">
                         <div class="flex-1 flex flex-col" style="width: 50%">
-                          <a
-                            class="text-gray-700 block px-4 py-2 text-sm"
-                            role="menuitem"
-                            tabindex="-1"
-                            id="menu-item-2"
-                            >Children</a
-                          >
+                          <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            id="menu-item-2">Children</a>
                         </div>
                         <div class="flex-2 flex flex-col" style="width: 50%">
                           <div class="flex items-center py-2">
-                            <button
-                              type="button"
-                              class="btn-minus"
-                              @click="decrementGuest('children')"
-                            >
+                            <button type="button" class="btn-minus" @click="decrementGuest('children')">
                               <a class="text-white text-m text-center">-</a>
                             </button>
                             <a class="mx-4">{{ childrenCount }}</a>
-                            <button
-                              type="button"
-                              class="btn-plus"
-                              @click="incrementGuest('children')"
-                            >
+                            <button type="button" class="btn-plus" @click="incrementGuest('children')">
                               <a class="text-white text-m text-center">+</a>
                             </button>
                           </div>
@@ -303,16 +261,10 @@ const stayDates = computed(() => {
                       <!-- Btn Apply -->
                       <div class="flex-3 flex flex-row p-1 justify-end">
                         <div class="flex">
-                          <button
-                            type="button"
-                            :class="
-                              adultCount + childrenCount === 0
-                                ? 'disable-btn-apply '
-                                : 'btn-apply'
-                            "
-                            @click="applyGuestCount"
-                            :disabled="adultCount + childrenCount === 0"
-                          >
+                          <button type="button" :class="adultCount + childrenCount === 0
+          ? 'disable-btn-apply '
+          : 'btn-apply'
+        " @click="applyGuestCount" :disabled="adultCount + childrenCount === 0">
                             <a class="text-white text-m text-center">Apply</a>
                           </button>
                         </div>
@@ -327,46 +279,25 @@ const stayDates = computed(() => {
             <div class="btn-date text-left">
               <label class=""> Check-in </label>
 
-              <input
-                class="rounded-lg text-black p-2"
-                type="date"
-                style="width: 90%"
-                :min="minDate"
-                v-model="startDate"
-              />
+              <input class="rounded-lg text-black p-2" type="date" style="width: 90%" :min="minDate"
+                v-model="startDate" />
             </div>
 
             <!-- Check-out date picker -->
             <div class="btn-date text-left">
               <label class=""> Check-out </label>
-              <input
-                style="width: 90%"
-                type="date"
-                class="rounded-lg text-black p-2"
-                :min="tomorrow"
-                :disabled="!startDate"
-                v-model="endDate"
-              />
+              <input style="width: 90%" type="date" class="rounded-lg text-black p-2" :min="tomorrow"
+                :disabled="!startDate" v-model="endDate" />
             </div>
           </div>
         </div>
         <p class="mt-3 text-white font-semibold text-xl">Select Room</p>
 
-        <div
-          class="mt-2 overflow-y-auto mb-20 p-3 dc-scroll"
-          v-if="roomStore.currentRooms.length > 0"
-        >
+        <div class="mt-2 overflow-y-auto mb-20 p-3 dc-scroll" v-if="roomStore.currentRooms.length > 0">
           <div v-for="item of roomStore.currentRooms" :key="item.id">
-            <RoomCard
-              :image="item.image"
-              :typename="item.roomType.typeName"
-              :sleep="item.roomType.typeName"
-              area="37"
-              detail="Sea View , Smart TV , Work Desk"
-              :price="item.roomType.price"
-              roomDetail="/SelectRoomDialog"
-              :room="item"
-            />
+            <RoomCard :image="item.image" :typename="item.roomType.typeName" :sleep="item.roomType.typeName" area="37"
+              detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" roomDetail="/SelectRoomDialog"
+              :room="item" />
           </div>
         </div>
         <div v-else>
@@ -414,12 +345,7 @@ const stayDates = computed(() => {
           </div>
 
           <div class="flex-2 flex flex-row justify-center pt-10">
-            <button
-              class="btn-continue"
-              :class="{ 'disabled-text': totalGuests === 0 }"
-              
-              @click="clickcontinue()"
-            >
+            <button class="btn-continue" :class="{ 'disabled-text': totalGuests === 0 }" @click="clickcontinue()">
               Continue
             </button>
           </div>
@@ -427,47 +353,27 @@ const stayDates = computed(() => {
       </div>
     </div>
     <!-- --- Dialog RoomDetail --- -->
-    <div
-      v-if="roomStore.roomDetailCard == true"
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center"
-    >
-      <div
-        class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-        style="max-width: 90%; margin-top: -20vh"
-      >
+    <div v-if="roomStore.roomDetailCard == true"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+      <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        style="max-width: 90%; margin-top: -20vh">
         <div class="body-roomDetail">
           <!-- The container for the overlay and cards -->
           <div class="flex justify-center items-center bigcard-roomDetail">
             <!-- Added classes for centering -->
             <div class="grid relative card-style-roomDetail items-center mt-10">
-              <div
-                class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5"
-              >
+              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
                 <!-- Center alignment -->
                 <div class="flex grid grid-cols-2">
-                  <p
-                    class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                  >
+                  <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
                     Room Detail
                   </p>
-                  <a
-                    href="#"
-                    class="flex items-center justify-end text-right mr-10"
-                  >
-                    <svg
-                      @click="roomStore.toggleRoomDetail()"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
+                  <a href="#" class="flex items-center justify-end text-right mr-10">
+                    <svg @click="roomStore.toggleRoomDetail()" xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                      </path>
                     </svg>
                   </a>
                 </div>
@@ -475,41 +381,25 @@ const stayDates = computed(() => {
                   <hr class="hr-style-roomDetail" />
                 </div>
               </div>
-              <div
-                class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10"
-              >
-                <div
-                  class="flex grid grid-rows-1 grid-cols-1 items-center pt-5"
-                >
-                  <p
-                    class="text-sm text-gray-900 dark:text-white mb-4 font-semibold"
-                  >
+              <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
+                <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
+                  <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
                     {{ roomStore.curentRoom.roomType.typeName }}
                   </p>
-                  <p
-                    class="text-xs text-gray-900 dark:text-white mb-4 opacity-70"
-                  >
+                  <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
                     Sleep 1 | 37 square metre
                   </p>
-                  <p
-                    class="text-sm text-gray-900 dark:text-white font-semibold"
-                  >
+                  <p class="text-sm text-gray-900 dark:text-white font-semibold">
                     Room Amenities
                   </p>
                   <ul class="list-disc mb-10">
-                    <li
-                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                    >
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
                       Free Wifi
                     </li>
-                    <li
-                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                    >
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
                       Accessible Room
                     </li>
-                    <li
-                      class="text-xs text-gray-900 dark:text-white ml-5 opacity-70"
-                    >
+                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
                       Non-smoking
                     </li>
                   </ul>
@@ -517,13 +407,10 @@ const stayDates = computed(() => {
                 <div class="justify-start items-center">
                   <img
                     class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                    :src="roomStore.curentRoom.image"
-                  />
+                    :src="roomStore.curentRoom.image" />
                 </div>
               </div>
-              <div
-                class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5"
-              >
+              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
                 <!-- Center alignment -->
                 <div>
                   <hr class="hr-style-roomDetail" />
@@ -533,17 +420,11 @@ const stayDates = computed(() => {
                 <div class="flex grid grid-rows-1 flex-col items-right ml-10">
                   <!-- Center alignment -->
                   <div class="text-center">
-                    <div
-                      class="flex flex-wrap justify-between items-center pt-5"
-                    >
-                      <p
-                        class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                      >
+                    <div class="flex flex-wrap justify-between items-center pt-5">
+                      <p class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70">
                         City View, Smart TV, Work Desk
                       </p>
-                      <p
-                        class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70"
-                      >
+                      <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
                         {{ roomStore.curentRoom.roomType.descriptions }}
                       </p>
                     </div>
@@ -557,6 +438,7 @@ const stayDates = computed(() => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .body {
   background-image: url("../images/image.png");
@@ -630,6 +512,7 @@ const stayDates = computed(() => {
   height: 24.22px;
   text-align: center;
 }
+
 .btn-minus:hover {
   background-color: #e31111;
 }
@@ -640,6 +523,7 @@ const stayDates = computed(() => {
   width: 24.22px;
   height: 24.22px;
 }
+
 .btn-plus:hover {
   background-color: #2fc072;
 }
@@ -652,6 +536,7 @@ const stayDates = computed(() => {
   border-radius: 9999px;
   justify-content: end;
 }
+
 .disable-btn-apply {
   background-color: #ac9c8f;
   color: #ffffff;
@@ -660,6 +545,7 @@ const stayDates = computed(() => {
   border-radius: 9999px;
   justify-content: end;
 }
+
 .btn-apply:hover {
   background-color: #c08c62;
 }
@@ -675,6 +561,7 @@ const stayDates = computed(() => {
   display: inline-block;
   width: 60%;
 }
+
 .btn-continue:hover {
   background-color: #9e754f;
 }
@@ -694,14 +581,17 @@ const stayDates = computed(() => {
   background-color: #ebbd99;
   border-radius: 10px;
 }
+
 .disabled-text {
   background-color: #968e88;
   box-shadow: 0px 4px 6px #8d8277;
   color: white;
 }
+
 .disabled-text:hover {
   background-color: #968e88;
 }
+
 /* ---- Room Detail ---- */
 .body-roomDetail {
   width: 100vw;
