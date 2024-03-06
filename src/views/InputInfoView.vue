@@ -8,7 +8,7 @@ import { usePromotionsStore } from "@/store/promotion";
 import { Promotion } from "@/model/promotion.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useRoomStore } from "@/store/room.store";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -53,115 +53,78 @@ const clickContinue = async () => {
 const routerToAddRoom = () => {
   router.push(`/selectroom/${roomStore.currentType}`);
 };
-
 const checkPromotion = async (code: string, event: Event) => {
   event.preventDefault();
-  showModal.value = false;
-  validationMessage.value = "";
   const promotion = await promotionStore.findPromotion(code);
   if (promotion) {
-    if (promotion.createdDate > new Date()) {
-      showModal.value = true;
-      validationMessage.value = "Promotion code is expired";
-      //   return;
+    if (promotion.createdDate > new Date() || promotion.endDate < new Date()) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Promotion code is expired",
+      });
+      return;
     }
-    if (promotion.endDate < new Date()) {
-      showModal.value = true;
-      validationMessage.value = "Promotion code is expired";
+    bookingStore.currentBooking.promotion = promotion;
+    bookingsStore.currentBooking.total = bookingStore.calculateInitialTotal();
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Promotion code applied successfully!",
+    });
 
-      //   return;
-    }
-    if (promotion.discount > 0) {
-      bookingsStore.currentBooking.total = 0;
-
-      for (
-        let i = 0;
-        i < bookingsStore.currentBooking.bookingDetail.length;
-        i++
-      ) {
-        bookingsStore.currentBooking.total +=
-          bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
-      }
-      for (
-        let i = 0;
-        i < bookingsStore.currentBooking.activityPerBooking.length;
-        i++
-      ) {
-        bookingsStore.currentBooking.total +=
-          bookingsStore.currentBooking.activityPerBooking[i].activity.price;
-      }
-
-      bookingsStore.currentBooking.totalDiscount = promotion.discount;
-      bookingsStore.currentBooking.promotion = promotion;
-      bookingsStore.currentBooking.total =
-        bookingsStore.currentBooking.total - promotion.discount;
-      console.log(bookingsStore.currentBooking.total);
-    } else if (promotion.discountPercent > 0) {
-      bookingsStore.currentBooking.total = 0;
-
-      for (
-        let i = 0;
-        i < bookingsStore.currentBooking.bookingDetail.length;
-        i++
-      ) {
-        bookingsStore.currentBooking.total +=
-          bookingsStore.currentBooking.bookingDetail[i].room.roomType.price;
-      }
-      for (
-        let i = 0;
-        i < bookingsStore.currentBooking.activityPerBooking.length;
-        i++
-      ) {
-        bookingsStore.currentBooking.total +=
-          bookingsStore.currentBooking.activityPerBooking[i].activity.id;
-      }
-
-      bookingsStore.currentBooking.totalDiscount =
-        (bookingsStore.currentBooking.total * promotion.discountPercent) / 100;
-      bookingsStore.currentBooking.promotion = promotion;
-      bookingsStore.currentBooking.total =
-        bookingsStore.currentBooking.total -
-        bookingsStore.currentBooking.totalDiscount;
-      console.log(bookingsStore.currentBooking.total);
-    } else {
-      showModal.value = true;
-      validationMessage.value = "Promotion code is invalid";
-    }
+    console.log(bookingsStore.currentBooking.total);
   } else {
-    showModal.value = true;
-    validationMessage.value = "Promotion code is invalid";
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Promotion code is invalid",
+    });
   }
 };
+
 const validateForm = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameRegex = /^[a-zA-Z]+$/;
   const mobilePhoneRegex = /^\d{10}$/;
-  
+
   if (!nameRegex.test(firstName.value) || !nameRegex.test(lastName.value)) {
-    Swal.fire('Validation Error', 'First name and last name must contain only alphabetic characters', 'error');
+    Swal.fire(
+      "Validation Error",
+      "First name and last name must contain only alphabetic characters",
+      "error"
+    );
     return false;
   }
   if (!emailRegex.test(emailAddress.value)) {
-    Swal.fire('Validation Error', 'Please enter a valid email address', 'error');
+    Swal.fire(
+      "Validation Error",
+      "Please enter a valid email address",
+      "error"
+    );
     return false;
   }
   if (!mobilePhoneRegex.test(mobilePhone.value)) {
-    Swal.fire('Validation Error', 'Telephone number must be a 10-digit number', 'error');
+    Swal.fire(
+      "Validation Error",
+      "Telephone number must be a 10-digit number",
+      "error"
+    );
     return false;
   }
   //country
   if (country.value === "") {
-    Swal.fire('Validation Error', 'Please select a country', 'error');
+    Swal.fire("Validation Error", "Please select a country", "error");
     return false;
   }
   //description
   if (description.value === "") {
-    Swal.fire('Validation Error', 'Please enter an address', 'error');
+    Swal.fire("Validation Error", "Please enter an address", "error");
     return false;
   }
   //payment method
   if (paymentMethod.value === "") {
-    Swal.fire('Validation Error', 'Please select a payment method', 'error');
+    Swal.fire("Validation Error", "Please select a payment method", "error");
     return false;
   }
   return true;
@@ -181,7 +144,11 @@ const saveBooking = async () => {
     console.log(JSON.stringify(bookingsStore.currentBooking));
     await bookingsStore.saveBooking();
     //add sweet alert
-    await Swal.fire('Booking Success', 'Your booking has been saved', 'success');
+    await Swal.fire(
+      "Booking Success",
+      "Your booking has been saved",
+      "success"
+    );
     clickContinue();
   }
 };
@@ -208,8 +175,7 @@ const removePromotion = () => {
   <div class="body">
     <div class="pt-5 pl-5">
       <button @click="clickBack">
-        <i style="font-size: 30px; color:#F5EEE6" class="far">&#xf359;</i>
-
+        <i style="font-size: 30px; color: #f5eee6" class="far">&#xf359;</i>
       </button>
     </div>
 
@@ -660,8 +626,8 @@ const removePromotion = () => {
   height: 6vh;
 }
 .btn-applypromo:hover {
-      background-color: #9e754f;
-    }
+  background-color: #9e754f;
+}
 
 .btn-complete {
   background-color: #906843;
@@ -675,8 +641,8 @@ const removePromotion = () => {
   width: 60%;
 }
 .btn-complete:hover {
-      background-color: #9e754f;
-    }
+  background-color: #9e754f;
+}
 
 .card-stay {
   width: 80%;

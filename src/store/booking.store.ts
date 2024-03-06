@@ -201,7 +201,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             };
             booking.promotion = promotion;
           }
-          if (response.data.promotion != null) {
+          if (response.data.customer != null) {
             const customer: Customer = {
               id: response.data.customer.cus_id,
               name: response.data.customer.cus_name,
@@ -209,7 +209,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             };
             booking.customer = customer;
           }
-          if (response.data.promotion != null) {
+          if (response.data.employee != null) {
             const employee: Employee = {
               id: response.data.employee.emp_id,
               name: response.data.employee.emp_name,
@@ -708,6 +708,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         }
       }
     }
+    console.log('Total: ', currentBooking.value.promotion.discount);
     return currentBooking.value.total;
   }
 
@@ -1040,6 +1041,7 @@ export const useBookingsStore = defineStore("bookings", () => {
   };
 
   return {
+    calculateInitialTotal,
     bookings,
     saveBooking,
     addBookingDetail,
