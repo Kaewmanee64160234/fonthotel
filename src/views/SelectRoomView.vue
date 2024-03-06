@@ -12,12 +12,52 @@ const bookingsStore = useBookingsStore();
 const roomStore = useRoomStore();
 //get param from url
 
+const isDropdownOpen = ref(false);
+//get param from url
+
 const booking = ref<Booking>();
 const route = useRoute();
+
+const adultCount = ref(0);
+const childrenCount = ref(0);
+const totalGuests = ref(0);
 
 const clickback = () => {
   router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
 };
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const closeDropdown = () => {
+  isDropdownOpen.value = false;
+};
+
+const decrementGuest = (type: "adult" | "children") => {
+  if (type === "adult" && adultCount.value > 0) {
+    adultCount.value--;
+  } else if (type === "children" && childrenCount.value > 0) {
+    childrenCount.value--;
+  }
+};
+
+const incrementGuest = (type: "adult" | "children") => {
+  if (type === "adult") {
+    adultCount.value++;
+  } else if (type === "children") {
+    childrenCount.value++;
+  }
+};
+
+const applyGuestCount = () => {
+  totalGuests.value = adultCount.value + childrenCount.value;
+  bookingsStore.currentBooking.adult = adultCount.value;
+  bookingsStore.currentBooking.child = childrenCount.value;
+  // Explicitly close the dropdown
+  closeDropdown();
+};
+
+
 
 onMounted(async () => {
 
@@ -76,8 +116,145 @@ function formatTwoDates(date1: Date): string {
     <div class="min-h-screen flex card-container">
       <!-- Left Side: -->
       <div class="flex-1 flex flex-col pt-3 p-10">
-        <p class="text-white font-semibold text-xl">Select Room</p>
-        <div class="mt-2 overflow-y-auto dc-scroll mb-10">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div
+              class="relative inline-block text-left"
+              @click="toggleDropdown"
+            >
+              <div>
+                <button
+                  type="button"
+                  class="btn-guest text-left m-0 p-0"
+                  id="guest-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                >
+                  <p>Guest</p>
+                  <p class="text-right pr-7 p-2">{{ totalGuests }}</p>
+                </button>
+
+                <div
+                  v-if="isDropdownOpen === true"
+                  @click="closeDropdown"
+                  class="absolute card-selectguest mt-2"
+                  role="guest"
+                  aria-orientation="vertical"
+                  aria-labelledby="guest-button"
+                  tabindex="-1"
+                >
+                  <div class="py-1" role="none">
+                    <div>
+                      <a class="text-gray-700 block px-4 py-2 text-sm"
+                        >Select Guests</a
+                      >
+                      <hr class="color-line" />
+                      <!-- Select Adult -->
+                      <div class="flex-1 flex flex-row p-1">
+                        <div class="flex-1 flex flex-col" style="width: 50%">
+                          <a
+                            class="text-black block px-4 py-2 text-sm"
+                            role="menuitem"
+                            tabindex="-1"
+                            id="menu-item-1"
+                            >Adult</a
+                          >
+                        </div>
+                        <div class="flex-2 flex flex-col" style="width: 50%">
+                          <div class="flex items-center py-2">
+                            <button
+                              type="button"
+                              class="btn-minus"
+                              @click="decrementGuest('adult')"
+                            >
+                              <a class="text-white text-m text-center">-</a>
+                            </button>
+                            <a class="mx-4">{{ adultCount }}</a>
+                            <button
+                              type="button"
+                              class="btn-plus"
+                              @click="incrementGuest('adult')"
+                            >
+                              <a class="text-white text-m text-center">+</a>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Select Children -->
+                      <div class="flex-2 flex flex-row p-1">
+                        <div class="flex-1 flex flex-col" style="width: 50%">
+                          <a
+                            class="text-gray-700 block px-4 py-2 text-sm"
+                            role="menuitem"
+                            tabindex="-1"
+                            id="menu-item-2"
+                            >Children</a
+                          >
+                        </div>
+                        <div class="flex-2 flex flex-col" style="width: 50%">
+                          <div class="flex items-center py-2">
+                            <button
+                              type="button"
+                              class="btn-minus"
+                              @click="decrementGuest('children')"
+                            >
+                              <a class="text-white text-m text-center">-</a>
+                            </button>
+                            <a class="mx-4">{{ childrenCount }}</a>
+                            <button
+                              type="button"
+                              class="btn-plus"
+                              @click="incrementGuest('children')"
+                            >
+                              <a class="text-white text-m text-center">+</a>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Btn Apply -->
+                      <div class="flex-3 flex flex-row p-1 justify-end">
+                        <div class="flex">
+                          <button
+                            type="button"
+                            :class="
+                              adultCount + childrenCount === 0
+                                ? 'disable-btn-apply '
+                                : 'btn-apply'
+                            "
+                            @click="applyGuestCount"
+                            :disabled="adultCount + childrenCount === 0"
+                          >
+                            <a class="text-white text-m text-center">Apply</a>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+
+          </div>
+          <div class="flex-1 flex flex-row p-2 ">
+          <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px;">
+            <p class="text-white font-semibold text-xl">Select Room</p>
+          </div>
+          <div class="inline-flex">
+            <button v-if="roomStore.currentRooms" class=" hover:bg-gray-400 text-white  font-semibold  py-2 px-4 ">
+              Standard
+            </button>
+            <button class=" hover:bg-gray-400 text-white   font-semibold py-2 px-4  ">
+              Deluxe
+            </button>
+            <button class="  hover:bg-gray-400 text-white   font-semibold py-2 px-4 ">
+
+              Luxury
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-2 overflow-y-auto dc-scroll mb-20">
           <div v-for="item of roomStore.currentRooms" :key="item.id">
             <SelectRoomCard :room="item" :image="item.image" :typename="item.roomType.typeName" sleep="1"
               detail="Sea View , Smart TV , Work Desk" :price="item.roomType.price" roomDetail="/SelectRoomDialog"
@@ -312,4 +489,71 @@ function formatTwoDates(date1: Date): string {
   width: 95%;
   border: 1px solid #eeeeee;
 }
+.btn-minus {
+  background-color: #ff0000;
+  border-radius: 9999px;
+  width: 24.22px;
+  height: 24.22px;
+  text-align: center;
+}
+
+.btn-minus:hover {
+  background-color: #e31111;
+}
+
+.btn-plus {
+  background-color: #59ce8f;
+  border-radius: 9999px;
+  width: 24.22px;
+  height: 24.22px;
+}
+
+.btn-plus:hover {
+  background-color: #2fc072;
+}
+
+.btn-apply {
+  background-color: #ebbd99;
+  color: #ffffff;
+  width: 59px;
+  height: 27px;
+  border-radius: 9999px;
+  justify-content: end;
+}
+
+.disable-btn-apply {
+  background-color: #ac9c8f;
+  color: #ffffff;
+  width: 59px;
+  height: 27px;
+  border-radius: 9999px;
+  justify-content: end;
+}
+
+.btn-apply:hover {
+  background-color: #c08c62;
+}
+
+.card-selectguest {
+  background-color: #fffcf7;
+  width: 229px;
+  /* height: 1px; */
+  border-radius: 10px;
+}
+
+.btn-guest {
+  border-color: #000000;
+  background-color: #ffffff;
+  padding-top: 5px;
+  padding-left: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
+  font-weight: medium;
+  display: inline-block;
+  width: 15vw;
+  height: 70px;
+}
 </style>
+
+
+
