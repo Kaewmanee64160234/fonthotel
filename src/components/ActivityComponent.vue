@@ -17,20 +17,28 @@ const props = defineProps<{
 const adultCount = ref(0);
 const childrenCount = ref(0);
 const isAddingDetails = ref(false);
-
+const bookingStore = useBookingsStore();
 
 const decrementGuest = (type: "adult" | "children") => {
   if (type === "adult" && adultCount.value > 0) {
+    if(adultCount.value < bookingStore.currentBooking.adult)
     adultCount.value--;
   } else if (type === "children" && childrenCount.value > 0) {
-    childrenCount.value--;
+    if(childrenCount.value < bookingStore.currentBooking.child){
+      childrenCount.value--;
+
+    }
   }
 };
 const incrementGuest = (type: "adult" | "children") => {
   if (type === "adult") {
-    adultCount.value++;
+    if(adultCount.value < bookingStore.currentBooking.adult){
+      adultCount.value++;
+    }
   } else if (type === "children") {
-    childrenCount.value++;
+    if(childrenCount.value < bookingStore.currentBooking.child){
+      childrenCount.value++;
+    }
   }
 };
 
