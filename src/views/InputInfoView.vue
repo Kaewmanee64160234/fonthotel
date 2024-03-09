@@ -9,6 +9,7 @@ import { Promotion } from "@/model/promotion.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useRoomStore } from "@/store/room.store";
 import Swal from "sweetalert2";
+import { Room } from "@/model/room.model";
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -36,6 +37,12 @@ const clickBack = () => {
 const clickRemove = (activityPer: ActivityPerBooking) => {
   //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
+};
+const clickRemoveRoom = (room: Room) => {
+  if(bookingStore.currentBooking.bookingDetail.length > 1) {
+  bookingStore.removeRoomPerBooking(room);
+  }
+  
 };
 
 const clickContinue = async () => {
@@ -312,11 +319,12 @@ const removePromotion = () => {
                 />
               </div>
 
-              <div class="col-2">
+              <div class="col-2 mt-6">
                 <button
                   @click="checkPromotion(promotionId, $event)"
-                  class="mt-6 btn-applypromo"
+                  :class="{ 'btn-applypromo': true, 'disabled-btn-applypromo': promotionId === '' }"
                   id="btnApplypromo"
+                  :disabled="promotionId === ''"
                 >
                   Apply
                 </button>
@@ -327,7 +335,7 @@ const removePromotion = () => {
               <!-- cretae dropdown payment method -->
               <div class="col-1">
                 <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Payment Method</label
+                  >Service</label
                 >
                 <select
                   v-model="paymentMethod"
@@ -405,19 +413,20 @@ const removePromotion = () => {
                 <div
                   class="flex-3 flex flex-row px-5"
                   style="width: 100%; font-size: 16px"
-                  v-for="item of bookingsStore.currentBooking.bookingDetail"
-                  :key="item.id"
+                  v-for="book of bookingsStore.currentBooking.bookingDetail"
+                  :key="book.id"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">{{ item.room.roomType.roomType }}</p>
+                    <p class="font-medium">{{ book.room.roomType.roomType }}</p>
                   </div>
-                  <div class="flex-2 flex flex-col">
+                  <div class="flex-2 flex flex-col pr-3">
                     <p class="font-medium">
-                      THB {{ item.room.roomType.price }}
+                      THB {{ book.room.roomType.price }}
                     </p>
                   </div>
-                  <div class="flex-3 flex flex-col">
-                    <i class="fas fa-trash-alt" style="color: red"></i>
+                  <div class="flex-3 flex flex-col justify-center items-center">
+                    <i class="fas fa-trash-alt" style="color: red" @click="clickRemoveRoom(book.room)"></i>
+
                   </div>
                 </div>
 
@@ -655,6 +664,22 @@ const removePromotion = () => {
 }
 .btn-applypromo:hover {
   background-color: #9e754f;
+}
+.disabled-btn-applypromo {
+  background-color: #69625b;
+  color: white;
+  padding: 5px 5px;
+  font-weight: medium;
+  text-decoration: none;
+  display: inline-block;
+  width: 128px;
+  border-radius: 9999px;
+  text-align: center;
+  font-size: 13px;
+  height: 6vh;
+}
+.disabled-btn-applypromo:hover {
+  background-color: #69625b;
 }
 
 .btn-complete {

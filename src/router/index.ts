@@ -119,7 +119,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/historyConfirmReservation",
     name: "historyConfirmReservation",
     component: () => import("../views/Employee/HistoryAcceptBookingView.vue"), // Ensure the path is correct here
-    meta: { hideNavigation: true },
+    meta: { hideNavigation: false },
   },
   {
     path: "/historyBookings",
