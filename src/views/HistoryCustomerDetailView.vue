@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import router from "@/router";
-import booking from "@/service/booking";
 import { useBookingsStore } from "@/store/booking.store";
-import { onMounted } from "vue";
 
 const clickback = () => {
   router.push("/historyBookings");
