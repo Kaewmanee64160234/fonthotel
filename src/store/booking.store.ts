@@ -11,10 +11,12 @@ import { useUserStore } from "./user.store";
 import router from "@/router";
 import { RoomType } from "@/model/roomtype.model";
 import Swal from "sweetalert2";
+import { useRoomStore } from "./room.store";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
   const moreDetailCard = ref(false);
+  const roomStore = useRoomStore();
   const currentBooking = ref<Booking>({
     adult: 0,
     checkIn: new Date(),
@@ -235,6 +237,13 @@ export const useBookingsStore = defineStore("bookings", () => {
   const addBookingDetail = (bookingDetail: BookingDetail) => {
     currentBooking.value.bookingDetail.push(bookingDetail);
     console.log(bookingDetail);
+    //remove room user selected from currentRooms
+    const index = roomStore.currentRooms.findIndex(
+      (room) => room.id === bookingDetail.room.id
+    );
+    if (index !== -1) {
+      roomStore.currentRooms.splice(index, 1);
+    }
     currentBooking.value.total =
       currentBooking.value.total + bookingDetail.room.roomType.price;
     console.log("---------------------------------");
@@ -330,9 +339,18 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
+      
 
       if (response.data) {
         console.log(response.data);
+        //add sweet alert
+        Swal.fire({
+          title: "Success",
+          text: `Booking ${response.data.booking_id} has been ${status}ed`,
+          icon: "success",
+          confirmButtonText: "Ok",
+        
+        });
         getBookings("asc", "waiting");
       }
     } catch (error) {
@@ -364,7 +382,7 @@ export const useBookingsStore = defineStore("bookings", () => {
           const { value: backNumber } = await Swal.fire({
             title: "Input your back number",
             input: "text",
-            inputLabel: "Your back number",
+            inputLabel: "Enter your Promptpay number",
             inputPlaceholder: "Enter your prompt pay number",
           });
           if (name && backNumber) {
