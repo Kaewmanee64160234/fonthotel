@@ -113,7 +113,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       calculateInitialTotal();
       if (userStore.currentUser.role == "customer") {
         //check if total <= 0
-       
+
         const response = await bookingService.saveBooking(
           currentBooking.value,
           userStore.currentUser.customer!.id!
@@ -124,7 +124,6 @@ export const useBookingsStore = defineStore("bookings", () => {
           bookings.value = [];
         }
       } else {
-       
         const response = await bookingService.saveBookingEmployee(
           currentBooking.value,
           userStore.currentUser.employee!.id!
@@ -355,7 +354,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         const booking = mapOneBooking(bookingData);
         return booking;
       });
-
+      bookings.value = [];
       bookings.value.push(...bookings_);
     } catch (error) {
       console.error("Error fetching bookings:", error);
