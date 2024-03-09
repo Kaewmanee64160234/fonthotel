@@ -9,6 +9,7 @@ import { Promotion } from "@/model/promotion.model";
 import { ActivityPerBooking } from "@/model/activity.model";
 import { useRoomStore } from "@/store/room.store";
 import Swal from "sweetalert2";
+import { Room } from "@/model/room.model";
 
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
@@ -40,6 +41,9 @@ const hasPromotion = computed(() => {
 const clickRemove = (activityPer: ActivityPerBooking) => {
   //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
+};
+const clickRemoveRoom = (room: Room) => {
+  bookingStore.removeRoomPerBooking(room);
 };
 
 const clickContinue = async () => {
@@ -391,19 +395,19 @@ const removePromotion = () => {
                 <div
                   class="flex-3 flex flex-row px-5"
                   style="width: 100%; font-size: 16px"
-                  v-for="item of bookingsStore.currentBooking.bookingDetail"
-                  :key="item.id"
+                  v-for="book of bookingsStore.currentBooking.bookingDetail"
+                  :key="book.id"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">{{ item.room.roomType.roomType }}</p>
+                    <p class="font-medium">{{ book.room.roomType.roomType }}</p>
                   </div>
-                  <div class="flex-2 flex flex-col">
+                  <div class="flex-2 flex flex-col pr-3">
                     <p class="font-medium">
-                      THB {{ item.room.roomType.price }}
+                      THB {{ book.room.roomType.price }}
                     </p>
                   </div>
-                  <div class="flex-3 flex flex-col">
-                    <i class="fas fa-trash-alt" style="color: red" ></i>
+                  <div class="flex-3 flex flex-col justify-center items-center">
+                    <i class="fas fa-trash-alt" style="color: red" @click="clickRemoveRoom(book.room)"></i>
                   </div>
                 </div>
 

@@ -41,12 +41,12 @@ const props = defineProps<{
             <span class="text-xl font-bold">Total: {{ props.price }}.00 Bath</span>
           </div>
           <div class="flex justify-end items-center mt-4 px-4">
-            <span v-if="props.status == 'waiting'" class="card-text text-orange-400 text-xl">Status: {{ props.status }}</span>
-            <span v-else-if="props.status == 'cancel'" class="card-text text-xl" style="color: red;">Status: {{ props.status }}
+            <span v-if="props.status == 'waiting'" class="card-text text-orange-400 text-xl">{{ props.status }}</span>
+            <span v-else-if="props.status == 'cancel'" class="card-text text-xl" style="color: red;">{{ props.status }}
             </span>
-            <span v-else-if="props.status == 'confirm'" class="card-text text-xl" style="color: cadetblue;">Status: {{
+            <span v-else-if="props.status == 'confirm'" class="card-text text-xl" style="color: cadetblue;">{{
                 props.status }}</span>
-            <span v-else-if="props.status == 'finish'" class="card-text text-xl" style="color: seagreen;">Status: {{ props.status
+            <span v-else-if="props.status == 'finish'" class="card-text text-xl" style="color: seagreen;">{{ props.status
               }}</span>
           </div>
         </div>
