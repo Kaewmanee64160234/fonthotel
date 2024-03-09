@@ -110,6 +110,7 @@ if(bookingsStore.currentBooking.bookingDetail.length > 1){
         <div>
           <h2 class="text-base font-bold">{{ props.typename }}</h2>
           <p class="text-sm text-gray-600">Sleep {{ props.room.roomType.sleep }}</p>
+          <p class="text-base text-gray-600" >Adult {{ props.room.roomType.maxAdult }} | Children {{ props.room.roomType.maxChildren }}</p>
           <p class="text-sm text-gray-600">{{ props.detail }}</p>
           <!-- <a :href="roomDetail" class="text-xs font-semibold">Room Detail</a> -->
           <button @click="clickRoomDetail()">
