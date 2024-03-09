@@ -34,10 +34,6 @@ const clickBack = () => {
   router.push("/activity");
 };
 
-const hasPromotion = computed(() => {
-  return promotionStore.promotions.length > 0;
-});
-
 const clickRemove = (activityPer: ActivityPerBooking) => {
   //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
@@ -301,12 +297,12 @@ const removePromotion = () => {
                 />
               </div>
 
-              <div class="col-2">
+              <div class="col-2 mt-6">
                 <button
                   @click="checkPromotion(promotionId, $event)"
-                  class="mt-6 btn-applypromo"
+                  :class="{ 'btn-applypromo': true, 'disabled-btn-applypromo': promotionId === '' }"
                   id="btnApplypromo"
-                  :disabled="!hasPromotion"
+                  :disabled="promotionId === ''"
                 >
                   Apply
                 </button>
@@ -646,6 +642,22 @@ const removePromotion = () => {
 }
 .btn-applypromo:hover {
   background-color: #9e754f;
+}
+.disabled-btn-applypromo {
+  background-color: #69625b;
+  color: white;
+  padding: 5px 5px;
+  font-weight: medium;
+  text-decoration: none;
+  display: inline-block;
+  width: 128px;
+  border-radius: 9999px;
+  text-align: center;
+  font-size: 13px;
+  height: 6vh;
+}
+.disabled-btn-applypromo:hover {
+  background-color: #69625b;
 }
 
 .btn-complete {
