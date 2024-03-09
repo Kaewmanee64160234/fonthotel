@@ -71,8 +71,8 @@ const stayDates = computed(() => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div class="grid gap-4 grid-cols-2 text-sm">
-            <button type="button" class="button-style">Edit review</button>
-            <button type="button" class="button-style">Add review</button>
+            <button type="button" class="button-save">Save</button>
+            <button type="button" class="button-cancel">Cancel</button>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ const stayDates = computed(() => {
                   class="flex-2 flex flex-col"
                   style="width: 50%; font-size: 16px"
                 >
-                  <p
+                <p
                     class="font-medium"
                     style="display: inline; margin-right: 5px"
                   >
@@ -151,6 +151,21 @@ const stayDates = computed(() => {
                   <span class="text-base font-sans" style="font-size: 15px">{{
                     bookingStore.currentBooking.bookingDetail[0].room.id
                   }}</span>
+                </div>
+
+                <div
+                  class="flex-2 flex flex-col"
+                  style="width: 50%; font-size: 16px"
+                >
+                <p
+                    class="font-medium"
+                    style="display: inline; margin-right: 5px"
+                  >
+                    Check-in :
+                  </p>
+                  <span class="text-base font-sans" style="font-size: 15px">
+                    {{ formatTime(bookingStore.currentBooking.checkIn) }}
+                  </span>
                 </div>
               </div>
 
@@ -369,19 +384,6 @@ const stayDates = computed(() => {
                   style="width: 50%; font-size: 16px"
                 >
                   <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 18px"
-                  >
-                    Fine :
-                  </p>
-                </div>
-              </div>
-              <div class="flex-1 flex flex-row p-2 pl-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
                     class="font-bold"
                     style="display: inline; margin-right: 5px; font-size: 20px"
                   >
@@ -470,15 +472,27 @@ body {
   height: 234px;
 }
 
-.button-style {
+.button-save {
   color: white;
-  background-color: #906843;
+  background-color: #2d7d30;
   border-radius: 8px;
   padding: 10px 20px;
-  box-shadow: 0px 4px 6px #805d3f;
+  box-shadow: 0px 4px 6px #3f805b;
 }
 
-.button-style:hover {
-  background-color: #9e754f;
+.button-save:hover {
+  background-color: #3e8460;
+}
+
+.button-cancel {
+  color: white;
+  background-color: #dc3030;
+  border-radius: 8px;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px #cd2323;
+}
+
+.button-cancel:hover {
+  background-color: #ff0000;
 }
 </style>
