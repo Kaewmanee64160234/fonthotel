@@ -61,51 +61,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     },
   });
   const bookings = ref<Booking[]>([
-    {
-      adult: 0,
-      checkIn: new Date(),
-      checkOut: new Date(),
-      child: 0,
-      createDate: new Date(),
-      cusAddress: "",
-      cusCountry: "",
-      cusEmail: "",
-      cusLastName: "",
-      cusName: "",
-      cusTel: "",
-      createdDate: new Date(),
-
-      id: 0,
-      paymentBooking: "",
-      paymentCheckout: "",
-      status: "",
-      statusLate: "",
-      total: 0,
-      totalDiscount: 0,
-      activityPerBooking: [],
-      bookingDetail: [],
-      customer: { id: 0, name: "", startDate: new Date() },
-      employee: {
-        address: "",
-        dateOfBirth: new Date(),
-        dateStartWork: "",
-        email: "",
-        hourlyRate: 0,
-        id: 0,
-        name: "",
-        position: "",
-        tel: "",
-      },
-      pledge: 0,
-      promotion: {
-        createdDate: new Date(),
-        discount: 0,
-        discountPercent: 0,
-        endDate: new Date(),
-        id: 0,
-        name: "",
-      },
-    },
+    
   ]);
 
   const saveBooking = async () => {
@@ -365,7 +321,9 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   const confirmBooking = async (id: number, status: string) => {
     try {
+      //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
+    
       if (response.data) {
         console.log(response.data);
         getBookings("asc", "waiting");
@@ -380,16 +338,77 @@ export const useBookingsStore = defineStore("bookings", () => {
     status: string
   ) => {
     try {
-      const response = await bookingService.confirmBooking(id, status);
-      if (response.data) {
-        console.log("----------------------------------------------------");
-        console.log(response.data);
-        if (userStore.currentUser.role == "customer") {
-          await getBookingByCustomerId(userStore.currentUser.customer!.id!);
-        } else {
-          await getBookingByEmployeeId(userStore.currentUser.employee!.id!);
+      //find booking by id
+      const res = await bookingService.getBookingBybookingid(id);
+      if(res.data) {
+        //check if checkin date in 7 days can cancel booking
+        const checkinDate = new Date(res.data.booking_checkin);
+        const currentDate = new Date();
+        const timeDiff = checkinDate.getTime() - currentDate.getTime();
+        const dayDiff = timeDiff / (1000 * 3600 * 24);
+        if (dayDiff < 7) {
+          //sweet alert user input name and back number and then user can cancel booking
+          const { value: name } = await Swal.fire({
+            title: "Input your name",
+            input: "text",
+            inputLabel: "Your name",
+            inputPlaceholder: "Enter your name",
+          });
+          const { value: backNumber } = await Swal.fire({
+            title: "Input your back number",
+            input: "text",
+            inputLabel: "Your back number",
+            inputPlaceholder: "Enter your back number",
+          });
+          if (name && backNumber) {
+            const response = await bookingService.confirmBooking(id, status);
+            if (response.data) {
+              console.log(response.data);
+              if (userStore.currentUser.customer) {
+                await getBookingByCustomerId(
+                  userStore.currentUser.customer!.id!
+                );
+              }
+              if (userStore.currentUser.employee) {
+                await getBookingByEmployeeId(
+                  userStore.currentUser.employee!.id!
+                );
+              }
+            }
+          }
+          
         }
+        //if morethen 7 days show info not return money
+        else {
+         //show sweet alert
+          const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, keep it",
+          });
+          if (result.isConfirmed) {
+            const response = await bookingService.confirmBooking(id, status);
+            if (response.data) {
+              console.log(response.data);
+              if (userStore.currentUser.customer) {
+                await getBookingByCustomerId(
+                  userStore.currentUser.customer!.id!
+                );
+              }
+              if (userStore.currentUser.employee) {
+                await getBookingByEmployeeId(
+                  userStore.currentUser.employee!.id!
+                );
+              }
+            }
+          }
+        }
+
       }
+     
     } catch (error) {
       console.log(error);
     }
@@ -439,6 +458,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
+    bookings.value = [];
 
     bookings.value.push(...bookings_);
   };
@@ -452,7 +472,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
-
+    bookings.value = [];
     bookings.value.push(...bookings_);
   };
   // set current room

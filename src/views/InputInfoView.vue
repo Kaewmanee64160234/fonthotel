@@ -147,7 +147,7 @@ const validateForm = () => {
     return false;
   }
   //check no room
-  if (bookingStore.currentBooking.bookingDetail.length == 0) {
+  if (bookingStore.currentBooking!.bookingDetail.length == 0) {
     //ad sweet alert
     Swal.fire({
       icon: "error",

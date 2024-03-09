@@ -21,9 +21,9 @@ function toggleDropdown() {
 const currentDate = new Date();
 const currentFormattedDate = new Intl.DateTimeFormat("en-US", {
   weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
 }).format(currentDate);
 
 function formatTwoDates(date1: Date): string {
@@ -37,11 +37,11 @@ function formatTwoDates(date1: Date): string {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = hours >= 12 ? "PM" : "AM";
     const formattedHours = hours % 12 || 12; // Converts 0 to 12 for 12AM
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Adds leading 0 if needed
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds; // Adds leading 0 if needed
-  
+
     return `${day}, ${month} ${dayOfMonth}, ${year} ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
   };
 
@@ -94,21 +94,17 @@ let booking = ref<Booking>({
 });
 onMounted(async () => {
   if (userStore.currentUser.customer) {
-    await bookingStore.getBookingByCustomerId(userStore.currentUser.customer!.id!);
+    await bookingStore.getBookingByCustomerId(
+      userStore.currentUser.customer!.id!
+    );
   }
   if (userStore.currentUser.employee) {
-    await bookingStore.getBookingByEmployeeId(userStore.currentUser.employee!.id!);
+    await bookingStore.getBookingByEmployeeId(
+      userStore.currentUser.employee!.id!
+    );
   }
+});
 
-});
-onMounted(() => {
-  if (bookingStore.currentBooking.id) {
-    bookingStore.getBookingByCustomerId(bookingStore.currentBooking.id);
-  }
-  else {
-    bookingStore.getBookingByEmployeeId(bookingStore.currentBooking.id);
-  }
-});
 // const clickback = () => {
 //   window.location.href = "/";
 // };
@@ -127,8 +123,13 @@ onMounted(() => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div>
-            <p>Date: <span class="font-semibold">{{ currentFormattedDate }}</span></p>
-            <p>Time: <span class="font-semibold">{{ currentTime }}</span></p>
+            <p>
+              Date:
+              <span class="font-semibold">{{ currentFormattedDate }}</span>
+            </p>
+            <p>
+              Time: <span class="font-semibold">{{ currentTime }}</span>
+            </p>
           </div>
         </div>
         <div class="p-4">
@@ -197,12 +198,11 @@ onMounted(() => {
                 </ul>
               </div>
             </div>
-           
+
             <!-- <button type="button"  class=" bg-brown-500 text-white ">Brown Button</button> -->
           </div>
           <div class="overflow-y-auto dc-scroll pb-20">
             <div v-for="item in bookingStore.bookings" :key="item.id">
-             
               <HistoryBookingCard
                 :image="item.bookingDetail[0]?.room?.image"
                 :name="`${item.cusName} ${item.cusLastName}`"

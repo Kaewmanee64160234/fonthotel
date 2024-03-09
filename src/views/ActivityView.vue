@@ -44,7 +44,7 @@ const clickRemove = (activityPer: ActivityPerBooking) => {
 };
 
 const clickRemoveRoom = (room: Room) => {
-  if (bookingStore.currentBooking.bookingDetail.length > 1) {
+  if (bookingStore.currentBooking!.bookingDetail.length > 1) {
     bookingStore.removeRoomPerBooking(room);
   }
 };

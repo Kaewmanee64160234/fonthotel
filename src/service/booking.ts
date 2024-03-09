@@ -39,7 +39,7 @@ const saveBooking = async (booking: Booking, customerId: number) => {
 };
 
 const getBookingBybookingid = (id: number) => {
-  return http.get("/booking/id" + id);
+  return http.get("/booking/" + id);
 };
 
 const getBookingByCustomerIdLastcreated = (id: number) => {
