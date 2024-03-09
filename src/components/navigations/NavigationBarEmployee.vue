@@ -70,7 +70,7 @@ const logout = () => {
         </div>
         <div class="flex flex-col">
           <div class="flex flex-1 flex-col">
-            <a v-if="userStore.currentUser.username == ''" @click="authStore.logout()"
+            <a v-if="userStore.currentUser.username == ''" 
               class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
             <a v-else  class=" text-sm font-judson font-semibold"> {{
             userStore.currentUser.username }}</a>

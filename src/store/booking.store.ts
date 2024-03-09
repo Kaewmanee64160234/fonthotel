@@ -339,9 +339,18 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
+      
 
       if (response.data) {
         console.log(response.data);
+        //add sweet alert
+        Swal.fire({
+          title: "Success",
+          text: `Booking ${response.data.booking_id} has been ${status}ed`,
+          icon: "success",
+          confirmButtonText: "Ok",
+        
+        });
         getBookings("asc", "waiting");
       }
     } catch (error) {
@@ -373,7 +382,7 @@ export const useBookingsStore = defineStore("bookings", () => {
           const { value: backNumber } = await Swal.fire({
             title: "Input your back number",
             input: "text",
-            inputLabel: "Your back number",
+            inputLabel: "Enter your Promptpay number",
             inputPlaceholder: "Enter your prompt pay number",
           });
           if (name && backNumber) {
