@@ -6,7 +6,9 @@ const props = defineProps<{
   typeRoom: string;
   activity: string;
   price: number;
-  status: string;
+  dateCheckIn: string,
+  status: string,
+  createdDate: string,
 }>();
 </script>
 <template lang="">
@@ -14,6 +16,9 @@ const props = defineProps<{
     <div class="grid gap-4 mb-5">
       <!-- Repeat this block for each reservation -->
       <div class="card bg-white shadow-lg rounded-lg p-5">
+        <div class="flex justify-end">
+          <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
+        </div>
         <div class="card-body">
           <div class="flex">
             <img
@@ -31,12 +36,18 @@ const props = defineProps<{
           <li  class="card-text">{{ typeRoom }}</li>
 
           <li v-if="activity !== undefine" class="card-text">{{ activity }}</li>
-          <li class="card-text">Check in 26/12/2023 at 1:00 PM</li>
+          <li class="card-text">{{ props.dateCheckIn }} at 1:00 PM</li>
           <div class="flex justify-end items-center mt-4 px-4">
             <span class="text-xl font-bold">Total: {{ props.price }}.00 Bath</span>
           </div>
           <div class="flex justify-end items-center mt-4 px-4">
-            <span class="text-xl">{{ status }} </span>
+            <span v-if="props.status == 'waiting'" class="card-text text-orange-400 text-xl">Status: {{ props.status }}</span>
+            <span v-else-if="props.status == 'cancel'" class="card-text text-xl" style="color: red;">Status: {{ props.status }}
+            </span>
+            <span v-else-if="props.status == 'confirm'" class="card-text text-xl" style="color: cadetblue;">Status: {{
+                props.status }}</span>
+            <span v-else-if="props.status == 'finish'" class="card-text text-xl" style="color: seagreen;">Status: {{ props.status
+              }}</span>
           </div>
         </div>
       </div>

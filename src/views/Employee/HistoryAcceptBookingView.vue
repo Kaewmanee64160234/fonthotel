@@ -5,6 +5,38 @@ import { useBookingsStore } from "@/store/booking.store";
 import { Booking } from "@/model/booking.model";
 const bookingStore = useBookingsStore();
 const isDropdownOpen = ref(false);
+const currentTime = new Date().toLocaleTimeString();
+
+const currentDate = new Date();
+const currentFormattedDate = new Intl.DateTimeFormat("en-US", {
+  weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+}).format(currentDate);
+
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("default", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
+
+    // Extracts hours, minutes, and AM/PM
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12; // Converts 0 to 12 for 12AM
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Adds leading 0 if needed
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds; // Adds leading 0 if needed
+  
+    return `${day}, ${month} ${dayOfMonth}, ${year} ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
+  };
+
+  return formatDate(date1);
+}
+
 
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
@@ -79,8 +111,8 @@ onMounted(async () => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">Confirm Reservation</h1>
           <div>
-            <p>Date: <span class="font-semibold">27 Dec 2023</span></p>
-            <p>Time: <span class="font-semibold">6:27 AM</span></p>
+            <p>Date: <span class="font-semibold">{{ currentFormattedDate }}</span></p>
+            <p>Time: <span class="font-semibold">{{ currentTime }}</span></p>
           </div>
         </div>
         <div class="p-4">
@@ -168,6 +200,8 @@ onMounted(async () => {
                 "
                 :price="item.total"
                 :status="item.status"
+                :createdDate="formatTwoDates(new Date(item.createdDate))"
+                :dateCheckIn="item.checkIn.toDateString()"
               />
             </div>
           </div>

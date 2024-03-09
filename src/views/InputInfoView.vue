@@ -33,6 +33,10 @@ const clickBack = () => {
   router.push("/activity");
 };
 
+const hasPromotion = computed(() => {
+  return promotionStore.promotions.length > 0;
+});
+
 const clickRemove = (activityPer: ActivityPerBooking) => {
   //remove activityPer from currentBooking
   bookingStore.removeActivityPerBooking(activityPer);
@@ -298,6 +302,7 @@ const removePromotion = () => {
                   @click="checkPromotion(promotionId, $event)"
                   class="mt-6 btn-applypromo"
                   id="btnApplypromo"
+                  :disabled="!hasPromotion"
                 >
                   Apply
                 </button>
@@ -308,7 +313,7 @@ const removePromotion = () => {
               <!-- cretae dropdown payment method -->
               <div class="col-1">
                 <label class="block mb-2 text-sm font-medium text-gray-900"
-                  >Payment Method</label
+                  >Service</label
                 >
                 <select
                   v-model="paymentMethod"

@@ -9,6 +9,9 @@ const props = defineProps<{
   typeRoom: string,
   activity: string,
   price: number,
+  createdDate: string,
+  dateCheckIn: string,
+  status: string,
 }>();
 
 const confirmBooking_ = async (status:string) => {
@@ -20,6 +23,9 @@ const confirmBooking_ = async (status:string) => {
     <div class="grid gap-4 mb-5">
       <!-- Repeat this block for each reservation -->
       <div class="card bg-white shadow-lg rounded-lg p-5">
+        <div class="flex justify-end">
+          <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
+        </div>
         <div class="card-body">
           <div class="flex">
             <img
@@ -34,9 +40,16 @@ const confirmBooking_ = async (status:string) => {
               </h5>
             </div>
           </div>
-          <li class="card-text">{{ typeRoom }}</li>
-          <li class="card-text">{{ activity }}</li>
-          <li class="card-text">Check in 26/12/2023 at 1:00 PM</li>
+          <li class="card-text ">{{ props.typeRoom }}</li>
+            <li class="card-text">{{ props.activity }}</li>
+            <li class="card-text">{{ props.dateCheckIn }} at 1:00 PM</li>
+            <li v-if="props.status == 'waiting'" class="card-text text-orange-400">Status: {{ props.status }}</li>
+            <li v-else-if="props.status == 'cancel'" class="card-text" style="color: red;">Status: {{ props.status }}
+            </li>
+            <li v-else-if="props.status == 'confirm'" class="card-text" style="color: cadetblue;">Status: {{
+                props.status }}</li>
+            <li v-else-if="props.status == 'finish'" class="card-text" style="color: seagreen;">Status: {{ props.status
+              }}</li>
           <div class="flex justify-end items-center mt-4 px-4">
             <span class="text-xl font-bold">Total: {{ price }}.00 Bath</span>
           </div>
