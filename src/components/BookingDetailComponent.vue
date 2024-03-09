@@ -7,30 +7,26 @@ import { useBookingsStore } from "@/store/booking.store";
 import { defineProps } from "vue";
 
 const props = defineProps<{
-    img: string,
-    date: string,
-    name: string,
-    roomType: string,
-    adult: number,
-    children: number,
-    total: number,
-    payment: string,
-    status: string,
-    promotion: number,
-    activity: ActivityPerBooking[],
-
+    img: string;
+    date: string;
+    name: string;
+    roomType: string;
+    adult: number;
+    children: number;
+    total: number;
+    payment: string;
+    status: string;
+    promotion: number;
+    activity: ActivityPerBooking[];
 }>();
 
 const clickback = () => {
-    window.location.href = '/'
-}
+    window.location.href = "/";
+};
 const linkTo = () => {
     router.push(`/`);
-
-}
+};
 const bookingStore = useBookingsStore();
-
-
 </script>
 
 <template>
@@ -41,98 +37,130 @@ const bookingStore = useBookingsStore();
             </button>
            -->
             <div class="absolute top-0 right-0 p-8">
-                <button @click="linkTo()" class="btn-home-view  inline-block ">Home View</button>
-
+                <button @click="linkTo()" class="btn-home-view inline-block">
+                    Home View
+                </button>
             </div>
-
         </div>
 
         <!-- Container for the room details -->
         <div class="flex justify-center items-center min-h-screen">
-            <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto  ">
+            <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto">
                 <!-- Title above the image -->
-                <h1 class="text-2xl font-judson px-5 pt-2 ml-10 mt-5 text-center">Booking details</h1>
-
-
+                <h1 class="text-2xl font-judson px-5 pt-2 ml-10 mt-5 text-center">
+                    Booking details
+                </h1>
 
                 <!-- Image and Description Container -->
                 <div class="md:flex pl-8">
                     <!-- Room Image -->
                     <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
                         <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
-
                     </div>
 
                     <!-- Room Description -->
                     <div class="md:w-1/2 py-4 pl-8 mt-5">
-                        <div class="card-stay ">
+                        <div class="card-stay">
                             <div class="mt-4 pl-8">
                                 <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
                                     <!-- Facility 1 -->
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Date: {{ date }} </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">Date: {{ date }}</p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Check-in : After 1:00 PM </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Check-in : After 1:00 PM
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Name: {{ props.name }} </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Name: {{ props.name }}
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Check-out : Before 7:00 AM </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Check-out : Before 7:00 AM
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Type Room : {{ props.roomType }}</p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Type Room : {{ props.roomType }}
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-semibold  text-base text-black">Payment Information
+                                    <div class="facility-item text-base ">
+                                        <h1 class="text-lg font-semibold text-base text-black">
+                                            Payment Information
                                         </h1>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Guest: {{ props.adult }} Per Adult | {{
-                    props.children }} Per Child</p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Guest: {{ props.adult }} Per Adult |
+                                            {{ props.children }} Per Child
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Payment: {{ props.payment }} </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">
+                                            Payment: {{ props.payment }}
+                                        </p>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black"> Promotion: {{ promotion }}</p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">Promotion: </p>
 
+                                        <span v-if="props.promotion == 0" class="text-sm text-base text-black">No
+                                            Promotion</span>
+                                        <span v-else class="text-sm text-base text-black">THB {{ props.promotion.name }}
+                                            Discount</span>
                                     </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black">Name: {{ name }} </p>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black">Name: {{ name }}</p>
                                     </div>
                                     <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                                        <p class="text-sm text-base text-black">
-                                            Activity : {{ activity }}
-                                        </p>
-                                        <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0"
-                                            class="text-base font-sans" style="font-size: 15px">
-                                            No activity</span>
-                                    </div>
-                                    <div class="facility-item text-base font-judson">
-                                        <p class="text-sm text-base text-black text-green-600">Status: {{status }} </p>
-                                    </div>
+                                        <div class="facility-item text-base ">
+                                            <p class="text-sm text-base text-black">Activaty:</p>
 
+                                            <div class="flex-1 flex flex-col pl-5 ">
+                                                <!-- Changed to flex-col for vertical layout -->
+                                                <div class="flex-2" style="width: 100%; font-size: 16px">
+                                                    <!-- Removed flex directives here for direct control -->
+
+                                                    <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0" class="text-base font-sans" style="font-size: 15px">
+                                                        No activity
+                                                    </span>
+                                                    <!-- Unordered list for activities -->
+                                                    <ul v-else class="text-base font-sans" style="font-size: 13px;list-style-type: disc;padding-left: 20px;">
+                                                        <li v-for="activityPerBooking in bookingStore.currentBooking.activityPerBooking" :key="activityPerBooking.id">
+                                                            {{ activityPerBooking.qty }}
+                                                            {{ activityPerBooking.activity.name }}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <span v-if="bookingStore.currentBooking.activityPerBooking.length == 0 " class="text-base font-sans" style="font-size: 15px">
+                                                No activity</span>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="facility-item text-base ">
+                                        <p class="text-sm text-base text-black text-green-600">
+                                            Status: {{ status }}
+                                        </p>
+                                    </div>
                                 </div>
                                 <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
-                                    <div class="facility-item text-base font-judson">
-                                        <h1 class="text-lg font-semibold  text-base text-black ">Total : {{ total }}
-                                            Baht</h1>
+                                    <div class="facility-item text-base ">
+                                        <h1 class="text-lg font-semibold text-base text-black">
+                                            Total : {{ total }} Baht
+                                        </h1>
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
                     </div>
                 </div>
 
                 <!-- Facilities Container -->
-
             </div>
         </div>
     </div>
@@ -160,7 +188,6 @@ const bookingStore = useBookingsStore();
 }
 
 .facility-item span {
-
     display: flex;
     align-items: center;
 }
@@ -180,9 +207,8 @@ const bookingStore = useBookingsStore();
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px
+    padding: 5px;
 }
-
 
 .body {
     background-image: url("../images/image.png");
@@ -202,7 +228,7 @@ const bookingStore = useBookingsStore();
 }
 
 .font-judson {
-    font-family: 'Judson';
+    font-family: "Judson";
 }
 
 .card-container {
@@ -217,4 +243,5 @@ const bookingStore = useBookingsStore();
     background-color: rgba(255, 255, 255);
     box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
 }
+
 </style>
