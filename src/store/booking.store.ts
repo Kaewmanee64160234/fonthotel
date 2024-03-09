@@ -365,7 +365,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             title: "Input your back number",
             input: "text",
             inputLabel: "Your back number",
-            inputPlaceholder: "Enter your back number",
+            inputPlaceholder: "Enter your prompt pay number",
           });
           if (name && backNumber) {
             const response = await bookingService.confirmBooking(id, status);
