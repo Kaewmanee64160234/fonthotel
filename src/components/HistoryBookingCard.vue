@@ -29,11 +29,7 @@ const cancelBooking = async (bookingId: number) => {
   try {
     await bookingStore.confirmBookingByCustomerOrEmployee(bookingId, "cancel");
     // Show success message after booking cancellation
-    Swal.fire({
-      title: "Cancelled",
-      text: "Your booking has been cancelled.",
-      icon: "success"
-    });
+    
   } catch (error) {
     console.error(error);
     // Show error message if cancellation fails

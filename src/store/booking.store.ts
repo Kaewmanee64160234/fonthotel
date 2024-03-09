@@ -366,8 +366,9 @@ export const useBookingsStore = defineStore("bookings", () => {
       //find booking by id
       const res = await bookingService.getBookingBybookingid(id);
       if (res.data) {
+        console.log(res.data);
         //check if checkin date in 7 days can cancel booking
-        const checkinDate = new Date(res.data.booking_checkin);
+        const checkinDate = new Date(res.data.booking_create_date);
         const currentDate = new Date();
         const timeDiff = checkinDate.getTime() - currentDate.getTime();
         const dayDiff = timeDiff / (1000 * 3600 * 24);
@@ -400,6 +401,15 @@ export const useBookingsStore = defineStore("bookings", () => {
                 );
               }
             }
+          }else{
+            //show sweet alert
+            Swal.fire({
+              title: "Error",
+              text: "Please input your name and back number",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          
           }
         }
         //if morethen 7 days show info not return money
