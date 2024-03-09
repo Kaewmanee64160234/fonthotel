@@ -190,6 +190,7 @@ export const useBookingsStore = defineStore("bookings", () => {
                 roomType: detail.room.roomtype.room_type,
                 typeName: detail.room.roomtype.room_type_name,
                 bedSize: detail.room.roomtype.room_type_bed_size,
+              
               },
             },
             total: detail.total,

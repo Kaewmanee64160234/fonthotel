@@ -99,7 +99,7 @@ export const useRoomStore = defineStore("roomStore", () => {
                         desk: room.roomtype.room_type_desk,
                         typeName: room.roomtype.room_type_name,
                         maxAdult: room.roomtype.max_adult,
-                        maxChildren: room.roomtype.max_children,
+                        maxChildren: room.roomtype.max_child,
                         sleep: room.roomtype.sleep,
                     }
                     const room_: Room = {
@@ -142,7 +142,7 @@ export const useRoomStore = defineStore("roomStore", () => {
                     desk: response.data.room_type_desk,
                     typeName: response.data.room_type_name,
                     maxAdult: response.data.max_adult,
-                    maxChildren: response.data.max_children,
+                    maxChildren: response.data.max_child,
                     sleep: response.data.sleep,
                   
                 

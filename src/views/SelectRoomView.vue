@@ -24,7 +24,20 @@ const childrenCount = ref(0);
 const totalGuests = ref(0);
 
 const clickback = () => {
-  router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
+  //sweet`alert
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be redirected to the previous page,Your bookings will be lost!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, go back!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.push("/selectguestdate/" + roomStore.currentType.split(" ")[0]);
+    }
+  });
 };
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
