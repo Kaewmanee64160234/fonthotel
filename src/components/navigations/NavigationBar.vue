@@ -32,10 +32,12 @@ onMounted(() => {
       <!-- Right Side: Menu Items -->
       <div class="flex gap-4">
         <a
+        v-if="userStore.currentUser.login != ''"
           href="/historyBookings"
           class="font-semibold hover:text-white text-base font-judson"
           >BOOKING HISTORY</a
         >
+
         <a
           v-if="userStore.currentUser.username == ''"
           href="/login"
