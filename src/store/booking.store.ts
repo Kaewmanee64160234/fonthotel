@@ -11,10 +11,12 @@ import { useUserStore } from "./user.store";
 import router from "@/router";
 import { RoomType } from "@/model/roomtype.model";
 import Swal from "sweetalert2";
+import { useRoomStore } from "./room.store";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
   const moreDetailCard = ref(false);
+  const roomStore = useRoomStore();
   const currentBooking = ref<Booking>({
     adult: 0,
     checkIn: new Date(),
@@ -235,6 +237,13 @@ export const useBookingsStore = defineStore("bookings", () => {
   const addBookingDetail = (bookingDetail: BookingDetail) => {
     currentBooking.value.bookingDetail.push(bookingDetail);
     console.log(bookingDetail);
+    //remove room user selected from currentRooms
+    const index = roomStore.currentRooms.findIndex(
+      (room) => room.id === bookingDetail.room.id
+    );
+    if (index !== -1) {
+      roomStore.currentRooms.splice(index, 1);
+    }
     currentBooking.value.total =
       currentBooking.value.total + bookingDetail.room.roomType.price;
     console.log("---------------------------------");

@@ -46,6 +46,8 @@ const clickRemove = (activityPer: ActivityPerBooking) => {
 const clickRemoveRoom = (room: Room) => {
   if (bookingStore.currentBooking!.bookingDetail.length > 1) {
     bookingStore.removeRoomPerBooking(room);
+    //add room in to roomStore currentRooms
+    roomStore.currentRooms.push(room);
   }
 };
 const routerToAddRoom = () => {
@@ -184,15 +186,15 @@ const routerToAddRoom = () => {
                       <p class="font-medium">Promotion</p>
                       <p>
                         {{
-                          bookingStore.currentBooking.promotion.discount ??
-                          bookingStore.currentBooking.promotion
+                          bookingStore.currentBooking!.promotion!.discount! ??
+                          bookingStore.currentBooking!.promotion!
                             .discountPercent + "%"
                         }}
                       </p>
                     </div>
                     <div class="flex-2 flex flex-col">
                       <p>
-                        {{ bookingStore.currentBooking.promotion.name ?? "-" }}
+                        {{ bookingStore.currentBooking!.promotion!.name! ?? "-" }}
                       </p>
                     </div>
                   </div>
