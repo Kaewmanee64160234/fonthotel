@@ -1,21 +1,13 @@
 <script setup lang="ts">
 import router from "@/router";
 import { useBookingsStore } from "@/store/booking.store";
+import { computed, ref, watch } from "vue";
 
 const clickback = () => {
   router.push("/historyBookings");
 };
 
-// Function to format dates
-const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-};
+
 // const formatTime = new Date().toLocaleTimeString();
 const formatTime = (dateString: string): string => {
   const date = new Date(dateString);
@@ -27,6 +19,44 @@ const formatTime = (dateString: string): string => {
   return `${formattedHours}:${formattedMinutes} ${amOrPm}`; // Combine hours, minutes, and AM/PM
 };
 const bookingStore = useBookingsStore();
+const minDate = new Date().toISOString().split("T")[0];
+const startDate = ref(minDate);
+const endDate = ref("");
+
+// Computed property to calculate "tomorrow" based on startDate
+const tomorrow = computed(() => {
+  const result = new Date(startDate.value);
+  result.setDate(result.getDate() + 1);
+  return result.toISOString().split("T")[0];
+});
+
+// Watchers to ensure dates are within valid ranges
+watch(startDate, (newValue) => {
+  const start = new Date(newValue);
+  const end = new Date(endDate.value);
+  if (start >= end) {
+    const nextDay = new Date(start);
+    nextDay.setDate(nextDay.getDate() + 1);
+    endDate.value = nextDay.toISOString().split("T")[0];
+  }
+});
+
+// Function to format dates
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+// Computed property for displaying stay dates
+const stayDates = computed(() => {
+  if (!startDate.value || !endDate.value) return "";
+  return `${formatDate(startDate.value)} - ${formatDate(endDate.value)}`;
+});
 </script>
 
 <template>
@@ -50,35 +80,29 @@ const bookingStore = useBookingsStore();
           <div class="card-stay">
             <div class="card-container">
               <div class="flex-1 flex flex-row p-2 pl-5 mt-5">
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
-                    Date :
-                  </p>
-                  <span class="text-base font-sans" style="font-size: 15px">
-                  </span
-                  >{{ formatDate(bookingStore.currentBooking.checkIn) }} -
-                  {{ formatDate(bookingStore.currentBooking.checkOut) }}
+                <div class="btn-date text-left">
+                  <label class=""> Check-in </label>
+
+                  <input
+                    class="rounded-lg text-black p-2"
+                    type="date"
+                    style="width: 90%"
+                    :min="minDate"
+                    v-model="startDate"
+                  />
                 </div>
 
-                <div
-                  class="flex-2 flex flex-col"
-                  style="width: 50%; font-size: 16px"
-                >
-                  <p
-                    class="font-medium"
-                    style="display: inline; margin-right: 5px"
-                  >
-                    Check-in :
-                  </p>
-                  <span class="text-base font-sans" style="font-size: 15px">
-                    {{ formatTime(bookingStore.currentBooking.checkIn) }}
-                  </span>
+                <!-- Check-out date picker -->
+                <div class="btn-date text-left">
+                  <label class=""> Check-out </label>
+                  <input
+                    style="width: 90%"
+                    type="date"
+                    class="rounded-lg text-black p-2"
+                    :min="tomorrow"
+                    :disabled="!startDate"
+                    v-model="endDate"
+                  />
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">
@@ -221,15 +245,13 @@ const bookingStore = useBookingsStore();
                 </div>
               </div>
               <div class="flex-1 flex flex-row">
-                <div class="flex-1 flex flex-row  pl-5">
-                  <p class="font-medium">
-                        Activity :
-                      </p>
+                <div class="flex-1 flex flex-row pl-5">
+                  <p class="font-medium">Activity :</p>
                   <div class="flex-1 flex flex-col pl-5">
                     <!-- Changed to flex-col for vertical layout -->
                     <div class="flex-2" style="width: 100%; font-size: 16px">
                       <!-- Removed flex directives here for direct control -->
-                    
+
                       <span
                         v-if="
                           bookingStore.currentBooking.activityPerBooking
@@ -352,7 +374,6 @@ const bookingStore = useBookingsStore();
                   >
                     Fine :
                   </p>
-                  
                 </div>
               </div>
               <div class="flex-1 flex flex-row p-2 pl-5">

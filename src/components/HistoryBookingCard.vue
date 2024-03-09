@@ -45,6 +45,10 @@ const cancelBooking = async (bookingId: number) => {
   }
 }
 
+const editDateBooking = () => {
+  bookingStore.currentBooking = props.booking;
+  router.push('/editDateBooking');
+}
 const clickConfirmCancel = (bookingId: number) => {
   // Show confirmation dialog before cancelling the booking
   Swal.fire({
@@ -105,7 +109,7 @@ const clickConfirmCancel = (bookingId: number) => {
             <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3" @click="clickMoreDetail">
               More Detail
             </button>
-            <button   v-if="booking.status != 'cancel'"  type="button" class="btn-edit text-sm px-5 py-2.5 me-2 mb-3">
+            <button @click="editDateBooking()"  v-if="booking.status != 'cancel'"  type="button" class="btn-edit text-sm px-5 py-2.5 me-2 mb-3">
               Edit
             </button>
             <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id)"
