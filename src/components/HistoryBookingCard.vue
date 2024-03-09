@@ -105,6 +105,9 @@ const clickConfirmCancel = (bookingId: number) => {
             <button type="button" class="btn-moreDetail text-sm px-5 py-2.5 me-2 mb-3" @click="clickMoreDetail">
               More Detail
             </button>
+            <button type="button" class="btn-edit text-sm px-5 py-2.5 me-2 mb-3">
+              Edit
+            </button>
             <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id)"
               v-if="booking.status != 'cancel'">
               <p>Cancel</p>
@@ -123,6 +126,21 @@ const clickConfirmCancel = (bookingId: number) => {
 
 
 <style scoped>
+.btn-edit {
+  background-color: #c56a3a;
+  color: white;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px #805d3f;
+  font-weight: medium;
+  text-decoration: none;
+  display: inline-block;
+  width: 128px;
+  border-radius: 9999px;
+  text-align: center;
+}
+.btn-edit:hover {
+      background-color: #cc7f56;
+    }
 .btn-moreDetail {
   background-color: #906843;
   color: white;
