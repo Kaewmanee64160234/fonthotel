@@ -5,9 +5,12 @@ import router from "@/router";
 import room from "@/service/room";
 import { useBookingsStore } from "@/store/booking.store";
 import { useRoomStore } from "@/store/room.store";
+import { useUserStore } from '@/store/user.store';
 import { defineProps, ref } from "vue";
 import Swal from "sweetalert2";
 
+
+const userStore = useUserStore();
 const roomStore = useRoomStore();
 const bookingsStore = useBookingsStore();
 const props = defineProps<{
@@ -21,13 +24,20 @@ const props = defineProps<{
   room: Room;
 }>();
 //add bookingDeail
+
 const addBooking = () => {
-  const bookingDetail: BookingDetail = {
+  if(userStore.currentUser.id <= 0 ) {
+        router.push('/login');
+  }else{
+    const bookingDetail: BookingDetail = {
     id: -1,
     room: props.room,
     total: props.room.roomType.price,
   };
   checkRoomCapacity(bookingDetail);
+
+  }
+
 };
 
 const clickRoomDetail = () => {
