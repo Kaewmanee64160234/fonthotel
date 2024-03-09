@@ -72,7 +72,7 @@ const logout = () => {
           <div class="flex flex-1 flex-col">
             <a v-if="userStore.currentUser.username == ''" @click="authStore.logout()"
               class="hover:text-gray-700 text-sm font-judson"> {{ userStore.currentUser.username }}</a>
-            <a v-else @click="router.push('/login')" class="hover:text-gray-700 text-sm font-judson font-semibold"> {{
+            <a v-else  class=" text-sm font-judson font-semibold"> {{
             userStore.currentUser.username }}</a>
             <a v-if="userStore.currentUser.username == ''" href="/login"
               class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>
