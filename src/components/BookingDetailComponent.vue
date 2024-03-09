@@ -125,6 +125,7 @@ const bookingStore = useBookingsStore();
                     <span v-else class="text-sm text-base text-black "> <span style="padding: 5px;">
                         {{ props.promotion.name! }}
                     </span>
+
                     </span>
                   </div>
                   <div class="facility-item text-base">
