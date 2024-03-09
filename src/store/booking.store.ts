@@ -10,6 +10,7 @@ import { ActivityPerBooking } from "@/model/activity.model";
 import { useUserStore } from "./user.store";
 import router from "@/router";
 import { RoomType } from "@/model/roomtype.model";
+import Swal from "sweetalert2";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
@@ -111,6 +112,8 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       calculateInitialTotal();
       if (userStore.currentUser.role == "customer") {
+        //check if total <= 0
+       
         const response = await bookingService.saveBooking(
           currentBooking.value,
           userStore.currentUser.customer!.id!
@@ -121,6 +124,7 @@ export const useBookingsStore = defineStore("bookings", () => {
           bookings.value = [];
         }
       } else {
+       
         const response = await bookingService.saveBookingEmployee(
           currentBooking.value,
           userStore.currentUser.employee!.id!
@@ -159,11 +163,13 @@ export const useBookingsStore = defineStore("bookings", () => {
       adult: bookingData.booking_adult,
       child: bookingData.booking_child,
       createdDate: new Date(bookingData.updateDate),
-      customer: {
-        id: bookingData.customer.cus_id,
-        name: bookingData.customer.cus_name,
-        startDate: new Date(bookingData.customer.cus_start_date),
-      },
+      customer: bookingData.customer
+        ? {
+            id: bookingData.customer.cus_id,
+            name: bookingData.customer.cus_name,
+            startDate: new Date(bookingData.customer.cus_start_date),
+          }
+        : undefined,
       promotion: bookingData.promotion, // Map promotion as needed
       employee: bookingData.employee
         ? {
@@ -190,7 +196,6 @@ export const useBookingsStore = defineStore("bookings", () => {
                 roomType: detail.room.roomtype.room_type,
                 typeName: detail.room.roomtype.room_type_name,
                 bedSize: detail.room.roomtype.room_type_bed_size,
-              
               },
             },
             total: detail.total,
@@ -297,8 +302,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log("---------------------------------");
     console.log(currentBooking.value.total);
   };
-
-
 
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
@@ -453,10 +456,10 @@ export const useBookingsStore = defineStore("bookings", () => {
 
     bookings.value.push(...bookings_);
   };
-      // set current room
-      const setCurrentBooking = (booking: Booking) => {
-        currentBooking.value = booking;
-    }
+  // set current room
+  const setCurrentBooking = (booking: Booking) => {
+    currentBooking.value = booking;
+  };
 
   return {
     calculateInitialTotal,
@@ -479,6 +482,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     toggleMoreDetail,
     moreDetailCard,
     setCurrentBooking,
-    removeRoomPerBooking
+    removeRoomPerBooking,
   };
 });

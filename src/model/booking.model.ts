@@ -27,7 +27,7 @@ export interface Booking {
     adult: number;
     child: number;
     employee?: Employee;
-    customer: Customer;
+    customer?: Customer;
     promotion: Promotion;
     createdDate:Date;
     bookingDetail: BookingDetail[];
