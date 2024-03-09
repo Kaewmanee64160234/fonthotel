@@ -43,19 +43,19 @@ const rating: Rating = {
           readmore="/readmoreview" roomtype="STANDARD ROOM" btnbooking="/selectguestdate" /> -->
               <TyperoomCard
                 imgroom="https://jw-webmagazine.com/wp-content/uploads/2022/10/5-Star-Hotels-halekulani.jpg"
-                readmore="/readmoreview"
+                readmore="/readmoreview/standard"
                 roomtype="STANDARD ROOM"
                 btnbooking="/selectguestdate"
               />
               <TyperoomCard
                 imgroom="https://i.pinimg.com/564x/87/86/a9/8786a90fbb85f030bf7c4c957a604188.jpg"
-                readmore="/readmoreview"
+                readmore="/readmoreview/deluxe"
                 roomtype="DELUXE ROOM"
                 btnbooking="/selectguestdate"
               />
               <TyperoomCard
                 imgroom="https://i.pinimg.com/564x/a8/d4/10/a8d410ef0f34c531d50af45972665b34.jpg"
-                readmore="/readmoreview"
+                readmore="/readmoreview/luxury"
                 roomtype="LUXURY ROOM"
                 btnbooking="/selectguestdate"
               />
@@ -128,10 +128,9 @@ const rating: Rating = {
   /* Optional: Fixes the background to the viewport */
 }
 
-
-.card-style2{
- margin: 10px 70px;
- padding: 20px;
+.card-style2 {
+  margin: 10px 70px;
+  padding: 20px;
   border-radius: 30px;
   background-color: rgba(229, 229, 229, 0.758);
   /* add filter blue */
@@ -153,7 +152,7 @@ const rating: Rating = {
   height: 65vh;
 }
 .font-judson {
-  font-family: 'Judson';
+  font-family: "Judson";
 }
 .dc-scroll {
   max-height: 100vh;
@@ -164,7 +163,7 @@ const rating: Rating = {
   height: 5px;
 }
 .dc-scroll::-webkit-scrollbar-thumb {
-  background-color: #EBBD99;
+  background-color: #ebbd99;
   border-radius: 10px;
 }
 </style>
