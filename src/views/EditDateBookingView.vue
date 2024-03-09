@@ -36,7 +36,7 @@ const bookingStore = useBookingsStore();
         <i style="font-size: 30px; color: #f5eee6" class="far">&#xf359;</i>
       </button>
     </div>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center bigcard">
       <div class="relative card-style">
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>

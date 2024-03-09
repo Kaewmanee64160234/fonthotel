@@ -186,6 +186,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/HistoryCustomerDetailView.vue"),
     meta: { hideNavigation: false },
   },
+  {
+    path: "/editDateBooking",
+    name: "editDateBooking",
+    component: () => import("../views/EditDateBookingView.vue"),
+    meta: { hideNavigation: false },
+  },
 ];
 
 const router = createRouter({
