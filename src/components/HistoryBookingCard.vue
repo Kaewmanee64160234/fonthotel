@@ -45,9 +45,25 @@ const cancelBooking = async (bookingId: number) => {
   }
 }
 
-const editDateBooking = () => {
+const editDateBooking = async (bookingId:number) => {
+  //find ubooking 
+
   bookingStore.currentBooking = props.booking;
-  router.push('/editDateBooking');
+  //check if edit date booking in 3 days before checkin can edit
+  const dateNow = new Date();
+  const dateCheckIn = new Date(props.booking.createDate);
+  const diffTime = Math.abs(dateCheckIn.getTime() - dateNow.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  console.log(diffDays);
+  if (diffDays < 3) {
+    router.push('/editDateBooking');
+  } else {
+    Swal.fire({
+      title: "Error",
+      text: "You can only edit the booking date 3 days before check-in.",
+      icon: "error"
+    });
+  }
 }
 const clickConfirmCancel = (bookingId: number) => {
   // Show confirmation dialog before cancelling the booking
