@@ -84,6 +84,24 @@ const addDetails = (activity_: Activity) => {
         <div class="mt-10">
           <div class="flex-2 flex flex-row p-1">
             <div class="flex-2 flex flex-col" style="width: 50%">
+              <div class="flex items-center py-2 ml-8">
+                <button type="button" class="btn-minus" @click="decrementGuest('adult')">
+                  <a class="text-white text-m text-center">-</a>
+                </button>
+                <a class="mx-4">{{ adultCount }}</a>
+                <button type="button" class="btn-plus" @click="incrementGuest('adult')">
+                  <a class="text-white text-m text-center">+</a>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-1 flex flex-col" style="width: 50%">
+              <a class="text-gray-700 block px-4 py-2 text-m" role="menuitem" tabindex="-1" id="menu-item-2">Per
+                Adult</a>
+            </div>
+          </div>
+          <div class="flex-2 flex flex-row p-1">
+            <div class="flex-2 flex flex-col" style="width: 50%">
               <div class="flex-2 flex flex-col" style="width: 100%">
                 <div class="flex items-center py-2 ml-8">
                   <button type="button" class="btn-minus" @click="decrementGuest('children')">
@@ -100,25 +118,6 @@ const addDetails = (activity_: Activity) => {
             <div class="flex-1 flex flex-col" style="width: 50%">
               <a class="text-gray-700 block px-4 py-2 text-m" role="menuitem" tabindex="-1" id="menu-item-2">Per
                 Child</a>
-            </div>
-          </div>
-
-          <div class="flex-2 flex flex-row p-1">
-            <div class="flex-2 flex flex-col" style="width: 50%">
-              <div class="flex items-center py-2 ml-8">
-                <button type="button" class="btn-minus" @click="decrementGuest('adult')">
-                  <a class="text-white text-m text-center">-</a>
-                </button>
-                <a class="mx-4">{{ adultCount }}</a>
-                <button type="button" class="btn-plus" @click="incrementGuest('adult')">
-                  <a class="text-white text-m text-center">+</a>
-                </button>
-              </div>
-            </div>
-
-            <div class="flex-1 flex flex-col" style="width: 50%">
-              <a class="text-gray-700 block px-4 py-2 text-m" role="menuitem" tabindex="-1" id="menu-item-2">Per
-                Adult</a>
             </div>
           </div>
 
