@@ -76,6 +76,7 @@ const checkPromotion = async (code: string, event: Event) => {
       return;
     }
     bookingStore.currentBooking.promotion = promotion;
+    console.log(`promotion: ${promotion.id}`);
     bookingStore.calculateInitialTotal();
     Swal.fire({
       icon: "success",

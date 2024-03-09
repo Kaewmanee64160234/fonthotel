@@ -28,7 +28,7 @@ export interface Booking {
     child: number;
     employee?: Employee;
     customer?: Customer;
-    promotion: Promotion;
+    promotion?: Promotion;
     createdDate:Date;
     bookingDetail: BookingDetail[];
     activityPerBooking: ActivityPerBooking[];

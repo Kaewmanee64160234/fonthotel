@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ActivityPerBooking } from "@/model/activity.model";
+import { Promotion } from "@/model/promotion.model";
 import router from "@/router";
 import activity from "@/service/activity";
 import promotion from "@/service/promotion";
@@ -16,7 +17,7 @@ const props = defineProps<{
     total: number;
     payment: string;
     status: string;
-    promotion: number;
+    promotion: Promotion;
     activity: ActivityPerBooking[];
 }>();
 
@@ -106,9 +107,9 @@ const bookingStore = useBookingsStore();
                                     <div class="facility-item text-base ">
                                         <p class="text-sm text-base text-black">Promotion: </p>
 
-                                        <span v-if="props.promotion == 0" class="text-sm text-base text-black">No
+                                        <span v-if="props.promotion== null || props.promotion == undefined" class="text-sm text-base text-black">No
                                             Promotion</span>
-                                        <span v-else class="text-sm text-base text-black">THB {{ props.promotion.name }}
+                                        <span v-else class="text-sm text-base text-black">{{ props.promotion.name }}
                                             Discount</span>
                                     </div>
                                     <div class="facility-item text-base ">

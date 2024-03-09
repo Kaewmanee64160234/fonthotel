@@ -60,9 +60,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       name: "",
     },
   });
-  const bookings = ref<Booking[]>([
-    
-  ]);
+  const bookings = ref<Booking[]>([]);
 
   const saveBooking = async () => {
     try {
@@ -125,7 +123,16 @@ export const useBookingsStore = defineStore("bookings", () => {
             startDate: new Date(bookingData.customer.cus_start_date),
           }
         : undefined,
-      promotion: bookingData.promotion, // Map promotion as needed
+      promotion: bookingData.promotion
+        ? {
+            createdDate: new Date(bookingData.promotion.prom_created_date),
+            discount: bookingData.promotion.prom_discount,
+            discountPercent: bookingData.promotion.prom_discount_pres,
+            endDate: new Date(bookingData.promotion.prom_end_date),
+            id: bookingData.promotion.prom_id,
+            name: bookingData.promotion.prom_name,
+          }
+        : undefined,
       employee: bookingData.employee
         ? {
             id: bookingData.employee.emp_id,
@@ -323,7 +330,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
-    
+
       if (response.data) {
         console.log(response.data);
         getBookings("asc", "waiting");
@@ -340,7 +347,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       //find booking by id
       const res = await bookingService.getBookingBybookingid(id);
-      if(res.data) {
+      if (res.data) {
         //check if checkin date in 7 days can cancel booking
         const checkinDate = new Date(res.data.booking_checkin);
         const currentDate = new Date();
@@ -376,11 +383,10 @@ export const useBookingsStore = defineStore("bookings", () => {
               }
             }
           }
-          
         }
         //if morethen 7 days show info not return money
         else {
-         //show sweet alert
+          //show sweet alert
           const result = await Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -406,9 +412,7 @@ export const useBookingsStore = defineStore("bookings", () => {
             }
           }
         }
-
       }
-     
     } catch (error) {
       console.log(error);
     }
@@ -459,7 +463,6 @@ export const useBookingsStore = defineStore("bookings", () => {
       return booking;
     });
     bookings.value = [];
-
     bookings.value.push(...bookings_);
   };
 
