@@ -15,6 +15,7 @@ const saveBooking = async (booking: Booking, customerId: number) => {
 
   const payload = {
     customerId: customerId,
+    promotionId: booking.promotion!.id, //
     booking_cus_name: booking.cusName,
     booking_cus_lastname: booking.cusLastName,
     booking_cus_tel: booking.cusTel,
@@ -34,12 +35,12 @@ const saveBooking = async (booking: Booking, customerId: number) => {
     booking_total_discount: booking.totalDiscount,
     booking_total: booking.total,
   };
-  console.log(JSON.stringify(payload));
+  console.log(JSON.stringify(payload.promotionId));
   return await http.post("/booking", payload);
 };
 
 const getBookingBybookingid = (id: number) => {
-  return http.get("/booking/id" + id);
+  return http.get("/booking/" + id);
 };
 
 const getBookingByCustomerIdLastcreated = (id: number) => {
@@ -74,6 +75,8 @@ const saveBookingEmployee = async (booking: Booking, employeeId: number) => {
 
   const payload = {
     employeeId: employeeId,
+    promotionId: booking.promotion!.id, //
+
     booking_cus_name: booking.cusName,
     booking_cus_lastname: booking.cusLastName,
     booking_cus_tel: booking.cusTel,
@@ -91,7 +94,7 @@ const saveBookingEmployee = async (booking: Booking, employeeId: number) => {
     booking_checkin: booking.checkIn,
     booking_checkout: booking.checkOut,
   };
-  console.log(JSON.stringify(payload));
+  console.log(JSON.stringify(payload.promotionId));
   return await http.post("/booking/employee", payload);
 };
 
@@ -106,9 +109,8 @@ const getBookingByCustomerId = (id: number) => {
 };
 // cretate getBookingByEmployeeId
 const getBookingByEmployeeId = (id: number) => {
-    
-    return http.get(`booking/employee/${id}`);
-    };
+  return http.get(`booking/employee/${id}`);
+};
 export default {
   saveBooking,
   getBookingBybookingid,
@@ -119,5 +121,4 @@ export default {
   getBookingByEmployeeIdLastcreated,
   getBookingByCustomerId,
   getBookingByEmployeeId,
-
 };

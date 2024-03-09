@@ -122,7 +122,10 @@ const bookingStore = useBookingsStore();
                     <span v-if="props.promotion == null || props.promotion == undefined"
                       class="text-sm text-base text-black">No
                       Promotion</span>
-                    <span v-else class="text-sm text-base text-black">{{ props.promotion.name }}
+                    <span v-else class="text-sm text-base text-black "> <span style="padding: 5px;">
+                        {{ props.promotion.name! }}
+                    </span>
+
                     </span>
                   </div>
                   <div class="facility-item text-base">

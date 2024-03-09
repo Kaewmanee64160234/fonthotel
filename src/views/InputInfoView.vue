@@ -14,10 +14,10 @@ import { Room } from "@/model/room.model";
 const bookingsStore = useBookingsStore();
 const promotionStore = usePromotionsStore();
 const userStore = useUserStore();
-const firstName = ref("");
-const lastName = ref("");
+const firstName = ref(userStore.currentUser.username);
+const lastName = ref(userStore.currentUser.username);
 const mobilePhone = ref("");
-const emailAddress = ref("");
+const emailAddress = ref(userStore.currentUser.username+'@gmail.com');
 const country = ref("");
 const description = ref("");
 const promotionId = ref("");
@@ -39,11 +39,13 @@ const clickRemove = (activityPer: ActivityPerBooking) => {
   bookingStore.removeActivityPerBooking(activityPer);
 };
 const clickRemoveRoom = (room: Room) => {
+  if(bookingStore.currentBooking.bookingDetail.length > 1) {
   bookingStore.removeRoomPerBooking(room);
+  }
+  
 };
 
 const clickContinue = async () => {
-
   if (userStore.currentUser.customer.id != -1) {
     await bookingsStore.getBookingByCustomerIdLastcreated();
     booking.value = bookingsStore.currentBooking;
@@ -81,7 +83,8 @@ const checkPromotion = async (code: string, event: Event) => {
       return;
     }
     bookingStore.currentBooking.promotion = promotion;
-     bookingStore.calculateInitialTotal();
+    console.log(`promotion: ${promotion.id}`);
+    bookingStore.calculateInitialTotal();
     Swal.fire({
       icon: "success",
       title: "Success",
@@ -134,12 +137,31 @@ const validateForm = () => {
   }
   //description
   if (description.value === "") {
-    Swal.fire("Validation Error", "Please enter an address", "error");
+    Swal.fire("Validation Error", "Please enter an description", "error");
     return false;
   }
   //payment method
   if (paymentMethod.value === "") {
     Swal.fire("Validation Error", "Please select a payment method", "error");
+    return false;
+  }
+  if (bookingStore.currentBooking.total < 0) {
+    //ad sweet alert
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please select room",
+    });
+    return false;
+  }
+  //check no room
+  if (bookingStore.currentBooking!.bookingDetail.length == 0) {
+    //ad sweet alert
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please select room",
+    });
     return false;
   }
   return true;
@@ -156,11 +178,11 @@ const saveBooking = async () => {
     bookingsStore.currentBooking.paymentBooking = paymentMethod.value;
     bookingsStore.currentBooking.cusAddress = description.value;
     bookingsStore.currentBooking.customer = userStore.currentUser.customer;
-    
+
     console.log(JSON.stringify(bookingsStore.currentBooking));
     await bookingsStore.saveBooking();
     //add sweet alert
-    
+
     clickContinue();
   }
 };
@@ -404,6 +426,7 @@ const removePromotion = () => {
                   </div>
                   <div class="flex-3 flex flex-col justify-center items-center">
                     <i class="fas fa-trash-alt" style="color: red" @click="clickRemoveRoom(book.room)"></i>
+
                   </div>
                 </div>
 
@@ -441,9 +464,7 @@ const removePromotion = () => {
                       </div>
                       <div>
                         <p>
-                          {{
-                           bookingsStore.currentBooking.promotion?.name 
-                          }}
+                          {{ bookingsStore.currentBooking.promotion?.name }}
                         </p>
                       </div>
                     </div>
@@ -463,7 +484,8 @@ const removePromotion = () => {
                       <p>
                         {{
                           bookingsStore.currentBooking.promotion?.discount ??
-                          bookingsStore.currentBooking.promotion?.discountPercent + "%"
+                          bookingsStore.currentBooking.promotion
+                            ?.discountPercent + "%"
                         }}
                       </p>
                     </div>

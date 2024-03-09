@@ -98,7 +98,7 @@ function formatTwoDates(date1: Date): string {
         :name="`${booking!.cusName}  ${booking!.cusLastName}`" :roomType="bookingDetailComputed!.room.roomType.typeName"
         :adult="booking!.adult" :children="booking!.child" :total="bookingStore.currentBooking.total"
         :payment="booking!.paymentBooking" :status="booking!.status" :activity="booking!.activityPerBooking"
-        :promotion="booking!.totalDiscount" />
+        :promotion="booking!.promotion!" />
     </div>
 
   </div>

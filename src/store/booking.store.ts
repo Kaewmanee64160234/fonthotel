@@ -10,6 +10,7 @@ import { ActivityPerBooking } from "@/model/activity.model";
 import { useUserStore } from "./user.store";
 import router from "@/router";
 import { RoomType } from "@/model/roomtype.model";
+import Swal from "sweetalert2";
 
 export const useBookingsStore = defineStore("bookings", () => {
   const userStore = useUserStore();
@@ -59,58 +60,14 @@ export const useBookingsStore = defineStore("bookings", () => {
       name: "",
     },
   });
-  const bookings = ref<Booking[]>([
-    {
-      adult: 0,
-      checkIn: new Date(),
-      checkOut: new Date(),
-      child: 0,
-      createDate: new Date(),
-      cusAddress: "",
-      cusCountry: "",
-      cusEmail: "",
-      cusLastName: "",
-      cusName: "",
-      cusTel: "",
-      createdDate: new Date(),
-
-      id: 0,
-      paymentBooking: "",
-      paymentCheckout: "",
-      status: "",
-      statusLate: "",
-      total: 0,
-      totalDiscount: 0,
-      activityPerBooking: [],
-      bookingDetail: [],
-      customer: { id: 0, name: "", startDate: new Date() },
-      employee: {
-        address: "",
-        dateOfBirth: new Date(),
-        dateStartWork: "",
-        email: "",
-        hourlyRate: 0,
-        id: 0,
-        name: "",
-        position: "",
-        tel: "",
-      },
-      pledge: 0,
-      promotion: {
-        createdDate: new Date(),
-        discount: 0,
-        discountPercent: 0,
-        endDate: new Date(),
-        id: 0,
-        name: "",
-      },
-    },
-  ]);
+  const bookings = ref<Booking[]>([]);
 
   const saveBooking = async () => {
     try {
       calculateInitialTotal();
       if (userStore.currentUser.role == "customer") {
+        //check if total <= 0
+
         const response = await bookingService.saveBooking(
           currentBooking.value,
           userStore.currentUser.customer!.id!
@@ -159,12 +116,23 @@ export const useBookingsStore = defineStore("bookings", () => {
       adult: bookingData.booking_adult,
       child: bookingData.booking_child,
       createdDate: new Date(bookingData.updateDate),
-      customer: {
-        id: bookingData.customer.cus_id,
-        name: bookingData.customer.cus_name,
-        startDate: new Date(bookingData.customer.cus_start_date),
-      },
-      promotion: bookingData.promotion, // Map promotion as needed
+      customer: bookingData.customer
+        ? {
+            id: bookingData.customer.cus_id,
+            name: bookingData.customer.cus_name,
+            startDate: new Date(bookingData.customer.cus_start_date),
+          }
+        : undefined,
+      promotion: bookingData.promotion
+        ? {
+            createdDate: new Date(bookingData.promotion.prom_created_date),
+            discount: bookingData.promotion.prom_discount,
+            discountPercent: bookingData.promotion.prom_discount_pres,
+            endDate: new Date(bookingData.promotion.prom_end_date),
+            id: bookingData.promotion.prom_id,
+            name: bookingData.promotion.prom_name,
+          }
+        : undefined,
       employee: bookingData.employee
         ? {
             id: bookingData.employee.emp_id,
@@ -297,8 +265,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     console.log(currentBooking.value.total);
   };
 
-
-
   // Calculate the initial total cost of the booking
   function calculateInitialTotal() {
     currentBooking.value.total = 0;
@@ -351,7 +317,7 @@ export const useBookingsStore = defineStore("bookings", () => {
         const booking = mapOneBooking(bookingData);
         return booking;
       });
-
+      bookings.value = [];
       bookings.value.push(...bookings_);
     } catch (error) {
       console.error("Error fetching bookings:", error);
@@ -362,7 +328,9 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   const confirmBooking = async (id: number, status: string) => {
     try {
+      //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
+
       if (response.data) {
         console.log(response.data);
         getBookings("asc", "waiting");
@@ -377,14 +345,72 @@ export const useBookingsStore = defineStore("bookings", () => {
     status: string
   ) => {
     try {
-      const response = await bookingService.confirmBooking(id, status);
-      if (response.data) {
-        console.log("----------------------------------------------------");
-        console.log(response.data);
-        if (userStore.currentUser.role == "customer") {
-          await getBookingByCustomerId(userStore.currentUser.customer!.id!);
-        } else {
-          await getBookingByEmployeeId(userStore.currentUser.employee!.id!);
+      //find booking by id
+      const res = await bookingService.getBookingBybookingid(id);
+      if (res.data) {
+        //check if checkin date in 7 days can cancel booking
+        const checkinDate = new Date(res.data.booking_checkin);
+        const currentDate = new Date();
+        const timeDiff = checkinDate.getTime() - currentDate.getTime();
+        const dayDiff = timeDiff / (1000 * 3600 * 24);
+        if (dayDiff < 7) {
+          //sweet alert user input name and back number and then user can cancel booking
+          const { value: name } = await Swal.fire({
+            title: "Input your name",
+            input: "text",
+            inputLabel: "Your name",
+            inputPlaceholder: "Enter your name",
+          });
+          const { value: backNumber } = await Swal.fire({
+            title: "Input your back number",
+            input: "text",
+            inputLabel: "Your back number",
+            inputPlaceholder: "Enter your prompt pay number",
+          });
+          if (name && backNumber) {
+            const response = await bookingService.confirmBooking(id, status);
+            if (response.data) {
+              console.log(response.data);
+              if (userStore.currentUser.customer) {
+                await getBookingByCustomerId(
+                  userStore.currentUser.customer!.id!
+                );
+              }
+              if (userStore.currentUser.employee) {
+                await getBookingByEmployeeId(
+                  userStore.currentUser.employee!.id!
+                );
+              }
+            }
+          }
+        }
+        //if morethen 7 days show info not return money
+        else {
+          //show sweet alert
+          const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, keep it",
+          });
+          if (result.isConfirmed) {
+            const response = await bookingService.confirmBooking(id, status);
+            if (response.data) {
+              console.log(response.data);
+              if (userStore.currentUser.customer) {
+                await getBookingByCustomerId(
+                  userStore.currentUser.customer!.id!
+                );
+              }
+              if (userStore.currentUser.employee) {
+                await getBookingByEmployeeId(
+                  userStore.currentUser.employee!.id!
+                );
+              }
+            }
+          }
         }
       }
     } catch (error) {
@@ -436,7 +462,7 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
-
+    bookings.value = [];
     bookings.value.push(...bookings_);
   };
 
@@ -449,13 +475,13 @@ export const useBookingsStore = defineStore("bookings", () => {
       console.log(booking);
       return booking;
     });
-
+    bookings.value = [];
     bookings.value.push(...bookings_);
   };
-      // set current room
-      const setCurrentBooking = (booking: Booking) => {
-        currentBooking.value = booking;
-    }
+  // set current room
+  const setCurrentBooking = (booking: Booking) => {
+    currentBooking.value = booking;
+  };
 
   return {
     calculateInitialTotal,
@@ -478,6 +504,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     toggleMoreDetail,
     moreDetailCard,
     setCurrentBooking,
-    removeRoomPerBooking
+    removeRoomPerBooking,
   };
 });

@@ -35,6 +35,7 @@ const clickRoomDetail = () =>  {
       <div>
         <h2 class="text-lg font-bold">{{ props.typename }}</h2>
         <p class="text-base text-gray-600" >Sleep {{ props.room.roomType.sleep }} </p>
+        <p class="text-base text-gray-600" >Adult {{ props.room.roomType.maxAdult }} | Children {{ props.room.roomType.maxChildren }}</p>
         <p class="text-base text-gray-600">{{ props.detail }}</p>
         <button @click="clickRoomDetail()" class="text-sm font-semibold hover:text-gray-600">Room Detail</button>
       </div>
