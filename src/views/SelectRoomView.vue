@@ -253,7 +253,8 @@ const totalNights = computed(() => {
           <div class="flex-1 flex flex-col" style="width: 50%; font-size: 16px">
             <p class="text-white font-semibold text-xl">Select Room</p>
           </div>
-          <div class="inline-flex">
+          <div class="inline-flex" style="max-height: 100%; max-width: 50%">
+
             <button
               v-if="bookingsStore.currentBooking.bookingDetail.length > 0"
               @click="roomStore.getRoomsByType('Standard', 'ready')"

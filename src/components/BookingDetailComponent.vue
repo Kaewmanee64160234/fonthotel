@@ -187,7 +187,7 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
           " class="text-base" style="font-size: 14px">
                             No activity
                           </span>
-                        <ul v-else style="font-size: 14px; padding-left: 5px">
+                        <ul v-else style="font-size: 14px; padding-left: 20px;    list-style-type: disc;">
                           <li v-for="activityPerBooking in bookingStore.currentBooking.activityPerBooking"
                               :key="activityPerBooking.id" >
                              {{ activityPerBooking.qty }} {{ activityPerBooking.activity.name }}
