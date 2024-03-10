@@ -41,19 +41,19 @@ onMounted(async () => {
 
 const clickcontinue = () => {
 
-  if(adultCount.value === 0 && childrenCount.value > 0){
+  if (adultCount.value === 0 && childrenCount.value > 0) {
 
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select the number of guests,Have Adult",
-      });
-      return; // Prevent further execution
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please select the number of guests,Have Adult",
+    });
+    return; // Prevent further execution
 
-    }
+  }
   if (totalGuests.value === 0) {
     //cannot just child
-    
+
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -197,6 +197,16 @@ const stayDates = computed(() => {
   if (!startDate.value || !endDate.value) return "";
   return `${formatDate(startDate.value)} - ${formatDate(endDate.value)}`;
 });
+
+  // Add the following computed property to calculate the number of nights
+  const numberOfNights = computed(() => {
+    if (!startDate.value || !endDate.value) return 0;
+    const start = new Date(startDate.value);
+    const end = new Date(endDate.value);
+    const timeDiff = Math.abs(end.getTime() - start.getTime());
+    const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return nights;
+  });
 </script>
 
 <template>
@@ -265,8 +275,8 @@ const stayDates = computed(() => {
                       <div class="flex-3 flex flex-row p-1 justify-end">
                         <div class="flex">
                           <button type="button" :class="adultCount + childrenCount === 0
-          ? 'disable-btn-apply '
-          : 'btn-apply'
+        ? 'disable-btn-apply '
+        : 'btn-apply'
         " @click="applyGuestCount" :disabled="adultCount + childrenCount === 0">
                             <a class="text-white text-m text-center">Apply</a>
                           </button>
@@ -331,105 +341,106 @@ const stayDates = computed(() => {
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date : </span>
                   <!-- <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span> -->
-                  <span>{{ stayDates }}</span>
+                  <span>{{ stayDates }} (Night {{ numberOfNights }})</span>
                 </div>
-
-                <div class="flex-3 flex flex-row p-2 pl-5">
-                  <div class="flex-1 flex flex-col">
-                    <p class="font-medium">Guest</p>
-                    <p>
-                      <a class="mr-10">Adult : {{ adultCount }}</a>
-                      <a class="ml-10">Children : {{ childrenCount }}</a>
-                    </p>
+               
+                  <div class="flex-3 flex flex-row p-2 pl-5">
+                    <div class="flex-1 flex flex-col">
+                      <p class="font-medium">Guest</p>
+                      <p>
+                        <a class="mr-10">Adult : {{ adultCount }}</a>
+                        <a class="ml-10">Children : {{ childrenCount }}</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="flex-2 flex flex-row justify-center pt-10">
-            <button class="btn-continue" :class="{ 'disabled-text': totalGuests === 0 }" @click="clickcontinue()">
-              Continue
-            </button>
+            <div class="flex-2 flex flex-row justify-center pt-10">
+              <button class="btn-continue" :class="{ 'disabled-text': totalGuests === 0 }" @click="clickcontinue()">
+                Continue
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- --- Dialog RoomDetail --- -->
-    <div v-if="roomStore.roomDetailCard == true"
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-      <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
-        style="max-width: 90%; margin-top: -20vh">
-        <div class="body-roomDetail">
-          <!-- The container for the overlay and cards -->
-          <div class="flex justify-center items-center bigcard-roomDetail">
-            <!-- Added classes for centering -->
-            <div class="grid relative card-style-roomDetail items-center mt-10">
-              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
-                <!-- Center alignment -->
-                <div class="flex grid grid-cols-2">
-                  <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
-                    Room Detail
-                  </p>
-                  <a href="#" class="flex items-center justify-end text-right mr-10">
-                    <svg @click="roomStore.toggleRoomDetail()" xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                      </path>
-                    </svg>
-                  </a>
-                </div>
-                <div>
-                  <hr class="hr-style-roomDetail" />
-                </div>
-              </div>
-              <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
-                <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
-                  <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
-                    {{ roomStore.curentRoom.roomType.typeName }}
-                  </p>
-                  <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
-                    Sleep 1 | 37 square metre
-                  </p>
-                  <p class="text-sm text-gray-900 dark:text-white font-semibold">
-                    Room Amenities
-                  </p>
-                  <ul class="list-disc mb-10">
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
-                      Free Wifi
-                    </li>
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
-                      Accessible Room
-                    </li>
-                    <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
-                      Non-smoking
-                    </li>
-                  </ul>
-                </div>
-                <div class="justify-start items-center">
-                  <img
-                    class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
-                    :src="roomStore.curentRoom.image" />
-                </div>
-              </div>
-              <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
-                <!-- Center alignment -->
-                <div>
-                  <hr class="hr-style-roomDetail" />
-                </div>
-              </div>
-              <div class="flex grid gap-8 grid-rows-1 items-left">
-                <div class="flex grid grid-rows-1 flex-col items-right ml-10">
+      <!-- --- Dialog RoomDetail --- -->
+      <div v-if="roomStore.roomDetailCard == true"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+        <div class="relative mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+          style="max-width: 90%; margin-top: -20vh">
+          <div class="body-roomDetail">
+            <!-- The container for the overlay and cards -->
+            <div class="flex justify-center items-center bigcard-roomDetail">
+              <!-- Added classes for centering -->
+              <div class="grid relative card-style-roomDetail items-center mt-10">
+                <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
                   <!-- Center alignment -->
-                  <div class="text-center">
-                    <div class="flex flex-wrap justify-between items-center pt-5">
-                      <p class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70">
-                        City View, Smart TV, Work Desk
-                      </p>
-                      <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
-                        {{ roomStore.curentRoom.roomType.descriptions }}
-                      </p>
+                  <div class="flex grid grid-cols-2">
+                    <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                      Room Detail
+                    </p>
+                    <a href="#" class="flex items-center justify-end text-right mr-10">
+                      <svg @click="roomStore.toggleRoomDetail()" xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 text-gray-400 dark:text-black-500 hover:text-blue-700 hover:underline"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                      </svg>
+                    </a>
+                  </div>
+                  <div>
+                    <hr class="hr-style-roomDetail" />
+                  </div>
+                </div>
+                <div class="flex grid gap-1 grid-rows-1 grid-cols-2 flex-col items-right ml-10">
+                  <div class="flex grid grid-rows-1 grid-cols-1 items-center pt-5">
+                    <p class="text-sm text-gray-900 dark:text-white mb-4 font-semibold">
+                      {{ roomStore.curentRoom.roomType.typeName }}
+                    </p>
+                    <p class="text-xs text-gray-900 dark:text-white mb-4 opacity-70">
+                      Sleep 1 | 37 square metre
+                    </p>
+                    <p class="text-sm text-gray-900 dark:text-white font-semibold">
+                      Room Amenities
+                    </p>
+                    <ul class="list-disc mb-10">
+                      <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                        Free Wifi
+                      </li>
+                      <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                        Accessible Room
+                      </li>
+                      <li class="text-xs text-gray-900 dark:text-white ml-5 opacity-70">
+                        Non-smoking
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="justify-start items-center">
+                    <img
+                      class="h-auto rounded-lg object-cover h-48 w-96 max-w-xs max-w-lg mx-auto mt-8 mr-10 md:size-auto"
+                      :src="roomStore.curentRoom.image" />
+                  </div>
+                </div>
+                <div class="flex grid grid-rows-1 flex-col items-right ml-10 mt-5">
+                  <!-- Center alignment -->
+                  <div>
+                    <hr class="hr-style-roomDetail" />
+                  </div>
+                </div>
+                <div class="flex grid gap-8 grid-rows-1 items-left">
+                  <div class="flex grid grid-rows-1 flex-col items-right ml-10">
+                    <!-- Center alignment -->
+                    <div class="text-center">
+                      <div class="flex flex-wrap justify-between items-center pt-5">
+                        <p class="text-base mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                          City View, Smart TV, Work Desk
+                        </p>
+                        <p class="text-xs mb-4 text-left text-gray-900 dark:text-white opacity-70">
+                          {{ roomStore.curentRoom.roomType.descriptions }}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -439,7 +450,6 @@ const stayDates = computed(() => {
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

@@ -112,7 +112,13 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
-
+const totalNights = computed(() => {
+  const checkIn = new Date(bookingsStore.currentBooking.checkIn);
+  const checkOut = new Date(bookingsStore.currentBooking.checkOut);
+  const timeDiff = checkOut.getTime() - checkIn.getTime();
+  const nightDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return nightDiff;
+});
 </script>
 
 <template>
@@ -318,7 +324,7 @@ function formatTwoDates(date1: Date): string {
                       formatTwoDates(
                         new Date(bookingsStore.currentBooking.checkOut)
                       )
-                    }}</span
+                    }} (์Night {{ totalNights }})</span
                   >
                 </div>
 

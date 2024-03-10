@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import router from "@/router";
 import { useBookingsStore } from "@/store/booking.store";
+import { ref } from "vue";
 
 const clickback = () => {
   router.push("/historyBookings");
@@ -27,6 +28,16 @@ const formatTime = (dateString: string): string => {
   return `${formattedHours}:${formattedMinutes} ${amOrPm}`; // Combine hours, minutes, and AM/PM
 };
 const bookingStore = useBookingsStore();
+
+const numberOfNights = ref<number>(0);
+const calculateNumberOfNights = () => {
+  const checkInDate = new Date(bookingStore.currentBooking.checkIn);
+  const checkOutDate = new Date(bookingStore.currentBooking.checkOut);
+  const differenceInTime = checkOutDate.getTime() - checkInDate.getTime();
+  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // Convert milliseconds to days
+  numberOfNights.value = differenceInDays;
+};
+calculateNumberOfNights();
 </script>
 
 <template>
@@ -57,7 +68,7 @@ const bookingStore = useBookingsStore();
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">
                   </span>{{ formatDate(bookingStore.currentBooking.checkIn) }} -
-                  {{ formatDate(bookingStore.currentBooking.checkOut) }}
+                  {{ formatDate(bookingStore.currentBooking.checkOut) }} (Night {{ numberOfNights }})
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
