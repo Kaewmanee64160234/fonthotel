@@ -8,6 +8,7 @@ import { defineProps } from "vue";
 import { RoomType } from "@/model/roomtype.model";
 import booking from "@/service/booking";
 import { Promotion } from "@/model/promotion.model";
+import { Booking } from "@/model/booking.model";
 
 const props = defineProps<{
   img: string;
@@ -19,6 +20,7 @@ const props = defineProps<{
   total: number;
   payment: string;
   promotion: Promotion;
+  booking_:Booking;
   status: string;
   activity: ActivityPerBooking[];
 }>();
@@ -204,10 +206,11 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
                     </p>
                   </div>
                 </div>
+         
                 <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
                   <div class="facility-item text-base">
                     <h1 class="text-lg font-semibold text-base text-black">
-                      Total : {{ total }} Baht
+                      Total : {{ booking_.total }} Baht
                     </h1>
                   </div>
                 </div>

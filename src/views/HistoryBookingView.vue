@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref,onUnmounted } from "vue";
 import HistoryBookingCard from "@/components/HistoryBookingCard.vue";
 import { Booking } from "@/model/booking.model";
 import { useBookingsStore } from "@/store/booking.store";
@@ -7,7 +7,7 @@ import { useUserStore } from "@/store/user.store";
 const isDropdownOpen = ref(false);
 const bookingStore = useBookingsStore();
 const userStore = useUserStore();
-const currentTime = new Date().toLocaleTimeString();
+// const currentTime = new Date().toLocaleTimeString();
 
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
@@ -47,6 +47,12 @@ function formatTwoDates(date1: Date): string {
 
   return formatDate(date1);
 }
+const currentTime = ref(new Date().toLocaleTimeString());
+
+// Function to update the current time every second
+const updateCurrentTime = () => {
+  currentTime.value = new Date().toLocaleTimeString();
+};
 
 let booking = ref<Booking>({
   adult: 0,
@@ -93,6 +99,14 @@ let booking = ref<Booking>({
   },
 });
 onMounted(async () => {
+  updateCurrentTime();
+  // Set up an interval to update the time every second
+  const intervalId = setInterval(updateCurrentTime, 1000);
+
+  // Clear the interval when the component is unmounted to avoid memory leaks
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
   if (userStore.currentUser.customer.id !==-1) {
     await bookingStore.getBookingByCustomerId(
       userStore.currentUser.customer!.id!

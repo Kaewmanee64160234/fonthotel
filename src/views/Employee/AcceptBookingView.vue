@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref ,onUnmounted} from "vue";
 import AcceptBookingCard from "@/components/Employee/AcceptBookingCard.vue";
 import { useBookingsStore } from "@/store/booking.store";
 import router from "@/router";
 const isDropdownOpen = ref(false);
 const bookingStore = useBookingsStore();
-const currentTime = new Date().toLocaleTimeString();
+// const currentTime = new Date().toLocaleTimeString();
 const selectFilter = (filterOption: any) => {
   console.log(`Filter selected: ${filterOption}`);
   isDropdownOpen.value = false;
@@ -13,8 +13,22 @@ const selectFilter = (filterOption: any) => {
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value;
 }
+const currentTime = ref(new Date().toLocaleTimeString());
+
+// Function to update the current time every second
+const updateCurrentTime = () => {
+  currentTime.value = new Date().toLocaleTimeString();
+};
 
 onMounted(async () => {
+  updateCurrentTime();
+  // Set up an interval to update the time every second
+  const intervalId = setInterval(updateCurrentTime, 1000);
+
+  // Clear the interval when the component is unmounted to avoid memory leaks
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
   await bookingStore.getConfirmBookings();
   // console.log(bookingStore.bookings.map((item) => item.bookingDetail.map((item) => console.log(item.room))));
 });
