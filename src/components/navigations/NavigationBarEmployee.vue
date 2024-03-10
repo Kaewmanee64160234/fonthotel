@@ -78,7 +78,7 @@ const logout = () => {
               class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>
           </div>
           <div class="flex flex-1 flex-col">
-            <p class="flex font-semibold">Position: Manager</p>
+            <p class="flex font-semibold">Position: {{ userStore.currentUser.employee?.position }}</p>
           </div>
         </div>
         <a @click="logout" href="/login" class="font-semibold hover:text-white text-base font-judson">LOGOUT</a>

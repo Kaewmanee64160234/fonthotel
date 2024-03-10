@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Booking } from "@/model/booking.model";
 import { useBookingsStore } from "@/store/booking.store";
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import Swal from "sweetalert2";
 import router from "@/router";
+import { useUserStore } from "@/store/user.store";
 const clickMoreDetail = () => {
   bookingStore.currentBooking = props.booking;
   console.log(JSON.stringify(bookingStore.currentBooking));
@@ -49,11 +50,13 @@ const editDateBooking = () => {
   bookingStore.currentBooking = props.booking;
   router.push('/editDateBooking');
 }
-const clickConfirmCancel = (bookingId: number) => {
+const userStore = useUserStore();
+
+const clickConfirmCancel = (bookingId: number, firstName: string) => {
   // Show confirmation dialog before cancelling the booking
   Swal.fire({
     title: "Are you sure?",
-    text: "Do you want to cancel this booking ?",
+    text: `Hi ${firstName}, do you want to cancel this booking ?`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "Yes, cancel it!",
@@ -112,7 +115,7 @@ const clickConfirmCancel = (bookingId: number) => {
             <button @click="editDateBooking()"  v-if="booking.status != 'cancel'"  type="button" class="btn-edit text-sm px-5 py-2.5 me-2 mb-3">
               Edit
             </button>
-            <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id)"
+            <button type="button" class="btn-cancel px-5 py-2.5 me-2 mb-3" @click="clickConfirmCancel(props.booking.id, userStore.currentUser.username)"
               v-if="booking.status != 'cancel'">
               <p>Cancel</p>
             </button>
@@ -121,10 +124,7 @@ const clickConfirmCancel = (bookingId: number) => {
         </div>
       </div>
     </div>
-    <!-- ****dialog cancel*** -->
-    <div v-if="bookingStore.moreDetailCard == true"
-      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-    </div>
+
   </div>
 </template>
 
@@ -183,17 +183,5 @@ const clickConfirmCancel = (bookingId: number) => {
 .btn-cancel:hover {
       background-color: #ff0000;
     }
-
-.btn-yes {
-  background-color: #abd398;
-  width: 50px;
-  border-radius: 9999px;
-}
-
-.btn-no {
-  background-color: #e06161;
-  width: 50px;
-  border-radius: 9999px;
-}
 
 </style>
