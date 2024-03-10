@@ -49,7 +49,7 @@ function toggleDropdown() {
 
 
 onMounted(async () => {
-  await bookingStore.getBookings("asc", "waiting");
+  await bookingStore.historyBookingsForEmployee();
 
   booking.value = bookingStore.currentBooking;
 });
@@ -99,9 +99,9 @@ let booking = ref<Booking>({
     name: "",
   },
 });
-onMounted(async () => {
-  await bookingStore.getBookings("desc", "all");
-});
+// onMounted(async () => {
+//   await bookingStore.getBookings("desc", "all");
+// });
 </script>
 <template>
   <body>

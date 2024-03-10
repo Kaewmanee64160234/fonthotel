@@ -46,6 +46,8 @@ const confirmBooking_ = async (status:string) => {
             <li v-if="props.status == 'waiting'" class="card-text text-orange-400">Status: {{ props.status }}</li>
             <li v-else-if="props.status == 'cancel'" class="card-text" style="color: red;">Status: {{ props.status }}
             </li>
+            <li v-else-if="props.status == 'edited'" class="card-text" style="color: purple;">Status: {{ props.status }}
+            </li>
             <li v-else-if="props.status == 'confirm'" class="card-text" style="color: cadetblue;">Status: {{
                 props.status }}</li>
             <li v-else-if="props.status == 'finish'" class="card-text" style="color: seagreen;">Status: {{ props.status

@@ -102,11 +102,13 @@ const clickConfirmCancel = (bookingId: number) => {
           <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
         </div>
           <div>
+
             <li class="card-text ">{{ props.typeRoom }}</li>
             <li class="card-text">{{ props.activity }}</li>
             <li class="card-text">{{ props.dateCheckIn }} at 1:00 PM</li>
             <li class="card-text">Guest: {{ props.guest }}</li>
             <li v-if="props.status == 'waiting'" class="card-text text-orange-400">Status: {{ props.status }}</li>
+            <li v-if="props.status == 'edited'" class="card-text text-purple-700">Status: {{ props.status }}</li>
             <li v-else-if="props.status == 'cancel'" class="card-text" style="color: red;">Status: {{ props.status }}
             </li>
             <li v-else-if="props.status == 'confirm'" class="card-text" style="color: cadetblue;">Status: {{

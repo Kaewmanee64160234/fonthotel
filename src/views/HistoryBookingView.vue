@@ -93,7 +93,7 @@ let booking = ref<Booking>({
   },
 });
 onMounted(async () => {
-  if (userStore.currentUser.customer) {
+  if (userStore.currentUser.customer.id !==-1) {
     await bookingStore.getBookingByCustomerId(
       userStore.currentUser.customer!.id!
     );

@@ -6,9 +6,9 @@ const props = defineProps<{
   typeRoom: string;
   activity: string;
   price: number;
-  dateCheckIn: string,
-  status: string,
-  createdDate: string,
+  dateCheckIn: string;
+  status: string;
+  createdDate: string;
 }>();
 </script>
 <template lang="">
@@ -17,7 +17,7 @@ const props = defineProps<{
       <!-- Repeat this block for each reservation -->
       <div class="card bg-white shadow-lg rounded-lg p-5">
         <div class="flex justify-end">
-          <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
+          <p class="items-center p-3">Created Date: {{ props.createdDate }}</p>
         </div>
         <div class="card-body">
           <div class="flex">
@@ -33,21 +33,45 @@ const props = defineProps<{
               </h5>
             </div>
           </div>
-          <li  class="card-text">{{ typeRoom }}</li>
+          <li class="card-text">{{ typeRoom }}</li>
 
           <li v-if="activity !== undefine" class="card-text">{{ activity }}</li>
           <li class="card-text">{{ props.dateCheckIn }} at 1:00 PM</li>
           <div class="flex justify-end items-center mt-4 px-4">
-            <span class="text-xl font-bold">Total: {{ props.price }}.00 Bath</span>
+            <span class="text-xl font-bold"
+              >Total: {{ props.price }}.00 Bath</span
+            >
           </div>
           <div class="flex justify-end items-center mt-4 px-4">
-            <span v-if="props.status == 'waiting'" class="card-text text-orange-400 text-xl">{{ props.status }}</span>
-            <span v-else-if="props.status == 'cancel'" class="card-text text-xl" style="color: red;">{{ props.status }}
+            <span
+              v-if="props.status == 'waiting'"
+              class="card-text text-orange-400 text-xl"
+              >{{ props.status }}</span
+            >
+            <span
+              v-else-if="props.status == 'cancel'"
+              class="card-text text-xl"
+              style="color: red"
+              >{{ props.status }}
             </span>
-            <span v-else-if="props.status == 'confirm'" class="card-text text-xl" style="color: cadetblue;">{{
-                props.status }}</span>
-            <span v-else-if="props.status == 'finish'" class="card-text text-xl" style="color: seagreen;">{{ props.status
-              }}</span>
+            <span
+              v-else-if="props.status == 'edited'"
+              class="card-text text-xl"
+              style="color: purple"
+              >{{ props.status }}</span
+            >
+            <span
+              v-else-if="props.status == 'confirm'"
+              class="card-text text-xl"
+              style="color: cadetblue"
+              >{{ props.status }}</span
+            >
+            <span
+              v-else-if="props.status == 'finish'"
+              class="card-text text-xl"
+              style="color: seagreen"
+              >{{ props.status }}</span
+            >
           </div>
         </div>
       </div>
