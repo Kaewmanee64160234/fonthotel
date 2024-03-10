@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import router from "@/router";
 import { useBookingsStore } from "@/store/booking.store";
+import Swal from "sweetalert2";
 import { computed, ref, watch } from "vue";
 const bookingStore = useBookingsStore();
 const clickback = () => {
   router.push("/historyBookings");
 };
-
 
 // const formatTime = new Date().toLocaleTimeString();
 const formatTime = (dateString: string): string => {
@@ -19,7 +19,9 @@ const formatTime = (dateString: string): string => {
   return `${formattedHours}:${formattedMinutes} ${amOrPm}`; // Combine hours, minutes, and AM/PM
 };
 
-const minDate = new Date(bookingStore.currentBooking.checkIn).toISOString().split("T")[0];
+const minDate = new Date(bookingStore.currentBooking.checkIn)
+  .toISOString()
+  .split("T")[0];
 const startDate = ref(minDate);
 const endDate = ref("");
 
@@ -53,11 +55,34 @@ const formatDate = (dateStr: string) => {
 };
 //save date
 const saveDate = async () => {
-  bookingStore.currentBooking.checkIn = new Date(startDate.value);
-  bookingStore.currentBooking.checkOut = new Date(endDate.value);
- await bookingStore.updateBooking(bookingStore.currentBooking.id, bookingStore.currentBooking);
-};
+  if (!startDate.value) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please select check-in date",
+    });
+    return;
+  }
+  if (!endDate.value) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Please select check-out date",
+    });
+    return;
+  }
+  //if user not select check-in date show alert
 
+  bookingStore.currentBooking.checkIn = new Date(startDate.value);
+  //if user not select check-out date show alert
+
+  bookingStore.currentBooking.checkOut = new Date(endDate.value);
+
+  await bookingStore.updateBooking(
+    bookingStore.currentBooking.id,
+    bookingStore.currentBooking
+  );
+};
 
 // Computed property for displaying stay dates
 const stayDates = computed(() => {
@@ -78,8 +103,12 @@ const stayDates = computed(() => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div class="grid gap-4 grid-cols-2 text-sm">
-            <button type="button" class="button-save" @click="saveDate()">Save</button>
-            <button type="button" class="button-cancel" @click="clickback()">Cancel</button>
+            <button type="button" class="button-save" @click="saveDate()">
+              Save
+            </button>
+            <button type="button" class="button-cancel" @click="clickback()">
+              Cancel
+            </button>
           </div>
         </div>
 
@@ -149,7 +178,7 @@ const stayDates = computed(() => {
                   class="flex-2 flex flex-col"
                   style="width: 50%; font-size: 16px"
                 >
-                <p
+                  <p
                     class="font-medium"
                     style="display: inline; margin-right: 5px"
                   >
@@ -164,7 +193,7 @@ const stayDates = computed(() => {
                   class="flex-2 flex flex-col"
                   style="width: 50%; font-size: 16px"
                 >
-                <p
+                  <p
                     class="font-medium"
                     style="display: inline; margin-right: 5px"
                   >
