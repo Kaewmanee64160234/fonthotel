@@ -265,7 +265,7 @@ const removePromotion = () => {
 
             <!-- Description Section -->
             <div class="mb-2">
-              <label class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+              <label class="block mb-2 text-sm font-medium text-gray-900">Address</label>
               <textarea v-model="description" class="dc-input" style="height: 7vh; width: 85%"></textarea>
             </div>
 
@@ -341,10 +341,10 @@ const removePromotion = () => {
         formatTwoDates(
           new Date(bookingsStore.currentBooking.checkOut)
         )
-      }} (Night {{ calculateNumberOfNights(
+      }} ({{ calculateNumberOfNights(
         new Date(bookingsStore.currentBooking.checkIn),
         new Date(bookingsStore.currentBooking.checkOut)
-      ) }})
+      ) }} Nights )
                     </p>
                     <p>{{ bookingsStore.currentBooking.adult }} Adult</p>
                   </div>

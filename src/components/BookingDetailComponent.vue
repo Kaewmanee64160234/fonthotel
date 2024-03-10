@@ -69,7 +69,9 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
 
     <!-- Container for the room details -->
     <div class="flex justify-center items-center min-h-screen">
-      <div class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto">
+      <div
+        class="bg-white bg-opacity-75 rounded-2xl shadow-xl overflow-hidden w-[90%] mx-auto"
+      >
         <!-- Title above the image -->
         <h1 class="text-2xl px-5 pt-2 ml-10 mt-5 text-center">
           Booking details
@@ -79,28 +81,48 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
         <div class="md:flex pl-8">
           <!-- Room Image -->
           <div class="md:w-1/3 flex justify-start items-center px-10 py-3 mt-5">
-            <img :src="img" alt="Room Image" class="object-cover h-auto max-w-full rounded-lg" />
+            <img
+              :src="img"
+              alt="Room Image"
+              class="object-cover h-auto max-w-full rounded-lg"
+            />
           </div>
 
           <!-- Room Description -->
           <div class="md:w-1/2 py-4 pl-8 mt-5">
             <div class="card-stay">
               <div class="mt-4 pl-8">
-                <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
+                <div
+                  class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2"
+                >
                   <!-- Facility 1 -->
                   <div class="facility-item text-base">
-                    <p class="text-sm text-base text-black">Date: {{
-          formatTwoDates(
-            new Date(bookingStore.currentBooking.checkIn)
-          ) +
-          "-" +
-          formatTwoDates(
-            new Date(bookingStore.currentBooking.checkOut)
-          )
-        }} (Night {{ calculateNumberOfNights(
-          new Date(bookingStore.currentBooking.checkIn),
-          new Date(bookingStore.currentBooking.checkOut)
-        ) }})</p>
+                    <p class="text-sm text-base text-black text-left">
+                      Date:
+                      {{
+                        formatTwoDates(
+                          new Date(bookingStore.currentBooking.checkIn)
+                        ) +
+                        "-" +
+                        formatTwoDates(
+                          new Date(bookingStore.currentBooking.checkOut)
+                        )
+                      }}
+                      <br />
+                      <span
+                        class="ml-9"
+                        style="display: block; text-align: left"
+                      >
+                        (
+                        {{
+                          calculateNumberOfNights(
+                            new Date(bookingStore.currentBooking.checkIn),
+                            new Date(bookingStore.currentBooking.checkOut)
+                          )
+                        }}
+                        Nights )
+                      </span>
+                    </p>
                   </div>
                   <div class="facility-item text-base">
                     <p class="text-sm text-base text-black">
@@ -123,8 +145,11 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
                     <div class="flex-1 flex flex-col">
                       <div class="flex-2" style="width: 100%; font-size: 16px">
                         <ul style="font-size: 14px; padding-left: 20px">
-                          <li v-for="book in bookingStore.currentBooking
-          .bookingDetail" :key="book.id">
+                          <li
+                            v-for="book in bookingStore.currentBooking
+                              .bookingDetail"
+                            :key="book.id"
+                          >
                             {{ book.room.id }} {{ props.roomType }}
                           </li>
                         </ul>
@@ -151,33 +176,56 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
                   <div class="facility-item text-base">
                     <p class="facility-item text-base">Promotion:</p>
 
-                    <span v-if="props.promotion == null || props.promotion == undefined"
-                      class="text-sm text-base text-black">No
-                      Promotion</span>
-                    <span v-else class="text-sm text-base text-black "> <span style="padding: 5px;">
+                    <span
+                      v-if="
+                        props.promotion == null || props.promotion == undefined
+                      "
+                      class="text-sm text-base text-black"
+                      >No Promotion</span
+                    >
+                    <span v-else class="text-sm text-base text-black">
+                      <span style="padding: 5px">
                         {{ props.promotion.name! }}
                       </span>
-
                     </span>
                   </div>
                   <div class="facility-item text-base">
-                    <p class="facility-item text-base">Name: {{ bookingStore.currentBooking.cusName }}
-                      {{ bookingStore.currentBooking.cusLastName }}</p>
+                    <p class="facility-item text-base">
+                      Name: {{ bookingStore.currentBooking.cusName }}
+                      {{ bookingStore.currentBooking.cusLastName }}
+                    </p>
                   </div>
-                  <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
+                  <div
+                    class="flex-2 flex flex-col"
+                    style="width: 50%; font-size: 16px"
+                  >
                     <div class="flex-1 flex flex-row">
                       <p class="text-base">Activaty:</p>
 
                       <div class="flex-1 flex flex-col">
-                        <div class="flex-2" style="width: 100%; font-size: 16px">
-                          <span v-if="bookingStore.currentBooking.activityPerBooking
-          .length == 0
-          " class="text-base" style="font-size: 14px">
+                        <div
+                          class="flex-2"
+                          style="width: 100%; font-size: 16px"
+                        >
+                          <span
+                            v-if="
+                              bookingStore.currentBooking.activityPerBooking
+                                .length == 0
+                            "
+                            class="text-base"
+                            style="font-size: 14px"
+                          >
                             No activity
                           </span>
-                          <ul style="font-size: 14px; padding-left: 20px" v-else>
-                            <li v-for="activityPerBooking in bookingStore
-          .currentBooking.activityPerBooking" :key="activityPerBooking.id">
+                          <ul
+                            style="font-size: 14px; padding-left: 20px"
+                            v-else
+                          >
+                            <li
+                              v-for="activityPerBooking in bookingStore
+                                .currentBooking.activityPerBooking"
+                              :key="activityPerBooking.id"
+                            >
                               {{ activityPerBooking.qty }}
                               {{ activityPerBooking.activity.name }}
                             </li>
@@ -192,7 +240,9 @@ const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
                     </p>
                   </div>
                 </div>
-                <div class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
+                <div
+                  class="ml-6 p-4 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2"
+                >
                   <div class="facility-item text-base">
                     <h1 class="text-lg font-semibold text-base text-black">
                       Total : {{ total }} Baht

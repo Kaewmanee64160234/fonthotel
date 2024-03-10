@@ -324,7 +324,7 @@ const totalNights = computed(() => {
                       formatTwoDates(
                         new Date(bookingsStore.currentBooking.checkOut)
                       )
-                    }} (์Night {{ totalNights }})</span
+                    }} ( {{ totalNights }} Nights )</span
                   >
                 </div>
 

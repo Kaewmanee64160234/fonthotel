@@ -341,7 +341,7 @@ const stayDates = computed(() => {
                 <div class="flex-2 flex flex-row p-2 pl-5">
                   <span class="font-medium">Date : </span>
                   <!-- <span>Tue, Dec 26, 2023 - Wed, Dec 27, 2023</span> -->
-                  <span>{{ stayDates }} (Night {{ numberOfNights }})</span>
+                  <span>{{ stayDates }} (  {{ numberOfNights }} Nights )</span>
                 </div>
                
                   <div class="flex-3 flex flex-row p-2 pl-5">

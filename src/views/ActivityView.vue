@@ -131,7 +131,7 @@ const numberOfNights = computed(() => {
                           bookingStore.currentBooking.checkIn,
                           bookingStore.currentBooking.checkOut
                         )
-                      }} (Night {{ numberOfNights }})
+                      }} ({{ numberOfNights }} Nights )
                     </p>
                     <p>
                       {{ bookingStore.currentBooking.adult }} Adult |
