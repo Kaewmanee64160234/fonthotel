@@ -56,7 +56,6 @@ const saveDate = async () => {
   bookingStore.currentBooking.checkIn = new Date(startDate.value);
   bookingStore.currentBooking.checkOut = new Date(endDate.value);
  await bookingStore.updateBooking(bookingStore.currentBooking.id, bookingStore.currentBooking);
-  
 };
 
 

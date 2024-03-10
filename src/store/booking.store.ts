@@ -411,7 +411,6 @@ export const useBookingsStore = defineStore("bookings", () => {
                   userStore.currentUser.employee!.id!
                 );
               }
-
             }
           } else {
             //show sweet alert
@@ -468,16 +467,49 @@ export const useBookingsStore = defineStore("bookings", () => {
 
   // removeRoomPerBooking
   const removeRoomPerBooking = (room: Room) => {
-    // Remove room from booking
-    const index = currentBooking.value.bookingDetail.findIndex(
-      (booking) => booking.room.id === room.id
+    // Assume currentBooking is reactive and has the total number of adults and children in the booking
+    const totalAdults = currentBooking.value.adult; // Total number of adults in the booking
+    const totalChildren = currentBooking.value.child; // Total number of children in the booking
+  
+    // Simulate removal and calculate total capacity after removal
+    const simulatedRemainingRooms = currentBooking.value.bookingDetail.filter(
+      (booking) => booking.room.id !== room.id
     );
-    if (index !== -1) {
-      currentBooking.value.bookingDetail.splice(index, 1);
-      calculateInitialTotal();
-      console.log(currentBooking.value.bookingDetail.length);
+    let remainingMaxAdults = 0;
+    let remainingMaxChildren = 0;
+    simulatedRemainingRooms.forEach((booking) => {
+      remainingMaxAdults += booking.room.roomType.maxAdult;
+      remainingMaxChildren += booking.room.roomType.maxChildren;
+    });
+  
+    // Check if remaining rooms accommodate all adults and children
+    if (totalAdults > remainingMaxAdults || totalChildren > remainingMaxChildren) {
+      // Insufficient space after removal
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Cannot remove the room. Doing so would leave insufficient space for the ${totalAdults} adults and ${totalChildren} children in the booking.`,
+      });
+    } else {
+      // Sufficient space, proceed with room removal
+      const index = currentBooking.value.bookingDetail.findIndex(
+        (booking) => booking.room.id === room.id
+      );
+      if (index !== -1) {
+        currentBooking.value.bookingDetail.splice(index, 1);
+        calculateInitialTotal(); // Assuming this recalculates the booking's total cost
+        // Provide feedback for successful removal
+        // console.log(`Room removed. Remaining rooms: ${currentBooking.value.bookingDetail.length}.`);
+        // Optionally, show a success message to the user
+        Swal.fire({
+          icon: "success",
+          title: "Room Removed",
+          text: "The room has been successfully removed from your booking.",
+        });
+      }
     }
   };
+  
 
   const removePromotion = () => {
     currentBooking.value.promotion = {
