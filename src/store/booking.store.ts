@@ -346,7 +346,7 @@ export const useBookingsStore = defineStore("bookings", () => {
     } catch (error) {
       console.error("Error fetching bookings:", error);
     }
-  }
+  };
 
   // Note: Adapt the structure of activity mapping based on your actual response structure
 
@@ -354,7 +354,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     try {
       //if status is cancel check
       const response = await bookingService.confirmBooking(id, status);
-      
 
       if (response.data) {
         console.log(response.data);
@@ -364,7 +363,6 @@ export const useBookingsStore = defineStore("bookings", () => {
           text: `Booking ${response.data.booking_id} has been ${status}ed`,
           icon: "success",
           confirmButtonText: "Ok",
-        
         });
         getBookings("asc", "waiting");
       }
@@ -388,24 +386,22 @@ export const useBookingsStore = defineStore("bookings", () => {
         const timeDiff = checkinDate.getTime() - currentDate.getTime();
         const dayDiff = timeDiff / (1000 * 3600 * 24);
         if (dayDiff < 7) {
-          //sweet alert user input name and back number and then user can cancel booking
-          const { value: name } = await Swal.fire({
-            title: "Input your name",
-            input: "text",
-            inputLabel: "Your name",
-            inputPlaceholder: "Enter your name",
+          //sweet alert user show first name and tel number to confirm not input
+          const result = await Swal.fire({
+            title: "Please confirm your name and telephone number",
+            text: ` Name: ${res.data.booking_cus_name} Tel: ${res.data.booking_cus_tel}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, keep it",
           });
-          const { value: backNumber } = await Swal.fire({
-            title: "Input your back number",
-            input: "text",
-            inputLabel: "Enter your Promptpay number",
-            inputPlaceholder: "Enter your prompt pay number",
-          });
-          if (name && backNumber) {
+
+          if (result) {
+            status = "cancel";
             const response = await bookingService.confirmBooking(id, status);
             if (response.data) {
               console.log(response.data);
-              if (userStore.currentUser.customer) {
+              if (userStore.currentUser.customer.id !== -1) {
                 await getBookingByCustomerId(
                   userStore.currentUser.customer!.id!
                 );
@@ -415,8 +411,9 @@ export const useBookingsStore = defineStore("bookings", () => {
                   userStore.currentUser.employee!.id!
                 );
               }
+
             }
-          }else{
+          } else {
             //show sweet alert
             Swal.fire({
               title: "Error",
@@ -424,7 +421,6 @@ export const useBookingsStore = defineStore("bookings", () => {
               icon: "error",
               confirmButtonText: "Ok",
             });
-          
           }
         }
         //if morethen 7 days show info not return money
@@ -527,7 +523,7 @@ export const useBookingsStore = defineStore("bookings", () => {
   };
   //update booking
   const updateBooking = async (id: number, booking: Booking) => {
-    currentBooking.value.status = 'edited'
+    currentBooking.value.status = "edited";
     const response = await bookingService.updateBooking(id, booking);
     if (response.data) {
       console.log(response.data);
@@ -538,9 +534,8 @@ export const useBookingsStore = defineStore("bookings", () => {
         confirmButtonText: "Ok",
       }).then(() => {
         router.push("/historyBookings");
-    });
-  
-  }
+      });
+    }
   };
   //create function getConfirmBookings
   const getConfirmBookings = async () => {
@@ -579,6 +574,6 @@ export const useBookingsStore = defineStore("bookings", () => {
     removeRoomPerBooking,
     updateBooking,
     getConfirmBookings,
-    historyBookingsForEmployee
+    historyBookingsForEmployee,
   };
 });
