@@ -59,8 +59,8 @@ calculateNumberOfNights();
         </div>
 
         <div class="flex-1 flex flex-row justify-center">
-          <div class="card-stay">
-            <div class="card-container">
+          <div class="card-stay ">
+            <div class="card-container ">
               <div class="flex-1 flex flex-row p-2 pl-5 mt-5">
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                   <p class="font-medium" style="display: inline; margin-right: 5px">
@@ -68,7 +68,7 @@ calculateNumberOfNights();
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">
                   </span>{{ formatDate(bookingStore.currentBooking.checkIn) }} -
-                  {{ formatDate(bookingStore.currentBooking.checkOut) }} (Night {{ numberOfNights }})
+                  {{ formatDate(bookingStore.currentBooking.checkOut) }}( {{ numberOfNights }} Nights)
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
@@ -104,10 +104,8 @@ calculateNumberOfNights();
                   <p class="font-medium" style="display: inline; margin-right: 5px">
                     Room number :
                   </p>
-                  <span v-for="book in bookingStore.currentBooking
-          .bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px">{{
-        bookingStore.currentBooking.bookingDetail[0].room.id
-      }}</span>
+                  <span v-for="book in bookingStore.currentBooking.bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px"><span class="p-2">{{ bookingStore.currentBooking.bookingDetail[0].room.id }}</span></span>
+
                 </div>
               </div>
 
@@ -117,10 +115,8 @@ calculateNumberOfNights();
                     Type Room :
                   </p>
                   <span v-for="book in bookingStore.currentBooking
-          .bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px">{{
-        bookingStore.currentBooking.bookingDetail[0].room.roomType
-          .typeName
-      }}
+          .bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px"><span class="p-2">{{bookingStore.currentBooking.bookingDetail[0].room.roomType.typeName
+ }}</span>
                   </span>
                 </div>
 
@@ -136,9 +132,9 @@ calculateNumberOfNights();
                   <p class="font-medium">Promotion:</p>
 
                   <span v-if="bookingStore.currentBooking.promotion == null || bookingStore.currentBooking.promotion == undefined"
-                    class="text-base font-sans">No
+                    class="text-base font-sans p-2">No
                     Promotion</span>
-                  <span v-else class="text-base font-sans"> 
+                  <span v-else class="text-base font-sans p-2"> 
                       {{ bookingStore.currentBooking.promotion.name! }}
                     </span>
                 </div>
@@ -160,7 +156,7 @@ calculateNumberOfNights();
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px; margin-right: 5px">{{
         bookingStore.currentBooking.adult }} Per Adult | {{ bookingStore.currentBooking.child }} Per Child</span>
-                  <span class="text-base font-sans" style="font-size: 15px">Per Adult</span>
+                
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
@@ -177,7 +173,7 @@ calculateNumberOfNights();
                   <p class="font-medium">
                     Activity :
                   </p>
-                  <div class="flex-1 flex flex-col pl-5">
+                  <div class="flex-1 flex flex-col pl-2">
                     <!-- Changed to flex-col for vertical layout -->
                     <div class="flex-2" style="width: 100%; font-size: 16px">
                       <!-- Removed flex directives here for direct control -->
@@ -204,7 +200,7 @@ calculateNumberOfNights();
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px">
+                  <p class="font-medium ml-2" style="display: inline; margin-right: 5px">
                     Status :
                   </p>
                   <span v-if="bookingStore.currentBooking.status == 'waiting'" class="card-text text-orange-400">
@@ -278,7 +274,7 @@ body {
 .card-style {
   top: 20px;
   width: 95vw;
-  height: 90vh;
+  height: 79vh;
   border-radius: 30px;
   background-color: rgba(229, 229, 229, 0.758);
   /* add filter blue */
@@ -289,7 +285,7 @@ body {
 
 .card-stay {
   width: 70vw;
-  height: 75vh;
+  height: 65vh;
   background-color: rgba(255, 255, 255);
   box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
   border-radius: 15px;
@@ -307,6 +303,7 @@ body {
   max-width: 100vw;
   height: 234px;
 }
+
 
 .button-style {
   color: white;
