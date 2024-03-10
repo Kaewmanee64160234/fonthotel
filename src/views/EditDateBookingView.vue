@@ -143,10 +143,10 @@ const stayDates = computed(() => {
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                   <p class="font-medium" style="display: inline; margin-right: 5px">
-                    Check-out :
+                    Check-in :
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">{{
-        formatTime(bookingStore.currentBooking!.checkOut) }}
+        formatTime(bookingStore.currentBooking.checkIn) }}
                   </span>
                 </div>
               </div>
@@ -155,17 +155,15 @@ const stayDates = computed(() => {
                   <p class="font-medium" style="display: inline; margin-right: 5px">
                     Room number :
                   </p>
-                  <span class="text-base font-sans" style="font-size: 15px">{{
-        bookingStore.currentBooking.bookingDetail[0].room.id
-      }}</span>
+                  <span v-for="book in bookingStore.currentBooking.bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px"><span class="p-2">{{ bookingStore.currentBooking.bookingDetail[0].room.id }}</span></span>
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                   <p class="font-medium" style="display: inline; margin-right: 5px">
-                    Check-in :
+                    Check-out :
                   </p>
                   <span class="text-base font-sans" style="font-size: 15px">
-                    {{ formatTime(bookingStore.currentBooking.checkIn) }}
+                    {{ formatTime(bookingStore.currentBooking!.checkOut) }}
                   </span>
                 </div>
               </div>
@@ -176,10 +174,10 @@ const stayDates = computed(() => {
                     Type Room :
                   </p>
                   <span v-for="book in bookingStore.currentBooking
-          .bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px">{{
+          .bookingDetail" :key="book.id" class="text-base font-sans" style="font-size: 15px"><span class="p-2">{{
         bookingStore.currentBooking.bookingDetail[0].room.roomType.typeName
       }}
-                  </span>
+                  </span></span>
                 </div>
 
                 <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
@@ -195,9 +193,9 @@ const stayDates = computed(() => {
 
                   <span
                     v-if="bookingStore.currentBooking.promotion == null || bookingStore.currentBooking.promotion == undefined"
-                    class="text-base font-sans">No
+                    class="text-base font-sans p-2">No
                     Promotion</span>
-                  <span v-else class="text-base font-sans">
+                  <span v-else class="text-base font-sans p-2">
                     {{ bookingStore.currentBooking.promotion.name! }}
                   </span>
 
@@ -235,14 +233,14 @@ const stayDates = computed(() => {
               <div class="flex-1 flex flex-row">
                 <div class="flex-1 flex flex-row pl-5">
                   <p class="font-medium">Activity :</p>
-                  <div class="flex-1 flex flex-col pl-5">
+                  <div class="flex-1 flex flex-col pl-2">
                     <!-- Changed to flex-col for vertical layout -->
                     <div class="flex-2" style="width: 100%; font-size: 16px">
                       <!-- Removed flex directives here for direct control -->
 
                       <span v-if="bookingStore.currentBooking.activityPerBooking
         .length == 0
-        " class="text-base font-sans" style="font-size: 15px">
+        " class="text-base font-sans pl-2" style="font-size: 15px">
                         No activity
                       </span>
                       <!-- Unordered list for activities -->
@@ -262,7 +260,7 @@ const stayDates = computed(() => {
                 </div>
 
                 <div class="flex-2 flex flex-col " style="width: 50%; font-size: 16px">
-                  <p class="font-medium" style="display: inline; margin-right: 5px;">
+                  <p class="font-medium ml-2" style="display: inline; margin-right: 5px;">
                     Status :
                   </p>
                   <span v-if="bookingStore.currentBooking.status == 'waiting'" class="card-text text-orange-400">
@@ -337,7 +335,7 @@ body {
 .card-style {
   top: 20px;
   width: 95vw;
-  height: 90vh;
+  height: 79vh;
   border-radius: 30px;
   background-color: rgba(229, 229, 229, 0.758);
   /* add filter blue */
@@ -348,7 +346,7 @@ body {
 
 .card-stay {
   width: 70vw;
-  height: 75vh;
+  height: 65vh;
   background-color: rgba(255, 255, 255);
   box-shadow: 0px 4px 6px rgb(0 0 0/0.25);
   border-radius: 15px;
