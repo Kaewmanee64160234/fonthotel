@@ -45,49 +45,94 @@ const clickRoomDetail = () => {
   console.log(props.room);
   roomStore.toggleRoomDetail();
 };
-function checkRoomCapacity(bookingDetail: BookingDetail) {
-  console.log(props.room.roomType.maxAdult);
-  console.log(props.room.roomType.maxChildren);
-if(bookingsStore.currentBooking.bookingDetail.length > 1){
-  // total gust - total that already book
-  let totalGuest = bookingsStore.currentBooking.adult + bookingsStore.currentBooking.child;
-  let totalBooked = 0;
-  bookingsStore.currentBooking.bookingDetail.forEach((booking) => {
-    totalBooked += booking.room.roomType.maxAdult + booking.room.roomType.maxChildren;
-  });
-  if (totalGuest > totalBooked) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: `The selected room cannot accommodate adult: ${bookingsStore.currentBooking.adult} and children: ${bookingsStore.currentBooking.child},May I suggest you to select more room or change the room?`,
-    });
-    return;
-  } else {
-    bookingsStore.addBookingDetail(bookingDetail);
-    router.push("/activity");
-  }
+// function checkRoomCapacity(bookingDetail: BookingDetail) {
+//   console.log(props.room.roomType.maxAdult);
+//   console.log(props.room.roomType.maxChildren);
+// if(bookingsStore.currentBooking.bookingDetail.length > 1){
+//   // total gust - total that already book
+//   let totalGuest = bookingsStore.currentBooking.adult + bookingsStore.currentBooking.child;
+//   let totalBooked = 0;
+//   bookingsStore.currentBooking.bookingDetail.forEach((booking) => {
+//     totalBooked += booking.room.roomType.maxAdult + booking.room.roomType.maxChildren;
+//   });
+//   if (totalGuest > totalBooked) {
+//     Swal.fire({
+//       icon: "error",
+//       title: "Oops...",
+//       text: `The selected room cannot accommodate adult: ${bookingsStore.currentBooking.adult} and children: ${bookingsStore.currentBooking.child},May I suggest you to select more room or change the room?`,
+//     });
+//     return;
+//   } else {
+//     bookingsStore.addBookingDetail(bookingDetail);
+//     router.push("/activity");
+//   }
 
-}else{
-  if (
-    props.room.roomType.maxAdult < bookingsStore.currentBooking.adult ||
-    bookingsStore.currentBooking.adult > props.room.roomType.maxChildren
-  ) {
-    // Show SweetAlert
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: `The selected room cannot accommodate adult: ${bookingsStore.currentBooking.adult} and children: ${bookingsStore.currentBooking.child},May I suggest you to select more room or change the room?`,
+// }else{
+//   if (
+//     props.room.roomType.maxAdult < bookingsStore.currentBooking.adult ||
+//     bookingsStore.currentBooking.adult > props.room.roomType.maxChildren
+//   ) {
+//     // Show SweetAlert
+//     Swal.fire({
+//       icon: "error",
+//       title: "Oops...",
+//       text: `The selected room cannot accommodate adult: ${bookingsStore.currentBooking.adult} and children: ${bookingsStore.currentBooking.child},May I suggest you to select more room or change the room?`,
+//     });
+//     return;
+//   } else {
+//     bookingsStore.addBookingDetail(bookingDetail);
+//     router.push("/activity");
+//   }
+// }
+function checkRoomCapacity(bookingDetail:BookingDetail) {
+  // Assuming props should be accessible or passed into this function. 
+  // If not, adjust accordingly based on actual data structure.
+  const maxAdult = bookingDetail.room.roomType.maxAdult;
+  const maxChildren = bookingDetail.room.roomType.maxChildren;
+
+  // Calculate the total number of guests (adults + children) for the current booking
+  let totalGuest = bookingsStore.currentBooking.adult + bookingsStore.currentBooking.child;
+
+  if (bookingsStore.currentBooking.bookingDetail.length > 0) {
+    // If there are existing booking details, calculate the total booked capacity
+    let totalBookedCapacity = 0;
+    bookingsStore.currentBooking.bookingDetail.forEach((booking) => {
+      totalBookedCapacity += booking.room.roomType.maxAdult + booking.room.roomType.maxChildren;
     });
-    return;
+
+    // Check if adding the current booking detail exceeds total booked capacity
+    if (totalGuest > totalBookedCapacity + maxAdult + maxChildren) {
+      // If total guests exceed the capacity including the new booking detail
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `The selected rooms cannot accommodate ${totalGuest} guests. Please select more rooms or change the room.`,
+      });
+      return;
+    } else {
+      bookingsStore.addBookingDetail(bookingDetail);
+      router.push("/activity");
+    }
   } else {
-    bookingsStore.addBookingDetail(bookingDetail);
-    router.push("/activity");
+    // For the first booking detail, check if it can accommodate the guests
+    if (bookingsStore.currentBooking.adult > maxAdult || bookingsStore.currentBooking.child > maxChildren) {
+      // If either adults or children exceed the room's capacity
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `The selected room cannot accommodate ${bookingsStore.currentBooking.adult} adults and ${bookingsStore.currentBooking.child} children. Please select more rooms or change the room.`,
+      });
+      return;
+    } else {
+      bookingsStore.addBookingDetail(bookingDetail);
+      router.push("/activity");
+    }
   }
 }
- 
+
 
   
-}
+
 </script>
 
 <template>
