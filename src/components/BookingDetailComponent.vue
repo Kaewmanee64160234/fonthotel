@@ -30,6 +30,27 @@ const linkTo = () => {
   router.push(`/`);
 };
 const bookingStore = useBookingsStore();
+
+function formatTwoDates(date1: Date): string {
+  const formatDate = (date: Date): string => {
+    const day = date.toDateString().split(" ")[0]; // Extracts the day of the week
+    const month = date.toLocaleString("default", { month: "short" }); // Extracts the abbreviated month
+    const dayOfMonth = date.getDate(); // Extracts the day of the month
+    const year = date.getFullYear(); // Extracts the year
+
+    return `${day}, ${month} ${dayOfMonth}, ${year}`;
+  };
+
+  return formatDate(date1);
+}
+
+const calculateNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  const diffDays = Math.round(
+    Math.abs((checkOutDate.getTime() - checkInDate.getTime()) / oneDay)
+  );
+  return diffDays;
+};
 </script>
 
 <template>
@@ -68,7 +89,18 @@ const bookingStore = useBookingsStore();
                 <div class="ml-6 p-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
                   <!-- Facility 1 -->
                   <div class="facility-item text-base">
-                    <p class="text-sm text-base text-black">Date: {{ date }}</p>
+                    <p class="text-sm text-base text-black">Date: {{
+          formatTwoDates(
+            new Date(bookingStore.currentBooking.checkIn)
+          ) +
+          "-" +
+          formatTwoDates(
+            new Date(bookingStore.currentBooking.checkOut)
+          )
+        }} (Night {{ calculateNumberOfNights(
+          new Date(bookingStore.currentBooking.checkIn),
+          new Date(bookingStore.currentBooking.checkOut)
+        ) }})</p>
                   </div>
                   <div class="facility-item text-base">
                     <p class="text-sm text-base text-black">
@@ -124,12 +156,13 @@ const bookingStore = useBookingsStore();
                       Promotion</span>
                     <span v-else class="text-sm text-base text-black "> <span style="padding: 5px;">
                         {{ props.promotion.name! }}
-                    </span>
+                      </span>
 
                     </span>
                   </div>
                   <div class="facility-item text-base">
-                    <p class="facility-item text-base">Name: {{ name }}</p>
+                    <p class="facility-item text-base">Name: {{ bookingStore.currentBooking.cusName }}
+                      {{ bookingStore.currentBooking.cusLastName }}</p>
                   </div>
                   <div class="flex-2 flex flex-col" style="width: 50%; font-size: 16px">
                     <div class="flex-1 flex flex-row">

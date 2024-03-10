@@ -7,7 +7,7 @@ import router from "@/router";
 import { useActivityStore } from "@/store/activity.store";
 import { useBookingsStore } from "@/store/booking.store";
 import { useRoomStore } from "@/store/room.store";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 const bookingStore = useBookingsStore();
 const activityStore = useActivityStore();
 const roomStore = useRoomStore();
@@ -54,6 +54,14 @@ const routerToAddRoom = () => {
   router.push(`/selectroom/${roomStore.currentType}`);
 };
 //wacth bookingStore.currentBooking
+
+// Computed property to calculate the number of nights
+const numberOfNights = computed(() => {
+  const checkInDate = new Date(bookingStore.currentBooking.checkIn);
+  const checkOutDate = new Date(bookingStore.currentBooking.checkOut);
+  const timeDifference = checkOutDate.getTime() - checkInDate.getTime();
+  return Math.ceil(timeDifference / (1000 * 3600 * 24));
+});
 </script>
 
 <template>
@@ -123,7 +131,7 @@ const routerToAddRoom = () => {
                           bookingStore.currentBooking.checkIn,
                           bookingStore.currentBooking.checkOut
                         )
-                      }}
+                      }} (Night {{ numberOfNights }})
                     </p>
                     <p>
                       {{ bookingStore.currentBooking.adult }} Adult |
