@@ -333,6 +333,21 @@ export const useBookingsStore = defineStore("bookings", () => {
     }
   }
 
+  const historyBookingsForEmployee = async () => {
+    try {
+      const response = await bookingService.historyBookingsForEmployee();
+      const bookings_ = response.data.map((bookingData: any) => {
+        // Basic booking information
+        const booking = mapOneBooking(bookingData);
+        return booking;
+      });
+      bookings.value = [];
+      bookings.value.push(...bookings_);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  }
+
   // Note: Adapt the structure of activity mapping based on your actual response structure
 
   const confirmBooking = async (id: number, status: string) => {
@@ -366,8 +381,9 @@ export const useBookingsStore = defineStore("bookings", () => {
       //find booking by id
       const res = await bookingService.getBookingBybookingid(id);
       if (res.data) {
+        console.log(res.data);
         //check if checkin date in 7 days can cancel booking
-        const checkinDate = new Date(res.data.booking_checkin);
+        const checkinDate = new Date(res.data.booking_create_date);
         const currentDate = new Date();
         const timeDiff = checkinDate.getTime() - currentDate.getTime();
         const dayDiff = timeDiff / (1000 * 3600 * 24);
@@ -400,6 +416,15 @@ export const useBookingsStore = defineStore("bookings", () => {
                 );
               }
             }
+          }else{
+            //show sweet alert
+            Swal.fire({
+              title: "Error",
+              text: "Please input your name and back number",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          
           }
         }
         //if morethen 7 days show info not return money
@@ -500,6 +525,35 @@ export const useBookingsStore = defineStore("bookings", () => {
   const setCurrentBooking = (booking: Booking) => {
     currentBooking.value = booking;
   };
+  //update booking
+  const updateBooking = async (id: number, booking: Booking) => {
+    currentBooking.value.status = 'edited'
+    const response = await bookingService.updateBooking(id, booking);
+    if (response.data) {
+      console.log(response.data);
+      Swal.fire({
+        title: "Success",
+        text: `Booking has been updated`,
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        router.push("/historyBookings");
+    });
+  
+  }
+  };
+  //create function getConfirmBookings
+  const getConfirmBookings = async () => {
+    const response = await bookingService.getConfirmBookings();
+    const bookings_ = response.data.map((bookingData: any) => {
+      // Basic booking information
+      const booking = mapOneBooking(bookingData);
+      console.log(booking);
+      return booking;
+    });
+    bookings.value = [];
+    bookings.value.push(...bookings_);
+  };
 
   return {
     calculateInitialTotal,
@@ -523,5 +577,8 @@ export const useBookingsStore = defineStore("bookings", () => {
     moreDetailCard,
     setCurrentBooking,
     removeRoomPerBooking,
+    updateBooking,
+    getConfirmBookings,
+    historyBookingsForEmployee
   };
 });

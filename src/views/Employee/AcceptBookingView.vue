@@ -15,7 +15,7 @@ function toggleDropdown() {
 }
 
 onMounted(async () => {
-  await bookingStore.getBookings("asc", "waiting");
+  await bookingStore.getConfirmBookings();
   // console.log(bookingStore.bookings.map((item) => item.bookingDetail.map((item) => console.log(item.room))));
 });
 

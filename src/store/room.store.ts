@@ -3,6 +3,8 @@ import { ref } from "vue";
 import roomService from "@/service/room";
 import { Room } from "@/model/room.model";
 import { RoomType } from "@/model/roomtype.model";
+import { useBookingsStore } from "./booking.store";
+import { BookingDetail } from "@/model/booking.model";
 
 
 export const useRoomStore = defineStore("roomStore", () => {
@@ -55,6 +57,7 @@ export const useRoomStore = defineStore("roomStore", () => {
             sleep: 1,
         }
     });
+    const bookingStore = useBookingsStore();
 
     function setRoom(room: Room) {
         roomDatail.value = room;
@@ -111,6 +114,20 @@ export const useRoomStore = defineStore("roomStore", () => {
                     rooms.push(room_);
                 }
                 currentRooms.value = rooms;
+                //remove room in currentRooms if room in currentBooking booking deails
+                if (bookingStore.currentBooking) {
+                    const currentBooking = bookingStore.currentBooking;
+                    const currentRooms_ = currentRooms.value.filter(room => {
+                        return !currentBooking.bookingDetail.some((bookingDetail:BookingDetail) => {
+                            return bookingDetail.room.id === room.id;
+                        });
+                    });
+                    currentRooms.value = currentRooms_;
+                    console.log('current room',currentRooms.value);
+                } else {
+                    currentRooms.value = [];
+                }
+               
                 console.log('current room',currentRooms.value);
             } else {
                 currentRooms.value = [];

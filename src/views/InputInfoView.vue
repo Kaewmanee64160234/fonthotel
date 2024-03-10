@@ -417,7 +417,7 @@ const removePromotion = () => {
                   :key="book.id"
                 >
                   <div class="flex-1 flex flex-col">
-                    <p class="font-medium">{{ book.room.roomType.roomType }}</p>
+                    <p class="font-medium">{{ book.room.roomType.typeName }}</p>
                   </div>
                   <div class="flex-2 flex flex-col pr-3">
                     <p class="font-medium">

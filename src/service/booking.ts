@@ -1,4 +1,4 @@
-import { Booking } from "@/model/booking.model";
+import { Booking, BookingDetail } from "@/model/booking.model";
 import http from "./axios";
 
 const saveBooking = async (booking: Booking, customerId: number) => {
@@ -111,7 +111,29 @@ const getBookingByCustomerId = (id: number) => {
 const getBookingByEmployeeId = (id: number) => {
   return http.get(`booking/employee/${id}`);
 };
+//update booking
+const updateBooking = (id: number, booking: Booking) => {
+  //create payload for map data
+  const payload = {
+    booking_status: booking.status,
+    booking_checkin: booking.checkIn,
+    booking_checkout: booking.checkOut,
+  };
+  console.log("payload", JSON.stringify(payload));
+  return http.patch(`/booking/${id}`, payload);
+}
+//get for employee confirm bookings
+const getConfirmBookings = ()=>{
+  return http.get('/booking/confirm/booking');
+
+
+}
+const historyBookingsForEmployee = () => {
+  return http.get("/booking/employee/history/booking");
+
+}
 export default {
+  historyBookingsForEmployee,
   saveBooking,
   getBookingBybookingid,
   getBookingByCustomerIdLastcreated,
@@ -121,4 +143,6 @@ export default {
   getBookingByEmployeeIdLastcreated,
   getBookingByCustomerId,
   getBookingByEmployeeId,
+  updateBooking,
+  getConfirmBookings
 };

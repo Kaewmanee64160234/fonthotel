@@ -30,11 +30,7 @@ const cancelBooking = async (bookingId: number) => {
   try {
     await bookingStore.confirmBookingByCustomerOrEmployee(bookingId, "cancel");
     // Show success message after booking cancellation
-    Swal.fire({
-      title: "Cancelled",
-      text: "Your booking has been cancelled.",
-      icon: "success"
-    });
+    
   } catch (error) {
     console.error(error);
     // Show error message if cancellation fails
@@ -46,9 +42,25 @@ const cancelBooking = async (bookingId: number) => {
   }
 }
 
-const editDateBooking = () => {
+const editDateBooking = async (bookingId:number) => {
+  //find ubooking 
+
   bookingStore.currentBooking = props.booking;
-  router.push('/editDateBooking');
+  //check if edit date booking in 3 days before checkin can edit
+  const dateNow = new Date();
+  const dateCheckIn = new Date(props.booking.createDate);
+  const diffTime = Math.abs(dateCheckIn.getTime() - dateNow.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  console.log(diffDays);
+  if (diffDays < 3) {
+    router.push('/editDateBooking');
+  } else {
+    Swal.fire({
+      title: "Error",
+      text: "You can only edit the booking date 3 days before check-in.",
+      icon: "error"
+    });
+  }
 }
 const userStore = useUserStore();
 
@@ -93,11 +105,13 @@ const clickConfirmCancel = (bookingId: number, firstName: string) => {
           <p class='items-center p-3'>Created Date: {{ props.createdDate }}</p>
         </div>
           <div>
+
             <li class="card-text ">{{ props.typeRoom }}</li>
             <li class="card-text">{{ props.activity }}</li>
             <li class="card-text">{{ props.dateCheckIn }} at 1:00 PM</li>
             <li class="card-text">Guest: {{ props.guest }}</li>
             <li v-if="props.status == 'waiting'" class="card-text text-orange-400">Status: {{ props.status }}</li>
+            <li v-if="props.status == 'edited'" class="card-text text-purple-700">Status: {{ props.status }}</li>
             <li v-else-if="props.status == 'cancel'" class="card-text" style="color: red;">Status: {{ props.status }}
             </li>
             <li v-else-if="props.status == 'confirm'" class="card-text" style="color: cadetblue;">Status: {{

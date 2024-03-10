@@ -2,7 +2,7 @@
 import router from "@/router";
 import { useBookingsStore } from "@/store/booking.store";
 import { computed, ref, watch } from "vue";
-
+const bookingStore = useBookingsStore();
 const clickback = () => {
   router.push("/historyBookings");
 };
@@ -18,8 +18,8 @@ const formatTime = (dateString: string): string => {
   const formattedMinutes = minutes.toString().padStart(2, "0"); // Ensure minutes are two digits
   return `${formattedHours}:${formattedMinutes} ${amOrPm}`; // Combine hours, minutes, and AM/PM
 };
-const bookingStore = useBookingsStore();
-const minDate = new Date().toISOString().split("T")[0];
+
+const minDate = new Date(bookingStore.currentBooking.checkIn).toISOString().split("T")[0];
 const startDate = ref(minDate);
 const endDate = ref("");
 
@@ -51,6 +51,14 @@ const formatDate = (dateStr: string) => {
     day: "numeric",
   });
 };
+//save date
+const saveDate = async () => {
+  bookingStore.currentBooking.checkIn = new Date(startDate.value);
+  bookingStore.currentBooking.checkOut = new Date(endDate.value);
+ await bookingStore.updateBooking(bookingStore.currentBooking.id, bookingStore.currentBooking);
+  
+};
+
 
 // Computed property for displaying stay dates
 const stayDates = computed(() => {
@@ -71,8 +79,8 @@ const stayDates = computed(() => {
         <div class="flex justify-between items-center p-4">
           <h1 class="text-xl font-bold">History Booking</h1>
           <div class="grid gap-4 grid-cols-2 text-sm">
-            <button type="button" class="button-save">Save</button>
-            <button type="button" class="button-cancel">Cancel</button>
+            <button type="button" class="button-save" @click="saveDate()">Save</button>
+            <button type="button" class="button-cancel" @click="clickback()">Cancel</button>
           </div>
         </div>
 
